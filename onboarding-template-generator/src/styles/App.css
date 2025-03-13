@@ -2,299 +2,555 @@
 
 /* Global styles */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-    color: #333;
-    background-color: #f9f9f9;
-  }
-  
-  .app-container {
-    width: 800px;
-    min-height: 600px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Generator header */
-  .generator-header {
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #eaeaea;
-  }
-  
-  .generator-header h1 {
-    font-size: 24px;
-    font-weight: 600;
-    color: #0078d4;
-    margin-bottom: 8px;
-  }
-  
-  .generator-header p {
-    font-size: 14px;
-    color: #666;
-  }
-  
-  /* Generator content */
-  .generator-content {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  
-  h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 16px;
-  }
-  
-  h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-  
-  /* Form elements */
-  .form-group {
-    margin-bottom: 16px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-  
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="date"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    transition: border-color 0.2s;
-  }
-  
-  input:focus,
-  select:focus,
-  textarea:focus {
-    outline: none;
-    border-color: #0078d4;
-    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
-  }
-  
-  button {
-    cursor: pointer;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.2s, transform 0.1s;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
-  button:active {
-    transform: translateY(1px);
-  }
-  
-  /* Tier selector */
-  .tier-selector {
-    margin-bottom: 24px;
-  }
-  
-  .tier-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .tier-card {
-    border: 2px solid transparent;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .tier-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .tier-card.selected {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  .tier-header {
-    padding: 12px;
-    text-align: center;
-    color: white;
-  }
-  
-  .tier-header h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-  }
-  
-  .tier-content {
-    padding: 12px;
-    font-size: 12px;
-  }
-  
-  .tier-content p {
-    margin-bottom: 8px;
-    min-height: 60px;
-  }
-  
-  .tier-content ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .tier-content li {
-    margin-bottom: 4px;
-    font-size: 12px;
-  }
-  
-  /* Contacts form */
-  .contacts-form {
-    margin-bottom: 24px;
-  }
-  
-  .contact-card {
-    margin-bottom: 16px;
-    padding: 16px;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-  }
-  
-  .contact-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  
-  .contact-header h3 {
-    margin: 0;
-    font-size: 16px;
-  }
-  
-  .contact-fields {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-  }
-  
-  .add-button {
-    background-color: #0078d4;
-    color: white;
-  }
-  
-  .remove-button {
-    background-color: #d83b01;
-    color: white;
-    padding: 4px 8px;
-    font-size: 12px;
-  }
-  
-  /* Preview section */
-  .template-preview {
-    margin-top: 24px;
-  }
-  
-  .preview-actions {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  
-  .preview-button {
-    background-color: #f0f0f0;
-    color: #333;
-  }
-  
-  .copy-button {
-    background-color: #107c10;
-    color: white;
-    flex-grow: 1;
-  }
-  
-  .copy-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .validation-message {
-    color: #d83b01;
-    margin-bottom: 16px;
-    font-size: 13px;
-  }
-  
-  .preview-container {
-    margin-top: 16px;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .preview-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #eaeaea;
-  }
-  
-  .preview-content {
-    padding: 16px;
-    max-height: 400px;
-    overflow-y: auto;
-    background-color: white;
-  }
-  
-  /* Info boxes */
-  .info-box {
-    padding: 12px;
-    background-color: #f0f7ff;
-    border-left: 4px solid #0078d4;
-    margin: 16px 0;
-    border-radius: 0 4px 4px 0;
-  }
-  
-  /* Customer info section */
-  .customer-info-section {
-    background-color: #f9f9f9;
-    padding: 16px;
-    border-radius: 8px;
-    margin-bottom: 24px;
-  }
-  
-  /* Small text */
-  .form-text {
-    font-size: 12px;
-    color: #666;
-    display: block;
-    margin-top: 4px;
-  }
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.app-container {
+  width: 800px;
+  min-height: 600px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Options page adjustments */
+.options-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Generator header */
+.generator-header {
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.generator-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #0078d4;
+  margin-bottom: 8px;
+}
+
+.generator-header p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Generator content */
+.generator-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Form elements */
+.form-group {
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+}
+
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+/* Tier selector */
+.tier-selector {
+  margin-bottom: 24px;
+}
+
+.tier-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tier-card {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tier-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tier-card.selected {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tier-header {
+  padding: 12px;
+  text-align: center;
+  color: white;
+}
+
+.tier-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.tier-content {
+  padding: 12px;
+  font-size: 12px;
+}
+
+.tier-content p {
+  margin-bottom: 8px;
+  min-height: 60px;
+}
+
+.tier-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.tier-content li {
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+/* Contacts form */
+.contacts-form {
+  margin-bottom: 24px;
+}
+
+.contact-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.contact-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.contact-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.add-button {
+  background-color: #0078d4;
+  color: white;
+}
+
+.remove-button {
+  background-color: #d83b01;
+  color: white;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+/* Preview section */
+.template-preview {
+  margin-top: 24px;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.preview-button {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.copy-button {
+  background-color: #107c10;
+  color: white;
+  flex-grow: 1;
+}
+
+.copy-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.validation-message {
+  color: #d83b01;
+  margin-bottom: 16px;
+  font-size: 13px;
+}
+
+.preview-container {
+  margin-top: 16px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.preview-content {
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: white;
+}
+
+/* Info boxes */
+.info-box {
+  padding: 12px;
+  background-color: #f0f7ff;
+  border-left: 4px solid #0078d4;
+  margin: 16px 0;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Customer info section */
+.customer-info-section {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+/* Small text */
+.form-text {
+  font-size: 12px;
+  color: #666;
+  display: block;
+  margin-top: 4px;
+}
+
+/* App footer */
+.app-footer {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid #eaeaea;
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Tabs styles */
+.tabs-container {
+  margin-bottom: 20px;
+}
+
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  background-color: #f5f5f5;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin-right: 5px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-button.active {
+  background-color: #fff;
+  color: #0078d4;
+  border-bottom: 3px solid #0078d4;
+}
+
+.tab-button:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Email form styles */
+.email-form-container {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.section {
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.info-text {
+  margin-bottom: 15px;
+  color: #666;
+}
+
+.checkbox-group {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px dashed #eee;
+}
+
+.checkbox-group:last-child {
+  border-bottom: none;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.nested-options {
+  margin-left: 25px;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-left: 3px solid #ddd;
+  border-radius: 0 4px 4px 0;
+}
+
+.inline-checks {
+  display: flex;
+  gap: 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-preview {
+  background-color: #0078d4;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+/* Email preview styles */
+.email-preview-container {
+  padding: 20px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.view-toggle button {
+  background-color: #f0f0f0;
+  color: #333;
+  border-radius: 4px;
+  padding: 8px 16px;
+}
+
+.view-toggle button.active {
+  background-color: #0078d4;
+  color: white;
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.action-buttons button {
+  background-color: #0078d4;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+}
+
+.action-buttons button:last-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.preview-content {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.preview-header {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.preview-recipient, 
+.preview-subject, 
+.preview-date {
+  margin-bottom: 5px;
+}
+
+.preview-body {
+  padding: 0;
+  background-color: white;
+}
+
+.text-preview {
+  padding: 15px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 13px;
+  line-height: 1.5;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.copy-success {
+  background-color: #107c10;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Popup styles */
+.popup-container {
+  width: 300px;
+  padding: 20px;
+  text-align: center;
+}
+
+.popup-container h2 {
+  color: #0078d4;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.popup-container p {
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.primary-button {
+  background-color: #0078d4;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 16px;
+  width: 100%;
+  transition: background-color 0.2s;
+}
+
+.primary-button:hover {
+  background-color: #106ebe;
+}

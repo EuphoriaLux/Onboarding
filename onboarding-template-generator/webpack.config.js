@@ -1,4 +1,3 @@
-// Copy this to your existing webpack.config.js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -22,6 +21,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: {
     popup: './src/popup.tsx',
+    options: './src/options.tsx',
     background: './src/background.ts'
   },
   output: {
@@ -53,6 +53,11 @@ module.exports = {
       template: './src/popup.html',
       filename: 'popup.html',
       chunks: ['popup']
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/options.html',
+      filename: 'options.html',
+      chunks: ['options']
     }),
     new CopyWebpackPlugin({
       patterns: copyPatterns

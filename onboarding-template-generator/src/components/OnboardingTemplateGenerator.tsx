@@ -1,68 +1,56 @@
 // src/components/OnboardingTemplateGenerator.tsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TierSelector from './TierSelector';
 import ContactsForm from './ContactsForm';
 import TenantForm from './TenantForm';
 import TemplatePreview from './TemplatePreview';
-import { supportTiers } from '../data/supportTiers';
 import { CustomerInfo } from '../utils/templateGenerator';
 
-const OnboardingTemplateGenerator: React.FC = () => {
-  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
-    companyName: '',
-    contactName: '',
-    contactEmail: '',
-    proposedDate: new Date(),
-    tenantId: '',
-    authorizedContacts: [{ name: '', email: '', phone: '' }],
-    selectedTier: 'silver' // Default tier
-  });
+interface OnboardingTemplateGeneratorProps {
+  customerInfo: CustomerInfo;
+  onChange: (info: CustomerInfo) => void;
+}
 
-  // Load data from storage when component mounts
-  useEffect(() => {
-    chrome.storage.sync.get('customerInfo', (data) => {
-      if (data.customerInfo) {
-        // Convert date string back to Date object
-        const storedInfo = data.customerInfo;
-        if (storedInfo.proposedDate) {
-          storedInfo.proposedDate = new Date(storedInfo.proposedDate);
-        }
-        setCustomerInfo(storedInfo);
-      }
-    });
-  }, []);
-
-  // Save data to storage when it changes
-  useEffect(() => {
-    chrome.storage.sync.set({ customerInfo });
-  }, [customerInfo]);
-
+const OnboardingTemplateGenerator: React.FC<OnboardingTemplateGeneratorProps> = ({ customerInfo, onChange }) => {
+  // Update handler functions to use onChange prop
   const handleTierChange = (tier: string) => {
-    setCustomerInfo(prev => ({
-      ...prev,
+    onChange({
+      ...customerInfo,
       selectedTier: tier
-    }));
+    });
   };
 
   const handleContactsChange = (contacts: Array<{name: string, email: string, phone: string}>) => {
-    setCustomerInfo(prev => ({
-      ...prev,
+    onChange({
+      ...customerInfo,
       authorizedContacts: contacts
-    }));
+    });
   };
 
   const handleFieldChange = (field: string, value: string) => {
-    setCustomerInfo(prev => ({
-      ...prev,
+    onChange({
+      ...customerInfo,
       [field]: value
-    }));
+    });
   };
 
   const handleDateChange = (date: string) => {
-    setCustomerInfo(prev => ({
-      ...prev,
-      proposedDate: new Date(date)
-    }));
+    try {
+      // Create a Date object safely
+      const newDate = new Date(date);
+      
+      // Verify it's a valid date before setting it
+      if (!isNaN(newDate.getTime())) {
+        onChange({
+          ...customerInfo,
+          proposedDate: newDate
+        });
+      } else {
+        console.warn("Invalid date input: ", date);
+      }
+    } catch (err) {
+      console.error("Error parsing date: ", err);
+    }
   };
 
   return (
@@ -110,7 +98,7 @@ const OnboardingTemplateGenerator: React.FC = () => {
             <input
               id="proposed-date"
               type="date"
-              value={customerInfo.proposedDate instanceof Date 
+              value={customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime())
                 ? customerInfo.proposedDate.toISOString().split('T')[0]
                 : ''}
               onChange={(e) => handleDateChange(e.target.value)}

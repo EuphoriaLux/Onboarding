@@ -28832,6 +28832,522 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/components/App.tsx":
+/*!********************************!*\
+  !*** ./src/components/App.tsx ***!
+  \********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _OnboardingTemplateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OnboardingTemplateGenerator */ "./src/components/OnboardingTemplateGenerator.tsx");
+/* harmony import */ var _EmailForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmailForm */ "./src/components/EmailForm.tsx");
+/* harmony import */ var _EmailPreview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EmailPreview */ "./src/components/EmailPreview.tsx");
+/* harmony import */ var _Tabs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Tabs */ "./src/components/Tabs.tsx");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/App.css */ "./src/styles/App.css");
+
+// src/components/App.tsx
+
+
+
+
+
+
+const App = () => {
+    const [customerInfo, setCustomerInfo] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        companyName: '',
+        contactName: '',
+        contactEmail: '',
+        proposedDate: new Date(),
+        tenantId: '',
+        authorizedContacts: [{ name: '', email: '', phone: '' }],
+        selectedTier: 'silver' // Default tier
+    });
+    const [emailData, setEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [showEmailPreview, setShowEmailPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        chrome.storage.sync.get('customerInfo', (data) => {
+            if (data.customerInfo) {
+                // Convert date string back to Date object
+                const storedInfo = data.customerInfo;
+                try {
+                    if (storedInfo.proposedDate) {
+                        const parsedDate = new Date(storedInfo.proposedDate);
+                        // Verify it's a valid date
+                        if (!isNaN(parsedDate.getTime())) {
+                            storedInfo.proposedDate = parsedDate;
+                        }
+                        else {
+                            // If the date is invalid, set to current date
+                            storedInfo.proposedDate = new Date();
+                            console.warn("Invalid date in storage, using current date instead");
+                        }
+                    }
+                    else {
+                        // If no date, use current date
+                        storedInfo.proposedDate = new Date();
+                    }
+                    setCustomerInfo(storedInfo);
+                }
+                catch (err) {
+                    console.error("Error parsing stored date:", err);
+                    // Use default values if there's an error
+                    setCustomerInfo(Object.assign(Object.assign({}, storedInfo), { proposedDate: new Date() }));
+                }
+            }
+        });
+    }, []);
+    // Save customer data when it changes
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        chrome.storage.sync.set({ customerInfo });
+    }, [customerInfo]);
+    // Handle customer info updates from template generator
+    const handleCustomerInfoUpdate = (info) => {
+        setCustomerInfo(info);
+    };
+    // Handle email data updates from email form
+    const handleEmailDataSave = (data) => {
+        setEmailData(data);
+        chrome.storage.sync.set({ emailData: data });
+    };
+    // Generate email preview
+    const handleEmailPreview = (data) => {
+        setEmailData(data);
+        setShowEmailPreview(true);
+    };
+    // Return to email form
+    const handleBackToEdit = () => {
+        setShowEmailPreview(false);
+    };
+    // Define tab content
+    const templateTab = {
+        id: 'template',
+        title: 'Template Generator',
+        content: ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OnboardingTemplateGenerator__WEBPACK_IMPORTED_MODULE_2__["default"], { customerInfo: customerInfo, onChange: handleCustomerInfoUpdate }))
+    };
+    const emailTab = {
+        id: 'email',
+        title: 'Email Builder',
+        content: showEmailPreview && emailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailPreview__WEBPACK_IMPORTED_MODULE_4__["default"], { emailData: emailData, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailForm__WEBPACK_IMPORTED_MODULE_3__["default"], { customerInfo: customerInfo, onSaveEmailData: handleEmailDataSave, onPreviewEmail: handleEmailPreview }))
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container options-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Generate rich text templates and emails for customer onboarding" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Tabs__WEBPACK_IMPORTED_MODULE_5__["default"], { tabs: [templateTab, emailTab], defaultTab: "template" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", { className: "app-footer", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Onboarding Template Generator - v1.0.1" }) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+
+/***/ }),
+
+/***/ "./src/components/ContactsForm.tsx":
+/*!*****************************************!*\
+  !*** ./src/components/ContactsForm.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+
+
+const ContactsForm = ({ contacts, selectedTier, onChange }) => {
+    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers[selectedTier];
+    const handleContactChange = (index, field, value) => {
+        const updatedContacts = [...contacts];
+        updatedContacts[index] = Object.assign(Object.assign({}, updatedContacts[index]), { [field]: value });
+        onChange(updatedContacts);
+    };
+    const addContact = () => {
+        if (contacts.length < tier.authorizedContacts) {
+            onChange([...contacts, { name: '', email: '', phone: '' }]);
+        }
+    };
+    const removeContact = (index) => {
+        const updatedContacts = [...contacts];
+        updatedContacts.splice(index, 1);
+        onChange(updatedContacts);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contacts-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["2. Authorized Customer Contacts (", contacts.length, "/", tier.authorizedContacts, ")"] }), contacts.map((contact, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-card", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Contact #", index + 1] }), contacts.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeContact(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-name-${index}`, children: "Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-name-${index}`, type: "text", value: contact.name, onChange: (e) => handleContactChange(index, 'name', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-email-${index}`, children: "Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-email-${index}`, type: "email", value: contact.email, onChange: (e) => handleContactChange(index, 'email', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-phone-${index}`, children: "Phone" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-phone-${index}`, type: "tel", value: contact.phone, onChange: (e) => handleContactChange(index, 'phone', e.target.value), placeholder: "+1 (123) 456-7890" })] })] })] }, index))), contacts.length < tier.authorizedContacts && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addContact, children: "Add Contact" }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContactsForm);
+
+
+/***/ }),
+
+/***/ "./src/components/EmailForm.tsx":
+/*!**************************************!*\
+  !*** ./src/components/EmailForm.tsx ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/utils/emailBuilder.ts");
+
+// src/components/EmailForm.tsx
+
+
+const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail }) => {
+    const [emailData, setEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].processCustomerInfoToEmailData(customerInfo));
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        // Update email data when customer info changes
+        setEmailData(_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].processCustomerInfoToEmailData(customerInfo));
+    }, [customerInfo]);
+    const handleInputChange = (field, value) => {
+        setEmailData((prev) => (Object.assign(Object.assign({}, prev), { [field]: value })));
+    };
+    const handleNestedChange = (section, field, value) => {
+        setEmailData((prev) => {
+            const currentSection = prev[section];
+            return Object.assign(Object.assign({}, prev), { [section]: Object.assign(Object.assign({}, currentSection), { [field]: value }) });
+        });
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onSaveEmailData(emailData);
+        onPreviewEmail(emailData);
+    };
+    const handleCheckboxToggle = (section, field) => {
+        setEmailData((prev) => {
+            const currentSection = prev[section];
+            return Object.assign(Object.assign({}, prev), { [section]: Object.assign(Object.assign({}, currentSection), { [field]: !currentSection[field] }) });
+        });
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-form-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "info-text", children: "Customize this email template to send to your client as part of the onboarding process." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "to", value: emailData.to, onChange: (e) => handleInputChange('to', e.target.value), placeholder: "recipient@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "cc", value: emailData.cc || '', onChange: (e) => handleInputChange('cc', e.target.value), placeholder: "cc@example.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "subject", children: "Subject:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "subject", value: emailData.subject || '', onChange: (e) => handleInputChange('subject', e.target.value), placeholder: "Email subject" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select the components to include in your onboarding email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "gdap", checked: emailData.gdap.checked, onChange: () => handleCheckboxToggle('gdap', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap", children: "GDAP (Granular Delegation of Administrative Privileges)" })] }), emailData.gdap.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "nested-options", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdapDeadline", children: "Implementation Deadline:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "gdapDeadline", value: emailData.gdap.deadline, onChange: (e) => handleNestedChange('gdap', 'deadline', e.target.value), placeholder: "e.g., June 30, 2025" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdapLink", children: "GDAP Link:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "gdapLink", value: emailData.gdap.link, onChange: (e) => handleNestedChange('gdap', 'link', e.target.value), placeholder: "GDAP approval link" })] })] }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbac", checked: emailData.rbac.checked, onChange: () => handleCheckboxToggle('rbac', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbac", children: "RBAC (Role-Based Access Control)" })] }), emailData.rbac.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "nested-options", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacGroups", children: "Security Groups to Configure:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "rbacGroups", value: emailData.rbac.groups, onChange: (e) => handleNestedChange('rbac', 'groups', e.target.value), placeholder: "e.g., IT Admins, Finance Team, HR" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Permission Level:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacAzure", checked: emailData.rbac.azure, onChange: () => handleCheckboxToggle('rbac', 'azure') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacAzure", children: "Azure RBAC" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacM365", checked: emailData.rbac.m365, onChange: () => handleCheckboxToggle('rbac', 'm365') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacM365", children: "Microsoft 365 RBAC" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-group", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeRbacScript", checked: emailData.rbac.includeScript, onChange: () => handleCheckboxToggle('rbac', 'includeScript') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeRbacScript", children: "Include PowerShell Script" })] }) })] }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "conditionalAccess", checked: emailData.conditionalAccess.checked, onChange: () => handleCheckboxToggle('conditionalAccess', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "conditionalAccess", children: "Conditional Access" })] }), emailData.conditionalAccess.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "nested-options", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", checked: emailData.conditionalAccess.mfa, onChange: () => handleCheckboxToggle('conditionalAccess', 'mfa') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", checked: emailData.conditionalAccess.location, onChange: () => handleCheckboxToggle('conditionalAccess', 'location') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", checked: emailData.conditionalAccess.device, onChange: () => handleCheckboxToggle('conditionalAccess', 'device') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", checked: emailData.conditionalAccess.signIn, onChange: () => handleCheckboxToggle('conditionalAccess', 'signIn') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "authorizedContacts", checked: emailData.authorizedContacts.checked, onChange: () => handleCheckboxToggle('authorizedContacts', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "authorizedContacts", children: "Authorized Contacts Table" })] }), emailData.authorizedContacts.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "nested-options", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contactsRoles", children: "Recommended Contact Roles:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "contactsRoles", value: emailData.authorizedContacts.roles, onChange: (e) => handleNestedChange('authorizedContacts', 'roles', e.target.value), placeholder: "e.g., Technical Contact, Billing Contact" })] }) }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Additional Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "meetingDate", children: "Onboarding Meeting Date (if applicable):" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "meetingDate", value: emailData.meetingDate || '', onChange: (e) => handleInputChange('meetingDate', e.target.value), placeholder: "e.g., March 20, 2025 at 2:00 PM EST" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additionalNotes", children: "Additional Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additionalNotes", value: emailData.additionalNotes || '', onChange: (e) => handleInputChange('additionalNotes', e.target.value), placeholder: "Any additional information for the client...", rows: 4 })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Sender Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderName", children: "Your Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderName", value: emailData.senderName, onChange: (e) => handleInputChange('senderName', e.target.value), placeholder: "Your full name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderTitle", children: "Your Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderTitle", value: emailData.senderTitle, onChange: (e) => handleInputChange('senderTitle', e.target.value), placeholder: "Your job title" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderCompany", children: "Your Company:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderCompany", value: emailData.senderCompany, onChange: (e) => handleInputChange('senderCompany', e.target.value), placeholder: "Your company name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderContact", children: "Your Contact Info:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderContact", value: emailData.senderContact || '', onChange: (e) => handleInputChange('senderContact', e.target.value), placeholder: "Phone number or additional contact info" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "submit", className: "btn-preview", children: "Preview Email" }) })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailForm);
+
+
+/***/ }),
+
+/***/ "./src/components/EmailPreview.tsx":
+/*!*****************************************!*\
+  !*** ./src/components/EmailPreview.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/utils/emailBuilder.ts");
+
+// src/components/EmailPreview.tsx
+
+
+const EmailPreview = ({ emailData, onBackToEdit }) => {
+    const [htmlContent, setHtmlContent] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [plainText, setPlainText] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [viewMode, setViewMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('html');
+    const [copySuccess, setCopySuccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        // Generate email content
+        const html = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailHTML(emailData);
+        const text = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailBody(emailData);
+        setHtmlContent(html);
+        setPlainText(text);
+    }, [emailData]);
+    const handleCopyToClipboard = (contentType) => {
+        const content = contentType === 'html' ? htmlContent : plainText;
+        navigator.clipboard.writeText(content).then(() => {
+            setCopySuccess(`${contentType.toUpperCase()} copied to clipboard!`);
+            setTimeout(() => setCopySuccess(''), 3000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            setCopySuccess('Failed to copy content. Please try again.');
+        });
+    };
+    const handleDownloadHTML = () => {
+        const element = document.createElement('a');
+        const file = new Blob([htmlContent], { type: 'text/html' });
+        element.href = URL.createObjectURL(file);
+        element.download = `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding_Email.html`;
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    };
+    const handleOpenInOutlook = () => {
+        // Create a mailto URL (this has size limitations, so we'll just open the destination)
+        const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
+        window.open(mailtoUrl);
+        // Show instruction since we can't attach the full content
+        alert('Your default email client should open with the recipient and subject. Please paste the copied HTML or text content into the email body.');
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
+
+
+/***/ }),
+
+/***/ "./src/components/OnboardingTemplateGenerator.tsx":
+/*!********************************************************!*\
+  !*** ./src/components/OnboardingTemplateGenerator.tsx ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _TierSelector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TierSelector */ "./src/components/TierSelector.tsx");
+/* harmony import */ var _ContactsForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ContactsForm */ "./src/components/ContactsForm.tsx");
+/* harmony import */ var _TenantForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TenantForm */ "./src/components/TenantForm.tsx");
+/* harmony import */ var _TemplatePreview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TemplatePreview */ "./src/components/TemplatePreview.tsx");
+
+
+
+
+
+const OnboardingTemplateGenerator = ({ customerInfo, onChange }) => {
+    // Update handler functions to use onChange prop
+    const handleTierChange = (tier) => {
+        onChange(Object.assign(Object.assign({}, customerInfo), { selectedTier: tier }));
+    };
+    const handleContactsChange = (contacts) => {
+        onChange(Object.assign(Object.assign({}, customerInfo), { authorizedContacts: contacts }));
+    };
+    const handleFieldChange = (field, value) => {
+        onChange(Object.assign(Object.assign({}, customerInfo), { [field]: value }));
+    };
+    const handleDateChange = (date) => {
+        try {
+            // Create a Date object safely
+            const newDate = new Date(date);
+            // Verify it's a valid date before setting it
+            if (!isNaN(newDate.getTime())) {
+                onChange(Object.assign(Object.assign({}, customerInfo), { proposedDate: newDate }));
+            }
+            else {
+                console.warn("Invalid date input: ", date);
+            }
+        }
+        catch (err) {
+            console.error("Error parsing date: ", err);
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "onboarding-generator", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Generate rich text templates for customer onboarding" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TierSelector__WEBPACK_IMPORTED_MODULE_1__["default"], { selectedTier: customerInfo.selectedTier, onChange: handleTierChange }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: customerInfo.contactName, onChange: (e) => handleFieldChange('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: customerInfo.contactEmail, onChange: (e) => handleFieldChange('contactEmail', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime())
+                                            ? customerInfo.proposedDate.toISOString().split('T')[0]
+                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TenantForm__WEBPACK_IMPORTED_MODULE_3__["default"], { tenantId: customerInfo.tenantId, companyName: customerInfo.companyName, onChange: handleFieldChange }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ContactsForm__WEBPACK_IMPORTED_MODULE_2__["default"], { contacts: customerInfo.authorizedContacts, selectedTier: customerInfo.selectedTier, onChange: handleContactsChange }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TemplatePreview__WEBPACK_IMPORTED_MODULE_4__["default"], { customerInfo: customerInfo })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OnboardingTemplateGenerator);
+
+
+/***/ }),
+
+/***/ "./src/components/Tabs.tsx":
+/*!*********************************!*\
+  !*** ./src/components/Tabs.tsx ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+// src/components/Tabs.tsx
+
+const Tabs = ({ tabs, defaultTab }) => {
+    const [activeTab, setActiveTab] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(defaultTab || tabs[0].id);
+    const handleTabClick = (tabId) => {
+        setActiveTab(tabId);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tabs-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tabs-header", children: tabs.map(tab => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: `tab-button ${activeTab === tab.id ? 'active' : ''}`, onClick: () => handleTabClick(tab.id), children: tab.title }, tab.id))) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tabs-content", children: tabs.map(tab => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `tab-content ${activeTab === tab.id ? 'active' : ''}`, style: { display: activeTab === tab.id ? 'block' : 'none' }, children: tab.content }, tab.id))) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Tabs);
+
+
+/***/ }),
+
+/***/ "./src/components/TemplatePreview.tsx":
+/*!********************************************!*\
+  !*** ./src/components/TemplatePreview.tsx ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/templateGenerator */ "./src/utils/templateGenerator.ts");
+/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/utils/clipboardUtils.ts");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+
+// src/components/TemplatePreview.tsx
+
+
+
+
+const TemplatePreview = ({ customerInfo }) => {
+    const [copied, setCopied] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [showPreview, setShowPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const handleCopyToClipboard = () => {
+        const template = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo);
+        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyRichTextToClipboard)(template)
+            .then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 3000);
+        })
+            .catch(error => {
+            console.error('Error copying to clipboard:', error);
+        });
+    };
+    const togglePreview = () => {
+        setShowPreview(!showPreview);
+    };
+    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_4__.supportTiers[customerInfo.selectedTier];
+    const template = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo);
+    const isFormValid = () => {
+        return (customerInfo.companyName.trim() !== '' &&
+            customerInfo.contactName.trim() !== '' &&
+            customerInfo.contactEmail.trim() !== '' &&
+            customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime()) &&
+            customerInfo.authorizedContacts.length > 0 &&
+            customerInfo.authorizedContacts.every(contact => contact.name.trim() !== '' &&
+                contact.email.trim() !== ''));
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "template-preview", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Template Preview & Generation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "preview-button", onClick: togglePreview, children: showPreview ? 'Hide Preview' : 'Show Preview' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "copy-button", onClick: handleCopyToClipboard, disabled: !isFormValid(), children: copied ? '✓ Copied to Clipboard!' : 'Generate & Copy to Clipboard' })] }), !isFormValid() && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "validation-message", children: "Please fill in all required fields before generating the template." })), showPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Template Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: { color: tier.color }, children: tier.name })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-content", dangerouslySetInnerHTML: { __html: template } })] }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TemplatePreview);
+
+
+/***/ }),
+
+/***/ "./src/components/TenantForm.tsx":
+/*!***************************************!*\
+  !*** ./src/components/TenantForm.tsx ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+const TenantForm = ({ tenantId, companyName, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "3. Tenant Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "company-name", children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "company-name", type: "text", value: companyName, onChange: (e) => onChange('companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "tenant-id", children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "tenant-id", type: "text", value: tenantId, onChange: (e) => onChange('tenantId', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantForm);
+
+
+/***/ }),
+
+/***/ "./src/components/TierSelector.tsx":
+/*!*****************************************!*\
+  !*** ./src/components/TierSelector.tsx ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+
+
+const TierSelector = ({ selectedTier, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tier-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "1. Support Tier Selection" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tier-cards", children: Object.entries(_data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers).map(([key, tier]) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tier-card ${selectedTier === key ? 'selected' : ''}`, style: {
+                        borderColor: tier.color,
+                        backgroundColor: selectedTier === key ? `${tier.color}20` : 'transparent'
+                    }, onClick: () => onChange(key), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tier-header", style: { backgroundColor: tier.color }, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: tier.name }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tier-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: tier.description }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Support Hours:" }), " ", tier.supportHours] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Critical Situation:" }), " ", tier.criticalSituation ? 'Yes' : 'No'] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Tenants:" }), " ", tier.tenants] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Authorized Contacts:" }), " ", tier.authorizedContacts] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Support Requests:" }), " ", tier.supportRequestsIncluded] })] })] })] }, key))) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TierSelector);
+
+
+/***/ }),
+
+/***/ "./src/data/supportTiers.ts":
+/*!**********************************!*\
+  !*** ./src/data/supportTiers.ts ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
+/* harmony export */ });
+const supportTiers = {
+    bronze: {
+        name: "Bronze Support",
+        color: "#cd7f32",
+        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
+        criticalSituation: false,
+        supportHours: "8 x 5",
+        supportRequestSubmission: "Email",
+        tenants: 1,
+        authorizedContacts: 2,
+        supportRequestsIncluded: "Pay As You Go",
+        products: ["Microsoft Azure", "Microsoft 365"],
+        severityLevels: "Level B or C"
+    },
+    silver: {
+        name: "Silver Support",
+        color: "#C0C0C0",
+        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 2,
+        authorizedContacts: 6,
+        supportRequestsIncluded: 12,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C"
+    },
+    gold: {
+        name: "Gold Support",
+        color: "#FFD700",
+        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 6,
+        authorizedContacts: 12,
+        supportRequestsIncluded: 36,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C"
+    },
+    platinum: {
+        name: "Platinum Support",
+        color: "#E5E4E2",
+        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 100,
+        authorizedContacts: 100,
+        supportRequestsIncluded: 100,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C"
+    }
+};
+
+
+/***/ }),
+
 /***/ "./src/styles/App.css":
 /*!****************************!*\
   !*** ./src/styles/App.css ***!
@@ -28880,6 +29396,681 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_App_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_App_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_App_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/utils/clipboardUtils.ts":
+/*!*************************************!*\
+  !*** ./src/utils/clipboardUtils.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   copyRichTextToClipboard: () => (/* binding */ copyRichTextToClipboard)
+/* harmony export */ });
+// utils/clipboardUtils.ts
+const copyRichTextToClipboard = (html) => {
+    // Create a temporary div with the HTML content
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    // Select the content
+    const selection = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(container);
+    selection === null || selection === void 0 ? void 0 : selection.removeAllRanges();
+    selection === null || selection === void 0 ? void 0 : selection.addRange(range);
+    // Execute copy command
+    document.execCommand('copy');
+    // Clean up
+    selection === null || selection === void 0 ? void 0 : selection.removeAllRanges();
+    document.body.removeChild(container);
+    return Promise.resolve();
+};
+
+
+/***/ }),
+
+/***/ "./src/utils/emailBuilder.ts":
+/*!***********************************!*\
+  !*** ./src/utils/emailBuilder.ts ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   emailBuilder: () => (/* binding */ emailBuilder)
+/* harmony export */ });
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+// src/utils/emailBuilder.ts
+
+const emailBuilder = {
+    /**
+     * Build the plain text version of the email body
+     * @param {EmailFormData} formData - The form data from the UI
+     * @returns {String} - Plain text email content
+     */
+    buildEmailBody: function (formData) {
+        // Get the selected tier
+        const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
+        let body = `Dear ${formData.contactName},\n\n`;
+        body += `Thank you for choosing ${formData.senderCompany} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for ${formData.companyName}.\n\n`;
+        // Add introduction
+        body += `Below is important information regarding your selected ${tier.name} Support Plan, administrative access, and security configurations we need to set up for your Microsoft 365 environment. Please review this information carefully and let us know if you have any questions.\n\n`;
+        // Support Plan Section
+        body += `**${tier.name.toUpperCase()} SUPPORT PLAN DETAILS**\n`;
+        body += this.getSupportPlanText(formData.selectedTier);
+        body += `\n\n`;
+        // Authorized Contacts Section
+        if (formData.authorizedContacts.checked) {
+            body += `**AUTHORIZED CONTACTS**\n`;
+            body += `Based on your ${tier.name} Support Plan, you can designate up to ${tier.authorizedContacts} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.\n\n`;
+            body += `We recommend designating individuals for the following roles: ${formData.authorizedContacts.roles}.\n\n`;
+            body += `Please complete the following Authorized Contacts information:\n\n`;
+            // Contact table in plain text
+            body += `AUTHORIZED CONTACTS TABLE:\n`;
+            body += `-----------------------------------------------------------------------------------\n`;
+            body += `# | First Name | Last Name | Office Phone | Mobile Phone | Email | IM | Job Title\n`;
+            body += `-----------------------------------------------------------------------------------\n`;
+            // Add a limited number of rows to the plain text version
+            const rows = Math.min(tier.authorizedContacts, 10);
+            for (let i = 1; i <= rows; i++) {
+                body += `${i} | | | | | | | \n`;
+            }
+            body += `-----------------------------------------------------------------------------------\n\n`;
+            if (tier.authorizedContacts > 10) {
+                body += `Note: Your plan includes ${tier.authorizedContacts} authorized contacts. Additional contacts can be added after initial setup.\n\n`;
+            }
+        }
+        // Meeting Section
+        if (formData.meetingDate) {
+            body += `**ONBOARDING MEETING**\n`;
+            body += `We have scheduled an onboarding meeting on ${formData.meetingDate} to discuss these items in detail and answer any questions you may have. Please ensure the appropriate team members can attend this meeting.\n\n`;
+        }
+        // GDAP Section
+        if (formData.gdap.checked) {
+            body += `**GRANULAR DELEGATION OF ADMINISTRATIVE PRIVILEGES (GDAP)**\n`;
+            body += `Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by ${formData.gdap.deadline}. We will request the "${formData.gdap.roles}" role.\n`;
+            body += `This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.\n\n`;
+            body += `Please visit the following link to approve the GDAP relationship: ${formData.gdap.link}\n\n`;
+        }
+        // RBAC Section
+        if (formData.rbac.checked) {
+            body += `**ROLE-BASED ACCESS CONTROL (RBAC)**\n`;
+            body += `We will configure ${formData.rbac.groups} to ensure users have the appropriate level of access to your environment based on their job functions. `;
+            if (formData.rbac.azure && formData.rbac.m365) {
+                body += `This includes both Azure and Microsoft 365 access permissions.`;
+            }
+            else if (formData.rbac.azure) {
+                body += `This includes Azure resources access permissions.`;
+            }
+            else if (formData.rbac.m365) {
+                body += `This includes Microsoft 365 service access permissions.`;
+            }
+            body += `\n\n`;
+            if (formData.rbac.includeScript) {
+                body += `Please run the following PowerShell script to configure RBAC permissions:\n\n`;
+                body += `-------------------------------------------------------------\n`;
+                body += `STEP 1: Install Azure PowerShell\n`;
+                body += `Source: https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
+                body += `Install-Module -Name Az -Repository PSGallery -Force\n\n`;
+                body += `or update it:\n\n`;
+                body += `Update-Module Az.Resources -Force\n\n`;
+                body += `STEP 2: Update the tenant and run the following script as one block:\n\n`;
+                body += `# Connect to the correct tenant\n`;
+                body += `Connect-AzAccount -TenantID ${formData.rbac.tenantId}\n\n`;
+                body += `$subscriptions = Get-AzSubscription\n`;
+                body += `foreach ($subscription in $subscriptions) {\n`;
+                body += `    Set-AzContext -SubscriptionId $subscription.Id \n`;
+                body += `    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:\n`;
+                body += `    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue \n`;
+                body += `    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:\n`;
+                body += `    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } \n`;
+                body += `    if ($supportRole) {\n`;
+                body += `        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents." \n`;
+                body += `        # Test if the Owner role for the Foreign Principal AdminAgents exists:\n`;
+                body += `        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } \n`;
+                body += `        if ($ownerRole) {\n`;
+                body += `            # If the Owner role for Foreign Principal AdminAgents exists, remove it:\n`;
+                body += `            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner"\n`;
+                body += `        } else {\n`;
+                body += `            Write-Host "Owner role for Foreign Principal AdminAgents does not exist."\n`;
+                body += `        }\n`;
+                body += `    } else {\n`;
+                body += `        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"\n`;
+                body += `    }\n`;
+                body += `}\n`;
+                body += `-------------------------------------------------------------\n\n`;
+                body += `Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.\n\n`;
+            }
+        }
+        // Conditional Access Section
+        if (formData.conditionalAccess.checked) {
+            body += `**CONDITIONAL ACCESS POLICIES**\n`;
+            body += `We recommend implementing the following security policies for your environment:\n`;
+            if (formData.conditionalAccess.mfa) {
+                body += `- Multi-Factor Authentication (MFA) requirements for all users\n`;
+            }
+            if (formData.conditionalAccess.location) {
+                body += `- Location-based access restrictions\n`;
+            }
+            if (formData.conditionalAccess.device) {
+                body += `- Device compliance policies to ensure only secure devices can access your data\n`;
+            }
+            if (formData.conditionalAccess.signIn) {
+                body += `- Sign-in risk-based policies to prevent suspicious login attempts\n`;
+            }
+            body += `\n`;
+        }
+        // Additional Notes Section
+        if (formData.additionalNotes) {
+            body += `**ADDITIONAL INFORMATION**\n`;
+            body += `${formData.additionalNotes}\n\n`;
+        }
+        // Closing
+        body += `Please reply to this email to confirm receipt and let us know if you have any questions or concerns.\n\n`;
+        body += `Best regards,\n\n`;
+        body += `${formData.senderName}\n`;
+        body += `${formData.senderTitle}\n`;
+        body += `${formData.senderCompany}\n`;
+        if (formData.senderContact) {
+            body += `${formData.senderContact}\n`;
+        }
+        return body;
+    },
+    /**
+     * Get text description for the selected support plan
+     */
+    getSupportPlanText: function (planType) {
+        switch (planType) {
+            case 'bronze':
+                return `The Bronze Support Plan provides basic support availability for non-urgent cases for cloud products, with no Critical Situation coverage. It includes:
+- Microsoft Flexible Support
+- 8×5 Support Hours
+- Level B or C Severity
+- 2 Customer Contacts
+- 1 Tenant
+- Pay As You Go support requests`;
+            case 'silver':
+                return `The Silver Support Plan provides full product coverage with Critical Situation Support, ideal for organizations with occasional support requests. It includes:
+- Microsoft Premier Support
+- 24×7×365 Support Hours
+- Level A, B or C Severity
+- 6 Customer Contacts
+- 2 Tenants
+- 12 Support Requests Included per trailing 12-month period`;
+            case 'gold':
+                return `The Gold Support Plan is our most popular option, providing three times the included cases and tenants compared to Silver, with double the customer contacts. It's well-suited for complex organizational structures. It includes:
+- Microsoft Premier Support
+- 24×7×365 Support Hours
+- Level A, B or C Severity
+- 12 Customer Contacts
+- 6 Tenants
+- 36 Support Requests Included per trailing 12-month period`;
+            case 'platinum':
+                return `The Platinum Support Plan is ideal for very complex organizational structures with the highest number of tenants, contacts, and support requests. It includes:
+- Microsoft Premier Support
+- 24×7×365 Support Hours
+- Level A, B or C Severity
+- 100 Customer Contacts
+- 100 Tenants
+- 100 Support Requests Included per trailing 12-month period`;
+            default:
+                return '';
+        }
+    },
+    /**
+     * Build HTML version of the email
+     * @param {EmailFormData} formData - The form data from the UI
+     * @returns {String} - HTML formatted email content
+     */
+    buildEmailHTML: function (formData) {
+        // Get the selected tier
+        const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
+        // Get tier color
+        let tierColor = '';
+        switch (formData.selectedTier) {
+            case 'bronze':
+                tierColor = '#cd7f32';
+                break;
+            case 'silver':
+                tierColor = '#C0C0C0';
+                break;
+            case 'gold':
+                tierColor = '#FFD700';
+                break;
+            case 'platinum':
+                tierColor = '#E5E4E2';
+                break;
+        }
+        // Generate subject if not provided
+        const subject = formData.subject || `${tier.name} Support Plan Onboarding for ${formData.companyName} - Microsoft 365 Administration Setup`;
+        let htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>${subject}</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
+        .header { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .footer { margin-top: 30px; border-top: 1px solid #eee; padding-top: 10px; }
+        .bold { font-weight: bold; }
+        h1 { color: #333; }
+        h2 { color: #0078d4; margin-top: 25px; }
+        .company { font-weight: bold; }
+        .support-plans { color: #c00000; }
+        table.contact-table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        table.contact-table th, table.contact-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        table.contact-table th { background-color: #f5f5f5; }
+        .code-block { background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 15px; font-family: 'Courier New', monospace; white-space: pre-wrap; overflow-x: auto; font-size: 14px; line-height: 1.4; margin: 15px 0; }
+        .plan-header { padding: 10px; color: white; text-align: center; }
+        .bronze { background-color: #cd7f32; }
+        .silver { background-color: #C0C0C0; }
+        .gold { background-color: #FFD700; }
+        .platinum { background-color: #E5E4E2; }
+        .step-title { font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="company">${formData.senderCompany.toUpperCase()}</span> <span class="support-plans">Support Plans</span></h1>
+            <div><span class="bold">To:</span> ${formData.to}</div>
+            ${formData.cc ? `<div><span class="bold">Cc:</span> ${formData.cc}</div>` : ''}
+            <div><span class="bold">Subject:</span> ${subject}</div>
+            <div><span class="bold">Date:</span> ${formData.currentDate}</div>
+        </div>
+        
+        <div class="content">
+            <p>Dear ${formData.contactName},</p>
+            
+            <p>Thank you for choosing ${formData.senderCompany} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for ${formData.companyName}.</p>
+            
+            <p>Below is important information regarding your selected ${tier.name} Support Plan, administrative access, and security configurations we need to set up for your Microsoft 365 environment. Please review this information carefully and let us know if you have any questions.</p>`;
+        // Support Plan Section
+        htmlContent += `
+        <div class="plan-header ${formData.selectedTier}">
+            <h2>${tier.name.toUpperCase()} SUPPORT PLAN DETAILS</h2>
+        </div>
+        <p>${this.getSupportPlanTextHTML(formData.selectedTier)}</p>`;
+        // Authorized Contacts Section
+        if (formData.authorizedContacts.checked) {
+            htmlContent += `
+        <h2>AUTHORIZED CONTACTS</h2>
+        <p>Based on your ${tier.name} Support Plan, you can designate up to ${tier.authorizedContacts} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.</p>
+        <p>We recommend designating individuals for the following roles: ${formData.authorizedContacts.roles}.</p>
+        <p>Please complete the following table with the required information for each contact:</p>`;
+            // Create contact tables based on plan type
+            htmlContent += this.buildContactTableHTML(tier.authorizedContacts);
+        }
+        // Meeting Section
+        if (formData.meetingDate) {
+            htmlContent += `
+        <h2>ONBOARDING MEETING</h2>
+        <p>We have scheduled an onboarding meeting on ${formData.meetingDate} to discuss these items in detail and answer any questions you may have. Please ensure the appropriate team members can attend this meeting.</p>`;
+        }
+        // GDAP Section
+        if (formData.gdap.checked) {
+            htmlContent += `
+        <h2>GRANULAR DELEGATION OF ADMINISTRATIVE PRIVILEGES (GDAP)</h2>
+        <p>Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by ${formData.gdap.deadline}. We will request the "${formData.gdap.roles}" role.</p>
+        <p>This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.</p>
+        <p>Please visit the following link to approve the GDAP relationship: <a href="${formData.gdap.link}" target="_blank">${formData.gdap.link}</a></p>`;
+        }
+        // RBAC Section
+        if (formData.rbac.checked) {
+            let permissionText = '';
+            if (formData.rbac.azure && formData.rbac.m365) {
+                permissionText = 'This includes both Azure and Microsoft 365 access permissions.';
+            }
+            else if (formData.rbac.azure) {
+                permissionText = 'This includes Azure resources access permissions.';
+            }
+            else if (formData.rbac.m365) {
+                permissionText = 'This includes Microsoft 365 service access permissions.';
+            }
+            htmlContent += `
+        <h2>ROLE-BASED ACCESS CONTROL (RBAC)</h2>
+        <p>We will configure ${formData.rbac.groups} to ensure users have the appropriate level of access to your environment based on their job functions. ${permissionText}</p>`;
+            if (formData.rbac.includeScript) {
+                htmlContent += `
+            <p>Please run the following PowerShell script to configure RBAC permissions:</p>
+            
+            <div class="step-title">STEP 1: Install Azure PowerShell</div>
+            <p>Source: <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>
+            <div class="code-block">Install-Module -Name Az -Repository PSGallery -Force</div>
+            <p>or update it:</p>
+            <div class="code-block">Update-Module Az.Resources -Force</div>
+            
+            <div class="step-title">STEP 2: Update the tenant and run the following script as one block:</div>
+            <div class="code-block"># Connect to the correct tenant
+Connect-AzAccount -TenantID ${formData.rbac.tenantId}
+
+$subscriptions = Get-AzSubscription
+foreach ($subscription in $subscriptions) {
+    Set-AzContext -SubscriptionId $subscription.Id 
+    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue 
+    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
+    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+    if ($supportRole) {
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents." 
+        # Test if the Owner role for the Foreign Principal AdminAgents exists:
+        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+        if ($ownerRole) {
+            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
+            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner"
+        } else {
+            Write-Host "Owner role for Foreign Principal AdminAgents does not exist."
+        }
+    } else {
+        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"
+    }
+}</div>
+            <p>Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.</p>`;
+            }
+        }
+        // Conditional Access Section
+        if (formData.conditionalAccess.checked) {
+            htmlContent += `
+        <h2>CONDITIONAL ACCESS POLICIES</h2>
+        <p>We recommend implementing the following security policies for your environment:</p>
+        <ul>`;
+            if (formData.conditionalAccess.mfa) {
+                htmlContent += `
+            <li>Multi-Factor Authentication (MFA) requirements for all users</li>`;
+            }
+            if (formData.conditionalAccess.location) {
+                htmlContent += `
+            <li>Location-based access restrictions</li>`;
+            }
+            if (formData.conditionalAccess.device) {
+                htmlContent += `
+            <li>Device compliance policies to ensure only secure devices can access your data</li>`;
+            }
+            if (formData.conditionalAccess.signIn) {
+                htmlContent += `
+            <li>Sign-in risk-based policies to prevent suspicious login attempts</li>`;
+            }
+            htmlContent += `
+        </ul>`;
+        }
+        // Additional Notes Section
+        if (formData.additionalNotes) {
+            htmlContent += `
+        <h2>ADDITIONAL INFORMATION</h2>
+        <p>${formData.additionalNotes.replace(/\n/g, '<br>')}</p>`;
+        }
+        // Closing
+        htmlContent += `
+        <p>Please reply to this email to confirm receipt and let us know if you have any questions or concerns.</p>
+        
+        <div class="footer">
+            <p>Best regards,</p>
+            <p>${formData.senderName}<br>
+            ${formData.senderTitle}<br>
+            ${formData.senderCompany}<br>
+            ${formData.senderContact || ''}</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>`;
+        return htmlContent;
+    },
+    /**
+     * Get HTML formatted text description for the selected support plan
+     */
+    getSupportPlanTextHTML: function (planType) {
+        switch (planType) {
+            case 'bronze':
+                return `The Bronze Support Plan provides basic support availability for non-urgent cases for cloud products, with no Critical Situation coverage. It includes:<br><br>
+<ul>
+  <li>Microsoft Flexible Support</li>
+  <li>8×5 Support Hours</li>
+  <li>Level B or C Severity</li>
+  <li>2 Customer Contacts</li>
+  <li>1 Tenant</li>
+  <li>Pay As You Go support requests</li>
+</ul>`;
+            case 'silver':
+                return `The Silver Support Plan provides full product coverage with Critical Situation Support, ideal for organizations with occasional support requests. It includes:<br><br>
+<ul>
+  <li>Microsoft Premier Support</li>
+  <li>24×7×365 Support Hours</li>
+  <li>Level A, B or C Severity</li>
+  <li>6 Customer Contacts</li>
+  <li>2 Tenants</li>
+  <li>12 Support Requests Included per trailing 12-month period</li>
+</ul>`;
+            case 'gold':
+                return `The Gold Support Plan is our most popular option, providing three times the included cases and tenants compared to Silver, with double the customer contacts. It's well-suited for complex organizational structures. It includes:<br><br>
+<ul>
+  <li>Microsoft Premier Support</li>
+  <li>24×7×365 Support Hours</li>
+  <li>Level A, B or C Severity</li>
+  <li>12 Customer Contacts</li>
+  <li>6 Tenants</li>
+  <li>36 Support Requests Included per trailing 12-month period</li>
+</ul>`;
+            case 'platinum':
+                return `The Platinum Support Plan is ideal for very complex organizational structures with the highest number of tenants, contacts, and support requests. It includes:<br><br>
+<ul>
+  <li>Microsoft Premier Support</li>
+  <li>24×7×365 Support Hours</li>
+  <li>Level A, B or C Severity</li>
+  <li>100 Customer Contacts</li>
+  <li>100 Tenants</li>
+  <li>100 Support Requests Included per trailing 12-month period</li>
+</ul>`;
+            default:
+                return '';
+        }
+    },
+    /**
+     * Build HTML contact table for authorized contacts
+     */
+    buildContactTableHTML: function (numContacts) {
+        // Limit the number of rows to display in the HTML to a reasonable number
+        const displayContacts = Math.min(numContacts, 20);
+        let tableHTML = `
+<table class="contact-table">
+  <tr>
+    <th>#</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Office Phone</th>
+    <th>Mobile Phone</th>
+    <th>Email Address</th>
+    <th>IM Address (Teams)</th>
+    <th>Job Title</th>
+  </tr>`;
+        for (let i = 1; i <= displayContacts; i++) {
+            tableHTML += `
+  <tr>
+    <td>${i}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>`;
+        }
+        tableHTML += `
+</table>`;
+        if (numContacts > displayContacts) {
+            tableHTML += `<p><em>Note: Your ${numContacts} authorized contacts can be managed through our customer portal after onboarding.</em></p>`;
+        }
+        return tableHTML;
+    },
+    /**
+     * Process form data into a structured email object
+     */
+    processCustomerInfoToEmailData: function (info) {
+        const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[info.selectedTier];
+        // Handle date calculation safely
+        const today = new Date();
+        const futureDate = new Date();
+        futureDate.setDate(today.getDate() + 30);
+        // Format today's date
+        const currentDate = today.toLocaleDateString();
+        // Format meeting date if it exists
+        let meetingDateStr;
+        if (info.proposedDate instanceof Date && !isNaN(info.proposedDate.getTime())) {
+            meetingDateStr = info.proposedDate.toLocaleDateString();
+        }
+        const formData = {
+            companyName: info.companyName,
+            contactName: info.contactName,
+            contactEmail: info.contactEmail,
+            proposedDate: info.proposedDate,
+            tenantId: info.tenantId,
+            selectedTier: info.selectedTier,
+            emailContacts: info.authorizedContacts,
+            to: info.contactEmail || '',
+            cc: '',
+            subject: `${tier.name} Support Plan Onboarding for ${info.companyName} - Microsoft 365 Administration Setup`,
+            gdap: {
+                checked: true,
+                deadline: futureDate.toLocaleDateString(),
+                roles: "Service Support Administrator",
+                link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
+            },
+            rbac: {
+                checked: true,
+                groups: 'appropriate security groups',
+                tenantId: info.tenantId || '[your-tenant-id]',
+                azure: true,
+                m365: true,
+                includeScript: true
+            },
+            conditionalAccess: {
+                checked: true,
+                mfa: true,
+                location: true,
+                device: true,
+                signIn: true
+            },
+            authorizedContacts: {
+                checked: true,
+                roles: 'Technical and Administrative contacts'
+            },
+            meetingDate: meetingDateStr,
+            additionalNotes: '',
+            senderName: 'Your Name',
+            senderTitle: 'Support Specialist',
+            senderCompany: 'Microsoft Partner Support',
+            senderContact: 'support@microsoftpartner.com',
+            currentDate: currentDate
+        };
+        return formData;
+    }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (emailBuilder);
+
+
+/***/ }),
+
+/***/ "./src/utils/templateGenerator.ts":
+/*!****************************************!*\
+  !*** ./src/utils/templateGenerator.ts ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   generateTemplate: () => (/* binding */ generateTemplate)
+/* harmony export */ });
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+// src/utils/templateGenerator.ts
+
+const generateTemplate = (info) => {
+    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[info.selectedTier];
+    // Format date if valid
+    const formattedDate = info.proposedDate instanceof Date && !isNaN(info.proposedDate.getTime())
+        ? info.proposedDate.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
+        : '[DATE TO BE CONFIRMED]';
+    return `
+    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; max-width: 800px;">
+      <h2 style="color: ${tier.color}; border-bottom: 1px solid ${tier.color}; padding-bottom: 10px;">Microsoft Support Onboarding - ${tier.name}</h2>
+      
+      <p>Dear ${info.contactName},</p>
+      
+      <p>Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong>${tier.name}</strong> plan.</p>
+      
+      <p>I propose we meet on <strong>${formattedDate}</strong> to discuss the following onboarding steps:</p>
+      
+      <h3 style="color: ${tier.color};">1. Support Tier Selection</h3>
+      <p>You have selected the <strong>${tier.name}</strong> plan which includes:</p>
+      <ul style="list-style-type: disc; padding-left: 20px;">
+        <li>Support Hours: ${tier.supportHours}</li>
+        <li>Authorized Contacts: ${tier.authorizedContacts}</li>
+        <li>Tenants: ${tier.tenants}</li>
+        <li>Support Requests: ${tier.supportRequestsIncluded}</li>
+        ${tier.criticalSituation
+        ? '<li>Critical Situation Support: <span style="color: green;">Yes</span></li>'
+        : '<li>Critical Situation Support: <span style="color: red;">No</span></li>'}
+      </ul>
+      
+      <h3 style="color: ${tier.color};">2. Authorized Customer Contacts</h3>
+      <p>Please confirm the following list of contacts authorized to open support requests:</p>
+      <table style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
+        <tr style="background-color: ${tier.color}30;">
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Email</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Phone</th>
+        </tr>
+        ${info.authorizedContacts.map((contact, index) => `
+          <tr style="background-color: ${index % 2 === 0 ? '#f9f9f9' : 'white'};">
+            <td style="border: 1px solid #ddd; padding: 8px;">${contact.name || ''}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${contact.email || ''}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${contact.phone || ''}</td>
+          </tr>
+        `).join('')}
+      </table>
+      
+      <h3 style="color: ${tier.color};">3. Tenant Microsoft ID Definition</h3>
+      <p>Your Microsoft Tenant ID: <strong>${info.tenantId || '<span style="color: red; font-style: italic;">[PLEASE PROVIDE]</span>'}</strong></p>
+      
+      <h3 style="color: ${tier.color};">4. GDAP Link Acceptance</h3>
+      <p>Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
+      
+      <h3 style="color: ${tier.color};">5. RBAC Role Establishment</h3>
+      <p>We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
+      <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; font-family: Consolas, Monaco, 'Courier New', monospace; margin-bottom: 20px; white-space: pre-wrap; font-size: 14px;">
+# Example PowerShell script to be executed
+Connect-AzAccount -Tenant "${info.tenantId || 'YOUR_TENANT_ID'}"
+New-AzRoleAssignment -SignInName "support@microsoft.com" -RoleDefinitionName "Support Request Contributor"
+      </div>
+      
+      <h3 style="color: ${tier.color};">6. Service Provider Acceptance</h3>
+      <p>Finally, please add Microsoft Support as a service provider in your conditional access policy to ensure seamless integration with your security protocols.</p>
+      
+      <p style="margin-top: 30px;">Looking forward to our meeting and to supporting your organization.</p>
+      
+      <p style="margin-top: 20px;">
+        Best regards,<br>
+        <em>Microsoft Support Team</em><br>
+        <a href="mailto:support@microsoft.com" style="color: #0078D4; text-decoration: none;">support@microsoft.com</a>
+      </p>
+      
+      <div style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 12px; color: #666;">
+        <p>This is an automated message generated by the Microsoft Onboarding Template Generator.</p>
+      </div>
+    </div>
+  `;
+};
 
 
 /***/ })
@@ -28972,31 +30163,27 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!***********************!*\
-  !*** ./src/popup.tsx ***!
-  \***********************/
+/*!*************************!*\
+  !*** ./src/options.tsx ***!
+  \*************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./src/components/App.tsx");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
 
 
 
-const Popup = () => {
-    const openOptions = () => {
-        chrome.runtime.openOptionsPage();
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "popup-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Microsoft Support Onboarding" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Click below to open the template generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "primary-button", onClick: openOptions, children: "Open Template Generator" })] }));
-};
+
 // Create root element for React
 const container = document.getElementById('root');
 if (container) {
     const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container);
-    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Popup, {}));
+    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_App__WEBPACK_IMPORTED_MODULE_2__["default"], {}));
 }
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=popup.js.map
+//# sourceMappingURL=options.js.map
