@@ -23,19 +23,35 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/App.css */
 
-/* Global styles */
+/* ========== Global styles ========== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --primary-color: #0078d4;
+  --primary-hover: #106ebe;
+  --success-color: #107c10;
+  --success-hover: #10a310;
+  --warning-color: #d83b01;
+  --text-color: #333;
+  --text-light: #666;
+  --border-color: #eaeaea;
+  --background-light: #f9f9f9;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --transition-fast: all 0.2s ease;
+  --transition-medium: all 0.3s ease;
+}
+
 body {
   font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: #333;
-  background-color: #f9f9f9;
+  color: var(--text-color);
+  background-color: var(--background-light);
 }
 
 .app-container {
@@ -43,7 +59,8 @@ body {
   min-height: 600px;
   padding: 20px;
   background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
+  border-radius: 8px;
 }
 
 /* Options page adjustments */
@@ -52,25 +69,51 @@ body {
   max-width: 1000px;
   margin: 0 auto;
   min-height: 100vh;
+  padding-bottom: 40px;
 }
 
+/* ========== Typography ========== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-color);
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+/* ========== Layout Components ========== */
 /* Generator header */
 .generator-header {
   margin-bottom: 24px;
   padding-bottom: 12px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .generator-header h1 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #0078d4;
+  color: var(--primary-color);
   margin-bottom: 8px;
 }
 
 .generator-header p {
   font-size: 14px;
-  color: #666;
+  color: var(--text-light);
 }
 
 /* Generator content */
@@ -80,20 +123,7 @@ body {
   gap: 24px;
 }
 
-h2 {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 16px;
-}
-
-h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-/* Form elements */
+/* ========== Form Elements ========== */
 .form-group {
   margin-bottom: 16px;
 }
@@ -111,18 +141,18 @@ input[type="date"],
 select,
 textarea {
   width: 100%;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: #0078d4;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
 }
 
@@ -133,7 +163,7 @@ button {
   border-radius: 4px;
   font-size: 14px;
   font-weight: 500;
-  transition: background-color 0.2s, transform 0.1s;
+  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;
 }
 
 button:hover {
@@ -144,7 +174,7 @@ button:active {
   transform: translateY(1px);
 }
 
-/* Tier selector */
+/* ========== Tier Selector ========== */
 .tier-selector {
   margin-bottom: 24px;
 }
@@ -161,13 +191,13 @@ button:active {
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-fast);
+  box-shadow: var(--box-shadow);
 }
 
 .tier-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--box-shadow-hover);
 }
 
 .tier-card.selected {
@@ -184,6 +214,7 @@ button:active {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
+  color: white;
 }
 
 .tier-content {
@@ -206,7 +237,7 @@ button:active {
   font-size: 12px;
 }
 
-/* Contacts form */
+/* ========== Contacts Form ========== */
 .contacts-form {
   margin-bottom: 24px;
 }
@@ -214,9 +245,14 @@ button:active {
 .contact-card {
   margin-bottom: 16px;
   padding: 16px;
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: var(--background-light);
+  transition: var(--transition-fast);
+}
+
+.contact-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .contact-header {
@@ -237,19 +273,33 @@ button:active {
   gap: 12px;
 }
 
+@media (max-width: 768px) {
+  .contact-fields {
+    grid-template-columns: 1fr;
+  }
+}
+
 .add-button {
-  background-color: #0078d4;
+  background-color: var(--primary-color);
   color: white;
 }
 
+.add-button:hover {
+  background-color: var(--primary-hover);
+}
+
 .remove-button {
-  background-color: #d83b01;
+  background-color: var(--warning-color);
   color: white;
   padding: 4px 8px;
   font-size: 12px;
 }
 
-/* Preview section */
+.remove-button:hover {
+  background-color: #c23500;
+}
+
+/* ========== Preview Section ========== */
 .template-preview {
   margin-top: 24px;
 }
@@ -262,13 +312,27 @@ button:active {
 
 .preview-button {
   background-color: #f0f0f0;
-  color: #333;
+  color: var(--text-color);
+}
+
+.preview-button:hover {
+  background-color: #e0e0e0;
 }
 
 .copy-button {
-  background-color: #107c10;
+  background-color: var(--success-color);
   color: white;
   flex-grow: 1;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+  background-color: var(--success-hover);
+}
+
+.copy-button.copied {
+  background-color: var(--success-hover);
 }
 
 .copy-button:disabled {
@@ -277,16 +341,17 @@ button:active {
 }
 
 .validation-message {
-  color: #d83b01;
+  color: var(--warning-color);
   margin-bottom: 16px;
   font-size: 13px;
 }
 
 .preview-container {
   margin-top: 16px;
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .preview-header {
@@ -295,7 +360,7 @@ button:active {
   align-items: center;
   padding: 12px 16px;
   background-color: #f5f5f5;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .preview-content {
@@ -305,42 +370,43 @@ button:active {
   background-color: white;
 }
 
-/* Info boxes */
+/* ========== Info Boxes ========== */
 .info-box {
   padding: 12px;
   background-color: #f0f7ff;
-  border-left: 4px solid #0078d4;
+  border-left: 4px solid var(--primary-color);
   margin: 16px 0;
   border-radius: 0 4px 4px 0;
 }
 
-/* Customer info section */
+/* ========== Customer Info Section ========== */
 .customer-info-section {
-  background-color: #f9f9f9;
+  background-color: var(--background-light);
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 24px;
+  border: 1px solid var(--border-color);
 }
 
-/* Small text */
+/* ========== Small Text ========== */
 .form-text {
   font-size: 12px;
-  color: #666;
+  color: var(--text-light);
   display: block;
   margin-top: 4px;
 }
 
-/* App footer */
+/* ========== App Footer ========== */
 .app-footer {
   margin-top: 30px;
   padding-top: 16px;
-  border-top: 1px solid #eaeaea;
+  border-top: 1px solid var(--border-color);
   text-align: center;
-  color: #666;
+  color: var(--text-light);
   font-size: 12px;
 }
 
-/* Tabs styles */
+/* ========== Tabs Styles ========== */
 .tabs-container {
   margin-bottom: 20px;
 }
@@ -360,15 +426,15 @@ button:active {
   border-top-right-radius: 4px;
   margin-right: 5px;
   font-weight: 500;
-  color: #666;
+  color: var(--text-light);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition-fast);
 }
 
 .tab-button.active {
   background-color: #fff;
-  color: #0078d4;
-  border-bottom: 3px solid #0078d4;
+  color: var(--primary-color);
+  border-bottom: 3px solid var(--primary-color);
 }
 
 .tab-button:hover:not(.active) {
@@ -383,10 +449,11 @@ button:active {
   display: block;
 }
 
-/* Email form styles */
+/* ========== Email Form Styles ========== */
 .email-form-container {
   padding: 20px;
   background-color: #fff;
+  border-radius: 8px;
 }
 
 .section {
@@ -401,7 +468,7 @@ button:active {
 
 .info-text {
   margin-bottom: 15px;
-  color: #666;
+  color: var(--text-light);
 }
 
 .checkbox-group {
@@ -427,8 +494,8 @@ button:active {
 .nested-options {
   margin-left: 25px;
   margin-top: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
+  padding: 12px;
+  background-color: var(--background-light);
   border-left: 3px solid #ddd;
   border-radius: 0 4px 4px 0;
 }
@@ -436,6 +503,7 @@ button:active {
 .inline-checks {
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .form-actions {
@@ -445,13 +513,17 @@ button:active {
 }
 
 .btn-preview {
-  background-color: #0078d4;
+  background-color: var(--primary-color);
   color: white;
   padding: 10px 20px;
   font-weight: bold;
 }
 
-/* Email preview styles */
+.btn-preview:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ========== Email Preview Styles ========== */
 .email-preview-container {
   padding: 20px;
 }
@@ -464,14 +536,16 @@ button:active {
 
 .view-toggle button {
   background-color: #f0f0f0;
-  color: #333;
+  color: var(--text-color);
   border-radius: 4px;
   padding: 8px 16px;
+  transition: var(--transition-fast);
 }
 
 .view-toggle button.active {
-  background-color: #0078d4;
+  background-color: var(--primary-color);
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .action-buttons {
@@ -482,21 +556,27 @@ button:active {
 }
 
 .action-buttons button {
-  background-color: #0078d4;
+  background-color: var(--primary-color);
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
+  transition: var(--transition-fast);
+}
+
+.action-buttons button:hover {
+  background-color: var(--primary-hover);
 }
 
 .action-buttons button:last-child {
   background-color: #f0f0f0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .preview-content {
   border: 1px solid #ddd;
   border-radius: 4px;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .preview-header {
@@ -525,16 +605,19 @@ button:active {
   line-height: 1.5;
   max-height: 600px;
   overflow-y: auto;
+  background-color: #fafafa;
+  border: 1px solid #eee;
 }
 
+/* ========== Copy Success Animation ========== */
 .copy-success {
-  background-color: #107c10;
+  background-color: var(--success-color);
   color: white;
   padding: 8px 15px;
   border-radius: 4px;
   margin-bottom: 15px;
   text-align: center;
-  animation: fadeIn 0.3s ease-in;
+  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -542,7 +625,66 @@ button:active {
   to { opacity: 1; }
 }
 
-/* Popup styles */
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ========== Tooltip Styling ========== */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 180px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -90px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+  font-weight: normal;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ========== Iframe Loading Effect ========== */
+.preview-body iframe {
+  background-color: white;
+  transition: opacity 0.3s ease;
+  opacity: 0.3;
+}
+
+.preview-body iframe.loaded {
+  opacity: 1;
+}
+
+/* ========== Popup Styles ========== */
 .popup-container {
   width: 300px;
   padding: 20px;
@@ -550,18 +692,18 @@ button:active {
 }
 
 .popup-container h2 {
-  color: #0078d4;
+  color: var(--primary-color);
   font-size: 18px;
   margin-bottom: 12px;
 }
 
 .popup-container p {
-  color: #333;
+  color: var(--text-color);
   margin-bottom: 16px;
 }
 
 .primary-button {
-  background-color: #0078d4;
+  background-color: var(--primary-color);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -575,8 +717,170 @@ button:active {
 }
 
 .primary-button:hover {
-  background-color: #106ebe;
-}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* Global styles */\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: #333;\r\n  background-color: #f9f9f9;\r\n}\r\n\r\n.app-container {\r\n  width: 800px;\r\n  min-height: 600px;\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n/* Options page adjustments */\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1000px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n}\r\n\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 24px;\r\n  padding-bottom: 12px;\r\n  border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.generator-header h1 {\r\n  font-size: 24px;\r\n  font-weight: 600;\r\n  color: #0078d4;\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n/* Generator content */\r\n.generator-content {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 24px;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  font-weight: 600;\r\n  color: #333;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* Form elements */\r\n.form-group {\r\n  margin-bottom: 16px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 6px;\r\n  font-weight: 500;\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 8px 12px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  transition: border-color 0.2s;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: #0078d4;\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n}\r\n\r\n/* Tier selector */\r\n.tier-selector {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: all 0.2s;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n.tier-header {\r\n  padding: 12px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n}\r\n\r\n.tier-content {\r\n  padding: 12px;\r\n  font-size: 12px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 8px;\r\n  min-height: 60px;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 4px;\r\n  font-size: 12px;\r\n}\r\n\r\n/* Contacts form */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 16px;\r\n  padding: 16px;\r\n  border: 1px solid #eaeaea;\r\n  border-radius: 8px;\r\n  background-color: #f9f9f9;\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr 1fr;\r\n  gap: 12px;\r\n}\r\n\r\n.add-button {\r\n  background-color: #0078d4;\r\n  color: white;\r\n}\r\n\r\n.remove-button {\r\n  background-color: #d83b01;\r\n  color: white;\r\n  padding: 4px 8px;\r\n  font-size: 12px;\r\n}\r\n\r\n/* Preview section */\r\n.template-preview {\r\n  margin-top: 24px;\r\n}\r\n\r\n.preview-actions {\r\n  display: flex;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.preview-button {\r\n  background-color: #f0f0f0;\r\n  color: #333;\r\n}\r\n\r\n.copy-button {\r\n  background-color: #107c10;\r\n  color: white;\r\n  flex-grow: 1;\r\n}\r\n\r\n.copy-button:disabled {\r\n  background-color: #cccccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.validation-message {\r\n  color: #d83b01;\r\n  margin-bottom: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.preview-container {\r\n  margin-top: 16px;\r\n  border: 1px solid #eaeaea;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n}\r\n\r\n.preview-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 12px 16px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid #eaeaea;\r\n}\r\n\r\n.preview-content {\r\n  padding: 16px;\r\n  max-height: 400px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n}\r\n\r\n/* Info boxes */\r\n.info-box {\r\n  padding: 12px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid #0078d4;\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n/* Customer info section */\r\n.customer-info-section {\r\n  background-color: #f9f9f9;\r\n  padding: 16px;\r\n  border-radius: 8px;\r\n  margin-bottom: 24px;\r\n}\r\n\r\n/* Small text */\r\n.form-text {\r\n  font-size: 12px;\r\n  color: #666;\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* App footer */\r\n.app-footer {\r\n  margin-top: 30px;\r\n  padding-top: 16px;\r\n  border-top: 1px solid #eaeaea;\r\n  text-align: center;\r\n  color: #666;\r\n  font-size: 12px;\r\n}\r\n\r\n/* Tabs styles */\r\n.tabs-container {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tabs-header {\r\n  display: flex;\r\n  border-bottom: 1px solid #ddd;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tab-button {\r\n  padding: 10px 20px;\r\n  background-color: #f5f5f5;\r\n  border: none;\r\n  border-bottom: 3px solid transparent;\r\n  border-top-left-radius: 4px;\r\n  border-top-right-radius: 4px;\r\n  margin-right: 5px;\r\n  font-weight: 500;\r\n  color: #666;\r\n  cursor: pointer;\r\n  transition: all 0.2s;\r\n}\r\n\r\n.tab-button.active {\r\n  background-color: #fff;\r\n  color: #0078d4;\r\n  border-bottom: 3px solid #0078d4;\r\n}\r\n\r\n.tab-button:hover:not(.active) {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.tab-content {\r\n  display: none;\r\n}\r\n\r\n.tab-content.active {\r\n  display: block;\r\n}\r\n\r\n/* Email form styles */\r\n.email-form-container {\r\n  padding: 20px;\r\n  background-color: #fff;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid #eee;\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: #666;\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 15px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px dashed #eee;\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.checkbox-container input[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 25px;\r\n  margin-top: 10px;\r\n  padding: 10px;\r\n  background-color: #f9f9f9;\r\n  border-left: 3px solid #ddd;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  gap: 20px;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\r\n}\r\n\r\n.btn-preview {\r\n  background-color: #0078d4;\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n}\r\n\r\n/* Email preview styles */\r\n.email-preview-container {\r\n  padding: 20px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: #333;\r\n  border-radius: 4px;\r\n  padding: 8px 16px;\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: #0078d4;\r\n  color: white;\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: #0078d4;\r\n  color: white;\r\n  padding: 8px 16px;\r\n  border-radius: 4px;\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: #333;\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid #ddd;\r\n  border-radius: 4px;\r\n  overflow: hidden;\r\n}\r\n\r\n.preview-header {\r\n  padding: 15px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.preview-body {\r\n  padding: 0;\r\n  background-color: white;\r\n}\r\n\r\n.text-preview {\r\n  padding: 15px;\r\n  font-family: monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.5;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n}\r\n\r\n.copy-success {\r\n  background-color: #107c10;\r\n  color: white;\r\n  padding: 8px 15px;\r\n  border-radius: 4px;\r\n  margin-bottom: 15px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in;\r\n}\r\n\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n/* Popup styles */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 20px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: #0078d4;\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: #333;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: #0078d4;\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: #106ebe;\r\n}"],"sourceRoot":""}]);
+  background-color: var(--primary-hover);
+}
+
+/* ========== Outlook Instructions Modal ========== */
+.outlook-instructions-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.outlook-instructions-modal {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.instructions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #f8f8f8;
+}
+
+.instructions-header h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.instructions-content {
+  padding: 20px;
+}
+
+.instructions-content ol {
+  padding-left: 20px;
+  counter-reset: item;
+}
+
+.instructions-content ol li {
+  margin-bottom: 18px;
+  position: relative;
+  padding-left: 5px;
+}
+
+.instructions-content ol li::marker {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.instruction-image {
+  margin: 10px 0;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+.instruction-note {
+  background-color: #f0f7ff;
+  padding: 12px;
+  border-left: 4px solid var(--primary-color);
+  margin: 10px 0;
+  font-size: 13px;
+  border-radius: 0 4px 4px 0;
+}
+
+.troubleshooting {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 20px;
+  border: 1px solid #eee;
+}
+
+.troubleshooting h4 {
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.troubleshooting ul {
+  padding-left: 20px;
+}
+
+.troubleshooting li {
+  margin-bottom: 8px;
+}
+
+.instructions-footer {
+  padding: 16px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f8f8;
+}
+
+.got-it-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.got-it-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.dont-show-again {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+}
+
+.dont-show-again input {
+  margin-right: 6px;
+  cursor: pointer;
+}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== Global styles ========== */\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n:root {\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --success-color: #107c10;\r\n  --success-hover: #10a310;\r\n  --warning-color: #d83b01;\r\n  --text-color: #333;\r\n  --text-light: #666;\r\n  --border-color: #eaeaea;\r\n  --background-light: #f9f9f9;\r\n  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n}\r\n\r\n.app-container {\r\n  width: 800px;\r\n  min-height: 600px;\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n/* Options page adjustments */\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1000px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding-bottom: 40px;\r\n}\r\n\r\n/* ========== Typography ========== */\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* ========== Layout Components ========== */\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 24px;\r\n  padding-bottom: 12px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 14px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* Generator content */\r\n.generator-content {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 24px;\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 16px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 6px;\r\n  font-weight: 500;\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n.tier-header {\r\n  padding: 12px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 12px;\r\n  font-size: 12px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 8px;\r\n  min-height: 60px;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 4px;\r\n  font-size: 12px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 16px;\r\n  padding: 16px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-light);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr 1fr;\r\n  gap: 12px;\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 4px 8px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: #c23500;\r\n}\r\n\r\n/* ========== Preview Section ========== */\r\n.template-preview {\r\n  margin-top: 24px;\r\n}\r\n\r\n.preview-actions {\r\n  display: flex;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.preview-button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-button:hover {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.copy-button {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  flex-grow: 1;\r\n  position: relative;\r\n  transition: background-color 0.3s ease;\r\n}\r\n\r\n.copy-button:hover {\r\n  background-color: var(--success-hover);\r\n}\r\n\r\n.copy-button.copied {\r\n  background-color: var(--success-hover);\r\n}\r\n\r\n.copy-button:disabled {\r\n  background-color: #cccccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.validation-message {\r\n  color: var(--warning-color);\r\n  margin-bottom: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.preview-container {\r\n  margin-top: 16px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.preview-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 12px 16px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-content {\r\n  padding: 16px;\r\n  max-height: 400px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 12px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n/* ========== Customer Info Section ========== */\r\n.customer-info-section {\r\n  background-color: var(--background-light);\r\n  padding: 16px;\r\n  border-radius: 8px;\r\n  margin-bottom: 24px;\r\n  border: 1px solid var(--border-color);\r\n}\r\n\r\n/* ========== Small Text ========== */\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 30px;\r\n  padding-top: 16px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 12px;\r\n}\r\n\r\n/* ========== Tabs Styles ========== */\r\n.tabs-container {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tabs-header {\r\n  display: flex;\r\n  border-bottom: 1px solid #ddd;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tab-button {\r\n  padding: 10px 20px;\r\n  background-color: #f5f5f5;\r\n  border: none;\r\n  border-bottom: 3px solid transparent;\r\n  border-top-left-radius: 4px;\r\n  border-top-right-radius: 4px;\r\n  margin-right: 5px;\r\n  font-weight: 500;\r\n  color: var(--text-light);\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tab-button.active {\r\n  background-color: #fff;\r\n  color: var(--primary-color);\r\n  border-bottom: 3px solid var(--primary-color);\r\n}\r\n\r\n.tab-button:hover:not(.active) {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.tab-content {\r\n  display: none;\r\n}\r\n\r\n.tab-content.active {\r\n  display: block;\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid #eee;\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 15px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px dashed #eee;\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.checkbox-container input[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 25px;\r\n  margin-top: 10px;\r\n  padding: 12px;\r\n  background-color: var(--background-light);\r\n  border-left: 3px solid #ddd;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  gap: 20px;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 20px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 8px 16px;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  border-radius: 4px;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid #ddd;\r\n  border-radius: 4px;\r\n  overflow: hidden;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.preview-header {\r\n  padding: 15px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.preview-body {\r\n  padding: 0;\r\n  background-color: white;\r\n}\r\n\r\n.text-preview {\r\n  padding: 15px;\r\n  font-family: monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.5;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: #fafafa;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Copy Success Animation ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 8px 15px;\r\n  border-radius: 4px;\r\n  margin-bottom: 15px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n/* ========== Tooltip Styling ========== */\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 180px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  margin-left: -90px;\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Iframe Loading Effect ========== */\r\n.preview-body iframe {\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n  opacity: 0.3;\r\n}\r\n\r\n.preview-body iframe.loaded {\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 20px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.6);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(3px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 16px 20px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 20px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 18px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 10px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 10px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 12px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 10px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 15px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 10px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 20px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29045,8 +29349,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/utils/emailBuilder.ts");
+/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/utils/clipboardUtils.ts");
+/* harmony import */ var _OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./OutlookInstructions */ "./src/components/OutlookInstructions.tsx");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
 // src/components/EmailPreview.tsx
+
+
 
 
 const EmailPreview = ({ emailData, onBackToEdit }) => {
@@ -29054,6 +29371,7 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
     const [plainText, setPlainText] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
     const [viewMode, setViewMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('html');
     const [copySuccess, setCopySuccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [showInstructions, setShowInstructions] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         // Generate email content
         const html = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailHTML(emailData);
@@ -29061,16 +29379,30 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
         setHtmlContent(html);
         setPlainText(text);
     }, [emailData]);
-    const handleCopyToClipboard = (contentType) => {
-        const content = contentType === 'html' ? htmlContent : plainText;
-        navigator.clipboard.writeText(content).then(() => {
+    const handleCopyToClipboard = (contentType) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            if (contentType === 'html') {
+                // Copy with HTML formatting preserved
+                yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText);
+                // Show instructions when copying HTML (first time only)
+                const hasSeenInstructions = localStorage.getItem('hasSeenCopyInstructions');
+                if (!hasSeenInstructions) {
+                    setShowInstructions(true);
+                    localStorage.setItem('hasSeenCopyInstructions', 'true');
+                }
+            }
+            else {
+                // Plain text copy
+                yield navigator.clipboard.writeText(plainText);
+            }
             setCopySuccess(`${contentType.toUpperCase()} copied to clipboard!`);
             setTimeout(() => setCopySuccess(''), 3000);
-        }).catch(err => {
+        }
+        catch (err) {
             console.error('Failed to copy: ', err);
             setCopySuccess('Failed to copy content. Please try again.');
-        });
-    };
+        }
+    });
     const handleDownloadHTML = () => {
         const element = document.createElement('a');
         const file = new Blob([htmlContent], { type: 'text/html' });
@@ -29081,13 +29413,25 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
         document.body.removeChild(element);
     };
     const handleOpenInOutlook = () => {
-        // Create a mailto URL (this has size limitations, so we'll just open the destination)
-        const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
-        window.open(mailtoUrl);
-        // Show instruction since we can't attach the full content
-        alert('Your default email client should open with the recipient and subject. Please paste the copied HTML or text content into the email body.');
+        // First copy the HTML content to clipboard with formatting preserved
+        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText).then(() => {
+            // Create a mailto URL
+            const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
+            // Open the default email client
+            window.open(mailtoUrl);
+            // Show guidance message
+            alert('Your default email client should open. The formatted email content has been copied to your clipboard - please paste (Ctrl+V) into the email body.');
+        }).catch(err => {
+            console.error('Failed to copy before opening email client', err);
+            alert('There was an issue copying the email content. Please try copying it manually before opening your email client.');
+        });
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
+    // Hide instructions modal
+    const closeInstructions = () => {
+        setShowInstructions(false);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
+                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Preserves formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
 
@@ -29150,6 +29494,26 @@ const OnboardingTemplateGenerator = ({ customerInfo, onChange }) => {
 
 /***/ }),
 
+/***/ "./src/components/OutlookInstructions.tsx":
+/*!************************************************!*\
+  !*** ./src/components/OutlookInstructions.tsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+const OutlookInstructions = ({ onClose }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "outlook-instructions-overlay", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "outlook-instructions-modal", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Pasting Formatted Content in Outlook" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "close-button", onClick: onClose, children: "\u00D7" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Follow these steps to paste your formatted template into Outlook:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ol", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Copy the content" }), " using the \"Copy HTML to Clipboard\" button", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-image", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: "/api/placeholder/200/100", alt: "Copy button illustration" }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Open a new email in Outlook" }), " (or use the \"Open in Email Client\" button)"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Paste using Ctrl+V" }), " (or right-click and select \"Paste\")", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-note", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Note: For best results in Outlook, use the \"Keep Source Formatting\" option if prompted" }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Verify the formatting" }), " appears correctly before sending"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "troubleshooting", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Troubleshooting" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "If the formatting doesn't appear correctly:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Try using the \"Paste Special\" option in Outlook (Right-click \u2192 Paste Special \u2192 HTML)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Use the \"Download HTML\" button and attach the file to your email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Switch to Plain Text view if HTML formatting is not needed" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "got-it-button", onClick: onClose, children: "Got it!" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "dont-show-again", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox" }), " Don't show this again"] })] })] }) }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OutlookInstructions);
+
+
+/***/ }),
+
 /***/ "./src/components/Tabs.tsx":
 /*!*********************************!*\
   !*** ./src/components/Tabs.tsx ***!
@@ -29194,6 +29558,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/templateGenerator */ "./src/utils/templateGenerator.ts");
 /* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/utils/clipboardUtils.ts");
 /* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 
 // src/components/TemplatePreview.tsx
 
@@ -29203,16 +29576,40 @@ __webpack_require__.r(__webpack_exports__);
 const TemplatePreview = ({ customerInfo }) => {
     const [copied, setCopied] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [showPreview, setShowPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const handleCopyToClipboard = () => {
-        const template = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo);
-        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyRichTextToClipboard)(template)
-            .then(() => {
+    const [copyMessage, setCopyMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Generate & Copy to Clipboard');
+    const handleCopyToClipboard = () => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const template = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo);
+            // Create a plain text version of the template for fallback
+            const plainText = convertHtmlToPlainText(template);
+            // Use the enhanced copyFormattedContent function
+            yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(template, plainText);
             setCopied(true);
-            setTimeout(() => setCopied(false), 3000);
-        })
-            .catch(error => {
+            setCopyMessage('✓ Copied to Clipboard!');
+            // Reset the button text after 3 seconds
+            setTimeout(() => {
+                setCopied(false);
+                setCopyMessage('Generate & Copy to Clipboard');
+            }, 3000);
+        }
+        catch (error) {
             console.error('Error copying to clipboard:', error);
-        });
+            setCopyMessage('Copy failed. Try again.');
+            // Reset on error after 3 seconds
+            setTimeout(() => {
+                setCopyMessage('Generate & Copy to Clipboard');
+            }, 3000);
+        }
+    });
+    // Helper function to convert HTML to plain text
+    const convertHtmlToPlainText = (html) => {
+        // Create a temporary element to parse the HTML
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        // Get text content and normalize whitespace
+        let text = temp.textContent || temp.innerText || '';
+        text = text.replace(/\s+/g, ' ').trim();
+        return text;
     };
     const togglePreview = () => {
         setShowPreview(!showPreview);
@@ -29228,7 +29625,7 @@ const TemplatePreview = ({ customerInfo }) => {
             customerInfo.authorizedContacts.every(contact => contact.name.trim() !== '' &&
                 contact.email.trim() !== ''));
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "template-preview", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Template Preview & Generation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "preview-button", onClick: togglePreview, children: showPreview ? 'Hide Preview' : 'Show Preview' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "copy-button", onClick: handleCopyToClipboard, disabled: !isFormValid(), children: copied ? '✓ Copied to Clipboard!' : 'Generate & Copy to Clipboard' })] }), !isFormValid() && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "validation-message", children: "Please fill in all required fields before generating the template." })), showPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Template Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: { color: tier.color }, children: tier.name })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-content", dangerouslySetInnerHTML: { __html: template } })] }))] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "template-preview", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Template Preview & Generation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "preview-button", onClick: togglePreview, children: showPreview ? 'Hide Preview' : 'Show Preview' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: `copy-button ${copied ? 'copied' : ''}`, onClick: handleCopyToClipboard, disabled: !isFormValid(), children: copyMessage })] }), !isFormValid() && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "validation-message", children: "Please fill in all required fields before generating the template." })), showPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Template Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: { color: tier.color }, children: tier.name })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-content", dangerouslySetInnerHTML: { __html: template } })] }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TemplatePreview);
 
@@ -29408,27 +29805,114 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   copyRichTextToClipboard: () => (/* binding */ copyRichTextToClipboard)
+/* harmony export */   copyFormattedContent: () => (/* binding */ copyFormattedContent),
+/* harmony export */   copyRichTextToClipboard: () => (/* binding */ copyRichTextToClipboard),
+/* harmony export */   copyToClipboardModern: () => (/* binding */ copyToClipboardModern)
 /* harmony export */ });
-// utils/clipboardUtils.ts
-const copyRichTextToClipboard = (html) => {
-    // Create a temporary div with the HTML content
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
-    // Select the content
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(container);
-    selection === null || selection === void 0 ? void 0 : selection.removeAllRanges();
-    selection === null || selection === void 0 ? void 0 : selection.addRange(range);
-    // Execute copy command
-    document.execCommand('copy');
-    // Clean up
-    selection === null || selection === void 0 ? void 0 : selection.removeAllRanges();
-    document.body.removeChild(container);
-    return Promise.resolve();
+// src/utils/clipboardUtils.ts
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
+/**
+ * Utility to copy rich text (HTML) to clipboard
+ * This implementation uses document.execCommand('copy') with HTML content
+ * to preserve formatting when pasting into applications like Outlook
+ */
+const copyRichTextToClipboard = (html) => {
+    return new Promise((resolve, reject) => {
+        try {
+            // Create a temporary div with the HTML content
+            const container = document.createElement('div');
+            container.innerHTML = html;
+            container.style.position = 'fixed';
+            container.style.pointerEvents = 'none';
+            container.style.opacity = '0';
+            document.body.appendChild(container);
+            // Select the content
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(container);
+            selection === null || selection === void 0 ? void 0 : selection.removeAllRanges();
+            selection === null || selection === void 0 ? void 0 : selection.addRange(range);
+            // Execute copy command
+            const successful = document.execCommand('copy');
+            // Clean up
+            selection === null || selection === void 0 ? void 0 : selection.removeAllRanges();
+            document.body.removeChild(container);
+            if (successful) {
+                resolve();
+            }
+            else {
+                reject(new Error('Unable to copy HTML to clipboard'));
+            }
+        }
+        catch (err) {
+            reject(err);
+        }
+    });
+};
+/**
+ * Alternative implementation using Clipboard API for modern browsers
+ * Note: This may not preserve HTML formatting in all applications
+ */
+const copyToClipboardModern = (text, html) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!navigator.clipboard) {
+        return copyRichTextToClipboard(html || text);
+    }
+    try {
+        if (html && navigator.clipboard.write) {
+            // Use ClipboardItem API if available for HTML content
+            const type = 'text/html';
+            const blob = new Blob([html], { type });
+            const data = [new ClipboardItem({ [type]: blob })];
+            yield navigator.clipboard.write(data);
+        }
+        else {
+            // Fallback to text-only copy
+            yield navigator.clipboard.writeText(text);
+        }
+    }
+    catch (err) {
+        console.error('Clipboard API failed, falling back to execCommand', err);
+        return copyRichTextToClipboard(html || text);
+    }
+});
+/**
+ * Enhanced copy function that tries multiple approaches to ensure
+ * HTML formatting is preserved when possible
+ */
+const copyFormattedContent = (html, plainText) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // First try the modern Clipboard API with HTML support
+        if (navigator.clipboard && 'write' in navigator.clipboard) {
+            yield copyToClipboardModern(plainText, html);
+            return;
+        }
+        // Fall back to execCommand approach for better compatibility
+        yield copyRichTextToClipboard(html);
+    }
+    catch (err) {
+        console.error('Rich text copy failed, falling back to plain text', err);
+        // Last resort - plain text copy
+        if (navigator.clipboard) {
+            yield navigator.clipboard.writeText(plainText);
+        }
+        else {
+            const textArea = document.createElement('textarea');
+            textArea.value = plainText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+    }
+});
 
 
 /***/ }),

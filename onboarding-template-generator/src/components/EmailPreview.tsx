@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { EmailFormData } from '../utils/emailBuilder';
 import emailBuilder from '../utils/emailBuilder';
+import { copyFormattedContent } from '../utils/clipboardUtils';
+import OutlookInstructions from './OutlookInstructions';
 
 interface EmailPreviewProps {
   emailData: EmailFormData;
@@ -13,6 +15,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
   const [plainText, setPlainText] = useState('');
   const [viewMode, setViewMode] = useState<'html' | 'text'>('html');
   const [copySuccess, setCopySuccess] = useState('');
+  const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
     // Generate email content
@@ -23,16 +26,29 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
     setPlainText(text);
   }, [emailData]);
 
-  const handleCopyToClipboard = (contentType: 'html' | 'text') => {
-    const content = contentType === 'html' ? htmlContent : plainText;
-    
-    navigator.clipboard.writeText(content).then(() => {
+  const handleCopyToClipboard = async (contentType: 'html' | 'text') => {
+    try {
+      if (contentType === 'html') {
+        // Copy with HTML formatting preserved
+        await copyFormattedContent(htmlContent, plainText);
+        
+        // Show instructions when copying HTML (first time only)
+        const hasSeenInstructions = localStorage.getItem('hasSeenCopyInstructions');
+        if (!hasSeenInstructions) {
+          setShowInstructions(true);
+          localStorage.setItem('hasSeenCopyInstructions', 'true');
+        }
+      } else {
+        // Plain text copy
+        await navigator.clipboard.writeText(plainText);
+      }
+      
       setCopySuccess(`${contentType.toUpperCase()} copied to clipboard!`);
       setTimeout(() => setCopySuccess(''), 3000);
-    }).catch(err => {
+    } catch (err) {
       console.error('Failed to copy: ', err);
       setCopySuccess('Failed to copy content. Please try again.');
-    });
+    }
   };
 
   const handleDownloadHTML = () => {
@@ -46,17 +62,30 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
   };
 
   const handleOpenInOutlook = () => {
-    // Create a mailto URL (this has size limitations, so we'll just open the destination)
-    const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
-    
-    window.open(mailtoUrl);
-    
-    // Show instruction since we can't attach the full content
-    alert('Your default email client should open with the recipient and subject. Please paste the copied HTML or text content into the email body.');
+    // First copy the HTML content to clipboard with formatting preserved
+    copyFormattedContent(htmlContent, plainText).then(() => {
+      // Create a mailto URL
+      const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
+      
+      // Open the default email client
+      window.open(mailtoUrl);
+      
+      // Show guidance message
+      alert('Your default email client should open. The formatted email content has been copied to your clipboard - please paste (Ctrl+V) into the email body.');
+    }).catch(err => {
+      console.error('Failed to copy before opening email client', err);
+      alert('There was an issue copying the email content. Please try copying it manually before opening your email client.');
+    });
+  };
+
+  // Hide instructions modal
+  const closeInstructions = () => {
+    setShowInstructions(false);
   };
 
   return (
     <div className="email-preview-container">
+      {showInstructions && <OutlookInstructions onClose={closeInstructions} />}
       <h2>Email Preview</h2>
       
       <div className="preview-actions">
@@ -76,8 +105,14 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
         </div>
         
         <div className="action-buttons">
-          <button onClick={() => handleCopyToClipboard(viewMode)}>
+          <button 
+            onClick={() => handleCopyToClipboard(viewMode)}
+            className="tooltip"
+          >
             Copy {viewMode === 'html' ? 'HTML' : 'Text'} to Clipboard
+            {viewMode === 'html' && 
+              <span className="tooltip-text">Preserves formatting for Outlook</span>
+            }
           </button>
           <button onClick={handleDownloadHTML}>Download HTML</button>
           <button onClick={handleOpenInOutlook}>Open in Email Client</button>

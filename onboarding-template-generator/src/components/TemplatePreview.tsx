@@ -1,7 +1,7 @@
 // src/components/TemplatePreview.tsx
 import React, { useState } from 'react';
 import { generateTemplate } from '../utils/templateGenerator';
-import { copyRichTextToClipboard } from '../utils/clipboardUtils';
+import { copyFormattedContent } from '../utils/clipboardUtils';
 import { supportTiers } from '../data/supportTiers';
 import { CustomerInfo } from '../utils/templateGenerator';
 
@@ -12,17 +12,48 @@ interface TemplatePreviewProps {
 const TemplatePreview: React.FC<TemplatePreviewProps> = ({ customerInfo }) => {
   const [copied, setCopied] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [copyMessage, setCopyMessage] = useState('Generate & Copy to Clipboard');
   
-  const handleCopyToClipboard = () => {
-    const template = generateTemplate(customerInfo);
-    copyRichTextToClipboard(template)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 3000);
-      })
-      .catch(error => {
-        console.error('Error copying to clipboard:', error);
-      });
+  const handleCopyToClipboard = async () => {
+    try {
+      const template = generateTemplate(customerInfo);
+      
+      // Create a plain text version of the template for fallback
+      const plainText = convertHtmlToPlainText(template);
+      
+      // Use the enhanced copyFormattedContent function
+      await copyFormattedContent(template, plainText);
+      
+      setCopied(true);
+      setCopyMessage('✓ Copied to Clipboard!');
+      
+      // Reset the button text after 3 seconds
+      setTimeout(() => {
+        setCopied(false);
+        setCopyMessage('Generate & Copy to Clipboard');
+      }, 3000);
+    } catch (error) {
+      console.error('Error copying to clipboard:', error);
+      setCopyMessage('Copy failed. Try again.');
+      
+      // Reset on error after 3 seconds
+      setTimeout(() => {
+        setCopyMessage('Generate & Copy to Clipboard');
+      }, 3000);
+    }
+  };
+  
+  // Helper function to convert HTML to plain text
+  const convertHtmlToPlainText = (html: string): string => {
+    // Create a temporary element to parse the HTML
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    
+    // Get text content and normalize whitespace
+    let text = temp.textContent || temp.innerText || '';
+    text = text.replace(/\s+/g, ' ').trim();
+    
+    return text;
   };
   
   const togglePreview = () => {
@@ -61,11 +92,11 @@ const TemplatePreview: React.FC<TemplatePreviewProps> = ({ customerInfo }) => {
         
         <button 
           type="button" 
-          className="copy-button"
+          className={`copy-button ${copied ? 'copied' : ''}`}
           onClick={handleCopyToClipboard}
           disabled={!isFormValid()}
         >
-          {copied ? '✓ Copied to Clipboard!' : 'Generate & Copy to Clipboard'}
+          {copyMessage}
         </button>
       </div>
       
