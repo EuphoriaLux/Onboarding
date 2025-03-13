@@ -1,4 +1,4 @@
-// data/supportTiers.ts
+// src/data/supportTiers.ts
 export interface SupportTier {
     name: string;
     color: string;
@@ -28,12 +28,42 @@ export interface SupportTier {
       severityLevels: "Level B or C"
     },
     silver: {
-      // Silver tier details based on the image
+      name: "Silver Support",
+      color: "#C0C0C0",
+      description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
+      criticalSituation: true,
+      supportHours: "24 x 7 x 365",
+      supportRequestSubmission: "Dedicated phone number or Email",
+      tenants: 2,
+      authorizedContacts: 6,
+      supportRequestsIncluded: 12,
+      products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+      severityLevels: "Level A, B or C"
     },
     gold: {
-      // Gold tier details based on the image
+      name: "Gold Support",
+      color: "#FFD700",
+      description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
+      criticalSituation: true,
+      supportHours: "24 x 7 x 365",
+      supportRequestSubmission: "Dedicated phone number or Email",
+      tenants: 6,
+      authorizedContacts: 12,
+      supportRequestsIncluded: 36,
+      products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+      severityLevels: "Level A, B or C"
     },
     platinum: {
-      // Platinum tier details based on the image
+      name: "Platinum Support",
+      color: "#E5E4E2",
+      description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
+      criticalSituation: true,
+      supportHours: "24 x 7 x 365",
+      supportRequestSubmission: "Dedicated phone number or Email",
+      tenants: 100,
+      authorizedContacts: 100,
+      supportRequestsIncluded: 100,
+      products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+      severityLevels: "Level A, B or C"
     }
   };

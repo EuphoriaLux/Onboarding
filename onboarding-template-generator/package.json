@@ -2,13 +2,29 @@
   "name": "onboarding-template-generator",
   "version": "1.0.0",
   "main": "webpack.config.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+"scripts": {
+  "setup": "node create-structure.js",
+  "create-icons": "node create-icons.js",
+  "prestart": "npm run setup",
+  "prebuild": "npm run setup",
+  "start": "webpack --watch --progress --config webpack.config.js",
+  "build": "webpack --config webpack.config.js",
+  "build:dev": "webpack --config webpack.config.js --mode=development",
+  "build:prod": "webpack --config webpack.config.js --mode=production",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
+  "keywords": [
+    "microsoft",
+    "support",
+    "onboarding",
+    "template",
+    "generator",
+    "chrome",
+    "extension"
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Chrome extension to generate Microsoft Support onboarding templates with rich text formatting",
   "dependencies": {
     "@types/chrome": "^0.0.309",
     "@types/react": "^19.0.10",

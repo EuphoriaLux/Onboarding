@@ -1,0 +1,1 @@
+{"version":3,"file":"background.js","mappings":";;;;;AAAA;AACA;AACA;AACA","sources":["webpack://onboarding-template-generator/./src/background.ts"],"sourcesContent":["\"use strict\";\n// ...existing code...\nconsole.log(\"Background script running\");\n// ...existing code...\n"],"names":[],"sourceRoot":""}

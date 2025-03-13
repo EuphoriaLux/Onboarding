@@ -1,11 +1,12 @@
+// src/components/App.tsx
 import React from 'react';
+import OnboardingTemplateGenerator from './OnboardingTemplateGenerator';
+import '../styles/App.css';
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <div>
-      {/* ...existing code... */}
-      <h1>Welcome to the Onboarding Template Generator</h1>
-      {/* ...existing code... */}
+    <div className="app-container">
+      <OnboardingTemplateGenerator />
     </div>
   );
 };

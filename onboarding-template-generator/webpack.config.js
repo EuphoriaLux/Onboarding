@@ -1,6 +1,21 @@
+// Copy this to your existing webpack.config.js
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const fs = require('fs');
+
+// Check if assets directory exists
+const assetsExist = fs.existsSync(path.resolve(__dirname, 'src/assets'));
+
+// Setup copy patterns
+const copyPatterns = [
+  { from: 'src/manifest.json', to: 'manifest.json' }
+];
+
+// Only add assets pattern if the directory exists
+if (assetsExist) {
+  copyPatterns.push({ from: 'src/assets', to: 'assets' });
+}
 
 module.exports = {
   mode: 'development',
@@ -40,10 +55,7 @@ module.exports = {
       chunks: ['popup']
     }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: 'src/manifest.json', to: 'manifest.json' },
-        { from: 'src/assets', to: 'assets' }
-      ]
+      patterns: copyPatterns
     })
   ]
 };
