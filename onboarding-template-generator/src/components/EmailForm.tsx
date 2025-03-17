@@ -4,21 +4,30 @@ import { supportTiers } from '../data/supportTiers';
 import { CustomerInfo } from '../utils/templateGenerator';
 import emailBuilder, { EmailFormData } from '../utils/emailBuilder';
 
+// Define Language type if not imported
+type Language = 'en' | 'fr' | 'de';
+
 interface EmailFormProps {
   customerInfo: CustomerInfo;
   onSaveEmailData: (emailData: EmailFormData) => void;
   onPreviewEmail: (emailData: EmailFormData) => void;
+  language?: Language; // Make language optional
 }
 
-const EmailForm: React.FC<EmailFormProps> = ({ customerInfo, onSaveEmailData, onPreviewEmail }) => {
+const EmailForm: React.FC<EmailFormProps> = ({ 
+  customerInfo, 
+  onSaveEmailData, 
+  onPreviewEmail, 
+  language = 'en' // Default to English if not provided
+}) => {
   const [emailData, setEmailData] = useState<EmailFormData>(
-    emailBuilder.processCustomerInfoToEmailData(customerInfo)
+    emailBuilder.processCustomerInfoToEmailData(customerInfo, language)
   );
 
   useEffect(() => {
-    // Update email data when customer info changes
-    setEmailData(emailBuilder.processCustomerInfoToEmailData(customerInfo));
-  }, [customerInfo]);
+    // Update email data when customer info or language changes
+    setEmailData(emailBuilder.processCustomerInfoToEmailData(customerInfo, language));
+  }, [customerInfo, language]);
 
   const handleInputChange = (field: string, value: any) => {
     setEmailData((prev) => ({
@@ -42,8 +51,15 @@ const EmailForm: React.FC<EmailFormProps> = ({ customerInfo, onSaveEmailData, on
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSaveEmailData(emailData);
-    onPreviewEmail(emailData);
+    
+    // Include language in the form data
+    const dataWithLanguage = {
+      ...emailData,
+      language
+    };
+    
+    onSaveEmailData(dataWithLanguage);
+    onPreviewEmail(dataWithLanguage);
   };
 
   const handleCheckboxToggle = (section: string, field: string) => {
@@ -59,10 +75,25 @@ const EmailForm: React.FC<EmailFormProps> = ({ customerInfo, onSaveEmailData, on
     });
   };
 
+  // Display current language info
+  const languageDisplay = () => {
+    switch (language) {
+      case 'fr':
+        return 'Français';
+      case 'de':
+        return 'Deutsch';
+      default:
+        return 'English';
+    }
+  };
+
   return (
     <div className="email-form-container">
       <h2>Email Template Generator</h2>
-      <p className="info-text">Customize this email template to send to your client as part of the onboarding process.</p>
+      <p className="info-text">
+        Customize this email template to send to your client as part of the onboarding process.
+        <span className="language-indicator"> Current language: <strong>{languageDisplay()}</strong></span>
+      </p>
       
       <form onSubmit={handleSubmit}>
         <div className="section">
@@ -101,6 +132,9 @@ const EmailForm: React.FC<EmailFormProps> = ({ customerInfo, onSaveEmailData, on
             />
           </div>
         </div>
+        
+        {/* Rest of the component remains the same */}
+        {/* ... */}
         
         <div className="section">
           <h3>Onboarding Components</h3>

@@ -5,6 +5,8 @@ import ContactsForm from './ContactsForm';
 import TenantManager, { TenantInfo } from './TenantManager';
 import EmailForm from './EmailForm';
 import EmailPreview from './EmailPreview';
+import LanguageSelector from './LanguageSelector';
+import { Language } from './LanguageSelector';
 import { EmailFormData } from '../utils/emailBuilder';
 import { supportTiers } from '../data/supportTiers';
 import '../styles/App.css';
@@ -32,10 +34,11 @@ const App: React.FC = () => {
   
   const [emailData, setEmailData] = useState<EmailFormData | null>(null);
   const [showEmailPreview, setShowEmailPreview] = useState(false);
+  const [language, setLanguage] = useState<Language>('en'); // Add language state
 
   // Load saved data on initial render
   useEffect(() => {
-    chrome.storage.sync.get(['customerInfo', 'emailData'], (data) => {
+    chrome.storage.sync.get(['customerInfo', 'emailData', 'language'], (data) => {
       if (data.customerInfo) {
         // Convert date string back to Date object
         const storedInfo = data.customerInfo;
@@ -74,6 +77,11 @@ const App: React.FC = () => {
       if (data.emailData) {
         setEmailData(data.emailData);
       }
+      
+      // Load saved language preference
+      if (data.language) {
+        setLanguage(data.language);
+      }
     });
   }, []);
 
@@ -81,6 +89,11 @@ const App: React.FC = () => {
   useEffect(() => {
     chrome.storage.sync.set({ customerInfo });
   }, [customerInfo]);
+  
+  // Save language preference when it changes
+  useEffect(() => {
+    chrome.storage.sync.set({ language });
+  }, [language]);
 
   // Handle tier selection - adjust tenants and contacts based on tier limits
   const handleTierChange = (tier: string) => {
@@ -150,6 +163,11 @@ const App: React.FC = () => {
     }
   };
 
+  // Handle language change
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+  };
+
   // Prepare data for Email Form
   const getEmailCustomerInfo = () => {
     // Use the first tenant's info for the email by default
@@ -168,13 +186,23 @@ const App: React.FC = () => {
 
   // Handle email data updates from email form
   const handleEmailDataSave = (data: EmailFormData) => {
-    setEmailData(data);
-    chrome.storage.sync.set({ emailData: data });
+    // Make sure language is included in saved data
+    const dataWithLanguage = {
+      ...data,
+      language
+    };
+    setEmailData(dataWithLanguage);
+    chrome.storage.sync.set({ emailData: dataWithLanguage });
   };
 
   // Generate email preview
   const handleEmailPreview = (data: EmailFormData) => {
-    setEmailData(data);
+    // Make sure language is included in preview data
+    const dataWithLanguage = {
+      ...data,
+      language
+    };
+    setEmailData(dataWithLanguage);
     setShowEmailPreview(true);
   };
 
@@ -188,11 +216,19 @@ const App: React.FC = () => {
       <header className="generator-header">
         <h1>Microsoft Support Onboarding Tool</h1>
         <p>Configure customer details and generate rich text emails for onboarding</p>
+        
+        {/* Add language selector to header */}
+        <div className="language-option">
+          <LanguageSelector 
+            selectedLanguage={language}
+            onChange={handleLanguageChange}
+          />
+        </div>
       </header>
 
       {showEmailPreview && emailData ? (
         <EmailPreview 
-          emailData={emailData}
+          emailData={{...emailData, language}} // Ensure language is passed
           onBackToEdit={handleBackToEdit}
         />
       ) : (
@@ -270,13 +306,14 @@ const App: React.FC = () => {
               customerInfo={getEmailCustomerInfo()}
               onSaveEmailData={handleEmailDataSave}
               onPreviewEmail={handleEmailPreview}
+              language={language} // Pass language to EmailForm
             />
           </div>
         </div>
       )}
 
       <footer className="app-footer">
-        <p>Microsoft Support Onboarding Tool - v1.0.1</p>
+        <p>Microsoft Support Onboarding Tool - v1.0.2</p>
       </footer>
     </div>
   );

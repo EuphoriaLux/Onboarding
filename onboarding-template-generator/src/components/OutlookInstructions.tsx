@@ -6,20 +6,29 @@ interface OutlookInstructionsProps {
 }
 
 const OutlookInstructions: React.FC<OutlookInstructionsProps> = ({ onClose }) => {
+  const [dontShowAgain, setDontShowAgain] = useState(false);
+  
+  const handleClose = () => {
+    if (dontShowAgain) {
+      localStorage.setItem('dontShowCopyInstructions', 'true');
+    }
+    onClose();
+  };
+
   return (
     <div className="outlook-instructions-overlay">
       <div className="outlook-instructions-modal">
         <div className="instructions-header">
-          <h3>Pasting Formatted Content in Outlook</h3>
-          <button className="close-button" onClick={onClose}>&times;</button>
+          <h3>Enhanced Email Formatting for Outlook</h3>
+          <button className="close-button" onClick={handleClose}>&times;</button>
         </div>
         
         <div className="instructions-content">
-          <p>Follow these steps to paste your formatted template into Outlook:</p>
+          <p>Your email has been copied with enhanced formatting for better compatibility with Outlook and other email clients. Follow these steps:</p>
           
           <ol>
             <li>
-              <strong>Copy the content</strong> using the &quot;Copy HTML to Clipboard&quot; button
+              <strong>The content has been copied to your clipboard</strong> with improved styling
               <div className="instruction-image">
                 <img src="/api/placeholder/200/100" alt="Copy button illustration" />
               </div>
@@ -32,30 +41,39 @@ const OutlookInstructions: React.FC<OutlookInstructionsProps> = ({ onClose }) =>
             <li>
               <strong>Paste using Ctrl+V</strong> (or right-click and select &quot;Paste&quot;)
               <div className="instruction-note">
-                <p>Note: For best results in Outlook, use the &quot;Keep Source Formatting&quot; option if prompted</p>
+                <p><strong>Important:</strong> If prompted with paste options in Outlook, choose &quot;Keep Source Formatting&quot; for best results.</p>
               </div>
             </li>
             
             <li>
-              <strong>Verify the formatting</strong> appears correctly before sending
+              <strong>Review the formatting</strong> after pasting
+              <div className="instruction-note">
+                <p>The email has been optimized with explicit background colors and improved spacing for better appearance.</p>
+              </div>
             </li>
           </ol>
           
           <div className="troubleshooting">
             <h4>Troubleshooting</h4>
-            <p>If the formatting doesn&apos;t appear correctly:</p>
+            <p>If you notice any formatting issues:</p>
             <ul>
-              <li>Try using the &quot;Paste Special&quot; option in Outlook (Right-click &rarr; Paste Special &rarr; HTML)</li>
-              <li>Use the &quot;Download HTML&quot; button and attach the file to your email</li>
-              <li>Switch to Plain Text view if HTML formatting is not needed</li>
+              <li>Try using <strong>&quot;Paste Special&quot;</strong> in Outlook and select <strong>HTML Format</strong></li>
+              <li>Use the <strong>&quot;Download HTML&quot;</strong> button and attach the file to your email</li>
+              <li>If images appear as placeholders, they will need to be replaced with actual images</li>
+              <li>Some email clients may display slight variations in formatting</li>
             </ul>
           </div>
         </div>
         
         <div className="instructions-footer">
-          <button className="got-it-button" onClick={onClose}>Got it!</button>
+          <button className="got-it-button" onClick={handleClose}>Got it!</button>
           <label className="dont-show-again">
-            <input type="checkbox" /> Don&apos;t show this again
+            <input 
+              type="checkbox" 
+              checked={dontShowAgain}
+              onChange={(e) => setDontShowAgain(e.target.checked)}
+            /> 
+            Don&apos;t show this again
           </label>
         </div>
       </div>

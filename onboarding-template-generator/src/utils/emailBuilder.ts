@@ -440,11 +440,11 @@ export const emailBuilder = {
     return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 35px 0 20px 0;">
       <tr>
-        <td style="padding: 0;">
+        <td style="padding: 0; background-color: #FFFFFF;">
           <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8; border-left: 4px solid ${color}; border-radius: 0 4px 4px 0;">
             <tr>
               <td style="padding: 16px;">
-                <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600;">${title}</h3>
+                <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600; background-color: #f8f8f8;">${title}</h3>
               </td>
             </tr>
           </table>
@@ -458,14 +458,14 @@ export const emailBuilder = {
    */
   createInstructionBox: function(title: string, content: string): string {
     return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #FFFFFF;">
       <tr>
-        <td style="padding: 0;">
+        <td style="padding: 0; background-color: #FFFFFF;">
           <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f0f7ff; border: 1px solid #cfe5ff; border-radius: 4px;">
             <tr>
-              <td style="padding: 16px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #333;">
-                <div style="font-weight: bold; color: #0078D4; margin-bottom: 8px; font-size: 15px;">${title}</div>
-                <div style="color: #333;">${content}</div>
+              <td style="padding: 16px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #333; background-color: #f0f7ff;">
+                <div style="font-weight: bold; color: #0078D4; margin-bottom: 8px; font-size: 15px; background-color: #f0f7ff;">${title}</div>
+                <div style="color: #333; background-color: #f0f7ff;">${content}</div>
               </td>
             </tr>
           </table>
@@ -479,16 +479,16 @@ export const emailBuilder = {
    */
   createStepIndicator: function(number: number, title: string): string {
     return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
       <tr>
-        <td style="padding: 0; vertical-align: middle;">
-          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+        <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
             <tr>
               <td style="width: 36px; height: 36px; background-color: #0078D4; border-radius: 50%; text-align: center; vertical-align: middle;">
-                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold;">${number}</span>
+                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4;">${number}</span>
               </td>
-              <td style="padding-left: 12px;">
-                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${title}</span>
+              <td style="padding-left: 12px; background-color: #FFFFFF;">
+                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${title}</span>
               </td>
             </tr>
           </table>
@@ -1159,6 +1159,695 @@ foreach ($subscription in $subscriptions) {
             <tr>
                 <td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;">
                     <p style="margin: 0; line-height: 1.5;">
+                        ${this.translate('footer', language)}
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>`;
+    
+    return htmlContent;
+  },
+
+  /**
+   * Build Enhanced HTML version of the email with improved formatting for better copy-paste
+   * @param {EmailFormData} formData - The form data from the UI
+   * @returns {String} - Enhanced HTML formatted email content
+   */
+  buildEnhancedEmailHTML: function(formData: EmailFormData): string {
+    // Get the selected tier and language
+    const tier = supportTiers[formData.selectedTier];
+    const language = (formData.language || 'en') as Language;
+    
+    // Get tier color
+    let tierColor = '';
+    switch(formData.selectedTier) {
+      case 'bronze': tierColor = '#cd7f32'; break;
+      case 'silver': tierColor = '#C0C0C0'; break;
+      case 'gold': tierColor = '#FFD700'; break;
+      case 'platinum': tierColor = '#E5E4E2'; break;
+    }
+
+    // Generate subject if not provided
+    const subject = formData.subject || this.translate('subject', language, {
+      tier: tier.name,
+      company: formData.companyName
+    });
+    
+    // Build the full HTML email with enhanced formatting for copy-paste
+    let htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>${subject}</title>
+    <!--[if mso]>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+    <style type="text/css">
+      body, table, td, th, div, p, h1, h2, h3, h4, h5, h6 {font-family: 'Segoe UI', Arial, sans-serif !important;}
+      table {border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;}
+      td, th {padding: 12px !important;}
+      h1, h2, h3, h4, h5, h6 {margin-top: 20px !important; margin-bottom: 16px !important;}
+      p {margin-bottom: 16px !important;}
+      .mso-line-height-rule: exactly !important;
+      body, div, p, a, li, td, th {background-color: #FFFFFF !important;}
+    </style>
+    <![endif]-->
+    <style type="text/css">
+      /* Base styles for all clients */
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'Segoe UI', Arial, sans-serif !important;
+        line-height: 1.6 !important;
+        color: #333333 !important;
+        background-color: #FFFFFF !important;
+      }
+      
+      table {
+        border-collapse: collapse !important;
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 24px !important;
+        margin-bottom: 16px !important;
+        color: #333333 !important;
+      }
+      
+      p {
+        margin-top: 0 !important;
+        margin-bottom: 16px !important;
+        line-height: 1.6 !important;
+      }
+      
+      td, th {
+        padding: 12px !important;
+      }
+      
+      /* Force white background for all elements */
+      body, div, td, th, p, span, a {
+        background-color: #FFFFFF !important;
+      }
+      
+      .section-container {
+        margin-top: 32px !important;
+        margin-bottom: 32px !important;
+      }
+      
+      .section-header {
+        padding: 14px 16px !important;
+        margin-bottom: 20px !important;
+      }
+    </style>
+</head>
+<body bgcolor="#FFFFFF" style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #FFFFFF;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; background-color: #FFFFFF;">
+        <!-- Email Header -->
+        <table width="100%" cellpadding="12" cellspacing="0" border="0" bgcolor="#FFFFFF" style="border-collapse: collapse; margin-bottom: 30px; border-bottom: 1px solid #eee; background-color: #FFFFFF;">
+            <tr>
+                <td style="padding: 0 0 20px 0; background-color: #FFFFFF;">
+                    <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333333; font-family: 'Segoe UI', Arial, sans-serif; background-color: #FFFFFF;">
+                        <span style="font-weight: bold; color: #0078D4; background-color: #FFFFFF;">${formData.senderCompany.toUpperCase()}</span> 
+                        <span style="color: #333333; background-color: #FFFFFF;">| ${tier.name} ${this.translate('supportPlanTitle', language, { tier: '' }).trim()}</span>
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">To:</strong> <span style="background-color: #FFFFFF;">${formData.to}</span>
+                </td>
+            </tr>
+            ${formData.cc ? `
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">Cc:</strong> <span style="background-color: #FFFFFF;">${formData.cc}</span>
+                </td>
+            </tr>` : ''}
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">Subject:</strong> <span style="background-color: #FFFFFF;">${subject}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">Date:</strong> <span style="background-color: #FFFFFF;">${formData.currentDate}</span>
+                </td>
+            </tr>
+        </table>
+        
+        <!-- Email Body -->
+        <table width="100%" cellpadding="12" cellspacing="0" border="0" bgcolor="#FFFFFF" style="border-collapse: collapse; background-color: #FFFFFF;">
+            <tr>
+                <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                    <!-- Greeting -->
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('greeting', language, { name: formData.contactName })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('intro1', language, { 
+                        company: formData.senderCompany,
+                        clientCompany: formData.companyName
+                      })}
+                    </p>
+                    
+                    <p style="margin: 0 0 30px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('intro2', language, { tier: tier.name })}
+                    </p>`;
+    
+    // Support Plan Section with tier-specific styling
+    htmlContent += `
+                    <!-- Support Plan Section -->
+                    <table width="100%" cellpadding="12" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 10px; border-radius: 4px; background-color: ${tierColor};">
+                        <tr>
+                            <td style="padding: 16px 20px !important; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; background-color: ${tierColor} !important;">
+                                <h2 style="margin: 0; padding: 0; color: white; font-size: 18px; font-weight: 600; background-color: ${tierColor} !important;">
+                                  ${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}
+                                </h2>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('supportPlanIntro', language, { 
+                        tier: tier.name,
+                        supportType: formData.selectedTier === 'bronze' 
+                          ? this.translate('supportType.bronze', language)
+                          : this.translate('supportType.other', language)
+                      })}
+                    </p>
+                    
+                    <table width="100%" cellpadding="12" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0 30px 0; border: 1px solid #eee; border-radius: 4px; background-color: #FFFFFF;">
+                        <tr>
+                            <td style="padding: 20px 24px !important; background-color: #FFFFFF;">
+                                <table width="100%" cellpadding="8" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('supportTypeLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('supportHoursLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.supportHours}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('severityLevelsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('contactsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.authorizedContacts}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('tenantsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.tenants}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('requestsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.supportRequestsIncluded}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('criticalLabel', language)}</strong> 
+                                            ${tier.criticalSituation 
+                                                ? '<span style="color: #107c10; font-weight: 600; background-color: #FFFFFF;">' + this.translate('yes', language) + '</span>' 
+                                                : '<span style="color: #d83b01; font-weight: 600; background-color: #FFFFFF;">' + this.translate('no', language) + '</span>'}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>`;
+    
+    // Create improved section header with explicit white background
+    const createImprovedSectionHeader = (title: string, color: string): string => {
+      return `
+      <div class="section-container" style="margin-top: 36px !important; margin-bottom: 24px !important; background-color: #FFFFFF;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px; background-color: #FFFFFF;">
+          <tr>
+            <td style="padding: 0 !important; background-color: #FFFFFF;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8; border-left: 4px solid ${color}; border-radius: 0 4px 4px 0;">
+                <tr>
+                  <td style="padding: 16px 20px !important; background-color: #f8f8f8;">
+                    <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600; background-color: #f8f8f8;">${title}</h3>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>`;
+    };
+    
+    // Create improved contacts table with explicit white background and better spacing
+    const createImprovedContactsTable = (rows: number, language: Language = 'en'): string => {
+      // Get translated headers
+      const numberHeader = this.translate('numberHeader', language);
+      const firstNameHeader = this.translate('firstNameHeader', language);
+      const lastNameHeader = this.translate('lastNameHeader', language);
+      const officePhoneHeader = this.translate('officePhoneHeader', language);
+      const mobilePhoneHeader = this.translate('mobilePhoneHeader', language);
+      const emailHeader = this.translate('emailHeader', language);
+      const jobTitleHeader = this.translate('jobTitleHeader', language);
+      
+      // Create headers with improved styling
+      let tableHTML = `
+      <table class="contacts-table" width="100%" cellpadding="12" cellspacing="0" border="1" style="border-collapse: collapse; margin: 30px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border: 1px solid #dddddd; background-color: #FFFFFF;">
+        <tr style="background-color: #f3f3f3;">
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${numberHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${firstNameHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${lastNameHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${officePhoneHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${mobilePhoneHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${emailHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${jobTitleHeader}</th>
+        </tr>`;
+      
+      // Create empty rows with improved styling
+      for (let i = 1; i <= rows; i++) {
+        const bgColor = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
+        tableHTML += `
+        <tr style="background-color: ${bgColor};">
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};">${i}</td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+        </tr>`;
+      }
+      
+      tableHTML += `
+      </table>`;
+      
+      return tableHTML;
+    };
+    
+    // Improved script formatting with guaranteed white background
+    const formatImprovedScriptBlock = (scriptContent: string, language: Language = 'en'): string => {
+      // Clean up the script content
+      const cleanedScript = scriptContent.trim()
+        .replace(/\t/g, '    ') // Replace tabs with spaces for consistency
+        .replace(/^\s*\n/gm, ''); // Remove empty lines
+      
+      // Get translation for script header
+      const scriptHeader = this.translate('rbacScriptHeader', language);
+      
+      // Better styled script block with consistent background color
+      return `
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 30px 0; background-color: #FFFFFF;">
+          <tr>
+            <td style="padding: 0 !important; background-color: #FFFFFF;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f5f5f5 !important; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+                <tr>
+                  <td style="padding: 12px 16px !important; background-color: #2b579a !important; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600;">
+                    ${scriptHeader}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 20px !important; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; background-color: #f5f5f5 !important;">
+${cleanedScript}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>`;
+    };
+    
+    // Authorized Contacts Section with improved formatting
+    if (formData.authorizedContacts.checked) {
+      const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
+      htmlContent += createImprovedSectionHeader(contactsSectionTitle, tierColor);
+      
+      htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('contactsIntro', language, { 
+                        tier: tier.name,
+                        count: tier.authorizedContacts
+                      })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('contactsRolesIntro', language, { 
+                        roles: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.authorizedContacts.roles}</strong>`
+                      })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('contactsInstruction', language)}
+                    </p>
+                    
+                    ${createImprovedContactsTable(tier.authorizedContacts, language)}`;
+    }
+    
+    // Meeting Section with improved formatting
+    if (formData.meetingDate) {
+      const meetingSectionTitle = this.translate('meetingTitle', language);
+      htmlContent += createImprovedSectionHeader(meetingSectionTitle, tierColor);
+      
+      htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('meetingIntro', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 20px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                <strong style="font-weight: 600; color: #333; background-color: #f8f8f8;">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4; background-color: #f8f8f8;">${formData.meetingDate}</span>` })}</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('meetingAttendees', language)}
+                    </p>`;
+    }
+    
+    // GDAP Section with improved formatting
+    if (formData.gdap.checked) {
+      const gdapSectionTitle = this.translate('gdapTitle', language);
+      htmlContent += createImprovedSectionHeader(gdapSectionTitle, tierColor);
+      
+      htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.gdap.deadline}</strong>` })}
+                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.gdap.roles}</strong>` })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('gdapPermission', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 20px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                <p style="margin: 0 0 15px 0; font-weight: 600; color: #333; background-color: #f8f8f8;">
+                                ${this.translate('gdapInstruction', language)}
+                                </p>
+                                <p style="margin: 0; text-align: center; background-color: #f8f8f8;">
+                                  <a href="${formData.gdap.link}" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
+                                    ${this.translate('gdapLink', language)}
+                                  </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>`;
+    }
+    
+    // RBAC Section with improved formatting
+    if (formData.rbac.checked) {
+      const rbacSectionTitle = this.translate('rbacTitle', language);
+      htmlContent += createImprovedSectionHeader(rbacSectionTitle, tierColor);
+      
+      let permissionText = '';
+      if (formData.rbac.azure && formData.rbac.m365) {
+          permissionText = this.translate('rbacPermissionBoth', language);
+      } else if (formData.rbac.azure) {
+          permissionText = this.translate('rbacPermissionAzure', language);
+      } else if (formData.rbac.m365) {
+          permissionText = this.translate('rbacPermission365', language);
+      }
+      
+      htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('rbacIntro', language, { groups: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.rbac.groups}</strong>` })}
+                      ${permissionText}
+                    </p>`;
+      
+      if (formData.rbac.includeScript) {
+          htmlContent += `
+                    <p style="margin: 15px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">
+                      ${this.translate('rbacInstruction', language)}
+                    </p>`;
+          
+          // Step 1 - Install Azure PowerShell with improved styling
+          htmlContent += `
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
+                      <tr>
+                        <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+                            <tr>
+                              <td style="width: 36px; height: 36px; background-color: #0078D4 !important; border-radius: 50%; text-align: center; vertical-align: middle;">
+                                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4 !important;">1</span>
+                              </td>
+                              <td style="padding-left: 12px; background-color: #FFFFFF;">
+                                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${this.translate('rbacStep1', language)}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>`;
+          
+          htmlContent += `
+                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('rbacStep1Source', language)} 
+                      <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">
+                        https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0
+                      </a>
+                    </p>`;
+          
+          // Install script with improved formatting
+          htmlContent += `<div style="margin-left: 48px; background-color: #FFFFFF;">
+                      ${formatImprovedScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}
+                    </div>`;
+          
+          htmlContent += `
+                    <p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      or update it:
+                    </p>`;
+          
+          // Update script with improved formatting
+          htmlContent += `<div style="margin-left: 48px; background-color: #FFFFFF;">
+                      ${formatImprovedScriptBlock('Update-Module Az.Resources -Force', language)}
+                    </div>`;
+          
+          // Step 2 - Run the script with improved styling
+          htmlContent += `
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
+                      <tr>
+                        <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+                            <tr>
+                              <td style="width: 36px; height: 36px; background-color: #0078D4 !important; border-radius: 50%; text-align: center; vertical-align: middle;">
+                                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4 !important;">2</span>
+                              </td>
+                              <td style="padding-left: 12px; background-color: #FFFFFF;">
+                                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${this.translate('rbacStep2', language)}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>`;
+          
+          htmlContent += `
+                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('rbacStep2Instruction', language)}
+                    </p>`;
+          
+          // The main RBAC script with improved formatting
+          htmlContent += `<div style="margin-left: 48px; background-color: #FFFFFF;">
+                      ${formatImprovedScriptBlock(`# Connect to the correct tenant
+Connect-AzAccount -TenantID ${formData.rbac.tenantId}
+
+$subscriptions = Get-AzSubscription
+foreach ($subscription in $subscriptions) {
+    Set-AzContext -SubscriptionId $subscription.Id 
+    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue 
+    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
+    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+    if ($supportRole) {
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents." 
+        # Test if the Owner role for the Foreign Principal AdminAgents exists:
+        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+        if ($ownerRole) {
+            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
+            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner"
+        } else {
+            Write-Host "Owner role for Foreign Principal AdminAgents does not exist."
+        }
+    } else {
+        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"
+    }
+}`, language)}
+                    </div>`;
+          
+          htmlContent += `
+                    <p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333; background-color: #FFFFFF;">
+                      ${this.translate('rbacScreenshot', language)}
+                    </p>`;
+      }
+    }
+    
+    // Conditional Access Section with improved formatting
+    if (formData.conditionalAccess.checked) {
+      const caSectionTitle = this.translate('conditionalAccessTitle', language);
+      htmlContent += createImprovedSectionHeader(caSectionTitle, tierColor);
+      
+      htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('conditionalAccessIntro', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0 0 25px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 20px !important; background-color: #f8f8f8;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">`;
+      
+      if (formData.conditionalAccess.mfa) {
+          htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('mfaPolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+      }
+      
+      if (formData.conditionalAccess.location) {
+          htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('locationPolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+      }
+      
+      if (formData.conditionalAccess.device) {
+          htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('devicePolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+      }
+      
+      if (formData.conditionalAccess.signIn) {
+          htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('signInPolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+      }
+      
+      htmlContent += `
+                                </table>
+                            </td>
+                        </tr>
+                    </table>`;
+    }
+    
+    // Additional Notes Section with improved formatting
+    if (formData.additionalNotes) {
+      const additionalInfoTitle = this.translate('additionalInfoTitle', language);
+      htmlContent += createImprovedSectionHeader(additionalInfoTitle, tierColor);
+      
+      // Process line breaks in the notes to preserve formatting
+      const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
+      
+      htmlContent += `
+                    <p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${formattedNotes}
+                    </p>`;
+    }
+    
+    // Closing and Footer with improved formatting
+    htmlContent += `
+                    <p style="margin: 40px 0 24px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('closing', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px; background-color: #FFFFFF;">
+                        <tr>
+                            <td style="padding: 0 !important; background-color: #FFFFFF;">
+                                <p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                                    ${this.translate('regards', language)}
+                                </p>
+                                <p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                                    <strong style="font-weight: 600; background-color: #FFFFFF;">${formData.senderName}</strong><br>
+                                    <span style="background-color: #FFFFFF;">${formData.senderTitle}</span><br>
+                                    <span style="background-color: #FFFFFF;">${formData.senderCompany}</span><br>
+                                    <span style="background-color: #FFFFFF;">${formData.senderContact || ''}</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 50px; border-top: 1px solid #eee; background-color: #FFFFFF;">
+            <tr>
+                <td style="padding: 20px 0 0 0 !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center; background-color: #FFFFFF;">
+                    <p style="margin: 0; line-height: 1.5; background-color: #FFFFFF;">
                         ${this.translate('footer', language)}
                     </p>
                 </td>

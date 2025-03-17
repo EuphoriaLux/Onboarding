@@ -1021,7 +1021,122 @@ button:active {
   .view-toggle button {
     width: 100%;
   }
-}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== CSS Variables & Global Reset ========== */\r\n:root {\r\n  /* Core colors */\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --primary-light: rgba(0, 120, 212, 0.1);\r\n  --success-color: #107c10;\r\n  --success-hover: #0e6e0e;\r\n  --warning-color: #d83b01;\r\n  --warning-hover: #c23500;\r\n  \r\n  /* Neutral colors */\r\n  --text-color: #323130;\r\n  --text-light: #605e5c;\r\n  --border-color: #edebe9;\r\n  --background-light: #f5f5f5;\r\n  --background-lighter: #fafafa;\r\n  \r\n  /* Bronze tier */\r\n  --bronze: #cd7f32;\r\n  --bronze-light: rgba(205, 127, 50, 0.1);\r\n  \r\n  /* Silver tier */\r\n  --silver: #C0C0C0;\r\n  --silver-light: rgba(192, 192, 192, 0.1);\r\n  \r\n  /* Gold tier */\r\n  --gold: #FFD700;\r\n  --gold-light: rgba(255, 215, 0, 0.1);\r\n  \r\n  /* Platinum tier */\r\n  --platinum: #E5E4E2;\r\n  --platinum-light: rgba(229, 228, 226, 0.1);\r\n  \r\n  /* Effects */\r\n  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);\r\n  --box-shadow-active: 0 1px 4px rgba(0, 0, 0, 0.16);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n  --focus-ring: 0 0 0 2px rgba(0, 120, 212, 0.25);\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n/* ========== Layout & Typography ========== */\r\n.app-container {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding: 24px;\r\n  background-color: white;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  padding-bottom: 60px;\r\n}\r\n\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  font-weight: 700;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 30px;\r\n  padding-bottom: 16px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 18px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 8px;\r\n  font-weight: 500;\r\n  color: var(--text-color);\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #d2d0ce;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  color: var(--text-color);\r\n  background-color: white;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:hover,\r\nselect:hover,\r\ntextarea:hover {\r\n  border-color: #b3b0ad;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: var(--focus-ring);\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n  transform: scale(1.1);\r\n  cursor: pointer;\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n  box-shadow: var(--box-shadow-active);\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.add-button::before {\r\n  content: \"+\";\r\n  margin-right: 6px;\r\n  font-weight: bold;\r\n  font-size: 16px;\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 6px 10px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: var(--warning-hover);\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n  min-width: 120px;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== Comprehensive Form Layout ========== */\r\n.comprehensive-form {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 25px;\r\n  padding-bottom: 20px;\r\n}\r\n\r\n.form-section {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  border: 1px solid var(--border-color);\r\n  padding: 24px;\r\n  box-shadow: var(--box-shadow);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.form-section:hover {\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.section-description {\r\n  color: var(--text-light);\r\n  margin-bottom: 18px;\r\n  font-size: 14px;\r\n}\r\n\r\n.customer-info-section {\r\n  display: grid;\r\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n  gap: 20px;\r\n}\r\n\r\n.tier-section,\r\n.tenant-section,\r\n.contacts-section,\r\n.email-section {\r\n  border-top: 4px solid var(--primary-color);\r\n}\r\n\r\n.tenant-section h2,\r\n.contacts-section h2,\r\n.email-section h2 {\r\n  margin-top: 0;\r\n  color: var(--primary-color);\r\n  border-bottom: 1px solid var(--border-color);\r\n  padding-bottom: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n/* Bronze tier */\r\n.tier-card[style*=\"border-color: #cd7f32\"].selected {\r\n  background-color: var(--bronze-light) !important;\r\n}\r\n\r\n/* Silver tier */\r\n.tier-card[style*=\"border-color: #C0C0C0\"].selected {\r\n  background-color: var(--silver-light) !important;\r\n}\r\n\r\n/* Gold tier */\r\n.tier-card[style*=\"border-color: #FFD700\"].selected {\r\n  background-color: var(--gold-light) !important;\r\n}\r\n\r\n/* Platinum tier */\r\n.tier-card[style*=\"border-color: #E5E4E2\"].selected {\r\n  background-color: var(--platinum-light) !important;\r\n}\r\n\r\n.tier-header {\r\n  padding: 14px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 12px;\r\n  min-height: auto;\r\n  line-height: 1.4;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 8px;\r\n  font-size: 13px;\r\n  position: relative;\r\n  padding-left: 20px;\r\n}\r\n\r\n.tier-content li::before {\r\n  content: \"•\";\r\n  position: absolute;\r\n  left: 6px;\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n/* ========== Tenant Manager ========== */\r\n.tenant-manager {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tenant-limit {\r\n  display: inline-block;\r\n  padding: 4px 10px;\r\n  background-color: var(--background-light);\r\n  border-radius: 20px;\r\n  font-size: 12px;\r\n  margin-left: 8px;\r\n  color: var(--text-light);\r\n  font-weight: normal;\r\n}\r\n\r\n.tenant-card {\r\n  margin-bottom: 16px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tenant-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n/* Tier-specific styling for tenant cards */\r\n.tenant-card.bronze {\r\n  border-left: 4px solid var(--bronze);\r\n}\r\n\r\n.tenant-card.silver {\r\n  border-left: 4px solid var(--silver);\r\n}\r\n\r\n.tenant-card.gold {\r\n  border-left: 4px solid var(--gold);\r\n}\r\n\r\n.tenant-card.platinum {\r\n  border-left: 4px solid var(--platinum);\r\n}\r\n\r\n.tenant-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tenant-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.tenant-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 20px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n  gap: 16px;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 14px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n  font-size: 13px;\r\n}\r\n\r\n.info-box strong {\r\n  color: var(--primary-color);\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 0;\r\n  background-color: white;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n  margin-bottom: 0;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.section h3 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n  font-size: 14px;\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 20px;\r\n  padding-bottom: 18px;\r\n  border-bottom: 1px dashed var(--border-color);\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 30px;\r\n  margin-top: 10px;\r\n  padding: 16px;\r\n  background-color: var(--background-lighter);\r\n  border-left: 3px solid var(--border-color);\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 24px;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 24px;\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 24px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 10px 18px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 18px;\r\n  border-radius: 4px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.preview-header {\r\n  padding: 16px;\r\n  background-color: #f8f8f8;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 6px;\r\n}\r\n\r\n.preview-body {\r\n  background-color: white;\r\n}\r\n\r\n.preview-body iframe {\r\n  width: 100%;\r\n  height: 600px;\r\n  border: none;\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n}\r\n\r\n.text-preview {\r\n  padding: 16px;\r\n  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.6;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Tooltip and Status Messages ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 10px 16px;\r\n  border-radius: 4px;\r\n  margin-bottom: 16px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 200px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 24px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 12px 24px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.7);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(5px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 24px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 24px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 20px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 12px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 16px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 14px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 12px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 16px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 12px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 24px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 40px;\r\n  padding-top: 20px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 13px;\r\n}\r\n\r\n/* ========== Animations ========== */\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n/* ========== Responsive Adjustments ========== */\r\n@media (max-width: 992px) {\r\n  .app-container {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .tier-cards {\r\n    grid-template-columns: repeat(2, 1fr);\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .app-container {\r\n    padding: 12px;\r\n  }\r\n  \r\n  .comprehensive-form {\r\n    gap: 20px;\r\n  }\r\n  \r\n  .form-section {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n  \r\n  .tenant-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .action-buttons {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .action-buttons button {\r\n    width: 100%;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n  .tier-cards {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .view-toggle {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .view-toggle button {\r\n    width: 100%;\r\n  }\r\n}"],"sourceRoot":""}]);
+}
+
+/* Add these styles to src/styles/App.css */
+
+/* Add to src/styles/App.css */
+
+/* Add to the end of src/styles/App.css */
+
+/* ========== Language Selector Styles ========== */
+.language-option {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+}
+
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+}
+
+.language-selector label {
+  margin-bottom: 0;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.language-select {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: var(--focus-ring);
+}
+
+.language-indicator {
+  margin-left: 8px;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.language-badge {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  font-size: 12px;
+  font-weight: normal;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* Responsive adjustments for language selector */
+@media (max-width: 768px) {
+  .language-option {
+    position: static;
+    margin-top: 16px;
+  }
+  
+  .language-selector {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .language-select {
+    min-width: 120px;
+  }
+}
+
+/* Enhanced copy success message */
+.copy-success {
+  background-color: var(--success-color);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin: 16px 0;
+  text-align: center;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.3s ease-out, successPulse 1s ease-in-out infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 124, 16, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 124, 16, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 124, 16, 0);
+  }
+}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== CSS Variables & Global Reset ========== */\r\n:root {\r\n  /* Core colors */\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --primary-light: rgba(0, 120, 212, 0.1);\r\n  --success-color: #107c10;\r\n  --success-hover: #0e6e0e;\r\n  --warning-color: #d83b01;\r\n  --warning-hover: #c23500;\r\n  \r\n  /* Neutral colors */\r\n  --text-color: #323130;\r\n  --text-light: #605e5c;\r\n  --border-color: #edebe9;\r\n  --background-light: #f5f5f5;\r\n  --background-lighter: #fafafa;\r\n  \r\n  /* Bronze tier */\r\n  --bronze: #cd7f32;\r\n  --bronze-light: rgba(205, 127, 50, 0.1);\r\n  \r\n  /* Silver tier */\r\n  --silver: #C0C0C0;\r\n  --silver-light: rgba(192, 192, 192, 0.1);\r\n  \r\n  /* Gold tier */\r\n  --gold: #FFD700;\r\n  --gold-light: rgba(255, 215, 0, 0.1);\r\n  \r\n  /* Platinum tier */\r\n  --platinum: #E5E4E2;\r\n  --platinum-light: rgba(229, 228, 226, 0.1);\r\n  \r\n  /* Effects */\r\n  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);\r\n  --box-shadow-active: 0 1px 4px rgba(0, 0, 0, 0.16);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n  --focus-ring: 0 0 0 2px rgba(0, 120, 212, 0.25);\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n/* ========== Layout & Typography ========== */\r\n.app-container {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding: 24px;\r\n  background-color: white;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  padding-bottom: 60px;\r\n}\r\n\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  font-weight: 700;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 30px;\r\n  padding-bottom: 16px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 18px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 8px;\r\n  font-weight: 500;\r\n  color: var(--text-color);\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #d2d0ce;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  color: var(--text-color);\r\n  background-color: white;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:hover,\r\nselect:hover,\r\ntextarea:hover {\r\n  border-color: #b3b0ad;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: var(--focus-ring);\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n  transform: scale(1.1);\r\n  cursor: pointer;\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n  box-shadow: var(--box-shadow-active);\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.add-button::before {\r\n  content: \"+\";\r\n  margin-right: 6px;\r\n  font-weight: bold;\r\n  font-size: 16px;\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 6px 10px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: var(--warning-hover);\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n  min-width: 120px;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== Comprehensive Form Layout ========== */\r\n.comprehensive-form {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 25px;\r\n  padding-bottom: 20px;\r\n}\r\n\r\n.form-section {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  border: 1px solid var(--border-color);\r\n  padding: 24px;\r\n  box-shadow: var(--box-shadow);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.form-section:hover {\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.section-description {\r\n  color: var(--text-light);\r\n  margin-bottom: 18px;\r\n  font-size: 14px;\r\n}\r\n\r\n.customer-info-section {\r\n  display: grid;\r\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n  gap: 20px;\r\n}\r\n\r\n.tier-section,\r\n.tenant-section,\r\n.contacts-section,\r\n.email-section {\r\n  border-top: 4px solid var(--primary-color);\r\n}\r\n\r\n.tenant-section h2,\r\n.contacts-section h2,\r\n.email-section h2 {\r\n  margin-top: 0;\r\n  color: var(--primary-color);\r\n  border-bottom: 1px solid var(--border-color);\r\n  padding-bottom: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n/* Bronze tier */\r\n.tier-card[style*=\"border-color: #cd7f32\"].selected {\r\n  background-color: var(--bronze-light) !important;\r\n}\r\n\r\n/* Silver tier */\r\n.tier-card[style*=\"border-color: #C0C0C0\"].selected {\r\n  background-color: var(--silver-light) !important;\r\n}\r\n\r\n/* Gold tier */\r\n.tier-card[style*=\"border-color: #FFD700\"].selected {\r\n  background-color: var(--gold-light) !important;\r\n}\r\n\r\n/* Platinum tier */\r\n.tier-card[style*=\"border-color: #E5E4E2\"].selected {\r\n  background-color: var(--platinum-light) !important;\r\n}\r\n\r\n.tier-header {\r\n  padding: 14px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 12px;\r\n  min-height: auto;\r\n  line-height: 1.4;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 8px;\r\n  font-size: 13px;\r\n  position: relative;\r\n  padding-left: 20px;\r\n}\r\n\r\n.tier-content li::before {\r\n  content: \"•\";\r\n  position: absolute;\r\n  left: 6px;\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n/* ========== Tenant Manager ========== */\r\n.tenant-manager {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tenant-limit {\r\n  display: inline-block;\r\n  padding: 4px 10px;\r\n  background-color: var(--background-light);\r\n  border-radius: 20px;\r\n  font-size: 12px;\r\n  margin-left: 8px;\r\n  color: var(--text-light);\r\n  font-weight: normal;\r\n}\r\n\r\n.tenant-card {\r\n  margin-bottom: 16px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tenant-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n/* Tier-specific styling for tenant cards */\r\n.tenant-card.bronze {\r\n  border-left: 4px solid var(--bronze);\r\n}\r\n\r\n.tenant-card.silver {\r\n  border-left: 4px solid var(--silver);\r\n}\r\n\r\n.tenant-card.gold {\r\n  border-left: 4px solid var(--gold);\r\n}\r\n\r\n.tenant-card.platinum {\r\n  border-left: 4px solid var(--platinum);\r\n}\r\n\r\n.tenant-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tenant-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.tenant-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 20px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n  gap: 16px;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 14px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n  font-size: 13px;\r\n}\r\n\r\n.info-box strong {\r\n  color: var(--primary-color);\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 0;\r\n  background-color: white;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n  margin-bottom: 0;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.section h3 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n  font-size: 14px;\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 20px;\r\n  padding-bottom: 18px;\r\n  border-bottom: 1px dashed var(--border-color);\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 30px;\r\n  margin-top: 10px;\r\n  padding: 16px;\r\n  background-color: var(--background-lighter);\r\n  border-left: 3px solid var(--border-color);\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 24px;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 24px;\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 24px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 10px 18px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 18px;\r\n  border-radius: 4px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.preview-header {\r\n  padding: 16px;\r\n  background-color: #f8f8f8;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 6px;\r\n}\r\n\r\n.preview-body {\r\n  background-color: white;\r\n}\r\n\r\n.preview-body iframe {\r\n  width: 100%;\r\n  height: 600px;\r\n  border: none;\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n}\r\n\r\n.text-preview {\r\n  padding: 16px;\r\n  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.6;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Tooltip and Status Messages ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 10px 16px;\r\n  border-radius: 4px;\r\n  margin-bottom: 16px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 200px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 24px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 12px 24px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.7);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(5px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 24px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 24px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 20px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 12px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 16px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 14px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 12px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 16px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 12px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 24px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 40px;\r\n  padding-top: 20px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 13px;\r\n}\r\n\r\n/* ========== Animations ========== */\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n/* ========== Responsive Adjustments ========== */\r\n@media (max-width: 992px) {\r\n  .app-container {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .tier-cards {\r\n    grid-template-columns: repeat(2, 1fr);\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .app-container {\r\n    padding: 12px;\r\n  }\r\n  \r\n  .comprehensive-form {\r\n    gap: 20px;\r\n  }\r\n  \r\n  .form-section {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n  \r\n  .tenant-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .action-buttons {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .action-buttons button {\r\n    width: 100%;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n  .tier-cards {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .view-toggle {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .view-toggle button {\r\n    width: 100%;\r\n  }\r\n}\r\n\r\n/* Add these styles to src/styles/App.css */\r\n\r\n/* Add to src/styles/App.css */\r\n\r\n/* Add to the end of src/styles/App.css */\r\n\r\n/* ========== Language Selector Styles ========== */\r\n.language-option {\r\n  position: absolute;\r\n  top: 24px;\r\n  right: 24px;\r\n}\r\n\r\n.language-selector {\r\n  display: flex;\r\n  align-items: center;\r\n  gap: 12px;\r\n  background-color: white;\r\n  padding: 8px 12px;\r\n  border-radius: 4px;\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.language-selector label {\r\n  margin-bottom: 0;\r\n  font-weight: 500;\r\n  color: var(--primary-color);\r\n}\r\n\r\n.language-select {\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 4px;\r\n  padding: 6px 10px;\r\n  font-size: 14px;\r\n  background-color: white;\r\n  cursor: pointer;\r\n}\r\n\r\n.language-select:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: var(--focus-ring);\r\n}\r\n\r\n.language-indicator {\r\n  margin-left: 8px;\r\n  font-style: italic;\r\n  color: var(--text-light);\r\n}\r\n\r\n.language-badge {\r\n  display: inline-block;\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  padding: 3px 8px;\r\n  border-radius: 12px;\r\n  margin-left: 10px;\r\n  vertical-align: middle;\r\n}\r\n\r\n/* Responsive adjustments for language selector */\r\n@media (max-width: 768px) {\r\n  .language-option {\r\n    position: static;\r\n    margin-top: 16px;\r\n  }\r\n  \r\n  .language-selector {\r\n    width: 100%;\r\n    justify-content: space-between;\r\n  }\r\n  \r\n  .language-select {\r\n    min-width: 120px;\r\n  }\r\n}\r\n\r\n/* Enhanced copy success message */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 12px 16px;\r\n  border-radius: 4px;\r\n  margin: 16px 0;\r\n  text-align: center;\r\n  font-weight: 500;\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);\r\n  animation: fadeInUp 0.3s ease-out, successPulse 1s ease-in-out infinite;\r\n}\r\n\r\n@keyframes fadeInUp {\r\n  from {\r\n    opacity: 0;\r\n    transform: translateY(10px);\r\n  }\r\n  to {\r\n    opacity: 1;\r\n    transform: translateY(0);\r\n  }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% {\r\n    box-shadow: 0 0 0 0 rgba(16, 124, 16, 0.4);\r\n  }\r\n  70% {\r\n    box-shadow: 0 0 0 8px rgba(16, 124, 16, 0);\r\n  }\r\n  100% {\r\n    box-shadow: 0 0 0 0 rgba(16, 124, 16, 0);\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29295,10 +29410,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TenantManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TenantManager */ "./src/components/TenantManager.tsx");
 /* harmony import */ var _EmailForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EmailForm */ "./src/components/EmailForm.tsx");
 /* harmony import */ var _EmailPreview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./EmailPreview */ "./src/components/EmailPreview.tsx");
-/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../styles/App.css */ "./src/styles/App.css");
+/* harmony import */ var _LanguageSelector__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./LanguageSelector */ "./src/components/LanguageSelector.tsx");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../styles/App.css */ "./src/styles/App.css");
 
 // src/components/App.tsx
+
 
 
 
@@ -29323,9 +29440,10 @@ const App = () => {
     });
     const [emailData, setEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const [showEmailPreview, setShowEmailPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [language, setLanguage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('en'); // Add language state
     // Load saved data on initial render
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        chrome.storage.sync.get(['customerInfo', 'emailData'], (data) => {
+        chrome.storage.sync.get(['customerInfo', 'emailData', 'language'], (data) => {
             if (data.customerInfo) {
                 // Convert date string back to Date object
                 const storedInfo = data.customerInfo;
@@ -29360,15 +29478,23 @@ const App = () => {
             if (data.emailData) {
                 setEmailData(data.emailData);
             }
+            // Load saved language preference
+            if (data.language) {
+                setLanguage(data.language);
+            }
         });
     }, []);
     // Save customer info when it changes
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         chrome.storage.sync.set({ customerInfo });
     }, [customerInfo]);
+    // Save language preference when it changes
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        chrome.storage.sync.set({ language });
+    }, [language]);
     // Handle tier selection - adjust tenants and contacts based on tier limits
     const handleTierChange = (tier) => {
-        const selectedTierObj = _data_supportTiers__WEBPACK_IMPORTED_MODULE_7__.supportTiers[tier];
+        const selectedTierObj = _data_supportTiers__WEBPACK_IMPORTED_MODULE_8__.supportTiers[tier];
         let updatedTenants = [...customerInfo.tenants];
         let updatedContacts = [...customerInfo.authorizedContacts];
         // Limit tenants to the new tier's maximum
@@ -29410,6 +29536,10 @@ const App = () => {
             console.error("Error parsing date: ", err);
         }
     };
+    // Handle language change
+    const handleLanguageChange = (newLanguage) => {
+        setLanguage(newLanguage);
+    };
     // Prepare data for Email Form
     const getEmailCustomerInfo = () => {
         // Use the first tenant's info for the email by default
@@ -29426,21 +29556,25 @@ const App = () => {
     };
     // Handle email data updates from email form
     const handleEmailDataSave = (data) => {
-        setEmailData(data);
-        chrome.storage.sync.set({ emailData: data });
+        // Make sure language is included in saved data
+        const dataWithLanguage = Object.assign(Object.assign({}, data), { language });
+        setEmailData(dataWithLanguage);
+        chrome.storage.sync.set({ emailData: dataWithLanguage });
     };
     // Generate email preview
     const handleEmailPreview = (data) => {
-        setEmailData(data);
+        // Make sure language is included in preview data
+        const dataWithLanguage = Object.assign(Object.assign({}, data), { language });
+        setEmailData(dataWithLanguage);
         setShowEmailPreview(true);
     };
     // Return to form editing
     const handleBackToEdit = () => {
         setShowEmailPreview(false);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container options-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Tool" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure customer details and generate rich text emails for onboarding" })] }), showEmailPreview && emailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailPreview__WEBPACK_IMPORTED_MODULE_6__["default"], { emailData: emailData, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TierSelector__WEBPACK_IMPORTED_MODULE_2__["default"], { selectedTier: customerInfo.selectedTier, onChange: handleTierChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: customerInfo.contactName, onChange: (e) => handleCustomerInfoChange('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: customerInfo.contactEmail, onChange: (e) => handleCustomerInfoChange('contactEmail', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime())
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container options-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Tool" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure customer details and generate rich text emails for onboarding" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LanguageSelector__WEBPACK_IMPORTED_MODULE_7__["default"], { selectedLanguage: language, onChange: handleLanguageChange }) })] }), showEmailPreview && emailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailPreview__WEBPACK_IMPORTED_MODULE_6__["default"], { emailData: Object.assign(Object.assign({}, emailData), { language }), onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TierSelector__WEBPACK_IMPORTED_MODULE_2__["default"], { selectedTier: customerInfo.selectedTier, onChange: handleTierChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: customerInfo.contactName, onChange: (e) => handleCustomerInfoChange('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: customerInfo.contactEmail, onChange: (e) => handleCustomerInfoChange('contactEmail', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime())
                                             ? customerInfo.proposedDate.toISOString().split('T')[0]
-                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TenantManager__WEBPACK_IMPORTED_MODULE_4__["default"], { tenants: customerInfo.tenants, selectedTier: customerInfo.selectedTier, onChange: handleTenantsChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ContactsForm__WEBPACK_IMPORTED_MODULE_3__["default"], { contacts: customerInfo.authorizedContacts, selectedTier: customerInfo.selectedTier, onChange: handleContactsChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Builder" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Customize the email template that will be sent to the customer as part of the onboarding process." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailForm__WEBPACK_IMPORTED_MODULE_5__["default"], { customerInfo: getEmailCustomerInfo(), onSaveEmailData: handleEmailDataSave, onPreviewEmail: handleEmailPreview })] })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", { className: "app-footer", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Onboarding Tool - v1.0.1" }) })] }));
+                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TenantManager__WEBPACK_IMPORTED_MODULE_4__["default"], { tenants: customerInfo.tenants, selectedTier: customerInfo.selectedTier, onChange: handleTenantsChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ContactsForm__WEBPACK_IMPORTED_MODULE_3__["default"], { contacts: customerInfo.authorizedContacts, selectedTier: customerInfo.selectedTier, onChange: handleContactsChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Builder" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Customize the email template that will be sent to the customer as part of the onboarding process." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailForm__WEBPACK_IMPORTED_MODULE_5__["default"], { customerInfo: getEmailCustomerInfo(), onSaveEmailData: handleEmailDataSave, onPreviewEmail: handleEmailPreview, language: language })] })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", { className: "app-footer", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Onboarding Tool - v1.0.2" }) })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -29503,12 +29637,13 @@ __webpack_require__.r(__webpack_exports__);
 // src/components/EmailForm.tsx
 
 
-const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail }) => {
-    const [emailData, setEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].processCustomerInfoToEmailData(customerInfo));
+const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail, language = 'en' // Default to English if not provided
+ }) => {
+    const [emailData, setEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].processCustomerInfoToEmailData(customerInfo, language));
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        // Update email data when customer info changes
-        setEmailData(_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].processCustomerInfoToEmailData(customerInfo));
-    }, [customerInfo]);
+        // Update email data when customer info or language changes
+        setEmailData(_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].processCustomerInfoToEmailData(customerInfo, language));
+    }, [customerInfo, language]);
     const handleInputChange = (field, value) => {
         setEmailData((prev) => (Object.assign(Object.assign({}, prev), { [field]: value })));
     };
@@ -29520,8 +29655,10 @@ const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail }) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSaveEmailData(emailData);
-        onPreviewEmail(emailData);
+        // Include language in the form data
+        const dataWithLanguage = Object.assign(Object.assign({}, emailData), { language });
+        onSaveEmailData(dataWithLanguage);
+        onPreviewEmail(dataWithLanguage);
     };
     const handleCheckboxToggle = (section, field) => {
         setEmailData((prev) => {
@@ -29529,7 +29666,18 @@ const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail }) => {
             return Object.assign(Object.assign({}, prev), { [section]: Object.assign(Object.assign({}, currentSection), { [field]: !currentSection[field] }) });
         });
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-form-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "info-text", children: "Customize this email template to send to your client as part of the onboarding process." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "to", value: emailData.to, onChange: (e) => handleInputChange('to', e.target.value), placeholder: "recipient@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "cc", value: emailData.cc || '', onChange: (e) => handleInputChange('cc', e.target.value), placeholder: "cc@example.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "subject", children: "Subject:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "subject", value: emailData.subject || '', onChange: (e) => handleInputChange('subject', e.target.value), placeholder: "Email subject" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select the components to include in your onboarding email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "gdap", checked: emailData.gdap.checked, onChange: () => handleCheckboxToggle('gdap', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap", children: "GDAP (Granular Delegation of Administrative Privileges)" })] }), emailData.gdap.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "nested-options", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdapDeadline", children: "Implementation Deadline:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "gdapDeadline", value: emailData.gdap.deadline, onChange: (e) => handleNestedChange('gdap', 'deadline', e.target.value), placeholder: "e.g., June 30, 2025" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdapLink", children: "GDAP Link:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "gdapLink", value: emailData.gdap.link, onChange: (e) => handleNestedChange('gdap', 'link', e.target.value), placeholder: "GDAP approval link" })] })] }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbac", checked: emailData.rbac.checked, onChange: () => handleCheckboxToggle('rbac', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbac", children: "RBAC (Role-Based Access Control)" })] }), emailData.rbac.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "nested-options", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacGroups", children: "Security Groups to Configure:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "rbacGroups", value: emailData.rbac.groups, onChange: (e) => handleNestedChange('rbac', 'groups', e.target.value), placeholder: "e.g., IT Admins, Finance Team, HR" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Permission Level:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacAzure", checked: emailData.rbac.azure, onChange: () => handleCheckboxToggle('rbac', 'azure') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacAzure", children: "Azure RBAC" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacM365", checked: emailData.rbac.m365, onChange: () => handleCheckboxToggle('rbac', 'm365') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacM365", children: "Microsoft 365 RBAC" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-group", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeRbacScript", checked: emailData.rbac.includeScript, onChange: () => handleCheckboxToggle('rbac', 'includeScript') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeRbacScript", children: "Include PowerShell Script" })] }) })] }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "conditionalAccess", checked: emailData.conditionalAccess.checked, onChange: () => handleCheckboxToggle('conditionalAccess', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "conditionalAccess", children: "Conditional Access" })] }), emailData.conditionalAccess.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "nested-options", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", checked: emailData.conditionalAccess.mfa, onChange: () => handleCheckboxToggle('conditionalAccess', 'mfa') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", checked: emailData.conditionalAccess.location, onChange: () => handleCheckboxToggle('conditionalAccess', 'location') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", checked: emailData.conditionalAccess.device, onChange: () => handleCheckboxToggle('conditionalAccess', 'device') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", checked: emailData.conditionalAccess.signIn, onChange: () => handleCheckboxToggle('conditionalAccess', 'signIn') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "authorizedContacts", checked: emailData.authorizedContacts.checked, onChange: () => handleCheckboxToggle('authorizedContacts', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "authorizedContacts", children: "Authorized Contacts Table" })] }), emailData.authorizedContacts.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "nested-options", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contactsRoles", children: "Recommended Contact Roles:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "contactsRoles", value: emailData.authorizedContacts.roles, onChange: (e) => handleNestedChange('authorizedContacts', 'roles', e.target.value), placeholder: "e.g., Technical Contact, Billing Contact" })] }) }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Additional Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "meetingDate", children: "Onboarding Meeting Date (if applicable):" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "meetingDate", value: emailData.meetingDate || '', onChange: (e) => handleInputChange('meetingDate', e.target.value), placeholder: "e.g., March 20, 2025 at 2:00 PM EST" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additionalNotes", children: "Additional Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additionalNotes", value: emailData.additionalNotes || '', onChange: (e) => handleInputChange('additionalNotes', e.target.value), placeholder: "Any additional information for the client...", rows: 4 })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Sender Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderName", children: "Your Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderName", value: emailData.senderName, onChange: (e) => handleInputChange('senderName', e.target.value), placeholder: "Your full name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderTitle", children: "Your Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderTitle", value: emailData.senderTitle, onChange: (e) => handleInputChange('senderTitle', e.target.value), placeholder: "Your job title" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderCompany", children: "Your Company:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderCompany", value: emailData.senderCompany, onChange: (e) => handleInputChange('senderCompany', e.target.value), placeholder: "Your company name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderContact", children: "Your Contact Info:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderContact", value: emailData.senderContact || '', onChange: (e) => handleInputChange('senderContact', e.target.value), placeholder: "Phone number or additional contact info" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "submit", className: "btn-preview", children: "Preview Email" }) })] })] }));
+    // Display current language info
+    const languageDisplay = () => {
+        switch (language) {
+            case 'fr':
+                return 'Français';
+            case 'de':
+                return 'Deutsch';
+            default:
+                return 'English';
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-form-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "info-text", children: ["Customize this email template to send to your client as part of the onboarding process.", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "language-indicator", children: [" Current language: ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: languageDisplay() })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: handleSubmit, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "to", value: emailData.to, onChange: (e) => handleInputChange('to', e.target.value), placeholder: "recipient@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "cc", value: emailData.cc || '', onChange: (e) => handleInputChange('cc', e.target.value), placeholder: "cc@example.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "subject", children: "Subject:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "subject", value: emailData.subject || '', onChange: (e) => handleInputChange('subject', e.target.value), placeholder: "Email subject" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select the components to include in your onboarding email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "gdap", checked: emailData.gdap.checked, onChange: () => handleCheckboxToggle('gdap', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap", children: "GDAP (Granular Delegation of Administrative Privileges)" })] }), emailData.gdap.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "nested-options", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdapDeadline", children: "Implementation Deadline:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "gdapDeadline", value: emailData.gdap.deadline, onChange: (e) => handleNestedChange('gdap', 'deadline', e.target.value), placeholder: "e.g., June 30, 2025" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdapLink", children: "GDAP Link:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "gdapLink", value: emailData.gdap.link, onChange: (e) => handleNestedChange('gdap', 'link', e.target.value), placeholder: "GDAP approval link" })] })] }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbac", checked: emailData.rbac.checked, onChange: () => handleCheckboxToggle('rbac', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbac", children: "RBAC (Role-Based Access Control)" })] }), emailData.rbac.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "nested-options", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacGroups", children: "Security Groups to Configure:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "rbacGroups", value: emailData.rbac.groups, onChange: (e) => handleNestedChange('rbac', 'groups', e.target.value), placeholder: "e.g., IT Admins, Finance Team, HR" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Permission Level:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacAzure", checked: emailData.rbac.azure, onChange: () => handleCheckboxToggle('rbac', 'azure') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacAzure", children: "Azure RBAC" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacM365", checked: emailData.rbac.m365, onChange: () => handleCheckboxToggle('rbac', 'm365') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacM365", children: "Microsoft 365 RBAC" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-group", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeRbacScript", checked: emailData.rbac.includeScript, onChange: () => handleCheckboxToggle('rbac', 'includeScript') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeRbacScript", children: "Include PowerShell Script" })] }) })] }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "conditionalAccess", checked: emailData.conditionalAccess.checked, onChange: () => handleCheckboxToggle('conditionalAccess', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "conditionalAccess", children: "Conditional Access" })] }), emailData.conditionalAccess.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "nested-options", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", checked: emailData.conditionalAccess.mfa, onChange: () => handleCheckboxToggle('conditionalAccess', 'mfa') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", checked: emailData.conditionalAccess.location, onChange: () => handleCheckboxToggle('conditionalAccess', 'location') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", checked: emailData.conditionalAccess.device, onChange: () => handleCheckboxToggle('conditionalAccess', 'device') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", checked: emailData.conditionalAccess.signIn, onChange: () => handleCheckboxToggle('conditionalAccess', 'signIn') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] }) }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "authorizedContacts", checked: emailData.authorizedContacts.checked, onChange: () => handleCheckboxToggle('authorizedContacts', 'checked') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "authorizedContacts", children: "Authorized Contacts Table" })] }), emailData.authorizedContacts.checked && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "nested-options", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contactsRoles", children: "Recommended Contact Roles:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "contactsRoles", value: emailData.authorizedContacts.roles, onChange: (e) => handleNestedChange('authorizedContacts', 'roles', e.target.value), placeholder: "e.g., Technical Contact, Billing Contact" })] }) }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Additional Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "meetingDate", children: "Onboarding Meeting Date (if applicable):" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "meetingDate", value: emailData.meetingDate || '', onChange: (e) => handleInputChange('meetingDate', e.target.value), placeholder: "e.g., March 20, 2025 at 2:00 PM EST" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additionalNotes", children: "Additional Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additionalNotes", value: emailData.additionalNotes || '', onChange: (e) => handleInputChange('additionalNotes', e.target.value), placeholder: "Any additional information for the client...", rows: 4 })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Sender Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderName", children: "Your Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderName", value: emailData.senderName, onChange: (e) => handleInputChange('senderName', e.target.value), placeholder: "Your full name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderTitle", children: "Your Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderTitle", value: emailData.senderTitle, onChange: (e) => handleInputChange('senderTitle', e.target.value), placeholder: "Your job title" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderCompany", children: "Your Company:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderCompany", value: emailData.senderCompany, onChange: (e) => handleInputChange('senderCompany', e.target.value), placeholder: "Your company name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "senderContact", children: "Your Contact Info:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "senderContact", value: emailData.senderContact || '', onChange: (e) => handleInputChange('senderContact', e.target.value), placeholder: "Phone number or additional contact info" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "submit", className: "btn-preview", children: "Preview Email" }) })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailForm);
 
@@ -29565,7 +29713,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 // src/components/EmailPreview.tsx
 
 
-
+ // Use the existing file path
 
 const EmailPreview = ({ emailData, onBackToEdit }) => {
     const [htmlContent, setHtmlContent] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
@@ -29573,9 +29721,14 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
     const [viewMode, setViewMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('html');
     const [copySuccess, setCopySuccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
     const [showInstructions, setShowInstructions] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    // Use the language from emailData, defaulting to English
+    const language = (emailData.language || 'en');
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        // Generate email content
-        const html = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailHTML(emailData);
+        // Generate email content with the selected language
+        // Use the enhanced HTML method if available, otherwise use standard
+        const html = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEnhancedEmailHTML
+            ? _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEnhancedEmailHTML(emailData)
+            : _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailHTML(emailData);
         const text = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailBody(emailData);
         setHtmlContent(html);
         setPlainText(text);
@@ -29608,21 +29761,25 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
         const element = document.createElement('a');
         const file = new Blob([htmlContent], { type: 'text/html' });
         element.href = URL.createObjectURL(file);
-        element.download = `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding_Email.html`;
+        // Use company name in filename if available
+        const filename = emailData.companyName
+            ? `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding_Email_${language}.html`
+            : `Onboarding_Email_${language}.html`;
+        element.download = filename;
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
     };
     const handleOpenInOutlook = () => {
-        // First copy the HTML content to clipboard with formatting preserved
+        // First copy the HTML content to clipboard with enhanced formatting preserved
         (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText).then(() => {
             // Create a mailto URL
             const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
             // Open the default email client
             window.open(mailtoUrl);
-            // Show guidance message
-            alert('Your default email client should open. The formatted email content has been copied to your clipboard - please paste (Ctrl+V) into the email body.');
-        }).catch(err => {
+            // Show improved guidance message
+            alert('Your default email client should open.\n\nThe formatted email content has been copied to your clipboard with improved styling for Outlook compatibility.\n\nPress Ctrl+V (or Cmd+V on Mac) to paste the content into the email body.');
+        }).catch((err) => {
             console.error('Failed to copy before opening email client', err);
             alert('There was an issue copying the email content. Please try copying it manually before opening your email client.');
         });
@@ -29631,10 +29788,41 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
     const closeInstructions = () => {
         setShowInstructions(false);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
-                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Preserves formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
+    // Display current language
+    const languageDisplay = () => {
+        switch (language) {
+            case 'fr':
+                return 'Français';
+            case 'de':
+                return 'Deutsch';
+            default:
+                return 'English';
+        }
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
+                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
+
+
+/***/ }),
+
+/***/ "./src/components/LanguageSelector.tsx":
+/*!*********************************************!*\
+  !*** ./src/components/LanguageSelector.tsx ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+const LanguageSelector = ({ selectedLanguage, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "language-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "language-select", children: "Template Language:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { id: "language-select", value: selectedLanguage, onChange: (e) => onChange(e.target.value), className: "language-select", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "en", children: "English" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "fr", children: "Fran\u00E7ais" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "de", children: "Deutsch" })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LanguageSelector);
 
 
 /***/ }),
@@ -29650,9 +29838,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+// src/components/OutlookInstructions.tsx
 
 const OutlookInstructions = ({ onClose }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "outlook-instructions-overlay", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "outlook-instructions-modal", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Pasting Formatted Content in Outlook" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "close-button", onClick: onClose, children: "\u00D7" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Follow these steps to paste your formatted template into Outlook:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ol", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Copy the content" }), " using the \"Copy HTML to Clipboard\" button", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-image", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: "/api/placeholder/200/100", alt: "Copy button illustration" }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Open a new email in Outlook" }), " (or use the \"Open in Email Client\" button)"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Paste using Ctrl+V" }), " (or right-click and select \"Paste\")", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-note", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Note: For best results in Outlook, use the \"Keep Source Formatting\" option if prompted" }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Verify the formatting" }), " appears correctly before sending"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "troubleshooting", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Troubleshooting" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "If the formatting doesn't appear correctly:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Try using the \"Paste Special\" option in Outlook (Right-click \u2192 Paste Special \u2192 HTML)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Use the \"Download HTML\" button and attach the file to your email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Switch to Plain Text view if HTML formatting is not needed" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "got-it-button", onClick: onClose, children: "Got it!" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "dont-show-again", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox" }), " Don't show this again"] })] })] }) }));
+    const [dontShowAgain, setDontShowAgain] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const handleClose = () => {
+        if (dontShowAgain) {
+            localStorage.setItem('dontShowCopyInstructions', 'true');
+        }
+        onClose();
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "outlook-instructions-overlay", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "outlook-instructions-modal", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Enhanced Email Formatting for Outlook" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "close-button", onClick: handleClose, children: "\u00D7" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Your email has been copied with enhanced formatting for better compatibility with Outlook and other email clients. Follow these steps:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ol", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "The content has been copied to your clipboard" }), " with improved styling", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-image", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: "/api/placeholder/200/100", alt: "Copy button illustration" }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Open a new email in Outlook" }), " (or use the \"Open in Email Client\" button)"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Paste using Ctrl+V" }), " (or right-click and select \"Paste\")", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-note", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Important:" }), " If prompted with paste options in Outlook, choose \"Keep Source Formatting\" for best results."] }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Review the formatting" }), " after pasting", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "instruction-note", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "The email has been optimized with explicit background colors and improved spacing for better appearance." }) })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "troubleshooting", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Troubleshooting" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "If you notice any formatting issues:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: ["Try using ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "\"Paste Special\"" }), " in Outlook and select ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "HTML Format" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: ["Use the ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "\"Download HTML\"" }), " button and attach the file to your email"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "If images appear as placeholders, they will need to be replaced with actual images" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("li", { children: "Some email clients may display slight variations in formatting" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "instructions-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "got-it-button", onClick: handleClose, children: "Got it!" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "dont-show-again", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", checked: dontShowAgain, onChange: (e) => setDontShowAgain(e.target.checked) }), "Don't show this again"] })] })] }) }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OutlookInstructions);
 
@@ -29857,7 +30056,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   copyRichTextToClipboard: () => (/* binding */ copyRichTextToClipboard),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// src/utils/clipboardUtils.ts
+// src/utils/enhancedClipboardUtils.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -29868,12 +30067,13 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 /**
- * Utility to copy rich text (HTML) to clipboard with enhanced formatting preservation
+ * Enhanced utility for copying rich text (HTML) to clipboard with better email client compatibility
+ * Specifically optimized for Outlook and other email clients
  */
 const copyRichTextToClipboard = (html) => {
     return new Promise((resolve, reject) => {
         try {
-            // Create a temporary div with the HTML content
+            // Create a temporary container
             const container = document.createElement('div');
             // Important: set contentEditable to make it selectable
             container.setAttribute('contenteditable', 'true');
@@ -29883,9 +30083,9 @@ const copyRichTextToClipboard = (html) => {
             container.style.opacity = '0';
             // Add special attributes for Outlook
             container.setAttribute('data-outlook-preserve', 'true');
-            // Process the HTML to enhance PowerShell script formatting for copy-paste
-            const processedHtml = processPowerShellScripts(html);
-            container.innerHTML = processedHtml;
+            // Apply preprocessing to fix common styling issues
+            const enhancedHtml = preprocessHtml(html);
+            container.innerHTML = enhancedHtml;
             document.body.appendChild(container);
             // Select the content
             const selection = window.getSelection();
@@ -29911,44 +30111,92 @@ const copyRichTextToClipboard = (html) => {
     });
 };
 /**
+ * Preprocesses HTML before copying to improve compatibility with email clients
+ */
+const preprocessHtml = (html) => {
+    // 1. Add Office/Outlook specific metadata
+    const metaBlock = `
+    <!--[if gte mso 9]>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <style type="text/css">
+      /* Outlook-specific styles */
+      table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
+      td, th { padding: 12px !important; }
+      .mso-line-height-rule: exactly !important;
+      body, div, p, table, td, th, span { background-color: #FFFFFF !important; }
+      body { margin: 0 !important; padding: 0 !important; }
+      
+      /* Force white background */
+      body, .email-body { background-color: #FFFFFF !important; }
+      
+      /* Improved spacing */
+      p { margin-bottom: 16px !important; line-height: 1.6 !important; }
+      h1, h2, h3 { margin-top: 24px !important; margin-bottom: 16px !important; }
+      .section-space { margin-top: 30px !important; margin-bottom: 30px !important; }
+      td { padding: 12px !important; }
+    </style>
+  `;
+    // 2. Process the HTML to enhance it
+    // Fix background color issues by adding explicit background-color to elements
+    let processedHtml = html
+        .replace(/<body/g, '<body bgcolor="#FFFFFF" style="background-color: #FFFFFF !important; margin: 0; padding: 0;"')
+        .replace(/<div style="/g, '<div style="background-color: #FFFFFF !important; ')
+        .replace(/<table/g, '<table bgcolor="#FFFFFF" cellspacing="0" cellpadding="12" border="0"')
+        .replace(/<td style="/g, '<td style="background-color: #FFFFFF !important; padding: 12px !important; ')
+        .replace(/<th style="/g, '<th style="background-color: #FFFFFF !important; padding: 12px !important; ')
+        .replace(/<p style="/g, '<p style="margin-bottom: 16px !important; line-height: 1.6 !important; ')
+        .replace(/<span style="/g, '<span style="background-color: transparent !important; ');
+    // 3. Add meta block after the <head> tag
+    processedHtml = processedHtml.replace(/<head>/, '<head>' + metaBlock);
+    // 4. Fix spacing issues by adding more consistent spacing
+    processedHtml = processedHtml
+        .replace(/<div class="section/g, '<div class="section-space section')
+        .replace(/margin: 0 0 15px 0/g, 'margin: 0 0 20px 0')
+        .replace(/margin-bottom: 20px/g, 'margin-bottom: 30px')
+        .replace(/padding: 16px/g, 'padding: 20px')
+        .replace(/line-height: 1.5/g, 'line-height: 1.6');
+    // 5. Process PowerShell scripts for better formatting
+    processedHtml = processPowerShellScripts(processedHtml);
+    return processedHtml;
+};
+/**
  * Process HTML to enhance PowerShell scripts for better copy-paste experience
  */
 const processPowerShellScripts = (html) => {
-    // Look for PowerShell script sections and replace them with plaintext versions
-    // that will copy-paste better while preserving the visual styling
-    const scriptPattern = /<table[^>]*class="powershell-script-container"[^>]*>[\s\S]*?<\/table>/g;
-    return html.replace(scriptPattern, (match) => {
-        // Extract the actual script content
-        const contentMatch = match.match(/<pre[^>]*>([\s\S]*?)<\/pre>/);
-        if (!contentMatch || !contentMatch[1])
-            return match;
-        // Get the plain script content (removing HTML tags but keeping whitespace)
-        const scriptContent = contentMatch[1]
-            .replace(/<[^>]*>/g, '') // Remove HTML tags
+    // Look for PowerShell script sections and enhance them for better copying
+    const scriptPattern = /<pre[^>]*>([\s\S]*?)<\/pre>/g;
+    return html.replace(scriptPattern, (match, scriptContent) => {
+        // Clean the script content
+        const cleanScript = scriptContent
             .replace(/&lt;/g, '<')
             .replace(/&gt;/g, '>')
             .replace(/&amp;/g, '&')
             .replace(/&quot;/g, '"')
-            .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec));
-        // Create a new div that will render nicely but copy as plain text
+            .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(parseInt(dec, 10)));
+        // Create a better formatted script container with improved styling
         return `
-      <div class="powershell-script-container" style="margin: 15px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div style="padding: 12px 16px; background-color: #2b579a; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold;">
+      <div style="background-color: #f5f5f5 !important; border: 1px solid #ddd; border-radius: 4px; padding: 20px; margin: 24px 0; font-family: Consolas, Monaco, 'Courier New', monospace;">
+        <div style="padding: 8px 12px; background-color: #2b579a; color: white; margin-bottom: 12px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 600; border-radius: 3px;">
           PowerShell Script
         </div>
-        <div style="background-color: #f8f8f8; padding: 16px;">
-          <pre style="margin: 0; white-space: pre-wrap; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5;">${scriptContent}</pre>
-        </div>
+        <pre style="margin: 0; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; background-color: #f5f5f5 !important;">${cleanScript}</pre>
       </div>
     `;
     });
 };
 /**
  * Enhanced copy function for all content
+ * Includes better email client compatibility
  */
 const copyFormattedContent = (html, plainText) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // First try the rich text copy with enhanced PowerShell formatting
+        // First try the rich text copy with enhanced formatting
         yield copyRichTextToClipboard(html);
     }
     catch (err) {
@@ -30326,11 +30574,11 @@ const emailBuilder = {
         return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 35px 0 20px 0;">
       <tr>
-        <td style="padding: 0;">
+        <td style="padding: 0; background-color: #FFFFFF;">
           <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8; border-left: 4px solid ${color}; border-radius: 0 4px 4px 0;">
             <tr>
               <td style="padding: 16px;">
-                <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600;">${title}</h3>
+                <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600; background-color: #f8f8f8;">${title}</h3>
               </td>
             </tr>
           </table>
@@ -30343,14 +30591,14 @@ const emailBuilder = {
      */
     createInstructionBox: function (title, content) {
         return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #FFFFFF;">
       <tr>
-        <td style="padding: 0;">
+        <td style="padding: 0; background-color: #FFFFFF;">
           <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f0f7ff; border: 1px solid #cfe5ff; border-radius: 4px;">
             <tr>
-              <td style="padding: 16px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #333;">
-                <div style="font-weight: bold; color: #0078D4; margin-bottom: 8px; font-size: 15px;">${title}</div>
-                <div style="color: #333;">${content}</div>
+              <td style="padding: 16px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #333; background-color: #f0f7ff;">
+                <div style="font-weight: bold; color: #0078D4; margin-bottom: 8px; font-size: 15px; background-color: #f0f7ff;">${title}</div>
+                <div style="color: #333; background-color: #f0f7ff;">${content}</div>
               </td>
             </tr>
           </table>
@@ -30363,16 +30611,16 @@ const emailBuilder = {
      */
     createStepIndicator: function (number, title) {
         return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
       <tr>
-        <td style="padding: 0; vertical-align: middle;">
-          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+        <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
             <tr>
               <td style="width: 36px; height: 36px; background-color: #0078D4; border-radius: 50%; text-align: center; vertical-align: middle;">
-                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold;">${number}</span>
+                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4;">${number}</span>
               </td>
-              <td style="padding-left: 12px;">
-                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${title}</span>
+              <td style="padding-left: 12px; background-color: #FFFFFF;">
+                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${title}</span>
               </td>
             </tr>
           </table>
@@ -30983,6 +31231,660 @@ foreach ($subscription in $subscriptions) {
             <tr>
                 <td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;">
                     <p style="margin: 0; line-height: 1.5;">
+                        ${this.translate('footer', language)}
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>`;
+        return htmlContent;
+    },
+    /**
+     * Build Enhanced HTML version of the email with improved formatting for better copy-paste
+     * @param {EmailFormData} formData - The form data from the UI
+     * @returns {String} - Enhanced HTML formatted email content
+     */
+    buildEnhancedEmailHTML: function (formData) {
+        // Get the selected tier and language
+        const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
+        const language = (formData.language || 'en');
+        // Get tier color
+        let tierColor = '';
+        switch (formData.selectedTier) {
+            case 'bronze':
+                tierColor = '#cd7f32';
+                break;
+            case 'silver':
+                tierColor = '#C0C0C0';
+                break;
+            case 'gold':
+                tierColor = '#FFD700';
+                break;
+            case 'platinum':
+                tierColor = '#E5E4E2';
+                break;
+        }
+        // Generate subject if not provided
+        const subject = formData.subject || this.translate('subject', language, {
+            tier: tier.name,
+            company: formData.companyName
+        });
+        // Build the full HTML email with enhanced formatting for copy-paste
+        let htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>${subject}</title>
+    <!--[if mso]>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+    <style type="text/css">
+      body, table, td, th, div, p, h1, h2, h3, h4, h5, h6 {font-family: 'Segoe UI', Arial, sans-serif !important;}
+      table {border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;}
+      td, th {padding: 12px !important;}
+      h1, h2, h3, h4, h5, h6 {margin-top: 20px !important; margin-bottom: 16px !important;}
+      p {margin-bottom: 16px !important;}
+      .mso-line-height-rule: exactly !important;
+      body, div, p, a, li, td, th {background-color: #FFFFFF !important;}
+    </style>
+    <![endif]-->
+    <style type="text/css">
+      /* Base styles for all clients */
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: 'Segoe UI', Arial, sans-serif !important;
+        line-height: 1.6 !important;
+        color: #333333 !important;
+        background-color: #FFFFFF !important;
+      }
+      
+      table {
+        border-collapse: collapse !important;
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        margin-top: 24px !important;
+        margin-bottom: 16px !important;
+        color: #333333 !important;
+      }
+      
+      p {
+        margin-top: 0 !important;
+        margin-bottom: 16px !important;
+        line-height: 1.6 !important;
+      }
+      
+      td, th {
+        padding: 12px !important;
+      }
+      
+      /* Force white background for all elements */
+      body, div, td, th, p, span, a {
+        background-color: #FFFFFF !important;
+      }
+      
+      .section-container {
+        margin-top: 32px !important;
+        margin-bottom: 32px !important;
+      }
+      
+      .section-header {
+        padding: 14px 16px !important;
+        margin-bottom: 20px !important;
+      }
+    </style>
+</head>
+<body bgcolor="#FFFFFF" style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333333; background-color: #FFFFFF;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; background-color: #FFFFFF;">
+        <!-- Email Header -->
+        <table width="100%" cellpadding="12" cellspacing="0" border="0" bgcolor="#FFFFFF" style="border-collapse: collapse; margin-bottom: 30px; border-bottom: 1px solid #eee; background-color: #FFFFFF;">
+            <tr>
+                <td style="padding: 0 0 20px 0; background-color: #FFFFFF;">
+                    <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333333; font-family: 'Segoe UI', Arial, sans-serif; background-color: #FFFFFF;">
+                        <span style="font-weight: bold; color: #0078D4; background-color: #FFFFFF;">${formData.senderCompany.toUpperCase()}</span> 
+                        <span style="color: #333333; background-color: #FFFFFF;">| ${tier.name} ${this.translate('supportPlanTitle', language, { tier: '' }).trim()}</span>
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">To:</strong> <span style="background-color: #FFFFFF;">${formData.to}</span>
+                </td>
+            </tr>
+            ${formData.cc ? `
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">Cc:</strong> <span style="background-color: #FFFFFF;">${formData.cc}</span>
+                </td>
+            </tr>` : ''}
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">Subject:</strong> <span style="background-color: #FFFFFF;">${subject}</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 8px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; background-color: #FFFFFF;">
+                    <strong style="font-weight: 600; background-color: #FFFFFF;">Date:</strong> <span style="background-color: #FFFFFF;">${formData.currentDate}</span>
+                </td>
+            </tr>
+        </table>
+        
+        <!-- Email Body -->
+        <table width="100%" cellpadding="12" cellspacing="0" border="0" bgcolor="#FFFFFF" style="border-collapse: collapse; background-color: #FFFFFF;">
+            <tr>
+                <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                    <!-- Greeting -->
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('greeting', language, { name: formData.contactName })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('intro1', language, {
+            company: formData.senderCompany,
+            clientCompany: formData.companyName
+        })}
+                    </p>
+                    
+                    <p style="margin: 0 0 30px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('intro2', language, { tier: tier.name })}
+                    </p>`;
+        // Support Plan Section with tier-specific styling
+        htmlContent += `
+                    <!-- Support Plan Section -->
+                    <table width="100%" cellpadding="12" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 10px; border-radius: 4px; background-color: ${tierColor};">
+                        <tr>
+                            <td style="padding: 16px 20px !important; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; background-color: ${tierColor} !important;">
+                                <h2 style="margin: 0; padding: 0; color: white; font-size: 18px; font-weight: 600; background-color: ${tierColor} !important;">
+                                  ${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}
+                                </h2>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('supportPlanIntro', language, {
+            tier: tier.name,
+            supportType: formData.selectedTier === 'bronze'
+                ? this.translate('supportType.bronze', language)
+                : this.translate('supportType.other', language)
+        })}
+                    </p>
+                    
+                    <table width="100%" cellpadding="12" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0 30px 0; border: 1px solid #eee; border-radius: 4px; background-color: #FFFFFF;">
+                        <tr>
+                            <td style="padding: 20px 24px !important; background-color: #FFFFFF;">
+                                <table width="100%" cellpadding="8" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('supportTypeLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('supportHoursLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.supportHours}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('severityLevelsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('contactsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.authorizedContacts}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('tenantsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.tenants}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('requestsLabel', language)}</strong> 
+                                            <span style="background-color: #FFFFFF;">${tier.supportRequestsIncluded}</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #FFFFFF;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor} !important; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333333; background-color: #FFFFFF;">${this.translate('criticalLabel', language)}</strong> 
+                                            ${tier.criticalSituation
+            ? '<span style="color: #107c10; font-weight: 600; background-color: #FFFFFF;">' + this.translate('yes', language) + '</span>'
+            : '<span style="color: #d83b01; font-weight: 600; background-color: #FFFFFF;">' + this.translate('no', language) + '</span>'}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>`;
+        // Create improved section header with explicit white background
+        const createImprovedSectionHeader = (title, color) => {
+            return `
+      <div class="section-container" style="margin-top: 36px !important; margin-bottom: 24px !important; background-color: #FFFFFF;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px; background-color: #FFFFFF;">
+          <tr>
+            <td style="padding: 0 !important; background-color: #FFFFFF;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8; border-left: 4px solid ${color}; border-radius: 0 4px 4px 0;">
+                <tr>
+                  <td style="padding: 16px 20px !important; background-color: #f8f8f8;">
+                    <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600; background-color: #f8f8f8;">${title}</h3>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>`;
+        };
+        // Create improved contacts table with explicit white background and better spacing
+        const createImprovedContactsTable = (rows, language = 'en') => {
+            // Get translated headers
+            const numberHeader = this.translate('numberHeader', language);
+            const firstNameHeader = this.translate('firstNameHeader', language);
+            const lastNameHeader = this.translate('lastNameHeader', language);
+            const officePhoneHeader = this.translate('officePhoneHeader', language);
+            const mobilePhoneHeader = this.translate('mobilePhoneHeader', language);
+            const emailHeader = this.translate('emailHeader', language);
+            const jobTitleHeader = this.translate('jobTitleHeader', language);
+            // Create headers with improved styling
+            let tableHTML = `
+      <table class="contacts-table" width="100%" cellpadding="12" cellspacing="0" border="1" style="border-collapse: collapse; margin: 30px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border: 1px solid #dddddd; background-color: #FFFFFF;">
+        <tr style="background-color: #f3f3f3;">
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${numberHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${firstNameHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${lastNameHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${officePhoneHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${mobilePhoneHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${emailHeader}</th>
+          <th style="border: 1px solid #ddd; padding: 12px !important; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f3f3f3;">${jobTitleHeader}</th>
+        </tr>`;
+            // Create empty rows with improved styling
+            for (let i = 1; i <= rows; i++) {
+                const bgColor = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
+                tableHTML += `
+        <tr style="background-color: ${bgColor};">
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};">${i}</td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+          <td style="border: 1px solid #ddd; padding: 12px !important; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal; background-color: ${bgColor};"></td>
+        </tr>`;
+            }
+            tableHTML += `
+      </table>`;
+            return tableHTML;
+        };
+        // Improved script formatting with guaranteed white background
+        const formatImprovedScriptBlock = (scriptContent, language = 'en') => {
+            // Clean up the script content
+            const cleanedScript = scriptContent.trim()
+                .replace(/\t/g, '    ') // Replace tabs with spaces for consistency
+                .replace(/^\s*\n/gm, ''); // Remove empty lines
+            // Get translation for script header
+            const scriptHeader = this.translate('rbacScriptHeader', language);
+            // Better styled script block with consistent background color
+            return `
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 30px 0; background-color: #FFFFFF;">
+          <tr>
+            <td style="padding: 0 !important; background-color: #FFFFFF;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f5f5f5 !important; border: 1px solid #ddd; border-radius: 6px; overflow: hidden;">
+                <tr>
+                  <td style="padding: 12px 16px !important; background-color: #2b579a !important; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600;">
+                    ${scriptHeader}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 20px !important; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; background-color: #f5f5f5 !important;">
+${cleanedScript}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>`;
+        };
+        // Authorized Contacts Section with improved formatting
+        if (formData.authorizedContacts.checked) {
+            const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
+            htmlContent += createImprovedSectionHeader(contactsSectionTitle, tierColor);
+            htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('contactsIntro', language, {
+                tier: tier.name,
+                count: tier.authorizedContacts
+            })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('contactsRolesIntro', language, {
+                roles: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.authorizedContacts.roles}</strong>`
+            })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('contactsInstruction', language)}
+                    </p>
+                    
+                    ${createImprovedContactsTable(tier.authorizedContacts, language)}`;
+        }
+        // Meeting Section with improved formatting
+        if (formData.meetingDate) {
+            const meetingSectionTitle = this.translate('meetingTitle', language);
+            htmlContent += createImprovedSectionHeader(meetingSectionTitle, tierColor);
+            htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('meetingIntro', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 20px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                <strong style="font-weight: 600; color: #333; background-color: #f8f8f8;">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4; background-color: #f8f8f8;">${formData.meetingDate}</span>` })}</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('meetingAttendees', language)}
+                    </p>`;
+        }
+        // GDAP Section with improved formatting
+        if (formData.gdap.checked) {
+            const gdapSectionTitle = this.translate('gdapTitle', language);
+            htmlContent += createImprovedSectionHeader(gdapSectionTitle, tierColor);
+            htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.gdap.deadline}</strong>` })}
+                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.gdap.roles}</strong>` })}
+                    </p>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('gdapPermission', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 20px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                <p style="margin: 0 0 15px 0; font-weight: 600; color: #333; background-color: #f8f8f8;">
+                                ${this.translate('gdapInstruction', language)}
+                                </p>
+                                <p style="margin: 0; text-align: center; background-color: #f8f8f8;">
+                                  <a href="${formData.gdap.link}" target="_blank" style="display: inline-block; padding: 12px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
+                                    ${this.translate('gdapLink', language)}
+                                  </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>`;
+        }
+        // RBAC Section with improved formatting
+        if (formData.rbac.checked) {
+            const rbacSectionTitle = this.translate('rbacTitle', language);
+            htmlContent += createImprovedSectionHeader(rbacSectionTitle, tierColor);
+            let permissionText = '';
+            if (formData.rbac.azure && formData.rbac.m365) {
+                permissionText = this.translate('rbacPermissionBoth', language);
+            }
+            else if (formData.rbac.azure) {
+                permissionText = this.translate('rbacPermissionAzure', language);
+            }
+            else if (formData.rbac.m365) {
+                permissionText = this.translate('rbacPermission365', language);
+            }
+            htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('rbacIntro', language, { groups: `<strong style="font-weight: 600; background-color: #FFFFFF;">${formData.rbac.groups}</strong>` })}
+                      ${permissionText}
+                    </p>`;
+            if (formData.rbac.includeScript) {
+                htmlContent += `
+                    <p style="margin: 15px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">
+                      ${this.translate('rbacInstruction', language)}
+                    </p>`;
+                // Step 1 - Install Azure PowerShell with improved styling
+                htmlContent += `
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
+                      <tr>
+                        <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+                            <tr>
+                              <td style="width: 36px; height: 36px; background-color: #0078D4 !important; border-radius: 50%; text-align: center; vertical-align: middle;">
+                                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4 !important;">1</span>
+                              </td>
+                              <td style="padding-left: 12px; background-color: #FFFFFF;">
+                                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${this.translate('rbacStep1', language)}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>`;
+                htmlContent += `
+                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('rbacStep1Source', language)} 
+                      <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">
+                        https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0
+                      </a>
+                    </p>`;
+                // Install script with improved formatting
+                htmlContent += `<div style="margin-left: 48px; background-color: #FFFFFF;">
+                      ${formatImprovedScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}
+                    </div>`;
+                htmlContent += `
+                    <p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      or update it:
+                    </p>`;
+                // Update script with improved formatting
+                htmlContent += `<div style="margin-left: 48px; background-color: #FFFFFF;">
+                      ${formatImprovedScriptBlock('Update-Module Az.Resources -Force', language)}
+                    </div>`;
+                // Step 2 - Run the script with improved styling
+                htmlContent += `
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
+                      <tr>
+                        <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+                          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+                            <tr>
+                              <td style="width: 36px; height: 36px; background-color: #0078D4 !important; border-radius: 50%; text-align: center; vertical-align: middle;">
+                                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4 !important;">2</span>
+                              </td>
+                              <td style="padding-left: 12px; background-color: #FFFFFF;">
+                                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${this.translate('rbacStep2', language)}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>`;
+                htmlContent += `
+                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('rbacStep2Instruction', language)}
+                    </p>`;
+                // The main RBAC script with improved formatting
+                htmlContent += `<div style="margin-left: 48px; background-color: #FFFFFF;">
+                      ${formatImprovedScriptBlock(`# Connect to the correct tenant
+Connect-AzAccount -TenantID ${formData.rbac.tenantId}
+
+$subscriptions = Get-AzSubscription
+foreach ($subscription in $subscriptions) {
+    Set-AzContext -SubscriptionId $subscription.Id 
+    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue 
+    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
+    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+    if ($supportRole) {
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents." 
+        # Test if the Owner role for the Foreign Principal AdminAgents exists:
+        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+        if ($ownerRole) {
+            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
+            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner"
+        } else {
+            Write-Host "Owner role for Foreign Principal AdminAgents does not exist."
+        }
+    } else {
+        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"
+    }
+}`, language)}
+                    </div>`;
+                htmlContent += `
+                    <p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333; background-color: #FFFFFF;">
+                      ${this.translate('rbacScreenshot', language)}
+                    </p>`;
+            }
+        }
+        // Conditional Access Section with improved formatting
+        if (formData.conditionalAccess.checked) {
+            const caSectionTitle = this.translate('conditionalAccessTitle', language);
+            htmlContent += createImprovedSectionHeader(caSectionTitle, tierColor);
+            htmlContent += `
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('conditionalAccessIntro', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0 0 25px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 20px !important; background-color: #f8f8f8;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">`;
+            if (formData.conditionalAccess.mfa) {
+                htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('mfaPolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+            }
+            if (formData.conditionalAccess.location) {
+                htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('locationPolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+            }
+            if (formData.conditionalAccess.device) {
+                htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('devicePolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+            }
+            if (formData.conditionalAccess.signIn) {
+                htmlContent += `
+                                    <tr>
+                                        <td style="padding: 10px 0 !important; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; background-color: #f8f8f8;">
+                                            <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8;">
+                                                <tr>
+                                                    <td style="vertical-align: top; padding: 5px 0 0 0 !important; background-color: #f8f8f8;">
+                                                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4 !important; margin-right: 10px;"></span>
+                                                    </td>
+                                                    <td style="padding: 0 0 0 5px !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #f8f8f8;">
+                                                        ${this.translate('signInPolicy', language)}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>`;
+            }
+            htmlContent += `
+                                </table>
+                            </td>
+                        </tr>
+                    </table>`;
+        }
+        // Additional Notes Section with improved formatting
+        if (formData.additionalNotes) {
+            const additionalInfoTitle = this.translate('additionalInfoTitle', language);
+            htmlContent += createImprovedSectionHeader(additionalInfoTitle, tierColor);
+            // Process line breaks in the notes to preserve formatting
+            const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
+            htmlContent += `
+                    <p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${formattedNotes}
+                    </p>`;
+        }
+        // Closing and Footer with improved formatting
+        htmlContent += `
+                    <p style="margin: 40px 0 24px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                      ${this.translate('closing', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px; background-color: #FFFFFF;">
+                        <tr>
+                            <td style="padding: 0 !important; background-color: #FFFFFF;">
+                                <p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                                    ${this.translate('regards', language)}
+                                </p>
+                                <p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; background-color: #FFFFFF;">
+                                    <strong style="font-weight: 600; background-color: #FFFFFF;">${formData.senderName}</strong><br>
+                                    <span style="background-color: #FFFFFF;">${formData.senderTitle}</span><br>
+                                    <span style="background-color: #FFFFFF;">${formData.senderCompany}</span><br>
+                                    <span style="background-color: #FFFFFF;">${formData.senderContact || ''}</span>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 50px; border-top: 1px solid #eee; background-color: #FFFFFF;">
+            <tr>
+                <td style="padding: 20px 0 0 0 !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center; background-color: #FFFFFF;">
+                    <p style="margin: 0; line-height: 1.5; background-color: #FFFFFF;">
                         ${this.translate('footer', language)}
                     </p>
                 </td>

@@ -2,8 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { EmailFormData } from '../utils/emailBuilder';
 import emailBuilder from '../utils/emailBuilder';
-import { copyFormattedContent } from '../utils/clipboardUtils';
+import { copyFormattedContent } from '../utils/clipboardUtils'; // Use the existing file path
 import OutlookInstructions from './OutlookInstructions';
+
+// Define Language type if not imported
+export type Language = 'en' | 'fr' | 'de';
 
 interface EmailPreviewProps {
   emailData: EmailFormData;
@@ -16,10 +19,17 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
   const [viewMode, setViewMode] = useState<'html' | 'text'>('html');
   const [copySuccess, setCopySuccess] = useState('');
   const [showInstructions, setShowInstructions] = useState(false);
+  
+  // Use the language from emailData, defaulting to English
+  const language = (emailData.language || 'en') as Language;
 
   useEffect(() => {
-    // Generate email content
-    const html = emailBuilder.buildEmailHTML(emailData);
+    // Generate email content with the selected language
+    // Use the enhanced HTML method if available, otherwise use standard
+    const html = emailBuilder.buildEnhancedEmailHTML 
+      ? emailBuilder.buildEnhancedEmailHTML(emailData) 
+      : emailBuilder.buildEmailHTML(emailData);
+    
     const text = emailBuilder.buildEmailBody(emailData);
     
     setHtmlContent(html);
@@ -55,14 +65,20 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
     const element = document.createElement('a');
     const file = new Blob([htmlContent], {type: 'text/html'});
     element.href = URL.createObjectURL(file);
-    element.download = `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding_Email.html`;
+    
+    // Use company name in filename if available
+    const filename = emailData.companyName 
+      ? `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding_Email_${language}.html`
+      : `Onboarding_Email_${language}.html`;
+      
+    element.download = filename;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
   };
 
   const handleOpenInOutlook = () => {
-    // First copy the HTML content to clipboard with formatting preserved
+    // First copy the HTML content to clipboard with enhanced formatting preserved
     copyFormattedContent(htmlContent, plainText).then(() => {
       // Create a mailto URL
       const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
@@ -70,9 +86,9 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
       // Open the default email client
       window.open(mailtoUrl);
       
-      // Show guidance message
-      alert('Your default email client should open. The formatted email content has been copied to your clipboard - please paste (Ctrl+V) into the email body.');
-    }).catch(err => {
+      // Show improved guidance message
+      alert('Your default email client should open.\n\nThe formatted email content has been copied to your clipboard with improved styling for Outlook compatibility.\n\nPress Ctrl+V (or Cmd+V on Mac) to paste the content into the email body.');
+    }).catch((err) => {
       console.error('Failed to copy before opening email client', err);
       alert('There was an issue copying the email content. Please try copying it manually before opening your email client.');
     });
@@ -83,10 +99,22 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
     setShowInstructions(false);
   };
 
+  // Display current language
+  const languageDisplay = () => {
+    switch (language) {
+      case 'fr':
+        return 'Français';
+      case 'de':
+        return 'Deutsch';
+      default:
+        return 'English';
+    }
+  };
+
   return (
     <div className="email-preview-container">
       {showInstructions && <OutlookInstructions onClose={closeInstructions} />}
-      <h2>Email Preview</h2>
+      <h2>Email Preview <span className="language-badge">{languageDisplay()}</span></h2>
       
       <div className="preview-actions">
         <div className="view-toggle">
@@ -111,7 +139,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
           >
             Copy {viewMode === 'html' ? 'HTML' : 'Text'} to Clipboard
             {viewMode === 'html' && 
-              <span className="tooltip-text">Preserves formatting for Outlook</span>
+              <span className="tooltip-text">Enhanced formatting for Outlook</span>
             }
           </button>
           <button onClick={handleDownloadHTML}>Download HTML</button>
@@ -141,7 +169,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
             <iframe 
               srcDoc={htmlContent}
               title="Email Preview"
-              style={{ width: '100%', height: '600px', border: '1px solid #ddd' }}
+              style={{ width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' }}
             />
           ) : (
             <pre className="text-preview">{plainText}</pre>
