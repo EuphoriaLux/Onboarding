@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { supportTiers } from '../data/supportTiers';
 import { CustomerInfo } from '../utils/templateGenerator';
-import emailBuilder, { EmailFormData } from '../utils/emailBuilder';
+import emailBuilder, { EmailFormData } from '../utils/email/emailBuilder';
 
 // Define Language type if not imported
 type Language = 'en' | 'fr' | 'de';

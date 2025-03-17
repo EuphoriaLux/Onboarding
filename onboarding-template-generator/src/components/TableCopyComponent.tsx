@@ -1,6 +1,6 @@
 // src/components/TableCopyComponent.tsx
 import React, { useState } from 'react';
-import emailBuilder from '../utils/emailBuilder';
+import emailBuilder from '../utils/email/emailBuilder';
 import { CustomerInfo } from '../utils/templateGenerator';
 import { supportTiers } from '../data/supportTiers';
 

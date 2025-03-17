@@ -7,7 +7,7 @@ import EmailForm from './EmailForm';
 import EmailPreview from './EmailPreview';
 import LanguageSelector from './LanguageSelector';
 import { Language } from './LanguageSelector';
-import { EmailFormData } from '../utils/emailBuilder';
+import { EmailFormData } from '../utils/email/emailBuilder';
 import { supportTiers } from '../data/supportTiers';
 import '../styles/App.css';
 
