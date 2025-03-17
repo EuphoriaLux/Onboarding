@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import emailBuilder from '../utils/email/emailBuilder';
 import { CustomerInfo } from '../utils/templateGenerator';
 import { supportTiers } from '../data/supportTiers';
+// Import createContactsTable directly from the components
+import { createContactsTable } from '../utils/email/components/formatters';
 
 interface TableCopyComponentProps {
   customerInfo: CustomerInfo;
@@ -17,8 +19,8 @@ const TableCopyComponent: React.FC<TableCopyComponentProps> = ({ customerInfo })
       // Get the tier information to determine number of rows
       const tier = supportTiers[customerInfo.selectedTier];
       
-      // Generate the contacts table HTML
-      const tableHtml = emailBuilder.createContactsTable(tier.authorizedContacts);
+      // Generate the contacts table HTML using the imported function directly
+      const tableHtml = createContactsTable(tier.authorizedContacts);
       
       // Copy to clipboard
       // Note: We're using the browser's built-in clipboard API here
@@ -75,7 +77,7 @@ const TableCopyComponent: React.FC<TableCopyComponentProps> = ({ customerInfo })
       <div className="preview-container">
         <h4>Preview:</h4>
         <div dangerouslySetInnerHTML={{ 
-          __html: emailBuilder.createContactsTable(tier.authorizedContacts) 
+          __html: createContactsTable(tier.authorizedContacts) 
         }} />
       </div>
     </div>

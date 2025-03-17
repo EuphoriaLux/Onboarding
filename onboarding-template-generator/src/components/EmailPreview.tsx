@@ -1,6 +1,6 @@
-// src/components/EmailPreview.tsx
+// src/components/EmailPreview.tsx - Update imports
 import React, { useState, useEffect } from 'react';
-import { EmailFormData } from '../utils/email/emailBuilder';
+import { EmailFormData } from '../utils/email/types'; // Import from types directly
 import emailBuilder from '../utils/email/emailBuilder';
 import { copyFormattedContent } from '../utils/clipboardUtils'; // Use the existing file path
 import OutlookInstructions from './OutlookInstructions';

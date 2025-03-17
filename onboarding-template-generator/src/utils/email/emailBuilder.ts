@@ -1,4 +1,4 @@
-// src/utils/email/emailBuilder.ts
+// src/utils/email/emailBuilder.ts - Export needed functions
 import { supportTiers } from '../../data/supportTiers';
 import { CustomerInfo, EmailFormData, Language } from './types';
 import { getTranslation } from './translationService';
@@ -18,6 +18,18 @@ import {
  * Handles the creation and formatting of email content with multilingual support
  */
 const emailBuilder = {
+  // Expose the component functions to make them available
+  components: {
+    createContactsTable,
+    createImprovedContactsTable,
+    formatScriptBlock,
+    formatImprovedScriptBlock,
+    createSectionHeader,
+    createImprovedSectionHeader,
+    createInstructionBox,
+    createStepIndicator
+  },
+  
   /**
    * Convenience method to access translations
    */

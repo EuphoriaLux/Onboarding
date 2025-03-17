@@ -1,8 +1,9 @@
-// src/components/EmailForm.tsx
+// src/components/EmailForm.tsx - Update imports and fix implicit any errors
 import React, { useState, useEffect } from 'react';
 import { supportTiers } from '../data/supportTiers';
 import { CustomerInfo } from '../utils/templateGenerator';
-import emailBuilder, { EmailFormData } from '../utils/email/emailBuilder';
+import emailBuilder from '../utils/email/emailBuilder';
+import { EmailFormData } from '../utils/email/types'; // Import from types directly
 
 // Define Language type if not imported
 type Language = 'en' | 'fr' | 'de';
@@ -30,14 +31,14 @@ const EmailForm: React.FC<EmailFormProps> = ({
   }, [customerInfo, language]);
 
   const handleInputChange = (field: string, value: any) => {
-    setEmailData((prev) => ({
+    setEmailData((prev: EmailFormData) => ({ // Fix implicit any
       ...prev,
       [field]: value
     }));
   };
 
   const handleNestedChange = (section: string, field: string, value: any) => {
-    setEmailData((prev) => {
+    setEmailData((prev: EmailFormData) => { // Fix implicit any
       const currentSection = prev[section as keyof EmailFormData] as Record<string, any>;
       return {
         ...prev,
@@ -63,7 +64,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
   };
 
   const handleCheckboxToggle = (section: string, field: string) => {
-    setEmailData((prev) => {
+    setEmailData((prev: EmailFormData) => { // Fix implicit any
       const currentSection = prev[section as keyof EmailFormData] as Record<string, any>;
       return {
         ...prev,

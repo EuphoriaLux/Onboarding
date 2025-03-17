@@ -29414,7 +29414,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
 /* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../styles/App.css */ "./src/styles/App.css");
 
-// src/components/App.tsx
+// src/components/App.tsx - Update the imports
 
 
 
@@ -29634,7 +29634,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_email_emailBuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/email/emailBuilder */ "./src/utils/email/emailBuilder.ts");
 
-// src/components/EmailForm.tsx
+// src/components/EmailForm.tsx - Update imports and fix implicit any errors
 
 
 const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail, language = 'en' // Default to English if not provided
@@ -29710,7 +29710,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 
-// src/components/EmailPreview.tsx
+// src/components/EmailPreview.tsx - Update imports
 
 
  // Use the existing file path
@@ -30539,6 +30539,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _formatters__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./formatters */ "./src/utils/email/components/formatters.ts");
 /* harmony import */ var _builders__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./builders */ "./src/utils/email/components/builders.ts");
 // src/utils/email/components/index.ts
+// Make sure we're explicitly exporting all formatters and builders
 
 
 
@@ -30558,7 +30559,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../data/supportTiers */ "./src/data/supportTiers.ts");
 /* harmony import */ var _translationService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./translationService */ "./src/utils/email/translationService.ts");
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components */ "./src/utils/email/components/index.ts");
-// src/utils/email/emailBuilder.ts
+// src/utils/email/emailBuilder.ts - Export needed functions
 
 
 
@@ -30567,6 +30568,17 @@ __webpack_require__.r(__webpack_exports__);
  * Handles the creation and formatting of email content with multilingual support
  */
 const emailBuilder = {
+    // Expose the component functions to make them available
+    components: {
+        createContactsTable: _components__WEBPACK_IMPORTED_MODULE_2__.createContactsTable,
+        createImprovedContactsTable: _components__WEBPACK_IMPORTED_MODULE_2__.createImprovedContactsTable,
+        formatScriptBlock: _components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock,
+        formatImprovedScriptBlock: _components__WEBPACK_IMPORTED_MODULE_2__.formatImprovedScriptBlock,
+        createSectionHeader: _components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader,
+        createImprovedSectionHeader: _components__WEBPACK_IMPORTED_MODULE_2__.createImprovedSectionHeader,
+        createInstructionBox: _components__WEBPACK_IMPORTED_MODULE_2__.createInstructionBox,
+        createStepIndicator: _components__WEBPACK_IMPORTED_MODULE_2__.createStepIndicator
+    },
     /**
      * Convenience method to access translations
      */

@@ -1,4 +1,4 @@
-// src/components/App.tsx
+// src/components/App.tsx - Update the imports
 import React, { useState, useEffect } from 'react';
 import TierSelector from './TierSelector';
 import ContactsForm from './ContactsForm';
@@ -7,7 +7,8 @@ import EmailForm from './EmailForm';
 import EmailPreview from './EmailPreview';
 import LanguageSelector from './LanguageSelector';
 import { Language } from './LanguageSelector';
-import { EmailFormData } from '../utils/email/emailBuilder';
+import { EmailFormData } from '../utils/email/types'; // Import from types directly
+import emailBuilder from '../utils/email/emailBuilder';
 import { supportTiers } from '../data/supportTiers';
 import '../styles/App.css';
 
