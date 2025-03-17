@@ -23,65 +23,94 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/App.css */
 
-/* ========== Global styles ========== */
+/* ========== CSS Variables & Global Reset ========== */
+:root {
+  /* Core colors */
+  --primary-color: #0078d4;
+  --primary-hover: #106ebe;
+  --primary-light: rgba(0, 120, 212, 0.1);
+  --success-color: #107c10;
+  --success-hover: #0e6e0e;
+  --warning-color: #d83b01;
+  --warning-hover: #c23500;
+  
+  /* Neutral colors */
+  --text-color: #323130;
+  --text-light: #605e5c;
+  --border-color: #edebe9;
+  --background-light: #f5f5f5;
+  --background-lighter: #fafafa;
+  
+  /* Bronze tier */
+  --bronze: #cd7f32;
+  --bronze-light: rgba(205, 127, 50, 0.1);
+  
+  /* Silver tier */
+  --silver: #C0C0C0;
+  --silver-light: rgba(192, 192, 192, 0.1);
+  
+  /* Gold tier */
+  --gold: #FFD700;
+  --gold-light: rgba(255, 215, 0, 0.1);
+  
+  /* Platinum tier */
+  --platinum: #E5E4E2;
+  --platinum-light: rgba(229, 228, 226, 0.1);
+  
+  /* Effects */
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --box-shadow-active: 0 1px 4px rgba(0, 0, 0, 0.16);
+  --transition-fast: all 0.2s ease;
+  --transition-medium: all 0.3s ease;
+  --focus-ring: 0 0 0 2px rgba(0, 120, 212, 0.25);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  --primary-color: #0078d4;
-  --primary-hover: #106ebe;
-  --success-color: #107c10;
-  --success-hover: #10a310;
-  --warning-color: #d83b01;
-  --text-color: #333;
-  --text-light: #666;
-  --border-color: #eaeaea;
-  --background-light: #f9f9f9;
-  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --transition-fast: all 0.2s ease;
-  --transition-medium: all 0.3s ease;
-}
-
 body {
-  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ========== Layout & Typography ========== */
 .app-container {
-  width: 800px;
-  min-height: 600px;
-  padding: 20px;
-  background-color: #fff;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: white;
   box-shadow: var(--box-shadow);
   border-radius: 8px;
 }
 
-/* Options page adjustments */
 .options-page {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 40px;
+  padding-bottom: 60px;
 }
 
-/* ========== Typography ========== */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.3;
   color: var(--text-color);
+  margin-bottom: 16px;
 }
 
 h1 {
   font-size: 24px;
-  margin-bottom: 16px;
+  font-weight: 700;
 }
 
 h2 {
@@ -98,11 +127,10 @@ p {
   margin-bottom: 12px;
 }
 
-/* ========== Layout Components ========== */
 /* Generator header */
 .generator-header {
-  margin-bottom: 24px;
-  padding-bottom: 12px;
+  margin-bottom: 30px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -112,26 +140,20 @@ p {
 }
 
 .generator-header p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-light);
-}
-
-/* Generator content */
-.generator-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
 /* ========== Form Elements ========== */
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 500;
+  color: var(--text-color);
 }
 
 input[type="text"],
@@ -142,10 +164,18 @@ select,
 textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #d2d0ce;
   border-radius: 4px;
   font-size: 14px;
+  color: var(--text-color);
+  background-color: white;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #b3b0ad;
 }
 
 input:focus,
@@ -153,7 +183,13 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  box-shadow: var(--focus-ring);
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 button {
@@ -172,11 +208,112 @@ button:hover {
 
 button:active {
   transform: translateY(1px);
+  box-shadow: var(--box-shadow-active);
+}
+
+.add-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.add-button::before {
+  content: "+";
+  margin-right: 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.remove-button {
+  background-color: var(--warning-color);
+  color: white;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.remove-button:hover {
+  background-color: var(--warning-hover);
+}
+
+.btn-preview {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.btn-preview:hover {
+  background-color: var(--primary-hover);
+}
+
+.form-text {
+  font-size: 12px;
+  color: var(--text-light);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ========== Comprehensive Form Layout ========== */
+.comprehensive-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+.form-section {
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition-fast);
+}
+
+.form-section:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.section-description {
+  color: var(--text-light);
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.customer-info-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.tier-section,
+.tenant-section,
+.contacts-section,
+.email-section {
+  border-top: 4px solid var(--primary-color);
+}
+
+.tenant-section h2,
+.contacts-section h2,
+.email-section h2 {
+  margin-top: 0;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 /* ========== Tier Selector ========== */
 .tier-selector {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .tier-cards {
@@ -204,8 +341,28 @@ button:active {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Bronze tier */
+.tier-card[style*="border-color: #cd7f32"].selected {
+  background-color: var(--bronze-light) !important;
+}
+
+/* Silver tier */
+.tier-card[style*="border-color: #C0C0C0"].selected {
+  background-color: var(--silver-light) !important;
+}
+
+/* Gold tier */
+.tier-card[style*="border-color: #FFD700"].selected {
+  background-color: var(--gold-light) !important;
+}
+
+/* Platinum tier */
+.tier-card[style*="border-color: #E5E4E2"].selected {
+  background-color: var(--platinum-light) !important;
+}
+
 .tier-header {
-  padding: 12px;
+  padding: 14px;
   text-align: center;
   color: white;
 }
@@ -218,13 +375,14 @@ button:active {
 }
 
 .tier-content {
-  padding: 12px;
-  font-size: 12px;
+  padding: 16px;
+  font-size: 13px;
 }
 
 .tier-content p {
-  margin-bottom: 8px;
-  min-height: 60px;
+  margin-bottom: 12px;
+  min-height: auto;
+  line-height: 1.4;
 }
 
 .tier-content ul {
@@ -233,8 +391,83 @@ button:active {
 }
 
 .tier-content li {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.tier-content li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* ========== Tenant Manager ========== */
+.tenant-manager {
+  margin-bottom: 24px;
+}
+
+.tenant-limit {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: var(--background-light);
+  border-radius: 20px;
   font-size: 12px;
+  margin-left: 8px;
+  color: var(--text-light);
+  font-weight: normal;
+}
+
+.tenant-card {
+  margin-bottom: 16px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-lighter);
+  transition: var(--transition-fast);
+}
+
+.tenant-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Tier-specific styling for tenant cards */
+.tenant-card.bronze {
+  border-left: 4px solid var(--bronze);
+}
+
+.tenant-card.silver {
+  border-left: 4px solid var(--silver);
+}
+
+.tenant-card.gold {
+  border-left: 4px solid var(--gold);
+}
+
+.tenant-card.platinum {
+  border-left: 4px solid var(--platinum);
+}
+
+.tenant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tenant-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.tenant-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 /* ========== Contacts Form ========== */
@@ -243,23 +476,23 @@ button:active {
 }
 
 .contact-card {
-  margin-bottom: 16px;
-  padding: 16px;
+  margin-bottom: 20px;
+  padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  background-color: var(--background-light);
+  background-color: var(--background-lighter);
   transition: var(--transition-fast);
 }
 
 .contact-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .contact-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .contact-header h3 {
@@ -269,297 +502,131 @@ button:active {
 
 .contact-fields {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-}
-
-@media (max-width: 768px) {
-  .contact-fields {
-    grid-template-columns: 1fr;
-  }
-}
-
-.add-button {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.add-button:hover {
-  background-color: var(--primary-hover);
-}
-
-.remove-button {
-  background-color: var(--warning-color);
-  color: white;
-  padding: 4px 8px;
-  font-size: 12px;
-}
-
-.remove-button:hover {
-  background-color: #c23500;
-}
-
-/* ========== Preview Section ========== */
-.template-preview {
-  margin-top: 24px;
-}
-
-.preview-actions {
-  display: flex;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 16px;
-}
-
-.preview-button {
-  background-color: #f0f0f0;
-  color: var(--text-color);
-}
-
-.preview-button:hover {
-  background-color: #e0e0e0;
-}
-
-.copy-button {
-  background-color: var(--success-color);
-  color: white;
-  flex-grow: 1;
-  position: relative;
-  transition: background-color 0.3s ease;
-}
-
-.copy-button:hover {
-  background-color: var(--success-hover);
-}
-
-.copy-button.copied {
-  background-color: var(--success-hover);
-}
-
-.copy-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.validation-message {
-  color: var(--warning-color);
-  margin-bottom: 16px;
-  font-size: 13px;
-}
-
-.preview-container {
-  margin-top: 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.preview-content {
-  padding: 16px;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: white;
 }
 
 /* ========== Info Boxes ========== */
 .info-box {
-  padding: 12px;
+  padding: 14px;
   background-color: #f0f7ff;
   border-left: 4px solid var(--primary-color);
   margin: 16px 0;
   border-radius: 0 4px 4px 0;
+  font-size: 13px;
 }
 
-/* ========== Customer Info Section ========== */
-.customer-info-section {
-  background-color: var(--background-light);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  border: 1px solid var(--border-color);
-}
-
-/* ========== Small Text ========== */
-.form-text {
-  font-size: 12px;
-  color: var(--text-light);
-  display: block;
-  margin-top: 4px;
-}
-
-/* ========== App Footer ========== */
-.app-footer {
-  margin-top: 30px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-color);
-  text-align: center;
-  color: var(--text-light);
-  font-size: 12px;
-}
-
-/* ========== Tabs Styles ========== */
-.tabs-container {
-  margin-bottom: 20px;
-}
-
-.tabs-header {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 20px;
-}
-
-.tab-button {
-  padding: 10px 20px;
-  background-color: #f5f5f5;
-  border: none;
-  border-bottom: 3px solid transparent;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  margin-right: 5px;
-  font-weight: 500;
-  color: var(--text-light);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.tab-button.active {
-  background-color: #fff;
+.info-box strong {
   color: var(--primary-color);
-  border-bottom: 3px solid var(--primary-color);
-}
-
-.tab-button:hover:not(.active) {
-  background-color: #e0e0e0;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
 }
 
 /* ========== Email Form Styles ========== */
 .email-form-container {
-  padding: 20px;
-  background-color: #fff;
+  padding: 0;
+  background-color: white;
   border-radius: 8px;
 }
 
 .section {
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .section:last-child {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section h3 {
+  color: var(--primary-color);
+  margin-bottom: 16px;
 }
 
 .info-text {
   margin-bottom: 15px;
   color: var(--text-light);
+  font-size: 14px;
 }
 
 .checkbox-group {
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px dashed #eee;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--border-color);
 }
 
 .checkbox-group:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .checkbox-container {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-}
-
-.checkbox-container input[type="checkbox"] {
-  margin-right: 8px;
+  margin-bottom: 10px;
 }
 
 .nested-options {
-  margin-left: 25px;
+  margin-left: 30px;
   margin-top: 10px;
-  padding: 12px;
-  background-color: var(--background-light);
-  border-left: 3px solid #ddd;
+  padding: 16px;
+  background-color: var(--background-lighter);
+  border-left: 3px solid var(--border-color);
   border-radius: 0 4px 4px 0;
 }
 
 .inline-checks {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 24px;
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.btn-preview {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px 20px;
-  font-weight: bold;
-}
-
-.btn-preview:hover {
-  background-color: var(--primary-hover);
+  margin-top: 24px;
 }
 
 /* ========== Email Preview Styles ========== */
 .email-preview-container {
-  padding: 20px;
+  padding: 24px;
 }
 
 .view-toggle {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .view-toggle button {
   background-color: #f0f0f0;
   color: var(--text-color);
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: 10px 18px;
+  font-weight: 500;
   transition: var(--transition-fast);
 }
 
 .view-toggle button.active {
   background-color: var(--primary-color);
   color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .action-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .action-buttons button {
   background-color: var(--primary-color);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: 4px;
+  font-weight: 500;
   transition: var(--transition-fast);
 }
 
@@ -573,65 +640,60 @@ button:active {
 }
 
 .preview-content {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--box-shadow);
 }
 
 .preview-header {
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
+  padding: 16px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .preview-recipient, 
 .preview-subject, 
 .preview-date {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .preview-body {
-  padding: 0;
   background-color: white;
 }
 
+.preview-body iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  background-color: white;
+  transition: opacity 0.3s ease;
+}
+
 .text-preview {
-  padding: 15px;
-  font-family: monospace;
+  padding: 16px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   white-space: pre-wrap;
   word-break: break-word;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
   max-height: 600px;
   overflow-y: auto;
-  background-color: #fafafa;
+  background-color: white;
   border: 1px solid #eee;
 }
 
-/* ========== Copy Success Animation ========== */
+/* ========== Tooltip and Status Messages ========== */
 .copy-success {
   background-color: var(--success-color);
   color: white;
-  padding: 8px 15px;
+  padding: 10px 16px;
   border-radius: 4px;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   text-align: center;
   animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes successPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-/* ========== Tooltip Styling ========== */
 .tooltip {
   position: relative;
   display: inline-block;
@@ -639,17 +701,17 @@ button:active {
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  width: 180px;
+  width: 200px;
   background-color: #333;
   color: #fff;
   text-align: center;
   border-radius: 4px;
-  padding: 5px;
+  padding: 8px;
   position: absolute;
   z-index: 1;
   bottom: 125%;
   left: 50%;
-  margin-left: -90px;
+  transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s;
   font-size: 12px;
@@ -673,21 +735,10 @@ button:active {
   opacity: 1;
 }
 
-/* ========== Iframe Loading Effect ========== */
-.preview-body iframe {
-  background-color: white;
-  transition: opacity 0.3s ease;
-  opacity: 0.3;
-}
-
-.preview-body iframe.loaded {
-  opacity: 1;
-}
-
 /* ========== Popup Styles ========== */
 .popup-container {
   width: 300px;
-  padding: 20px;
+  padding: 24px;
   text-align: center;
 }
 
@@ -705,7 +756,7 @@ button:active {
 .primary-button {
   background-color: var(--primary-color);
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
   border-radius: 4px;
   font-size: 14px;
@@ -727,19 +778,19 @@ button:active {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
   animation: fadeIn 0.2s ease-out;
 }
 
 .outlook-instructions-modal {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
@@ -747,22 +798,11 @@ button:active {
   animation: modalSlideIn 0.3s ease-out;
 }
 
-@keyframes modalSlideIn {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 .instructions-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 18px 24px;
   border-bottom: 1px solid #eee;
   background-color: #f8f8f8;
 }
@@ -770,6 +810,7 @@ button:active {
 .instructions-header h3 {
   margin: 0;
   color: var(--primary-color);
+  font-size: 18px;
 }
 
 .close-button {
@@ -786,7 +827,7 @@ button:active {
 }
 
 .instructions-content {
-  padding: 20px;
+  padding: 24px;
 }
 
 .instructions-content ol {
@@ -795,7 +836,7 @@ button:active {
 }
 
 .instructions-content ol li {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   position: relative;
   padding-left: 5px;
 }
@@ -806,26 +847,26 @@ button:active {
 }
 
 .instruction-image {
-  margin: 10px 0;
+  margin: 12px 0;
   text-align: center;
   background-color: #f5f5f5;
   border-radius: 4px;
-  padding: 10px;
+  padding: 16px;
   border: 1px solid #eee;
 }
 
 .instruction-note {
   background-color: #f0f7ff;
-  padding: 12px;
+  padding: 14px;
   border-left: 4px solid var(--primary-color);
-  margin: 10px 0;
+  margin: 12px 0;
   font-size: 13px;
   border-radius: 0 4px 4px 0;
 }
 
 .troubleshooting {
   background-color: #f9f9f9;
-  padding: 15px;
+  padding: 16px;
   border-radius: 6px;
   margin-top: 20px;
   border: 1px solid #eee;
@@ -834,7 +875,7 @@ button:active {
 .troubleshooting h4 {
   margin-top: 0;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 15px;
 }
 
@@ -843,11 +884,11 @@ button:active {
 }
 
 .troubleshooting li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .instructions-footer {
-  padding: 16px 20px;
+  padding: 16px 24px;
   border-top: 1px solid #eee;
   display: flex;
   justify-content: space-between;
@@ -858,7 +899,7 @@ button:active {
 .got-it-button {
   background-color: var(--primary-color);
   color: white;
-  padding: 8px 20px;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -880,7 +921,107 @@ button:active {
 .dont-show-again input {
   margin-right: 6px;
   cursor: pointer;
-}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== Global styles ========== */\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n:root {\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --success-color: #107c10;\r\n  --success-hover: #10a310;\r\n  --warning-color: #d83b01;\r\n  --text-color: #333;\r\n  --text-light: #666;\r\n  --border-color: #eaeaea;\r\n  --background-light: #f9f9f9;\r\n  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n}\r\n\r\n.app-container {\r\n  width: 800px;\r\n  min-height: 600px;\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n/* Options page adjustments */\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1000px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding-bottom: 40px;\r\n}\r\n\r\n/* ========== Typography ========== */\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* ========== Layout Components ========== */\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 24px;\r\n  padding-bottom: 12px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 14px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* Generator content */\r\n.generator-content {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 24px;\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 16px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 6px;\r\n  font-weight: 500;\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n.tier-header {\r\n  padding: 12px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 12px;\r\n  font-size: 12px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 8px;\r\n  min-height: 60px;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 4px;\r\n  font-size: 12px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 16px;\r\n  padding: 16px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-light);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr 1fr;\r\n  gap: 12px;\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 4px 8px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: #c23500;\r\n}\r\n\r\n/* ========== Preview Section ========== */\r\n.template-preview {\r\n  margin-top: 24px;\r\n}\r\n\r\n.preview-actions {\r\n  display: flex;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.preview-button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-button:hover {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.copy-button {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  flex-grow: 1;\r\n  position: relative;\r\n  transition: background-color 0.3s ease;\r\n}\r\n\r\n.copy-button:hover {\r\n  background-color: var(--success-hover);\r\n}\r\n\r\n.copy-button.copied {\r\n  background-color: var(--success-hover);\r\n}\r\n\r\n.copy-button:disabled {\r\n  background-color: #cccccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.validation-message {\r\n  color: var(--warning-color);\r\n  margin-bottom: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.preview-container {\r\n  margin-top: 16px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.preview-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 12px 16px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-content {\r\n  padding: 16px;\r\n  max-height: 400px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 12px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n/* ========== Customer Info Section ========== */\r\n.customer-info-section {\r\n  background-color: var(--background-light);\r\n  padding: 16px;\r\n  border-radius: 8px;\r\n  margin-bottom: 24px;\r\n  border: 1px solid var(--border-color);\r\n}\r\n\r\n/* ========== Small Text ========== */\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 30px;\r\n  padding-top: 16px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 12px;\r\n}\r\n\r\n/* ========== Tabs Styles ========== */\r\n.tabs-container {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tabs-header {\r\n  display: flex;\r\n  border-bottom: 1px solid #ddd;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tab-button {\r\n  padding: 10px 20px;\r\n  background-color: #f5f5f5;\r\n  border: none;\r\n  border-bottom: 3px solid transparent;\r\n  border-top-left-radius: 4px;\r\n  border-top-right-radius: 4px;\r\n  margin-right: 5px;\r\n  font-weight: 500;\r\n  color: var(--text-light);\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tab-button.active {\r\n  background-color: #fff;\r\n  color: var(--primary-color);\r\n  border-bottom: 3px solid var(--primary-color);\r\n}\r\n\r\n.tab-button:hover:not(.active) {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.tab-content {\r\n  display: none;\r\n}\r\n\r\n.tab-content.active {\r\n  display: block;\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid #eee;\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 15px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px dashed #eee;\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.checkbox-container input[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 25px;\r\n  margin-top: 10px;\r\n  padding: 12px;\r\n  background-color: var(--background-light);\r\n  border-left: 3px solid #ddd;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  gap: 20px;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 20px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 8px 16px;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  border-radius: 4px;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid #ddd;\r\n  border-radius: 4px;\r\n  overflow: hidden;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.preview-header {\r\n  padding: 15px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.preview-body {\r\n  padding: 0;\r\n  background-color: white;\r\n}\r\n\r\n.text-preview {\r\n  padding: 15px;\r\n  font-family: monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.5;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: #fafafa;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Copy Success Animation ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 8px 15px;\r\n  border-radius: 4px;\r\n  margin-bottom: 15px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n/* ========== Tooltip Styling ========== */\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 180px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  margin-left: -90px;\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Iframe Loading Effect ========== */\r\n.preview-body iframe {\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n  opacity: 0.3;\r\n}\r\n\r\n.preview-body iframe.loaded {\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 20px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.6);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(3px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 16px 20px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 20px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 18px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 10px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 10px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 12px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 10px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 15px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 10px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 20px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}"],"sourceRoot":""}]);
+}
+
+/* ========== App Footer ========== */
+.app-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+/* ========== Animations ========== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========== Responsive Adjustments ========== */
+@media (max-width: 992px) {
+  .app-container {
+    padding: 16px;
+  }
+  
+  .tier-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .customer-info-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+  
+  .comprehensive-form {
+    gap: 20px;
+  }
+  
+  .form-section {
+    padding: 16px;
+  }
+  
+  .customer-info-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .tenant-fields {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tier-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-fields {
+    grid-template-columns: 1fr;
+  }
+  
+  .view-toggle {
+    flex-direction: column;
+  }
+  
+  .view-toggle button {
+    width: 100%;
+  }
+}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== CSS Variables & Global Reset ========== */\r\n:root {\r\n  /* Core colors */\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --primary-light: rgba(0, 120, 212, 0.1);\r\n  --success-color: #107c10;\r\n  --success-hover: #0e6e0e;\r\n  --warning-color: #d83b01;\r\n  --warning-hover: #c23500;\r\n  \r\n  /* Neutral colors */\r\n  --text-color: #323130;\r\n  --text-light: #605e5c;\r\n  --border-color: #edebe9;\r\n  --background-light: #f5f5f5;\r\n  --background-lighter: #fafafa;\r\n  \r\n  /* Bronze tier */\r\n  --bronze: #cd7f32;\r\n  --bronze-light: rgba(205, 127, 50, 0.1);\r\n  \r\n  /* Silver tier */\r\n  --silver: #C0C0C0;\r\n  --silver-light: rgba(192, 192, 192, 0.1);\r\n  \r\n  /* Gold tier */\r\n  --gold: #FFD700;\r\n  --gold-light: rgba(255, 215, 0, 0.1);\r\n  \r\n  /* Platinum tier */\r\n  --platinum: #E5E4E2;\r\n  --platinum-light: rgba(229, 228, 226, 0.1);\r\n  \r\n  /* Effects */\r\n  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);\r\n  --box-shadow-active: 0 1px 4px rgba(0, 0, 0, 0.16);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n  --focus-ring: 0 0 0 2px rgba(0, 120, 212, 0.25);\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n/* ========== Layout & Typography ========== */\r\n.app-container {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding: 24px;\r\n  background-color: white;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  padding-bottom: 60px;\r\n}\r\n\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  font-weight: 700;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 30px;\r\n  padding-bottom: 16px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 18px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 8px;\r\n  font-weight: 500;\r\n  color: var(--text-color);\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #d2d0ce;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  color: var(--text-color);\r\n  background-color: white;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:hover,\r\nselect:hover,\r\ntextarea:hover {\r\n  border-color: #b3b0ad;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: var(--focus-ring);\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n  transform: scale(1.1);\r\n  cursor: pointer;\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n  box-shadow: var(--box-shadow-active);\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.add-button::before {\r\n  content: \"+\";\r\n  margin-right: 6px;\r\n  font-weight: bold;\r\n  font-size: 16px;\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 6px 10px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: var(--warning-hover);\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n  min-width: 120px;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== Comprehensive Form Layout ========== */\r\n.comprehensive-form {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 25px;\r\n  padding-bottom: 20px;\r\n}\r\n\r\n.form-section {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  border: 1px solid var(--border-color);\r\n  padding: 24px;\r\n  box-shadow: var(--box-shadow);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.form-section:hover {\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.section-description {\r\n  color: var(--text-light);\r\n  margin-bottom: 18px;\r\n  font-size: 14px;\r\n}\r\n\r\n.customer-info-section {\r\n  display: grid;\r\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n  gap: 20px;\r\n}\r\n\r\n.tier-section,\r\n.tenant-section,\r\n.contacts-section,\r\n.email-section {\r\n  border-top: 4px solid var(--primary-color);\r\n}\r\n\r\n.tenant-section h2,\r\n.contacts-section h2,\r\n.email-section h2 {\r\n  margin-top: 0;\r\n  color: var(--primary-color);\r\n  border-bottom: 1px solid var(--border-color);\r\n  padding-bottom: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n/* Bronze tier */\r\n.tier-card[style*=\"border-color: #cd7f32\"].selected {\r\n  background-color: var(--bronze-light) !important;\r\n}\r\n\r\n/* Silver tier */\r\n.tier-card[style*=\"border-color: #C0C0C0\"].selected {\r\n  background-color: var(--silver-light) !important;\r\n}\r\n\r\n/* Gold tier */\r\n.tier-card[style*=\"border-color: #FFD700\"].selected {\r\n  background-color: var(--gold-light) !important;\r\n}\r\n\r\n/* Platinum tier */\r\n.tier-card[style*=\"border-color: #E5E4E2\"].selected {\r\n  background-color: var(--platinum-light) !important;\r\n}\r\n\r\n.tier-header {\r\n  padding: 14px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 12px;\r\n  min-height: auto;\r\n  line-height: 1.4;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 8px;\r\n  font-size: 13px;\r\n  position: relative;\r\n  padding-left: 20px;\r\n}\r\n\r\n.tier-content li::before {\r\n  content: \"•\";\r\n  position: absolute;\r\n  left: 6px;\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n/* ========== Tenant Manager ========== */\r\n.tenant-manager {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tenant-limit {\r\n  display: inline-block;\r\n  padding: 4px 10px;\r\n  background-color: var(--background-light);\r\n  border-radius: 20px;\r\n  font-size: 12px;\r\n  margin-left: 8px;\r\n  color: var(--text-light);\r\n  font-weight: normal;\r\n}\r\n\r\n.tenant-card {\r\n  margin-bottom: 16px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tenant-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n/* Tier-specific styling for tenant cards */\r\n.tenant-card.bronze {\r\n  border-left: 4px solid var(--bronze);\r\n}\r\n\r\n.tenant-card.silver {\r\n  border-left: 4px solid var(--silver);\r\n}\r\n\r\n.tenant-card.gold {\r\n  border-left: 4px solid var(--gold);\r\n}\r\n\r\n.tenant-card.platinum {\r\n  border-left: 4px solid var(--platinum);\r\n}\r\n\r\n.tenant-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tenant-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.tenant-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 20px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n  gap: 16px;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 14px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n  font-size: 13px;\r\n}\r\n\r\n.info-box strong {\r\n  color: var(--primary-color);\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 0;\r\n  background-color: white;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n  margin-bottom: 0;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.section h3 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n  font-size: 14px;\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 20px;\r\n  padding-bottom: 18px;\r\n  border-bottom: 1px dashed var(--border-color);\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 30px;\r\n  margin-top: 10px;\r\n  padding: 16px;\r\n  background-color: var(--background-lighter);\r\n  border-left: 3px solid var(--border-color);\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 24px;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 24px;\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 24px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 10px 18px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 18px;\r\n  border-radius: 4px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.preview-header {\r\n  padding: 16px;\r\n  background-color: #f8f8f8;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 6px;\r\n}\r\n\r\n.preview-body {\r\n  background-color: white;\r\n}\r\n\r\n.preview-body iframe {\r\n  width: 100%;\r\n  height: 600px;\r\n  border: none;\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n}\r\n\r\n.text-preview {\r\n  padding: 16px;\r\n  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.6;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Tooltip and Status Messages ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 10px 16px;\r\n  border-radius: 4px;\r\n  margin-bottom: 16px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 200px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 24px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 12px 24px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.7);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(5px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 24px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 24px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 20px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 12px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 16px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 14px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 12px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 16px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 12px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 24px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 40px;\r\n  padding-top: 20px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 13px;\r\n}\r\n\r\n/* ========== Animations ========== */\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n/* ========== Responsive Adjustments ========== */\r\n@media (max-width: 992px) {\r\n  .app-container {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .tier-cards {\r\n    grid-template-columns: repeat(2, 1fr);\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .app-container {\r\n    padding: 12px;\r\n  }\r\n  \r\n  .comprehensive-form {\r\n    gap: 20px;\r\n  }\r\n  \r\n  .form-section {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n  \r\n  .tenant-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .action-buttons {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .action-buttons button {\r\n    width: 100%;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n  .tier-cards {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .view-toggle {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .view-toggle button {\r\n    width: 100%;\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29290,7 +29431,7 @@ const Popup = () => {
     const openOptions = () => {
         chrome.runtime.openOptionsPage();
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "popup-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Microsoft Support Onboarding" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Click below to open the template generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "primary-button", onClick: openOptions, children: "Open Template Generator" })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "popup-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Microsoft Support Onboarding" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Click below to open the email builder" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "primary-button", onClick: openOptions, children: "Open Email Builder" })] }));
 };
 // Create root element for React
 const container = document.getElementById('root');

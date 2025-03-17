@@ -10,9 +10,9 @@ const Popup: React.FC = () => {
   return (
     <div className="popup-container">
       <h2>Microsoft Support Onboarding</h2>
-      <p>Click below to open the template generator</p>
+      <p>Click below to open the email builder</p>
       <button className="primary-button" onClick={openOptions}>
-        Open Template Generator
+        Open Email Builder
       </button>
     </div>
   );

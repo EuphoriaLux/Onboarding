@@ -1,19 +1,28 @@
 // src/utils/clipboardUtils.ts
 
 /**
- * Utility to copy rich text (HTML) to clipboard
- * This implementation uses document.execCommand('copy') with HTML content
- * to preserve formatting when pasting into applications like Outlook
+ * Utility to copy rich text (HTML) to clipboard with enhanced formatting preservation
  */
 export const copyRichTextToClipboard = (html: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
       // Create a temporary div with the HTML content
       const container = document.createElement('div');
-      container.innerHTML = html;
+      
+      // Important: set contentEditable to make it selectable
+      container.setAttribute('contenteditable', 'true');
       container.style.position = 'fixed';
-      container.style.pointerEvents = 'none';
+      container.style.left = '-9999px';
+      container.style.top = '0';
       container.style.opacity = '0';
+      
+      // Add special attributes for Outlook
+      container.setAttribute('data-outlook-preserve', 'true');
+      
+      // Process the HTML to enhance PowerShell script formatting for copy-paste
+      const processedHtml = processPowerShellScripts(html);
+      
+      container.innerHTML = processedHtml;
       document.body.appendChild(container);
       
       // Select the content
@@ -42,48 +51,52 @@ export const copyRichTextToClipboard = (html: string): Promise<void> => {
 };
 
 /**
- * Alternative implementation using Clipboard API for modern browsers
- * Note: This may not preserve HTML formatting in all applications
+ * Process HTML to enhance PowerShell scripts for better copy-paste experience
  */
-export const copyToClipboardModern = async (text: string, html?: string): Promise<void> => {
-  if (!navigator.clipboard) {
-    return copyRichTextToClipboard(html || text);
-  }
-
-  try {
-    if (html && navigator.clipboard.write) {
-      // Use ClipboardItem API if available for HTML content
-      const type = 'text/html';
-      const blob = new Blob([html], { type });
-      const data = [new ClipboardItem({ [type]: blob })];
-      await navigator.clipboard.write(data);
-    } else {
-      // Fallback to text-only copy
-      await navigator.clipboard.writeText(text);
-    }
-  } catch (err) {
-    console.error('Clipboard API failed, falling back to execCommand', err);
-    return copyRichTextToClipboard(html || text);
-  }
+const processPowerShellScripts = (html: string): string => {
+  // Look for PowerShell script sections and replace them with plaintext versions
+  // that will copy-paste better while preserving the visual styling
+  
+  const scriptPattern = /<table[^>]*class="powershell-script-container"[^>]*>[\s\S]*?<\/table>/g;
+  
+  return html.replace(scriptPattern, (match) => {
+    // Extract the actual script content
+    const contentMatch = match.match(/<pre[^>]*>([\s\S]*?)<\/pre>/);
+    if (!contentMatch || !contentMatch[1]) return match;
+    
+    // Get the plain script content (removing HTML tags but keeping whitespace)
+    const scriptContent = contentMatch[1]
+      .replace(/<[^>]*>/g, '') // Remove HTML tags
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec));
+    
+    // Create a new div that will render nicely but copy as plain text
+    return `
+      <div class="powershell-script-container" style="margin: 15px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div style="padding: 12px 16px; background-color: #2b579a; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold;">
+          PowerShell Script
+        </div>
+        <div style="background-color: #f8f8f8; padding: 16px;">
+          <pre style="margin: 0; white-space: pre-wrap; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5;">${scriptContent}</pre>
+        </div>
+      </div>
+    `;
+  });
 };
 
 /**
- * Enhanced copy function that tries multiple approaches to ensure
- * HTML formatting is preserved when possible
+ * Enhanced copy function for all content
  */
 export const copyFormattedContent = async (html: string, plainText: string): Promise<void> => {
   try {
-    // First try the modern Clipboard API with HTML support
-    if (navigator.clipboard && 'write' in navigator.clipboard) {
-      await copyToClipboardModern(plainText, html);
-      return;
-    }
-    
-    // Fall back to execCommand approach for better compatibility
+    // First try the rich text copy with enhanced PowerShell formatting
     await copyRichTextToClipboard(html);
   } catch (err) {
     console.error('Rich text copy failed, falling back to plain text', err);
-    // Last resort - plain text copy
+    // Fall back to plain text copy
     if (navigator.clipboard) {
       await navigator.clipboard.writeText(plainText);
     } else {
@@ -95,4 +108,9 @@ export const copyFormattedContent = async (html: string, plainText: string): Pro
       document.body.removeChild(textArea);
     }
   }
+};
+
+export default {
+  copyRichTextToClipboard,
+  copyFormattedContent
 };

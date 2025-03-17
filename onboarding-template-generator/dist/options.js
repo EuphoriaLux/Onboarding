@@ -23,65 +23,94 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/App.css */
 
-/* ========== Global styles ========== */
+/* ========== CSS Variables & Global Reset ========== */
+:root {
+  /* Core colors */
+  --primary-color: #0078d4;
+  --primary-hover: #106ebe;
+  --primary-light: rgba(0, 120, 212, 0.1);
+  --success-color: #107c10;
+  --success-hover: #0e6e0e;
+  --warning-color: #d83b01;
+  --warning-hover: #c23500;
+  
+  /* Neutral colors */
+  --text-color: #323130;
+  --text-light: #605e5c;
+  --border-color: #edebe9;
+  --background-light: #f5f5f5;
+  --background-lighter: #fafafa;
+  
+  /* Bronze tier */
+  --bronze: #cd7f32;
+  --bronze-light: rgba(205, 127, 50, 0.1);
+  
+  /* Silver tier */
+  --silver: #C0C0C0;
+  --silver-light: rgba(192, 192, 192, 0.1);
+  
+  /* Gold tier */
+  --gold: #FFD700;
+  --gold-light: rgba(255, 215, 0, 0.1);
+  
+  /* Platinum tier */
+  --platinum: #E5E4E2;
+  --platinum-light: rgba(229, 228, 226, 0.1);
+  
+  /* Effects */
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --box-shadow-active: 0 1px 4px rgba(0, 0, 0, 0.16);
+  --transition-fast: all 0.2s ease;
+  --transition-medium: all 0.3s ease;
+  --focus-ring: 0 0 0 2px rgba(0, 120, 212, 0.25);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-:root {
-  --primary-color: #0078d4;
-  --primary-hover: #106ebe;
-  --success-color: #107c10;
-  --success-hover: #10a310;
-  --warning-color: #d83b01;
-  --text-color: #333;
-  --text-light: #666;
-  --border-color: #eaeaea;
-  --background-light: #f9f9f9;
-  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --transition-fast: all 0.2s ease;
-  --transition-medium: all 0.3s ease;
-}
-
 body {
-  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: var(--text-color);
   background-color: var(--background-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ========== Layout & Typography ========== */
 .app-container {
-  width: 800px;
-  min-height: 600px;
-  padding: 20px;
-  background-color: #fff;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: white;
   box-shadow: var(--box-shadow);
   border-radius: 8px;
 }
 
-/* Options page adjustments */
 .options-page {
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  min-height: 100vh;
-  padding-bottom: 40px;
+  padding-bottom: 60px;
 }
 
-/* ========== Typography ========== */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.3;
   color: var(--text-color);
+  margin-bottom: 16px;
 }
 
 h1 {
   font-size: 24px;
-  margin-bottom: 16px;
+  font-weight: 700;
 }
 
 h2 {
@@ -98,11 +127,10 @@ p {
   margin-bottom: 12px;
 }
 
-/* ========== Layout Components ========== */
 /* Generator header */
 .generator-header {
-  margin-bottom: 24px;
-  padding-bottom: 12px;
+  margin-bottom: 30px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -112,26 +140,20 @@ p {
 }
 
 .generator-header p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-light);
-}
-
-/* Generator content */
-.generator-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 
 /* ========== Form Elements ========== */
 .form-group {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 500;
+  color: var(--text-color);
 }
 
 input[type="text"],
@@ -142,10 +164,18 @@ select,
 textarea {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #d2d0ce;
   border-radius: 4px;
   font-size: 14px;
+  color: var(--text-color);
+  background-color: white;
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: #b3b0ad;
 }
 
 input:focus,
@@ -153,7 +183,13 @@ select:focus,
 textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+  box-shadow: var(--focus-ring);
+}
+
+input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 button {
@@ -172,11 +208,112 @@ button:hover {
 
 button:active {
   transform: translateY(1px);
+  box-shadow: var(--box-shadow-active);
+}
+
+.add-button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.add-button::before {
+  content: "+";
+  margin-right: 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.remove-button {
+  background-color: var(--warning-color);
+  color: white;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.remove-button:hover {
+  background-color: var(--warning-hover);
+}
+
+.btn-preview {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.btn-preview:hover {
+  background-color: var(--primary-hover);
+}
+
+.form-text {
+  font-size: 12px;
+  color: var(--text-light);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ========== Comprehensive Form Layout ========== */
+.comprehensive-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-bottom: 20px;
+}
+
+.form-section {
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+  box-shadow: var(--box-shadow);
+  transition: var(--transition-fast);
+}
+
+.form-section:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.section-description {
+  color: var(--text-light);
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.customer-info-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.tier-section,
+.tenant-section,
+.contacts-section,
+.email-section {
+  border-top: 4px solid var(--primary-color);
+}
+
+.tenant-section h2,
+.contacts-section h2,
+.email-section h2 {
+  margin-top: 0;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 /* ========== Tier Selector ========== */
 .tier-selector {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .tier-cards {
@@ -204,8 +341,28 @@ button:active {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Bronze tier */
+.tier-card[style*="border-color: #cd7f32"].selected {
+  background-color: var(--bronze-light) !important;
+}
+
+/* Silver tier */
+.tier-card[style*="border-color: #C0C0C0"].selected {
+  background-color: var(--silver-light) !important;
+}
+
+/* Gold tier */
+.tier-card[style*="border-color: #FFD700"].selected {
+  background-color: var(--gold-light) !important;
+}
+
+/* Platinum tier */
+.tier-card[style*="border-color: #E5E4E2"].selected {
+  background-color: var(--platinum-light) !important;
+}
+
 .tier-header {
-  padding: 12px;
+  padding: 14px;
   text-align: center;
   color: white;
 }
@@ -218,13 +375,14 @@ button:active {
 }
 
 .tier-content {
-  padding: 12px;
-  font-size: 12px;
+  padding: 16px;
+  font-size: 13px;
 }
 
 .tier-content p {
-  margin-bottom: 8px;
-  min-height: 60px;
+  margin-bottom: 12px;
+  min-height: auto;
+  line-height: 1.4;
 }
 
 .tier-content ul {
@@ -233,8 +391,83 @@ button:active {
 }
 
 .tier-content li {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.tier-content li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* ========== Tenant Manager ========== */
+.tenant-manager {
+  margin-bottom: 24px;
+}
+
+.tenant-limit {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: var(--background-light);
+  border-radius: 20px;
   font-size: 12px;
+  margin-left: 8px;
+  color: var(--text-light);
+  font-weight: normal;
+}
+
+.tenant-card {
+  margin-bottom: 16px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-lighter);
+  transition: var(--transition-fast);
+}
+
+.tenant-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Tier-specific styling for tenant cards */
+.tenant-card.bronze {
+  border-left: 4px solid var(--bronze);
+}
+
+.tenant-card.silver {
+  border-left: 4px solid var(--silver);
+}
+
+.tenant-card.gold {
+  border-left: 4px solid var(--gold);
+}
+
+.tenant-card.platinum {
+  border-left: 4px solid var(--platinum);
+}
+
+.tenant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tenant-header h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.tenant-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 /* ========== Contacts Form ========== */
@@ -243,23 +476,23 @@ button:active {
 }
 
 .contact-card {
-  margin-bottom: 16px;
-  padding: 16px;
+  margin-bottom: 20px;
+  padding: 20px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  background-color: var(--background-light);
+  background-color: var(--background-lighter);
   transition: var(--transition-fast);
 }
 
 .contact-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
 }
 
 .contact-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .contact-header h3 {
@@ -269,297 +502,131 @@ button:active {
 
 .contact-fields {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-}
-
-@media (max-width: 768px) {
-  .contact-fields {
-    grid-template-columns: 1fr;
-  }
-}
-
-.add-button {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.add-button:hover {
-  background-color: var(--primary-hover);
-}
-
-.remove-button {
-  background-color: var(--warning-color);
-  color: white;
-  padding: 4px 8px;
-  font-size: 12px;
-}
-
-.remove-button:hover {
-  background-color: #c23500;
-}
-
-/* ========== Preview Section ========== */
-.template-preview {
-  margin-top: 24px;
-}
-
-.preview-actions {
-  display: flex;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  margin-bottom: 16px;
-}
-
-.preview-button {
-  background-color: #f0f0f0;
-  color: var(--text-color);
-}
-
-.preview-button:hover {
-  background-color: #e0e0e0;
-}
-
-.copy-button {
-  background-color: var(--success-color);
-  color: white;
-  flex-grow: 1;
-  position: relative;
-  transition: background-color 0.3s ease;
-}
-
-.copy-button:hover {
-  background-color: var(--success-hover);
-}
-
-.copy-button.copied {
-  background-color: var(--success-hover);
-}
-
-.copy-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.validation-message {
-  color: var(--warning-color);
-  margin-bottom: 16px;
-  font-size: 13px;
-}
-
-.preview-container {
-  margin-top: 16px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.preview-content {
-  padding: 16px;
-  max-height: 400px;
-  overflow-y: auto;
-  background-color: white;
 }
 
 /* ========== Info Boxes ========== */
 .info-box {
-  padding: 12px;
+  padding: 14px;
   background-color: #f0f7ff;
   border-left: 4px solid var(--primary-color);
   margin: 16px 0;
   border-radius: 0 4px 4px 0;
+  font-size: 13px;
 }
 
-/* ========== Customer Info Section ========== */
-.customer-info-section {
-  background-color: var(--background-light);
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 24px;
-  border: 1px solid var(--border-color);
-}
-
-/* ========== Small Text ========== */
-.form-text {
-  font-size: 12px;
-  color: var(--text-light);
-  display: block;
-  margin-top: 4px;
-}
-
-/* ========== App Footer ========== */
-.app-footer {
-  margin-top: 30px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-color);
-  text-align: center;
-  color: var(--text-light);
-  font-size: 12px;
-}
-
-/* ========== Tabs Styles ========== */
-.tabs-container {
-  margin-bottom: 20px;
-}
-
-.tabs-header {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 20px;
-}
-
-.tab-button {
-  padding: 10px 20px;
-  background-color: #f5f5f5;
-  border: none;
-  border-bottom: 3px solid transparent;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  margin-right: 5px;
-  font-weight: 500;
-  color: var(--text-light);
-  cursor: pointer;
-  transition: var(--transition-fast);
-}
-
-.tab-button.active {
-  background-color: #fff;
+.info-box strong {
   color: var(--primary-color);
-  border-bottom: 3px solid var(--primary-color);
-}
-
-.tab-button:hover:not(.active) {
-  background-color: #e0e0e0;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
 }
 
 /* ========== Email Form Styles ========== */
 .email-form-container {
-  padding: 20px;
-  background-color: #fff;
+  padding: 0;
+  background-color: white;
   border-radius: 8px;
 }
 
 .section {
   margin-bottom: 25px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .section:last-child {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.section h3 {
+  color: var(--primary-color);
+  margin-bottom: 16px;
 }
 
 .info-text {
   margin-bottom: 15px;
   color: var(--text-light);
+  font-size: 14px;
 }
 
 .checkbox-group {
-  margin-bottom: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px dashed #eee;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px dashed var(--border-color);
 }
 
 .checkbox-group:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .checkbox-container {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-}
-
-.checkbox-container input[type="checkbox"] {
-  margin-right: 8px;
+  margin-bottom: 10px;
 }
 
 .nested-options {
-  margin-left: 25px;
+  margin-left: 30px;
   margin-top: 10px;
-  padding: 12px;
-  background-color: var(--background-light);
-  border-left: 3px solid #ddd;
+  padding: 16px;
+  background-color: var(--background-lighter);
+  border-left: 3px solid var(--border-color);
   border-radius: 0 4px 4px 0;
 }
 
 .inline-checks {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
+  gap: 24px;
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.btn-preview {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 10px 20px;
-  font-weight: bold;
-}
-
-.btn-preview:hover {
-  background-color: var(--primary-hover);
+  margin-top: 24px;
 }
 
 /* ========== Email Preview Styles ========== */
 .email-preview-container {
-  padding: 20px;
+  padding: 24px;
 }
 
 .view-toggle {
   display: flex;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .view-toggle button {
   background-color: #f0f0f0;
   color: var(--text-color);
   border-radius: 4px;
-  padding: 8px 16px;
+  padding: 10px 18px;
+  font-weight: 500;
   transition: var(--transition-fast);
 }
 
 .view-toggle button.active {
   background-color: var(--primary-color);
   color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .action-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .action-buttons button {
   background-color: var(--primary-color);
   color: white;
-  padding: 8px 16px;
+  padding: 10px 18px;
   border-radius: 4px;
+  font-weight: 500;
   transition: var(--transition-fast);
 }
 
@@ -573,65 +640,60 @@ button:active {
 }
 
 .preview-content {
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--box-shadow);
 }
 
 .preview-header {
-  padding: 15px;
-  background-color: #f5f5f5;
-  border-bottom: 1px solid #ddd;
+  padding: 16px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .preview-recipient, 
 .preview-subject, 
 .preview-date {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .preview-body {
-  padding: 0;
   background-color: white;
 }
 
+.preview-body iframe {
+  width: 100%;
+  height: 600px;
+  border: none;
+  background-color: white;
+  transition: opacity 0.3s ease;
+}
+
 .text-preview {
-  padding: 15px;
-  font-family: monospace;
+  padding: 16px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   white-space: pre-wrap;
   word-break: break-word;
   font-size: 13px;
-  line-height: 1.5;
+  line-height: 1.6;
   max-height: 600px;
   overflow-y: auto;
-  background-color: #fafafa;
+  background-color: white;
   border: 1px solid #eee;
 }
 
-/* ========== Copy Success Animation ========== */
+/* ========== Tooltip and Status Messages ========== */
 .copy-success {
   background-color: var(--success-color);
   color: white;
-  padding: 8px 15px;
+  padding: 10px 16px;
   border-radius: 4px;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
   text-align: center;
   animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes successPulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-/* ========== Tooltip Styling ========== */
 .tooltip {
   position: relative;
   display: inline-block;
@@ -639,17 +701,17 @@ button:active {
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  width: 180px;
+  width: 200px;
   background-color: #333;
   color: #fff;
   text-align: center;
   border-radius: 4px;
-  padding: 5px;
+  padding: 8px;
   position: absolute;
   z-index: 1;
   bottom: 125%;
   left: 50%;
-  margin-left: -90px;
+  transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s;
   font-size: 12px;
@@ -673,21 +735,10 @@ button:active {
   opacity: 1;
 }
 
-/* ========== Iframe Loading Effect ========== */
-.preview-body iframe {
-  background-color: white;
-  transition: opacity 0.3s ease;
-  opacity: 0.3;
-}
-
-.preview-body iframe.loaded {
-  opacity: 1;
-}
-
 /* ========== Popup Styles ========== */
 .popup-container {
   width: 300px;
-  padding: 20px;
+  padding: 24px;
   text-align: center;
 }
 
@@ -705,7 +756,7 @@ button:active {
 .primary-button {
   background-color: var(--primary-color);
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
   border-radius: 4px;
   font-size: 14px;
@@ -727,19 +778,19 @@ button:active {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
   animation: fadeIn 0.2s ease-out;
 }
 
 .outlook-instructions-modal {
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
   width: 90%;
   max-width: 600px;
   max-height: 90vh;
@@ -747,22 +798,11 @@ button:active {
   animation: modalSlideIn 0.3s ease-out;
 }
 
-@keyframes modalSlideIn {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 .instructions-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 18px 24px;
   border-bottom: 1px solid #eee;
   background-color: #f8f8f8;
 }
@@ -770,6 +810,7 @@ button:active {
 .instructions-header h3 {
   margin: 0;
   color: var(--primary-color);
+  font-size: 18px;
 }
 
 .close-button {
@@ -786,7 +827,7 @@ button:active {
 }
 
 .instructions-content {
-  padding: 20px;
+  padding: 24px;
 }
 
 .instructions-content ol {
@@ -795,7 +836,7 @@ button:active {
 }
 
 .instructions-content ol li {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
   position: relative;
   padding-left: 5px;
 }
@@ -806,26 +847,26 @@ button:active {
 }
 
 .instruction-image {
-  margin: 10px 0;
+  margin: 12px 0;
   text-align: center;
   background-color: #f5f5f5;
   border-radius: 4px;
-  padding: 10px;
+  padding: 16px;
   border: 1px solid #eee;
 }
 
 .instruction-note {
   background-color: #f0f7ff;
-  padding: 12px;
+  padding: 14px;
   border-left: 4px solid var(--primary-color);
-  margin: 10px 0;
+  margin: 12px 0;
   font-size: 13px;
   border-radius: 0 4px 4px 0;
 }
 
 .troubleshooting {
   background-color: #f9f9f9;
-  padding: 15px;
+  padding: 16px;
   border-radius: 6px;
   margin-top: 20px;
   border: 1px solid #eee;
@@ -834,7 +875,7 @@ button:active {
 .troubleshooting h4 {
   margin-top: 0;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 15px;
 }
 
@@ -843,11 +884,11 @@ button:active {
 }
 
 .troubleshooting li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .instructions-footer {
-  padding: 16px 20px;
+  padding: 16px 24px;
   border-top: 1px solid #eee;
   display: flex;
   justify-content: space-between;
@@ -858,7 +899,7 @@ button:active {
 .got-it-button {
   background-color: var(--primary-color);
   color: white;
-  padding: 8px 20px;
+  padding: 10px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -880,7 +921,107 @@ button:active {
 .dont-show-again input {
   margin-right: 6px;
   cursor: pointer;
-}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== Global styles ========== */\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\n:root {\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --success-color: #107c10;\r\n  --success-hover: #10a310;\r\n  --warning-color: #d83b01;\r\n  --text-color: #333;\r\n  --text-light: #666;\r\n  --border-color: #eaeaea;\r\n  --background-light: #f9f9f9;\r\n  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n}\r\n\r\n.app-container {\r\n  width: 800px;\r\n  min-height: 600px;\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n/* Options page adjustments */\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1000px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding-bottom: 40px;\r\n}\r\n\r\n/* ========== Typography ========== */\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* ========== Layout Components ========== */\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 24px;\r\n  padding-bottom: 12px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 14px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* Generator content */\r\n.generator-content {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 24px;\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 16px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 6px;\r\n  font-weight: 500;\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n.tier-header {\r\n  padding: 12px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 12px;\r\n  font-size: 12px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 8px;\r\n  min-height: 60px;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 4px;\r\n  font-size: 12px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 16px;\r\n  padding: 16px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-light);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr 1fr;\r\n  gap: 12px;\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 4px 8px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: #c23500;\r\n}\r\n\r\n/* ========== Preview Section ========== */\r\n.template-preview {\r\n  margin-top: 24px;\r\n}\r\n\r\n.preview-actions {\r\n  display: flex;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.preview-button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-button:hover {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.copy-button {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  flex-grow: 1;\r\n  position: relative;\r\n  transition: background-color 0.3s ease;\r\n}\r\n\r\n.copy-button:hover {\r\n  background-color: var(--success-hover);\r\n}\r\n\r\n.copy-button.copied {\r\n  background-color: var(--success-hover);\r\n}\r\n\r\n.copy-button:disabled {\r\n  background-color: #cccccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.validation-message {\r\n  color: var(--warning-color);\r\n  margin-bottom: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.preview-container {\r\n  margin-top: 16px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.preview-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 12px 16px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-content {\r\n  padding: 16px;\r\n  max-height: 400px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 12px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n/* ========== Customer Info Section ========== */\r\n.customer-info-section {\r\n  background-color: var(--background-light);\r\n  padding: 16px;\r\n  border-radius: 8px;\r\n  margin-bottom: 24px;\r\n  border: 1px solid var(--border-color);\r\n}\r\n\r\n/* ========== Small Text ========== */\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 30px;\r\n  padding-top: 16px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 12px;\r\n}\r\n\r\n/* ========== Tabs Styles ========== */\r\n.tabs-container {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tabs-header {\r\n  display: flex;\r\n  border-bottom: 1px solid #ddd;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tab-button {\r\n  padding: 10px 20px;\r\n  background-color: #f5f5f5;\r\n  border: none;\r\n  border-bottom: 3px solid transparent;\r\n  border-top-left-radius: 4px;\r\n  border-top-right-radius: 4px;\r\n  margin-right: 5px;\r\n  font-weight: 500;\r\n  color: var(--text-light);\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tab-button.active {\r\n  background-color: #fff;\r\n  color: var(--primary-color);\r\n  border-bottom: 3px solid var(--primary-color);\r\n}\r\n\r\n.tab-button:hover:not(.active) {\r\n  background-color: #e0e0e0;\r\n}\r\n\r\n.tab-content {\r\n  display: none;\r\n}\r\n\r\n.tab-content.active {\r\n  display: block;\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 20px;\r\n  background-color: #fff;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid #eee;\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 15px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px dashed #eee;\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.checkbox-container input[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 25px;\r\n  margin-top: 10px;\r\n  padding: 12px;\r\n  background-color: var(--background-light);\r\n  border-left: 3px solid #ddd;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  gap: 20px;\r\n  flex-wrap: wrap;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 20px;\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 20px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 8px 16px;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 10px;\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  border-radius: 4px;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid #ddd;\r\n  border-radius: 4px;\r\n  overflow: hidden;\r\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);\r\n}\r\n\r\n.preview-header {\r\n  padding: 15px;\r\n  background-color: #f5f5f5;\r\n  border-bottom: 1px solid #ddd;\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 5px;\r\n}\r\n\r\n.preview-body {\r\n  padding: 0;\r\n  background-color: white;\r\n}\r\n\r\n.text-preview {\r\n  padding: 15px;\r\n  font-family: monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.5;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: #fafafa;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Copy Success Animation ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 8px 15px;\r\n  border-radius: 4px;\r\n  margin-bottom: 15px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n/* ========== Tooltip Styling ========== */\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 180px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 5px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  margin-left: -90px;\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Iframe Loading Effect ========== */\r\n.preview-body iframe {\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n  opacity: 0.3;\r\n}\r\n\r\n.preview-body iframe.loaded {\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 20px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.6);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(3px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 16px 20px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 20px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 18px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 10px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 10px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 12px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 10px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 15px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 10px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 20px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}"],"sourceRoot":""}]);
+}
+
+/* ========== App Footer ========== */
+.app-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-light);
+  font-size: 13px;
+}
+
+/* ========== Animations ========== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ========== Responsive Adjustments ========== */
+@media (max-width: 992px) {
+  .app-container {
+    padding: 16px;
+  }
+  
+  .tier-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .customer-info-section {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 12px;
+  }
+  
+  .comprehensive-form {
+    gap: 20px;
+  }
+  
+  .form-section {
+    padding: 16px;
+  }
+  
+  .customer-info-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .tenant-fields {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .action-buttons button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tier-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-fields {
+    grid-template-columns: 1fr;
+  }
+  
+  .view-toggle {
+    flex-direction: column;
+  }
+  
+  .view-toggle button {
+    width: 100%;
+  }
+}`, "",{"version":3,"sources":["webpack://./src/styles/App.css"],"names":[],"mappings":"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","sourcesContent":["/* src/styles/App.css */\r\n\r\n/* ========== CSS Variables & Global Reset ========== */\r\n:root {\r\n  /* Core colors */\r\n  --primary-color: #0078d4;\r\n  --primary-hover: #106ebe;\r\n  --primary-light: rgba(0, 120, 212, 0.1);\r\n  --success-color: #107c10;\r\n  --success-hover: #0e6e0e;\r\n  --warning-color: #d83b01;\r\n  --warning-hover: #c23500;\r\n  \r\n  /* Neutral colors */\r\n  --text-color: #323130;\r\n  --text-light: #605e5c;\r\n  --border-color: #edebe9;\r\n  --background-light: #f5f5f5;\r\n  --background-lighter: #fafafa;\r\n  \r\n  /* Bronze tier */\r\n  --bronze: #cd7f32;\r\n  --bronze-light: rgba(205, 127, 50, 0.1);\r\n  \r\n  /* Silver tier */\r\n  --silver: #C0C0C0;\r\n  --silver-light: rgba(192, 192, 192, 0.1);\r\n  \r\n  /* Gold tier */\r\n  --gold: #FFD700;\r\n  --gold-light: rgba(255, 215, 0, 0.1);\r\n  \r\n  /* Platinum tier */\r\n  --platinum: #E5E4E2;\r\n  --platinum-light: rgba(229, 228, 226, 0.1);\r\n  \r\n  /* Effects */\r\n  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n  --box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.12);\r\n  --box-shadow-active: 0 1px 4px rgba(0, 0, 0, 0.16);\r\n  --transition-fast: all 0.2s ease;\r\n  --transition-medium: all 0.3s ease;\r\n  --focus-ring: 0 0 0 2px rgba(0, 120, 212, 0.25);\r\n}\r\n\r\n* {\r\n  box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\r\n}\r\n\r\nbody {\r\n  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;\r\n  font-size: 14px;\r\n  line-height: 1.5;\r\n  color: var(--text-color);\r\n  background-color: var(--background-light);\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\n/* ========== Layout & Typography ========== */\r\n.app-container {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  min-height: 100vh;\r\n  padding: 24px;\r\n  background-color: white;\r\n  box-shadow: var(--box-shadow);\r\n  border-radius: 8px;\r\n}\r\n\r\n.options-page {\r\n  width: 100%;\r\n  max-width: 1100px;\r\n  margin: 0 auto;\r\n  padding-bottom: 60px;\r\n}\r\n\r\nh1, h2, h3, h4, h5, h6 {\r\n  font-weight: 600;\r\n  line-height: 1.3;\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh1 {\r\n  font-size: 24px;\r\n  font-weight: 700;\r\n}\r\n\r\nh2 {\r\n  font-size: 18px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\nh3 {\r\n  font-size: 16px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\np {\r\n  margin-bottom: 12px;\r\n}\r\n\r\n/* Generator header */\r\n.generator-header {\r\n  margin-bottom: 30px;\r\n  padding-bottom: 16px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.generator-header h1 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 8px;\r\n}\r\n\r\n.generator-header p {\r\n  font-size: 15px;\r\n  color: var(--text-light);\r\n}\r\n\r\n/* ========== Form Elements ========== */\r\n.form-group {\r\n  margin-bottom: 18px;\r\n}\r\n\r\nlabel {\r\n  display: block;\r\n  margin-bottom: 8px;\r\n  font-weight: 500;\r\n  color: var(--text-color);\r\n}\r\n\r\ninput[type=\"text\"],\r\ninput[type=\"email\"],\r\ninput[type=\"tel\"],\r\ninput[type=\"date\"],\r\nselect,\r\ntextarea {\r\n  width: 100%;\r\n  padding: 10px 12px;\r\n  border: 1px solid #d2d0ce;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  color: var(--text-color);\r\n  background-color: white;\r\n  transition: border-color 0.2s, box-shadow 0.2s;\r\n}\r\n\r\ninput:hover,\r\nselect:hover,\r\ntextarea:hover {\r\n  border-color: #b3b0ad;\r\n}\r\n\r\ninput:focus,\r\nselect:focus,\r\ntextarea:focus {\r\n  outline: none;\r\n  border-color: var(--primary-color);\r\n  box-shadow: var(--focus-ring);\r\n}\r\n\r\ninput[type=\"checkbox\"] {\r\n  margin-right: 8px;\r\n  transform: scale(1.1);\r\n  cursor: pointer;\r\n}\r\n\r\nbutton {\r\n  cursor: pointer;\r\n  padding: 8px 16px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s, transform 0.1s, opacity 0.2s;\r\n}\r\n\r\nbutton:hover {\r\n  opacity: 0.9;\r\n}\r\n\r\nbutton:active {\r\n  transform: translateY(1px);\r\n  box-shadow: var(--box-shadow-active);\r\n}\r\n\r\n.add-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 8px 16px;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n}\r\n\r\n.add-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.add-button::before {\r\n  content: \"+\";\r\n  margin-right: 6px;\r\n  font-weight: bold;\r\n  font-size: 16px;\r\n}\r\n\r\n.remove-button {\r\n  background-color: var(--warning-color);\r\n  color: white;\r\n  padding: 6px 10px;\r\n  font-size: 12px;\r\n}\r\n\r\n.remove-button:hover {\r\n  background-color: var(--warning-hover);\r\n}\r\n\r\n.btn-preview {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  font-weight: bold;\r\n  min-width: 120px;\r\n}\r\n\r\n.btn-preview:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.form-text {\r\n  font-size: 12px;\r\n  color: var(--text-light);\r\n  display: block;\r\n  margin-top: 4px;\r\n}\r\n\r\n/* ========== Comprehensive Form Layout ========== */\r\n.comprehensive-form {\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 25px;\r\n  padding-bottom: 20px;\r\n}\r\n\r\n.form-section {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  border: 1px solid var(--border-color);\r\n  padding: 24px;\r\n  box-shadow: var(--box-shadow);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.form-section:hover {\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.section-description {\r\n  color: var(--text-light);\r\n  margin-bottom: 18px;\r\n  font-size: 14px;\r\n}\r\n\r\n.customer-info-section {\r\n  display: grid;\r\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\r\n  gap: 20px;\r\n}\r\n\r\n.tier-section,\r\n.tenant-section,\r\n.contacts-section,\r\n.email-section {\r\n  border-top: 4px solid var(--primary-color);\r\n}\r\n\r\n.tenant-section h2,\r\n.contacts-section h2,\r\n.email-section h2 {\r\n  margin-top: 0;\r\n  color: var(--primary-color);\r\n  border-bottom: 1px solid var(--border-color);\r\n  padding-bottom: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n/* ========== Tier Selector ========== */\r\n.tier-selector {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.tier-cards {\r\n  display: grid;\r\n  grid-template-columns: repeat(4, 1fr);\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tier-card {\r\n  border: 2px solid transparent;\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  cursor: pointer;\r\n  transition: var(--transition-fast);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.tier-card:hover {\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow-hover);\r\n}\r\n\r\n.tier-card.selected {\r\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);\r\n}\r\n\r\n/* Bronze tier */\r\n.tier-card[style*=\"border-color: #cd7f32\"].selected {\r\n  background-color: var(--bronze-light) !important;\r\n}\r\n\r\n/* Silver tier */\r\n.tier-card[style*=\"border-color: #C0C0C0\"].selected {\r\n  background-color: var(--silver-light) !important;\r\n}\r\n\r\n/* Gold tier */\r\n.tier-card[style*=\"border-color: #FFD700\"].selected {\r\n  background-color: var(--gold-light) !important;\r\n}\r\n\r\n/* Platinum tier */\r\n.tier-card[style*=\"border-color: #E5E4E2\"].selected {\r\n  background-color: var(--platinum-light) !important;\r\n}\r\n\r\n.tier-header {\r\n  padding: 14px;\r\n  text-align: center;\r\n  color: white;\r\n}\r\n\r\n.tier-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  color: white;\r\n}\r\n\r\n.tier-content {\r\n  padding: 16px;\r\n  font-size: 13px;\r\n}\r\n\r\n.tier-content p {\r\n  margin-bottom: 12px;\r\n  min-height: auto;\r\n  line-height: 1.4;\r\n}\r\n\r\n.tier-content ul {\r\n  list-style-type: none;\r\n  padding-left: 0;\r\n}\r\n\r\n.tier-content li {\r\n  margin-bottom: 8px;\r\n  font-size: 13px;\r\n  position: relative;\r\n  padding-left: 20px;\r\n}\r\n\r\n.tier-content li::before {\r\n  content: \"•\";\r\n  position: absolute;\r\n  left: 6px;\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n/* ========== Tenant Manager ========== */\r\n.tenant-manager {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.tenant-limit {\r\n  display: inline-block;\r\n  padding: 4px 10px;\r\n  background-color: var(--background-light);\r\n  border-radius: 20px;\r\n  font-size: 12px;\r\n  margin-left: 8px;\r\n  color: var(--text-light);\r\n  font-weight: normal;\r\n}\r\n\r\n.tenant-card {\r\n  margin-bottom: 16px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.tenant-card:hover {\r\n  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n/* Tier-specific styling for tenant cards */\r\n.tenant-card.bronze {\r\n  border-left: 4px solid var(--bronze);\r\n}\r\n\r\n.tenant-card.silver {\r\n  border-left: 4px solid var(--silver);\r\n}\r\n\r\n.tenant-card.gold {\r\n  border-left: 4px solid var(--gold);\r\n}\r\n\r\n.tenant-card.platinum {\r\n  border-left: 4px solid var(--platinum);\r\n}\r\n\r\n.tenant-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.tenant-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.tenant-fields {\r\n  display: grid;\r\n  grid-template-columns: 1fr 1fr;\r\n  gap: 16px;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n/* ========== Contacts Form ========== */\r\n.contacts-form {\r\n  margin-bottom: 24px;\r\n}\r\n\r\n.contact-card {\r\n  margin-bottom: 20px;\r\n  padding: 20px;\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  background-color: var(--background-lighter);\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.contact-card:hover {\r\n  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);\r\n}\r\n\r\n.contact-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.contact-header h3 {\r\n  margin: 0;\r\n  font-size: 16px;\r\n}\r\n\r\n.contact-fields {\r\n  display: grid;\r\n  grid-template-columns: repeat(3, 1fr);\r\n  gap: 16px;\r\n}\r\n\r\n/* ========== Info Boxes ========== */\r\n.info-box {\r\n  padding: 14px;\r\n  background-color: #f0f7ff;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 16px 0;\r\n  border-radius: 0 4px 4px 0;\r\n  font-size: 13px;\r\n}\r\n\r\n.info-box strong {\r\n  color: var(--primary-color);\r\n}\r\n\r\n/* ========== Email Form Styles ========== */\r\n.email-form-container {\r\n  padding: 0;\r\n  background-color: white;\r\n  border-radius: 8px;\r\n}\r\n\r\n.section {\r\n  margin-bottom: 25px;\r\n  padding-bottom: 15px;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.section:last-child {\r\n  border-bottom: none;\r\n  margin-bottom: 0;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.section h3 {\r\n  color: var(--primary-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.info-text {\r\n  margin-bottom: 15px;\r\n  color: var(--text-light);\r\n  font-size: 14px;\r\n}\r\n\r\n.checkbox-group {\r\n  margin-bottom: 20px;\r\n  padding-bottom: 18px;\r\n  border-bottom: 1px dashed var(--border-color);\r\n}\r\n\r\n.checkbox-group:last-child {\r\n  border-bottom: none;\r\n  padding-bottom: 0;\r\n}\r\n\r\n.checkbox-container {\r\n  display: flex;\r\n  align-items: center;\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.nested-options {\r\n  margin-left: 30px;\r\n  margin-top: 10px;\r\n  padding: 16px;\r\n  background-color: var(--background-lighter);\r\n  border-left: 3px solid var(--border-color);\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.inline-checks {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 24px;\r\n}\r\n\r\n.form-actions {\r\n  display: flex;\r\n  justify-content: flex-end;\r\n  margin-top: 24px;\r\n}\r\n\r\n/* ========== Email Preview Styles ========== */\r\n.email-preview-container {\r\n  padding: 24px;\r\n}\r\n\r\n.view-toggle {\r\n  display: flex;\r\n  gap: 10px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.view-toggle button {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n  border-radius: 4px;\r\n  padding: 10px 18px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.view-toggle button.active {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);\r\n}\r\n\r\n.action-buttons {\r\n  display: flex;\r\n  flex-wrap: wrap;\r\n  gap: 12px;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.action-buttons button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 18px;\r\n  border-radius: 4px;\r\n  font-weight: 500;\r\n  transition: var(--transition-fast);\r\n}\r\n\r\n.action-buttons button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.action-buttons button:last-child {\r\n  background-color: #f0f0f0;\r\n  color: var(--text-color);\r\n}\r\n\r\n.preview-content {\r\n  border: 1px solid var(--border-color);\r\n  border-radius: 8px;\r\n  overflow: hidden;\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.preview-header {\r\n  padding: 16px;\r\n  background-color: #f8f8f8;\r\n  border-bottom: 1px solid var(--border-color);\r\n}\r\n\r\n.preview-recipient, \r\n.preview-subject, \r\n.preview-date {\r\n  margin-bottom: 6px;\r\n}\r\n\r\n.preview-body {\r\n  background-color: white;\r\n}\r\n\r\n.preview-body iframe {\r\n  width: 100%;\r\n  height: 600px;\r\n  border: none;\r\n  background-color: white;\r\n  transition: opacity 0.3s ease;\r\n}\r\n\r\n.text-preview {\r\n  padding: 16px;\r\n  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;\r\n  white-space: pre-wrap;\r\n  word-break: break-word;\r\n  font-size: 13px;\r\n  line-height: 1.6;\r\n  max-height: 600px;\r\n  overflow-y: auto;\r\n  background-color: white;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n/* ========== Tooltip and Status Messages ========== */\r\n.copy-success {\r\n  background-color: var(--success-color);\r\n  color: white;\r\n  padding: 10px 16px;\r\n  border-radius: 4px;\r\n  margin-bottom: 16px;\r\n  text-align: center;\r\n  animation: fadeIn 0.3s ease-in, successPulse 0.5s ease-in-out;\r\n}\r\n\r\n.tooltip {\r\n  position: relative;\r\n  display: inline-block;\r\n}\r\n\r\n.tooltip .tooltip-text {\r\n  visibility: hidden;\r\n  width: 200px;\r\n  background-color: #333;\r\n  color: #fff;\r\n  text-align: center;\r\n  border-radius: 4px;\r\n  padding: 8px;\r\n  position: absolute;\r\n  z-index: 1;\r\n  bottom: 125%;\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  opacity: 0;\r\n  transition: opacity 0.3s;\r\n  font-size: 12px;\r\n  font-weight: normal;\r\n  box-shadow: 0 2px 5px rgba(0,0,0,0.2);\r\n}\r\n\r\n.tooltip .tooltip-text::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  top: 100%;\r\n  left: 50%;\r\n  margin-left: -5px;\r\n  border-width: 5px;\r\n  border-style: solid;\r\n  border-color: #333 transparent transparent transparent;\r\n}\r\n\r\n.tooltip:hover .tooltip-text {\r\n  visibility: visible;\r\n  opacity: 1;\r\n}\r\n\r\n/* ========== Popup Styles ========== */\r\n.popup-container {\r\n  width: 300px;\r\n  padding: 24px;\r\n  text-align: center;\r\n}\r\n\r\n.popup-container h2 {\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.popup-container p {\r\n  color: var(--text-color);\r\n  margin-bottom: 16px;\r\n}\r\n\r\n.primary-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 12px 24px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  font-size: 14px;\r\n  font-weight: 500;\r\n  cursor: pointer;\r\n  margin-top: 16px;\r\n  width: 100%;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.primary-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n/* ========== Outlook Instructions Modal ========== */\r\n.outlook-instructions-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  background-color: rgba(0, 0, 0, 0.7);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n  backdrop-filter: blur(5px);\r\n  animation: fadeIn 0.2s ease-out;\r\n}\r\n\r\n.outlook-instructions-modal {\r\n  background-color: white;\r\n  border-radius: 8px;\r\n  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);\r\n  width: 90%;\r\n  max-width: 600px;\r\n  max-height: 90vh;\r\n  overflow-y: auto;\r\n  animation: modalSlideIn 0.3s ease-out;\r\n}\r\n\r\n.instructions-header {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  padding: 18px 24px;\r\n  border-bottom: 1px solid #eee;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.instructions-header h3 {\r\n  margin: 0;\r\n  color: var(--primary-color);\r\n  font-size: 18px;\r\n}\r\n\r\n.close-button {\r\n  background: none;\r\n  border: none;\r\n  font-size: 24px;\r\n  cursor: pointer;\r\n  color: #666;\r\n  transition: color 0.2s;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #333;\r\n}\r\n\r\n.instructions-content {\r\n  padding: 24px;\r\n}\r\n\r\n.instructions-content ol {\r\n  padding-left: 20px;\r\n  counter-reset: item;\r\n}\r\n\r\n.instructions-content ol li {\r\n  margin-bottom: 20px;\r\n  position: relative;\r\n  padding-left: 5px;\r\n}\r\n\r\n.instructions-content ol li::marker {\r\n  color: var(--primary-color);\r\n  font-weight: bold;\r\n}\r\n\r\n.instruction-image {\r\n  margin: 12px 0;\r\n  text-align: center;\r\n  background-color: #f5f5f5;\r\n  border-radius: 4px;\r\n  padding: 16px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.instruction-note {\r\n  background-color: #f0f7ff;\r\n  padding: 14px;\r\n  border-left: 4px solid var(--primary-color);\r\n  margin: 12px 0;\r\n  font-size: 13px;\r\n  border-radius: 0 4px 4px 0;\r\n}\r\n\r\n.troubleshooting {\r\n  background-color: #f9f9f9;\r\n  padding: 16px;\r\n  border-radius: 6px;\r\n  margin-top: 20px;\r\n  border: 1px solid #eee;\r\n}\r\n\r\n.troubleshooting h4 {\r\n  margin-top: 0;\r\n  color: #333;\r\n  margin-bottom: 12px;\r\n  font-size: 15px;\r\n}\r\n\r\n.troubleshooting ul {\r\n  padding-left: 20px;\r\n}\r\n\r\n.troubleshooting li {\r\n  margin-bottom: 10px;\r\n}\r\n\r\n.instructions-footer {\r\n  padding: 16px 24px;\r\n  border-top: 1px solid #eee;\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  background-color: #f8f8f8;\r\n}\r\n\r\n.got-it-button {\r\n  background-color: var(--primary-color);\r\n  color: white;\r\n  padding: 10px 20px;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-weight: 500;\r\n  transition: background-color 0.2s;\r\n}\r\n\r\n.got-it-button:hover {\r\n  background-color: var(--primary-hover);\r\n}\r\n\r\n.dont-show-again {\r\n  display: flex;\r\n  align-items: center;\r\n  font-size: 14px;\r\n  color: #666;\r\n}\r\n\r\n.dont-show-again input {\r\n  margin-right: 6px;\r\n  cursor: pointer;\r\n}\r\n\r\n/* ========== App Footer ========== */\r\n.app-footer {\r\n  margin-top: 40px;\r\n  padding-top: 20px;\r\n  border-top: 1px solid var(--border-color);\r\n  text-align: center;\r\n  color: var(--text-light);\r\n  font-size: 13px;\r\n}\r\n\r\n/* ========== Animations ========== */\r\n@keyframes fadeIn {\r\n  from { opacity: 0; }\r\n  to { opacity: 1; }\r\n}\r\n\r\n@keyframes successPulse {\r\n  0% { transform: scale(1); }\r\n  50% { transform: scale(1.05); }\r\n  100% { transform: scale(1); }\r\n}\r\n\r\n@keyframes modalSlideIn {\r\n  from {\r\n    transform: translateY(20px);\r\n    opacity: 0;\r\n  }\r\n  to {\r\n    transform: translateY(0);\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n/* ========== Responsive Adjustments ========== */\r\n@media (max-width: 992px) {\r\n  .app-container {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .tier-cards {\r\n    grid-template-columns: repeat(2, 1fr);\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n}\r\n\r\n@media (max-width: 768px) {\r\n  .app-container {\r\n    padding: 12px;\r\n  }\r\n  \r\n  .comprehensive-form {\r\n    gap: 20px;\r\n  }\r\n  \r\n  .form-section {\r\n    padding: 16px;\r\n  }\r\n  \r\n  .customer-info-section {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr 1fr;\r\n  }\r\n  \r\n  .tenant-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .action-buttons {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .action-buttons button {\r\n    width: 100%;\r\n  }\r\n}\r\n\r\n@media (max-width: 480px) {\r\n  .tier-cards {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .contact-fields {\r\n    grid-template-columns: 1fr;\r\n  }\r\n  \r\n  .view-toggle {\r\n    flex-direction: column;\r\n  }\r\n  \r\n  .view-toggle button {\r\n    width: 100%;\r\n  }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29149,11 +29290,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _OnboardingTemplateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./OnboardingTemplateGenerator */ "./src/components/OnboardingTemplateGenerator.tsx");
-/* harmony import */ var _EmailForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EmailForm */ "./src/components/EmailForm.tsx");
-/* harmony import */ var _EmailPreview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EmailPreview */ "./src/components/EmailPreview.tsx");
-/* harmony import */ var _Tabs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Tabs */ "./src/components/Tabs.tsx");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/App.css */ "./src/styles/App.css");
+/* harmony import */ var _TierSelector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TierSelector */ "./src/components/TierSelector.tsx");
+/* harmony import */ var _ContactsForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ContactsForm */ "./src/components/ContactsForm.tsx");
+/* harmony import */ var _TenantManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TenantManager */ "./src/components/TenantManager.tsx");
+/* harmony import */ var _EmailForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EmailForm */ "./src/components/EmailForm.tsx");
+/* harmony import */ var _EmailPreview__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./EmailPreview */ "./src/components/EmailPreview.tsx");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../styles/App.css */ "./src/styles/App.css");
 
 // src/components/App.tsx
 
@@ -29162,20 +29305,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+/**
+ * Comprehensive App Component with all forms integrated
+ * and multi-tenant support based on tier selection
+ */
 const App = () => {
+    // State for all form data
     const [customerInfo, setCustomerInfo] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
-        companyName: '',
         contactName: '',
         contactEmail: '',
         proposedDate: new Date(),
-        tenantId: '',
         authorizedContacts: [{ name: '', email: '', phone: '' }],
-        selectedTier: 'silver' // Default tier
+        selectedTier: 'silver', // Default tier
+        tenants: [{ id: '', companyName: '' }],
     });
     const [emailData, setEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const [showEmailPreview, setShowEmailPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    // Load saved data on initial render
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        chrome.storage.sync.get('customerInfo', (data) => {
+        chrome.storage.sync.get(['customerInfo', 'emailData'], (data) => {
             if (data.customerInfo) {
                 // Convert date string back to Date object
                 const storedInfo = data.customerInfo;
@@ -29189,30 +29339,90 @@ const App = () => {
                         else {
                             // If the date is invalid, set to current date
                             storedInfo.proposedDate = new Date();
-                            console.warn("Invalid date in storage, using current date instead");
                         }
                     }
                     else {
                         // If no date, use current date
                         storedInfo.proposedDate = new Date();
                     }
+                    // Ensure tenants array exists
+                    if (!storedInfo.tenants || !Array.isArray(storedInfo.tenants)) {
+                        storedInfo.tenants = [{ id: '', companyName: '' }];
+                    }
                     setCustomerInfo(storedInfo);
                 }
                 catch (err) {
-                    console.error("Error parsing stored date:", err);
+                    console.error("Error parsing stored data:", err);
                     // Use default values if there's an error
-                    setCustomerInfo(Object.assign(Object.assign({}, storedInfo), { proposedDate: new Date() }));
+                    setCustomerInfo(Object.assign(Object.assign({}, storedInfo), { proposedDate: new Date(), tenants: [{ id: '', companyName: '' }] }));
                 }
+            }
+            if (data.emailData) {
+                setEmailData(data.emailData);
             }
         });
     }, []);
-    // Save customer data when it changes
+    // Save customer info when it changes
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         chrome.storage.sync.set({ customerInfo });
     }, [customerInfo]);
-    // Handle customer info updates from template generator
-    const handleCustomerInfoUpdate = (info) => {
-        setCustomerInfo(info);
+    // Handle tier selection - adjust tenants and contacts based on tier limits
+    const handleTierChange = (tier) => {
+        const selectedTierObj = _data_supportTiers__WEBPACK_IMPORTED_MODULE_7__.supportTiers[tier];
+        let updatedTenants = [...customerInfo.tenants];
+        let updatedContacts = [...customerInfo.authorizedContacts];
+        // Limit tenants to the new tier's maximum
+        if (updatedTenants.length > selectedTierObj.tenants) {
+            updatedTenants = updatedTenants.slice(0, selectedTierObj.tenants);
+        }
+        // Limit contacts to the new tier's maximum
+        if (updatedContacts.length > selectedTierObj.authorizedContacts) {
+            updatedContacts = updatedContacts.slice(0, selectedTierObj.authorizedContacts);
+        }
+        setCustomerInfo(prevInfo => (Object.assign(Object.assign({}, prevInfo), { selectedTier: tier, tenants: updatedTenants, authorizedContacts: updatedContacts })));
+    };
+    // Handle contact updates
+    const handleContactsChange = (contacts) => {
+        setCustomerInfo(prevInfo => (Object.assign(Object.assign({}, prevInfo), { authorizedContacts: contacts })));
+    };
+    // Handle tenant updates
+    const handleTenantsChange = (tenants) => {
+        setCustomerInfo(prevInfo => (Object.assign(Object.assign({}, prevInfo), { tenants: tenants })));
+    };
+    // Handle customer info field changes
+    const handleCustomerInfoChange = (field, value) => {
+        setCustomerInfo(prevInfo => (Object.assign(Object.assign({}, prevInfo), { [field]: value })));
+    };
+    // Handle date change
+    const handleDateChange = (date) => {
+        try {
+            // Create a Date object safely
+            const newDate = new Date(date);
+            // Verify it's a valid date before setting it
+            if (!isNaN(newDate.getTime())) {
+                setCustomerInfo(prevInfo => (Object.assign(Object.assign({}, prevInfo), { proposedDate: newDate })));
+            }
+            else {
+                console.warn("Invalid date input: ", date);
+            }
+        }
+        catch (err) {
+            console.error("Error parsing date: ", err);
+        }
+    };
+    // Prepare data for Email Form
+    const getEmailCustomerInfo = () => {
+        // Use the first tenant's info for the email by default
+        const primaryTenant = customerInfo.tenants[0] || { id: '', companyName: '' };
+        return {
+            companyName: primaryTenant.companyName,
+            contactName: customerInfo.contactName,
+            contactEmail: customerInfo.contactEmail,
+            proposedDate: customerInfo.proposedDate,
+            tenantId: primaryTenant.id,
+            authorizedContacts: customerInfo.authorizedContacts,
+            selectedTier: customerInfo.selectedTier
+        };
     };
     // Handle email data updates from email form
     const handleEmailDataSave = (data) => {
@@ -29224,22 +29434,13 @@ const App = () => {
         setEmailData(data);
         setShowEmailPreview(true);
     };
-    // Return to email form
+    // Return to form editing
     const handleBackToEdit = () => {
         setShowEmailPreview(false);
     };
-    // Define tab content
-    const templateTab = {
-        id: 'template',
-        title: 'Template Generator',
-        content: ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OnboardingTemplateGenerator__WEBPACK_IMPORTED_MODULE_2__["default"], { customerInfo: customerInfo, onChange: handleCustomerInfoUpdate }))
-    };
-    const emailTab = {
-        id: 'email',
-        title: 'Email Builder',
-        content: showEmailPreview && emailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailPreview__WEBPACK_IMPORTED_MODULE_4__["default"], { emailData: emailData, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailForm__WEBPACK_IMPORTED_MODULE_3__["default"], { customerInfo: customerInfo, onSaveEmailData: handleEmailDataSave, onPreviewEmail: handleEmailPreview }))
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container options-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Generate rich text templates and emails for customer onboarding" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Tabs__WEBPACK_IMPORTED_MODULE_5__["default"], { tabs: [templateTab, emailTab], defaultTab: "template" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", { className: "app-footer", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Onboarding Template Generator - v1.0.1" }) })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container options-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Tool" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure customer details and generate rich text emails for onboarding" })] }), showEmailPreview && emailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailPreview__WEBPACK_IMPORTED_MODULE_6__["default"], { emailData: emailData, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TierSelector__WEBPACK_IMPORTED_MODULE_2__["default"], { selectedTier: customerInfo.selectedTier, onChange: handleTierChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: customerInfo.contactName, onChange: (e) => handleCustomerInfoChange('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: customerInfo.contactEmail, onChange: (e) => handleCustomerInfoChange('contactEmail', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime())
+                                            ? customerInfo.proposedDate.toISOString().split('T')[0]
+                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TenantManager__WEBPACK_IMPORTED_MODULE_4__["default"], { tenants: customerInfo.tenants, selectedTier: customerInfo.selectedTier, onChange: handleTenantsChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ContactsForm__WEBPACK_IMPORTED_MODULE_3__["default"], { contacts: customerInfo.authorizedContacts, selectedTier: customerInfo.selectedTier, onChange: handleContactsChange }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Builder" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Customize the email template that will be sent to the customer as part of the onboarding process." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EmailForm__WEBPACK_IMPORTED_MODULE_5__["default"], { customerInfo: getEmailCustomerInfo(), onSaveEmailData: handleEmailDataSave, onPreviewEmail: handleEmailPreview })] })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("footer", { className: "app-footer", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Onboarding Tool - v1.0.1" }) })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -29438,62 +29639,6 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
 
 /***/ }),
 
-/***/ "./src/components/OnboardingTemplateGenerator.tsx":
-/*!********************************************************!*\
-  !*** ./src/components/OnboardingTemplateGenerator.tsx ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _TierSelector__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TierSelector */ "./src/components/TierSelector.tsx");
-/* harmony import */ var _ContactsForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ContactsForm */ "./src/components/ContactsForm.tsx");
-/* harmony import */ var _TenantForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TenantForm */ "./src/components/TenantForm.tsx");
-/* harmony import */ var _TemplatePreview__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TemplatePreview */ "./src/components/TemplatePreview.tsx");
-
-
-
-
-
-const OnboardingTemplateGenerator = ({ customerInfo, onChange }) => {
-    // Update handler functions to use onChange prop
-    const handleTierChange = (tier) => {
-        onChange(Object.assign(Object.assign({}, customerInfo), { selectedTier: tier }));
-    };
-    const handleContactsChange = (contacts) => {
-        onChange(Object.assign(Object.assign({}, customerInfo), { authorizedContacts: contacts }));
-    };
-    const handleFieldChange = (field, value) => {
-        onChange(Object.assign(Object.assign({}, customerInfo), { [field]: value }));
-    };
-    const handleDateChange = (date) => {
-        try {
-            // Create a Date object safely
-            const newDate = new Date(date);
-            // Verify it's a valid date before setting it
-            if (!isNaN(newDate.getTime())) {
-                onChange(Object.assign(Object.assign({}, customerInfo), { proposedDate: newDate }));
-            }
-            else {
-                console.warn("Invalid date input: ", date);
-            }
-        }
-        catch (err) {
-            console.error("Error parsing date: ", err);
-        }
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "onboarding-generator", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("header", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Generate rich text templates for customer onboarding" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TierSelector__WEBPACK_IMPORTED_MODULE_1__["default"], { selectedTier: customerInfo.selectedTier, onChange: handleTierChange }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: customerInfo.contactName, onChange: (e) => handleFieldChange('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: customerInfo.contactEmail, onChange: (e) => handleFieldChange('contactEmail', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime())
-                                            ? customerInfo.proposedDate.toISOString().split('T')[0]
-                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TenantForm__WEBPACK_IMPORTED_MODULE_3__["default"], { tenantId: customerInfo.tenantId, companyName: customerInfo.companyName, onChange: handleFieldChange }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_ContactsForm__WEBPACK_IMPORTED_MODULE_2__["default"], { contacts: customerInfo.authorizedContacts, selectedTier: customerInfo.selectedTier, onChange: handleContactsChange }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_TemplatePreview__WEBPACK_IMPORTED_MODULE_4__["default"], { customerInfo: customerInfo })] })] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OnboardingTemplateGenerator);
-
-
-/***/ }),
-
 /***/ "./src/components/OutlookInstructions.tsx":
 /*!************************************************!*\
   !*** ./src/components/OutlookInstructions.tsx ***!
@@ -29514,10 +29659,10 @@ const OutlookInstructions = ({ onClose }) => {
 
 /***/ }),
 
-/***/ "./src/components/Tabs.tsx":
-/*!*********************************!*\
-  !*** ./src/components/Tabs.tsx ***!
-  \*********************************/
+/***/ "./src/components/TenantManager.tsx":
+/*!******************************************!*\
+  !*** ./src/components/TenantManager.tsx ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -29525,129 +29670,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
 
-// src/components/Tabs.tsx
 
-const Tabs = ({ tabs, defaultTab }) => {
-    const [activeTab, setActiveTab] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(defaultTab || tabs[0].id);
-    const handleTabClick = (tabId) => {
-        setActiveTab(tabId);
+const TenantManager = ({ tenants, selectedTier, onChange }) => {
+    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers[selectedTier];
+    // Handle tenant field changes
+    const handleTenantChange = (index, field, value) => {
+        const updatedTenants = [...tenants];
+        updatedTenants[index] = Object.assign(Object.assign({}, updatedTenants[index]), { [field]: value });
+        onChange(updatedTenants);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tabs-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tabs-header", children: tabs.map(tab => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: `tab-button ${activeTab === tab.id ? 'active' : ''}`, onClick: () => handleTabClick(tab.id), children: tab.title }, tab.id))) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tabs-content", children: tabs.map(tab => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: `tab-content ${activeTab === tab.id ? 'active' : ''}`, style: { display: activeTab === tab.id ? 'block' : 'none' }, children: tab.content }, tab.id))) })] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Tabs);
-
-
-/***/ }),
-
-/***/ "./src/components/TemplatePreview.tsx":
-/*!********************************************!*\
-  !*** ./src/components/TemplatePreview.tsx ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/templateGenerator */ "./src/utils/templateGenerator.ts");
-/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/utils/clipboardUtils.ts");
-/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-
-// src/components/TemplatePreview.tsx
-
-
-
-
-const TemplatePreview = ({ customerInfo }) => {
-    const [copied, setCopied] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [showPreview, setShowPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [copyMessage, setCopyMessage] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Generate & Copy to Clipboard');
-    const handleCopyToClipboard = () => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const template = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo);
-            // Create a plain text version of the template for fallback
-            const plainText = convertHtmlToPlainText(template);
-            // Use the enhanced copyFormattedContent function
-            yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(template, plainText);
-            setCopied(true);
-            setCopyMessage('✓ Copied to Clipboard!');
-            // Reset the button text after 3 seconds
-            setTimeout(() => {
-                setCopied(false);
-                setCopyMessage('Generate & Copy to Clipboard');
-            }, 3000);
+    // Add a new tenant
+    const addTenant = () => {
+        if (tenants.length < tier.tenants) {
+            onChange([...tenants, { id: '', companyName: '' }]);
         }
-        catch (error) {
-            console.error('Error copying to clipboard:', error);
-            setCopyMessage('Copy failed. Try again.');
-            // Reset on error after 3 seconds
-            setTimeout(() => {
-                setCopyMessage('Generate & Copy to Clipboard');
-            }, 3000);
-        }
-    });
-    // Helper function to convert HTML to plain text
-    const convertHtmlToPlainText = (html) => {
-        // Create a temporary element to parse the HTML
-        const temp = document.createElement('div');
-        temp.innerHTML = html;
-        // Get text content and normalize whitespace
-        let text = temp.textContent || temp.innerText || '';
-        text = text.replace(/\s+/g, ' ').trim();
-        return text;
     };
-    const togglePreview = () => {
-        setShowPreview(!showPreview);
+    // Remove a tenant
+    const removeTenant = (index) => {
+        const updatedTenants = [...tenants];
+        updatedTenants.splice(index, 1);
+        onChange(updatedTenants);
     };
-    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_4__.supportTiers[customerInfo.selectedTier];
-    const template = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo);
-    const isFormValid = () => {
-        return (customerInfo.companyName.trim() !== '' &&
-            customerInfo.contactName.trim() !== '' &&
-            customerInfo.contactEmail.trim() !== '' &&
-            customerInfo.proposedDate instanceof Date && !isNaN(customerInfo.proposedDate.getTime()) &&
-            customerInfo.authorizedContacts.length > 0 &&
-            customerInfo.authorizedContacts.every(contact => contact.name.trim() !== '' &&
-                contact.email.trim() !== ''));
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "template-preview", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Template Preview & Generation" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "preview-button", onClick: togglePreview, children: showPreview ? 'Hide Preview' : 'Show Preview' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: `copy-button ${copied ? 'copied' : ''}`, onClick: handleCopyToClipboard, disabled: !isFormValid(), children: copyMessage })] }), !isFormValid() && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "validation-message", children: "Please fill in all required fields before generating the template." })), showPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Template Preview" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: { color: tier.color }, children: tier.name })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-content", dangerouslySetInnerHTML: { __html: template } })] }))] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }, index))), tenants.length < tier.tenants && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addTenant, children: "Add Tenant" }))] }));
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TemplatePreview);
-
-
-/***/ }),
-
-/***/ "./src/components/TenantForm.tsx":
-/*!***************************************!*\
-  !*** ./src/components/TenantForm.tsx ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-const TenantForm = ({ tenantId, companyName, onChange }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "3. Tenant Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "company-name", children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "company-name", type: "text", value: companyName, onChange: (e) => onChange('companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "tenant-id", children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "tenant-id", type: "text", value: tenantId, onChange: (e) => onChange('tenantId', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantForm);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantManager);
 
 
 /***/ }),
@@ -29807,7 +29855,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   copyFormattedContent: () => (/* binding */ copyFormattedContent),
 /* harmony export */   copyRichTextToClipboard: () => (/* binding */ copyRichTextToClipboard),
-/* harmony export */   copyToClipboardModern: () => (/* binding */ copyToClipboardModern)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 // src/utils/clipboardUtils.ts
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -29820,19 +29868,24 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 /**
- * Utility to copy rich text (HTML) to clipboard
- * This implementation uses document.execCommand('copy') with HTML content
- * to preserve formatting when pasting into applications like Outlook
+ * Utility to copy rich text (HTML) to clipboard with enhanced formatting preservation
  */
 const copyRichTextToClipboard = (html) => {
     return new Promise((resolve, reject) => {
         try {
             // Create a temporary div with the HTML content
             const container = document.createElement('div');
-            container.innerHTML = html;
+            // Important: set contentEditable to make it selectable
+            container.setAttribute('contenteditable', 'true');
             container.style.position = 'fixed';
-            container.style.pointerEvents = 'none';
+            container.style.left = '-9999px';
+            container.style.top = '0';
             container.style.opacity = '0';
+            // Add special attributes for Outlook
+            container.setAttribute('data-outlook-preserve', 'true');
+            // Process the HTML to enhance PowerShell script formatting for copy-paste
+            const processedHtml = processPowerShellScripts(html);
+            container.innerHTML = processedHtml;
             document.body.appendChild(container);
             // Select the content
             const selection = window.getSelection();
@@ -29858,48 +29911,49 @@ const copyRichTextToClipboard = (html) => {
     });
 };
 /**
- * Alternative implementation using Clipboard API for modern browsers
- * Note: This may not preserve HTML formatting in all applications
+ * Process HTML to enhance PowerShell scripts for better copy-paste experience
  */
-const copyToClipboardModern = (text, html) => __awaiter(void 0, void 0, void 0, function* () {
-    if (!navigator.clipboard) {
-        return copyRichTextToClipboard(html || text);
-    }
-    try {
-        if (html && navigator.clipboard.write) {
-            // Use ClipboardItem API if available for HTML content
-            const type = 'text/html';
-            const blob = new Blob([html], { type });
-            const data = [new ClipboardItem({ [type]: blob })];
-            yield navigator.clipboard.write(data);
-        }
-        else {
-            // Fallback to text-only copy
-            yield navigator.clipboard.writeText(text);
-        }
-    }
-    catch (err) {
-        console.error('Clipboard API failed, falling back to execCommand', err);
-        return copyRichTextToClipboard(html || text);
-    }
-});
+const processPowerShellScripts = (html) => {
+    // Look for PowerShell script sections and replace them with plaintext versions
+    // that will copy-paste better while preserving the visual styling
+    const scriptPattern = /<table[^>]*class="powershell-script-container"[^>]*>[\s\S]*?<\/table>/g;
+    return html.replace(scriptPattern, (match) => {
+        // Extract the actual script content
+        const contentMatch = match.match(/<pre[^>]*>([\s\S]*?)<\/pre>/);
+        if (!contentMatch || !contentMatch[1])
+            return match;
+        // Get the plain script content (removing HTML tags but keeping whitespace)
+        const scriptContent = contentMatch[1]
+            .replace(/<[^>]*>/g, '') // Remove HTML tags
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&amp;/g, '&')
+            .replace(/&quot;/g, '"')
+            .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec));
+        // Create a new div that will render nicely but copy as plain text
+        return `
+      <div class="powershell-script-container" style="margin: 15px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div style="padding: 12px 16px; background-color: #2b579a; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold;">
+          PowerShell Script
+        </div>
+        <div style="background-color: #f8f8f8; padding: 16px;">
+          <pre style="margin: 0; white-space: pre-wrap; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5;">${scriptContent}</pre>
+        </div>
+      </div>
+    `;
+    });
+};
 /**
- * Enhanced copy function that tries multiple approaches to ensure
- * HTML formatting is preserved when possible
+ * Enhanced copy function for all content
  */
 const copyFormattedContent = (html, plainText) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // First try the modern Clipboard API with HTML support
-        if (navigator.clipboard && 'write' in navigator.clipboard) {
-            yield copyToClipboardModern(plainText, html);
-            return;
-        }
-        // Fall back to execCommand approach for better compatibility
+        // First try the rich text copy with enhanced PowerShell formatting
         yield copyRichTextToClipboard(html);
     }
     catch (err) {
         console.error('Rich text copy failed, falling back to plain text', err);
-        // Last resort - plain text copy
+        // Fall back to plain text copy
         if (navigator.clipboard) {
             yield navigator.clipboard.writeText(plainText);
         }
@@ -29912,6 +29966,10 @@ const copyFormattedContent = (html, plainText) => __awaiter(void 0, void 0, void
             document.body.removeChild(textArea);
         }
     }
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+    copyRichTextToClipboard,
+    copyFormattedContent
 });
 
 
@@ -29931,79 +29989,499 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
 // src/utils/emailBuilder.ts
 
+/**
+ * Translations for various languages
+ */
+const translations = {
+    en: {
+        // Email general
+        'subject': '{tier} Support Plan Onboarding for {company} - Microsoft 365 Administration Setup',
+        'greeting': 'Dear {name},',
+        'intro1': 'Thank you for choosing {company} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for {clientCompany}.',
+        'intro2': 'Below are the important steps to complete your onboarding process. Please review each section carefully and follow the instructions to set up your {tier} Support Plan and the necessary access configurations.',
+        'closing': 'Please reply to this email to confirm receipt and let us know if you have any questions or concerns.',
+        'regards': 'Best regards,',
+        'footer': 'This is an automated message generated by the Microsoft Onboarding Template Generator.',
+        // Section titles
+        'supportPlanTitle': '{tier} SUPPORT PLAN DETAILS',
+        'authorizedContactsTitle': 'ACTION REQUIRED: AUTHORIZED CONTACTS',
+        'tenantTitle': 'ACTION REQUIRED: TENANT INFORMATION',
+        'gdapTitle': 'ACTION REQUIRED: GDAP DELEGATION',
+        'rbacTitle': 'ACTION REQUIRED: RBAC CONFIGURATION',
+        'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES',
+        'meetingTitle': 'SCHEDULED: ONBOARDING MEETING',
+        'additionalInfoTitle': 'ADDITIONAL INFORMATION',
+        // Support plan section
+        'supportPlanIntro': 'The {tier} Support Plan provides {supportType} with the following features:',
+        'supportType.bronze': 'basic support availability for non-urgent cases, with no Critical Situation coverage',
+        'supportType.other': 'comprehensive support with Critical Situation coverage',
+        'supportTypeLabel': 'Support Type:',
+        'supportHoursLabel': 'Support Hours:',
+        'severityLevelsLabel': 'Severity Levels:',
+        'contactsLabel': 'Authorized Contacts:',
+        'tenantsLabel': 'Tenants:',
+        'requestsLabel': 'Support Requests:',
+        'criticalLabel': 'Critical Situation Support:',
+        'yes': 'Yes',
+        'no': 'No',
+        // Contacts section
+        'contactsIntro': 'Based on your {tier} Support Plan, you can designate up to {count} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.',
+        'contactsRolesIntro': 'We recommend designating individuals for the following roles: {roles}.',
+        'contactsInstruction': 'Please complete the following table with the required information for each contact:',
+        'contactsNote': 'Note: Your {tier} plan includes {count} authorized contacts. Additional contacts can be managed through our customer portal after initial setup.',
+        // Table headers
+        'numberHeader': '#',
+        'firstNameHeader': 'First Name',
+        'lastNameHeader': 'Last Name',
+        'officePhoneHeader': 'Office Phone',
+        'mobilePhoneHeader': 'Mobile Phone',
+        'emailHeader': 'Email Address',
+        'jobTitleHeader': 'Job Title',
+        // Meeting section
+        'meetingIntro': 'We have scheduled an onboarding meeting to discuss these items in detail and answer any questions you may have:',
+        'meetingDate': 'Date: {date}',
+        'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
+        // GDAP section
+        'gdapIntro': 'Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by {deadline}.',
+        'gdapRoles': 'We will request the "{roles}" role.',
+        'gdapPermission': 'This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.',
+        'gdapInstruction': 'Please visit the following link to approve the GDAP relationship:',
+        'gdapLink': 'GDAP Approval Link',
+        // RBAC section
+        'rbacIntro': 'We will configure {groups} to ensure users have the appropriate level of access to your environment based on their job functions.',
+        'rbacPermissionBoth': 'This includes both Azure and Microsoft 365 access permissions.',
+        'rbacPermissionAzure': 'This includes Azure resources access permissions.',
+        'rbacPermission365': 'This includes Microsoft 365 service access permissions.',
+        'rbacInstruction': 'Please complete the following steps to configure RBAC permissions:',
+        'rbacStep1': 'STEP 1: Install Azure PowerShell',
+        'rbacStep1Source': 'Source:',
+        'rbacStep2': 'STEP 2: Update the tenant and run the following script',
+        'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console',
+        'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)',
+        'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.',
+        // Conditional Access section
+        'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:',
+        'mfaPolicy': 'Multi-Factor Authentication (MFA) requirements for all users',
+        'locationPolicy': 'Location-based access restrictions',
+        'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
+        'signInPolicy': 'Sign-in risk-based policies to prevent suspicious login attempts'
+    },
+    de: {
+        // Email general
+        'subject': '{tier} Support-Plan Onboarding für {company} - Microsoft 365 Administrationseinrichtung',
+        'greeting': 'Sehr geehrte(r) {name},',
+        'intro1': 'Vielen Dank, dass Sie sich für {company} als Ihren Microsoft 365-Administrationspartner entschieden haben. Wir freuen uns, den Onboarding-Prozess für {clientCompany} zu beginnen.',
+        'intro2': 'Nachfolgend finden Sie die wichtigen Schritte zum Abschluss Ihres Onboarding-Prozesses. Bitte prüfen Sie jeden Abschnitt sorgfältig und folgen Sie den Anweisungen zur Einrichtung Ihres {tier} Support-Plans und der notwendigen Zugriffskonfigurationen.',
+        'closing': 'Bitte antworten Sie auf diese E-Mail, um den Erhalt zu bestätigen, und lassen Sie uns wissen, wenn Sie Fragen oder Bedenken haben.',
+        'regards': 'Mit freundlichen Grüßen,',
+        'footer': 'Dies ist eine automatisch generierte Nachricht des Microsoft Onboarding Template Generators.',
+        // Section titles
+        'supportPlanTitle': '{tier} SUPPORT-PLAN DETAILS',
+        'authorizedContactsTitle': 'ERFORDERLICHE AKTION: AUTORISIERTE KONTAKTE',
+        'tenantTitle': 'ERFORDERLICHE AKTION: TENANT-INFORMATIONEN',
+        'gdapTitle': 'ERFORDERLICHE AKTION: GDAP-DELEGATION',
+        'rbacTitle': 'ERFORDERLICHE AKTION: RBAC-KONFIGURATION',
+        'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF',
+        'meetingTitle': 'GEPLANT: ONBOARDING-MEETING',
+        'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN',
+        // Support plan section
+        'supportPlanIntro': 'Der {tier} Support-Plan bietet {supportType} mit den folgenden Funktionen:',
+        'supportType.bronze': 'grundlegende Support-Verfügbarkeit für nicht dringende Fälle, ohne Abdeckung kritischer Situationen',
+        'supportType.other': 'umfassenden Support mit Abdeckung kritischer Situationen',
+        'supportTypeLabel': 'Support-Typ:',
+        'supportHoursLabel': 'Support-Zeiten:',
+        'severityLevelsLabel': 'Schweregrade:',
+        'contactsLabel': 'Autorisierte Kontakte:',
+        'tenantsLabel': 'Tenants:',
+        'requestsLabel': 'Support-Anfragen:',
+        'criticalLabel': 'Unterstützung bei kritischen Situationen:',
+        'yes': 'Ja',
+        'no': 'Nein',
+        // Contacts section
+        'contactsIntro': 'Basierend auf Ihrem {tier} Support-Plan können Sie bis zu {count} autorisierte Kontakte für Ihre Organisation benennen. Diese Kontakte werden berechtigt sein, Support-Anfragen zu stellen und administrative Änderungen in Ihrer Microsoft 365-Umgebung zu genehmigen.',
+        'contactsRolesIntro': 'Wir empfehlen, Personen für die folgenden Rollen zu benennen: {roles}.',
+        'contactsInstruction': 'Bitte füllen Sie die folgende Tabelle mit den erforderlichen Informationen für jeden Kontakt aus:',
+        'contactsNote': 'Hinweis: Ihr {tier}-Plan umfasst {count} autorisierte Kontakte. Zusätzliche Kontakte können nach der Ersteinrichtung über unser Kundenportal verwaltet werden.',
+        // Table headers
+        'numberHeader': 'Nr.',
+        'firstNameHeader': 'Vorname',
+        'lastNameHeader': 'Nachname',
+        'officePhoneHeader': 'Bürotelefon',
+        'mobilePhoneHeader': 'Mobiltelefon',
+        'emailHeader': 'E-Mail-Adresse',
+        'jobTitleHeader': 'Berufsbezeichnung',
+        // Meeting section
+        'meetingIntro': 'Wir haben ein Onboarding-Meeting geplant, um diese Punkte im Detail zu besprechen und Ihre Fragen zu beantworten:',
+        'meetingDate': 'Datum: {date}',
+        'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.',
+        // GDAP section
+        'gdapIntro': 'Microsoft verlangt jetzt von Partnern die Verwendung von GDAP für sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren.',
+        'gdapRoles': 'Wir werden die Rolle "{roles}" beantragen.',
+        'gdapPermission': 'Diese Berechtigung ermöglicht es uns, die in unserer Vereinbarung festgelegten Support-Dienste zu erbringen und gleichzeitig die Best Practices für Sicherheit einzuhalten.',
+        'gdapInstruction': 'Bitte besuchen Sie den folgenden Link, um die GDAP-Beziehung zu genehmigen:',
+        'gdapLink': 'GDAP-Genehmigungslink',
+        // RBAC section
+        'rbacIntro': 'Wir werden {groups} konfigurieren, um sicherzustellen, dass Benutzer über die entsprechenden Zugriffsebenen für Ihre Umgebung auf Basis ihrer Jobfunktionen verfügen.',
+        'rbacPermissionBoth': 'Dies umfasst sowohl Azure- als auch Microsoft 365-Zugriffsberechtigungen.',
+        'rbacPermissionAzure': 'Dies umfasst Zugriffsberechtigungen für Azure-Ressourcen.',
+        'rbacPermission365': 'Dies umfasst Zugriffsberechtigungen für Microsoft 365-Dienste.',
+        'rbacInstruction': 'Bitte führen Sie die folgenden Schritte aus, um RBAC-Berechtigungen zu konfigurieren:',
+        'rbacStep1': 'SCHRITT 1: Installation von Azure PowerShell',
+        'rbacStep1Source': 'Quelle:',
+        'rbacStep2': 'SCHRITT 2: Aktualisieren Sie den Tenant und führen Sie das folgende Skript aus',
+        'rbacStep2Instruction': 'Kopieren und fügen Sie dieses vollständige Skript in Ihre PowerShell-Konsole ein',
+        'rbacScriptHeader': 'PowerShell-Skript (Kopieren und in die PowerShell-Konsole einfügen)',
+        'rbacScreenshot': 'Bitte senden Sie uns einen Screenshot des Ergebnisses des obigen Skripts oder teilen Sie uns mit, ob Sie lieber ein Teams-Meeting planen möchten, um diese Konfiguration gemeinsam durchzuführen.',
+        // Conditional Access section
+        'conditionalAccessIntro': 'Wir empfehlen die Implementierung der folgenden Sicherheitsrichtlinien für Ihre Umgebung:',
+        'mfaPolicy': 'Multi-Faktor-Authentifizierung (MFA) für alle Benutzer',
+        'locationPolicy': 'Standortbasierte Zugriffsbeschränkungen',
+        'devicePolicy': 'Gerätekonformitätsrichtlinien, um sicherzustellen, dass nur sichere Geräte auf Ihre Daten zugreifen können',
+        'signInPolicy': 'Anmelderisiko-basierte Richtlinien zur Verhinderung verdächtiger Anmeldeversuche'
+    },
+    fr: {
+        // Email general
+        'subject': 'Intégration du Plan de Support {tier} pour {company} - Configuration Administrative Microsoft 365',
+        'greeting': 'Cher/Chère {name},',
+        'intro1': 'Merci d\'avoir choisi {company} comme partenaire d\'administration Microsoft 365. Nous sommes ravis de commencer le processus d\'intégration pour {clientCompany}.',
+        'intro2': 'Vous trouverez ci-dessous les étapes importantes pour compléter votre processus d\'intégration. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer votre Plan de Support {tier} et les configurations d\'accès nécessaires.',
+        'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.',
+        'regards': 'Cordialement,',
+        'footer': 'Ceci est un message généré automatiquement par le Générateur de Modèles d\'Intégration Microsoft.',
+        // Section titles
+        'supportPlanTitle': 'DÉTAILS DU PLAN DE SUPPORT {tier}',
+        'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS',
+        'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT',
+        'gdapTitle': 'ACTION REQUISE : DÉLÉGATION GDAP',
+        'rbacTitle': 'ACTION REQUISE : CONFIGURATION RBAC',
+        'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL',
+        'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION',
+        'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES',
+        // Support plan section
+        'supportPlanIntro': 'Le Plan de Support {tier} offre {supportType} avec les fonctionnalités suivantes :',
+        'supportType.bronze': 'une disponibilité de support de base pour les cas non urgents, sans couverture des situations critiques',
+        'supportType.other': 'un support complet avec couverture des situations critiques',
+        'supportTypeLabel': 'Type de support :',
+        'supportHoursLabel': 'Heures de support :',
+        'severityLevelsLabel': 'Niveaux de gravité :',
+        'contactsLabel': 'Contacts autorisés :',
+        'tenantsLabel': 'Tenants :',
+        'requestsLabel': 'Demandes de support :',
+        'criticalLabel': 'Support pour situations critiques :',
+        'yes': 'Oui',
+        'no': 'Non',
+        // Contacts section
+        'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft 365.',
+        'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.',
+        'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :',
+        'contactsNote': 'Remarque : Votre plan {tier} inclut {count} contacts autorisés. Des contacts supplémentaires peuvent être gérés via notre portail client après la configuration initiale.',
+        // Table headers
+        'numberHeader': 'N°',
+        'firstNameHeader': 'Prénom',
+        'lastNameHeader': 'Nom',
+        'officePhoneHeader': 'Téléphone bureau',
+        'mobilePhoneHeader': 'Téléphone mobile',
+        'emailHeader': 'Adresse e-mail',
+        'jobTitleHeader': 'Fonction',
+        // Meeting section
+        'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
+        'meetingDate': 'Date : {date}',
+        'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.',
+        // GDAP section
+        'gdapIntro': 'Microsoft exige désormais que les partenaires utilisent GDAP pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}.',
+        'gdapRoles': 'Nous demanderons le rôle "{roles}".',
+        'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité.',
+        'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :',
+        'gdapLink': 'Lien d\'approbation GDAP',
+        // RBAC section
+        'rbacIntro': 'Nous configurerons {groups} pour garantir que les utilisateurs disposent du niveau d\'accès approprié à votre environnement en fonction de leurs rôles professionnels.',
+        'rbacPermissionBoth': 'Cela inclut des autorisations d\'accès pour Azure et Microsoft 365.',
+        'rbacPermissionAzure': 'Cela inclut des autorisations d\'accès aux ressources Azure.',
+        'rbacPermission365': 'Cela inclut des autorisations d\'accès aux services Microsoft 365.',
+        'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :',
+        'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell',
+        'rbacStep1Source': 'Source :',
+        'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
+        'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
+        'rbacScriptHeader': 'Script PowerShell (Copier et coller dans la console PowerShell)',
+        'rbacScreenshot': 'Veuillez nous envoyer une capture d\'écran du résultat du script ci-dessus ou nous indiquer si vous préférez planifier une réunion Teams pour effectuer cette configuration ensemble.',
+        // Conditional Access section
+        'conditionalAccessIntro': 'Nous recommandons la mise en œuvre des politiques de sécurité suivantes pour votre environnement :',
+        'mfaPolicy': 'Exigences d\'authentification multifacteur (MFA) pour tous les utilisateurs',
+        'locationPolicy': 'Restrictions d\'accès basées sur la localisation',
+        'devicePolicy': 'Politiques de conformité des appareils pour garantir que seuls les appareils sécurisés peuvent accéder à vos données',
+        'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes'
+    }
+};
 const emailBuilder = {
+    /**
+     * Get translation for a key in the specified language
+     * @param key - The translation key
+     * @param language - The language code (en, de, fr)
+     * @param replacements - Optional replacements for placeholders
+     * @returns The translated string
+     */
+    translate: function (key, language = 'en', replacements) {
+        const langTranslations = translations[language] || translations.en;
+        let result = langTranslations[key] || translations.en[key] || key;
+        // Special handling for support type based on tier
+        if (key === 'supportType' && (replacements === null || replacements === void 0 ? void 0 : replacements.tier)) {
+            const tierKey = `supportType.${replacements.tier}`;
+            if (langTranslations[tierKey]) {
+                result = langTranslations[tierKey];
+            }
+            else if (langTranslations['supportType.other']) {
+                result = langTranslations['supportType.other'];
+            }
+        }
+        // Replace placeholders
+        if (replacements) {
+            Object.keys(replacements).forEach(placeholder => {
+                const value = replacements[placeholder];
+                result = result.replace(new RegExp(`{${placeholder}}`, 'g'), String(value));
+            });
+        }
+        return result;
+    },
+    /**
+     * Format script blocks for better copy-paste compatibility with email clients
+     */
+    formatScriptBlock: function (scriptContent, language = 'en') {
+        // Clean up the script content
+        const cleanedScript = scriptContent.trim()
+            .replace(/\t/g, '    ') // Replace tabs with spaces for consistency
+            .replace(/^\s*\n/gm, ''); // Remove empty lines
+        // Get translation for script header
+        const scriptHeader = this.translate('rbacScriptHeader', language);
+        // Plain pre-formatted text works better for copy-paste than styled HTML with syntax highlighting
+        return `
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" class="powershell-script-container" style="border-collapse: collapse; margin: 25px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <tr>
+          <td style="padding: 0;">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+              <tr>
+                <td style="padding: 12px 16px; background-color: #2b579a; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600;">
+                  ${scriptHeader}
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: #f8f8f8; padding: 16px;">
+                  <pre style="margin: 0; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: break-word;">${cleanedScript}</pre>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>`;
+    },
+    /**
+     * Create a multi-column table compatible with Outlook
+     * This table is designed to be copied and pasted with formatting preserved
+     * @param {number} rows - The number of rows to create in the table
+     * @returns {string} - HTML for the contacts table
+     */
+    createContactsTable: function (rows, language = 'en') {
+        // Get translated headers
+        const numberHeader = this.translate('numberHeader', language);
+        const firstNameHeader = this.translate('firstNameHeader', language);
+        const lastNameHeader = this.translate('lastNameHeader', language);
+        const officePhoneHeader = this.translate('officePhoneHeader', language);
+        const mobilePhoneHeader = this.translate('mobilePhoneHeader', language);
+        const emailHeader = this.translate('emailHeader', language);
+        const jobTitleHeader = this.translate('jobTitleHeader', language);
+        // Create headers
+        let tableHTML = `
+    <table class="contacts-table" width="100%" cellpadding="0" cellspacing="0" border="1" style="border-collapse: collapse; margin: 25px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+      <tr style="background-color: #f0f0f0;">
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${numberHeader}</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${firstNameHeader}</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${lastNameHeader}</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${officePhoneHeader}</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${mobilePhoneHeader}</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${emailHeader}</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${jobTitleHeader}</th>
+      </tr>`;
+        // Create empty rows
+        for (let i = 1; i <= rows; i++) {
+            const bgColor = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
+            tableHTML += `
+      <tr style="background-color: ${bgColor};">
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;">${i}</td>
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+        <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+      </tr>`;
+        }
+        tableHTML += `
+    </table>`;
+        return tableHTML;
+    },
+    /**
+     * Create a section header with tier-specific styling
+     */
+    createSectionHeader: function (title, color) {
+        return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 35px 0 20px 0;">
+      <tr>
+        <td style="padding: 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8; border-left: 4px solid ${color}; border-radius: 0 4px 4px 0;">
+            <tr>
+              <td style="padding: 16px;">
+                <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600;">${title}</h3>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>`;
+    },
+    /**
+     * Create an info box with visual styling for instructions
+     */
+    createInstructionBox: function (title, content) {
+        return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0;">
+      <tr>
+        <td style="padding: 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f0f7ff; border: 1px solid #cfe5ff; border-radius: 4px;">
+            <tr>
+              <td style="padding: 16px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #333;">
+                <div style="font-weight: bold; color: #0078D4; margin-bottom: 8px; font-size: 15px;">${title}</div>
+                <div style="color: #333;">${content}</div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>`;
+    },
+    /**
+     * Create a step indicator for numbered instructions
+     */
+    createStepIndicator: function (number, title) {
+        return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0;">
+      <tr>
+        <td style="padding: 0; vertical-align: middle;">
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td style="width: 36px; height: 36px; background-color: #0078D4; border-radius: 50%; text-align: center; vertical-align: middle;">
+                <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold;">${number}</span>
+              </td>
+              <td style="padding-left: 12px;">
+                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${title}</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>`;
+    },
     /**
      * Build the plain text version of the email body
      * @param {EmailFormData} formData - The form data from the UI
      * @returns {String} - Plain text email content
      */
     buildEmailBody: function (formData) {
-        // Get the selected tier
+        // Get the selected tier and language
         const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
-        let body = `Dear ${formData.contactName},\n\n`;
-        body += `Thank you for choosing ${formData.senderCompany} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for ${formData.companyName}.\n\n`;
-        // Add introduction
-        body += `Below is important information regarding your selected ${tier.name} Support Plan, administrative access, and security configurations we need to set up for your Microsoft 365 environment. Please review this information carefully and let us know if you have any questions.\n\n`;
+        const language = (formData.language || 'en');
+        // Start with greeting
+        let body = this.translate('greeting', language, { name: formData.contactName }) + '\n\n';
+        // Introduction
+        body += this.translate('intro1', language, {
+            company: formData.senderCompany,
+            clientCompany: formData.companyName
+        }) + '\n\n';
+        body += this.translate('intro2', language, {
+            tier: tier.name
+        }) + '\n\n';
         // Support Plan Section
-        body += `**${tier.name.toUpperCase()} SUPPORT PLAN DETAILS**\n`;
-        body += this.getSupportPlanText(formData.selectedTier);
-        body += `\n\n`;
+        body += `**${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}**\n\n`;
+        const supportType = formData.selectedTier === 'bronze'
+            ? this.translate('supportType.bronze', language)
+            : this.translate('supportType.other', language);
+        body += this.translate('supportPlanIntro', language, {
+            tier: tier.name,
+            supportType: supportType
+        }) + '\n\n';
+        // Support plan details
+        body += `• ${this.translate('supportTypeLabel', language)} ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}\n`;
+        body += `• ${this.translate('supportHoursLabel', language)} ${tier.supportHours}\n`;
+        body += `• ${this.translate('severityLevelsLabel', language)} ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}\n`;
+        body += `• ${this.translate('contactsLabel', language)} ${tier.authorizedContacts}\n`;
+        body += `• ${this.translate('tenantsLabel', language)} ${tier.tenants}\n`;
+        body += `• ${this.translate('requestsLabel', language)} ${tier.supportRequestsIncluded}\n`;
+        body += `• ${this.translate('criticalLabel', language)} ${tier.criticalSituation ? this.translate('yes', language) : this.translate('no', language)}\n\n`;
         // Authorized Contacts Section
         if (formData.authorizedContacts.checked) {
-            body += `**AUTHORIZED CONTACTS**\n`;
-            body += `Based on your ${tier.name} Support Plan, you can designate up to ${tier.authorizedContacts} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.\n\n`;
-            body += `We recommend designating individuals for the following roles: ${formData.authorizedContacts.roles}.\n\n`;
-            body += `Please complete the following Authorized Contacts information:\n\n`;
-            // Contact table in plain text
-            body += `AUTHORIZED CONTACTS TABLE:\n`;
-            body += `-----------------------------------------------------------------------------------\n`;
-            body += `# | First Name | Last Name | Office Phone | Mobile Phone | Email | IM | Job Title\n`;
-            body += `-----------------------------------------------------------------------------------\n`;
-            // Add a limited number of rows to the plain text version
+            body += `**${this.translate('authorizedContactsTitle', language)}**\n\n`;
+            body += this.translate('contactsIntro', language, {
+                tier: tier.name,
+                count: tier.authorizedContacts
+            }) + '\n\n';
+            body += this.translate('contactsRolesIntro', language, {
+                roles: formData.authorizedContacts.roles
+            }) + '\n\n';
+            body += this.translate('contactsInstruction', language) + '\n\n';
+            // Simple text table for authorized contacts
+            body += `#  | ${this.translate('firstNameHeader', language)} | ${this.translate('lastNameHeader', language)} | ${this.translate('officePhoneHeader', language)} | ${this.translate('mobilePhoneHeader', language)} | ${this.translate('emailHeader', language)} | ${this.translate('jobTitleHeader', language)}\n`;
+            body += `---|--------------------|------------------|----------------------|----------------------|------------------|------------------\n`;
+            // Add empty rows
             const rows = Math.min(tier.authorizedContacts, 10);
             for (let i = 1; i <= rows; i++) {
-                body += `${i} | | | | | | | \n`;
+                body += `${i}  |                    |                  |                      |                      |                  |                  \n`;
             }
-            body += `-----------------------------------------------------------------------------------\n\n`;
+            body += '\n';
             if (tier.authorizedContacts > 10) {
-                body += `Note: Your plan includes ${tier.authorizedContacts} authorized contacts. Additional contacts can be added after initial setup.\n\n`;
+                body += this.translate('contactsNote', language, {
+                    tier: tier.name,
+                    count: tier.authorizedContacts
+                }) + '\n\n';
             }
         }
         // Meeting Section
         if (formData.meetingDate) {
-            body += `**ONBOARDING MEETING**\n`;
-            body += `We have scheduled an onboarding meeting on ${formData.meetingDate} to discuss these items in detail and answer any questions you may have. Please ensure the appropriate team members can attend this meeting.\n\n`;
+            body += `**${this.translate('meetingTitle', language)}**\n\n`;
+            body += this.translate('meetingIntro', language) + '\n\n';
+            body += this.translate('meetingDate', language, { date: formData.meetingDate }) + '\n';
+            body += this.translate('meetingAttendees', language) + '\n\n';
         }
         // GDAP Section
         if (formData.gdap.checked) {
-            body += `**GRANULAR DELEGATION OF ADMINISTRATIVE PRIVILEGES (GDAP)**\n`;
-            body += `Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by ${formData.gdap.deadline}. We will request the "${formData.gdap.roles}" role.\n`;
-            body += `This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.\n\n`;
-            body += `Please visit the following link to approve the GDAP relationship: ${formData.gdap.link}\n\n`;
+            body += `**${this.translate('gdapTitle', language)}**\n\n`;
+            body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
+            body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
+            body += this.translate('gdapPermission', language) + '\n\n';
+            body += this.translate('gdapInstruction', language) + '\n';
+            body += formData.gdap.link + '\n\n';
         }
         // RBAC Section
         if (formData.rbac.checked) {
-            body += `**ROLE-BASED ACCESS CONTROL (RBAC)**\n`;
-            body += `We will configure ${formData.rbac.groups} to ensure users have the appropriate level of access to your environment based on their job functions. `;
+            body += `**${this.translate('rbacTitle', language)}**\n\n`;
+            body += this.translate('rbacIntro', language, { groups: formData.rbac.groups }) + ' ';
             if (formData.rbac.azure && formData.rbac.m365) {
-                body += `This includes both Azure and Microsoft 365 access permissions.`;
+                body += this.translate('rbacPermissionBoth', language);
             }
             else if (formData.rbac.azure) {
-                body += `This includes Azure resources access permissions.`;
+                body += this.translate('rbacPermissionAzure', language);
             }
             else if (formData.rbac.m365) {
-                body += `This includes Microsoft 365 service access permissions.`;
+                body += this.translate('rbacPermission365', language);
             }
-            body += `\n\n`;
+            body += '\n\n';
             if (formData.rbac.includeScript) {
-                body += `Please run the following PowerShell script to configure RBAC permissions:\n\n`;
-                body += `-------------------------------------------------------------\n`;
-                body += `STEP 1: Install Azure PowerShell\n`;
-                body += `Source: https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
-                body += `Install-Module -Name Az -Repository PSGallery -Force\n\n`;
-                body += `or update it:\n\n`;
-                body += `Update-Module Az.Resources -Force\n\n`;
-                body += `STEP 2: Update the tenant and run the following script as one block:\n\n`;
+                body += this.translate('rbacInstruction', language) + '\n\n';
+                body += `1. ${this.translate('rbacStep1', language)}\n`;
+                body += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
+                body += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
+                body += `   or update it:\n\n`;
+                body += `   Update-Module Az.Resources -Force\n\n`;
+                body += `2. ${this.translate('rbacStep2', language)}\n`;
+                body += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
                 body += `# Connect to the correct tenant\n`;
                 body += `Connect-AzAccount -TenantID ${formData.rbac.tenantId}\n\n`;
                 body += `$subscriptions = Get-AzSubscription\n`;
@@ -30026,37 +30504,36 @@ const emailBuilder = {
                 body += `    } else {\n`;
                 body += `        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"\n`;
                 body += `    }\n`;
-                body += `}\n`;
-                body += `-------------------------------------------------------------\n\n`;
-                body += `Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.\n\n`;
+                body += `}\n\n`;
+                body += this.translate('rbacScreenshot', language) + '\n\n';
             }
         }
         // Conditional Access Section
         if (formData.conditionalAccess.checked) {
-            body += `**CONDITIONAL ACCESS POLICIES**\n`;
-            body += `We recommend implementing the following security policies for your environment:\n`;
+            body += `**${this.translate('conditionalAccessTitle', language)}**\n\n`;
+            body += this.translate('conditionalAccessIntro', language) + '\n\n';
             if (formData.conditionalAccess.mfa) {
-                body += `- Multi-Factor Authentication (MFA) requirements for all users\n`;
+                body += `• ${this.translate('mfaPolicy', language)}\n`;
             }
             if (formData.conditionalAccess.location) {
-                body += `- Location-based access restrictions\n`;
+                body += `• ${this.translate('locationPolicy', language)}\n`;
             }
             if (formData.conditionalAccess.device) {
-                body += `- Device compliance policies to ensure only secure devices can access your data\n`;
+                body += `• ${this.translate('devicePolicy', language)}\n`;
             }
             if (formData.conditionalAccess.signIn) {
-                body += `- Sign-in risk-based policies to prevent suspicious login attempts\n`;
+                body += `• ${this.translate('signInPolicy', language)}\n`;
             }
-            body += `\n`;
+            body += '\n';
         }
         // Additional Notes Section
         if (formData.additionalNotes) {
-            body += `**ADDITIONAL INFORMATION**\n`;
+            body += `**${this.translate('additionalInfoTitle', language)}**\n\n`;
             body += `${formData.additionalNotes}\n\n`;
         }
         // Closing
-        body += `Please reply to this email to confirm receipt and let us know if you have any questions or concerns.\n\n`;
-        body += `Best regards,\n\n`;
+        body += this.translate('closing', language) + '\n\n';
+        body += this.translate('regards', language) + '\n\n';
         body += `${formData.senderName}\n`;
         body += `${formData.senderTitle}\n`;
         body += `${formData.senderCompany}\n`;
@@ -30066,54 +30543,14 @@ const emailBuilder = {
         return body;
     },
     /**
-     * Get text description for the selected support plan
-     */
-    getSupportPlanText: function (planType) {
-        switch (planType) {
-            case 'bronze':
-                return `The Bronze Support Plan provides basic support availability for non-urgent cases for cloud products, with no Critical Situation coverage. It includes:
-- Microsoft Flexible Support
-- 8×5 Support Hours
-- Level B or C Severity
-- 2 Customer Contacts
-- 1 Tenant
-- Pay As You Go support requests`;
-            case 'silver':
-                return `The Silver Support Plan provides full product coverage with Critical Situation Support, ideal for organizations with occasional support requests. It includes:
-- Microsoft Premier Support
-- 24×7×365 Support Hours
-- Level A, B or C Severity
-- 6 Customer Contacts
-- 2 Tenants
-- 12 Support Requests Included per trailing 12-month period`;
-            case 'gold':
-                return `The Gold Support Plan is our most popular option, providing three times the included cases and tenants compared to Silver, with double the customer contacts. It's well-suited for complex organizational structures. It includes:
-- Microsoft Premier Support
-- 24×7×365 Support Hours
-- Level A, B or C Severity
-- 12 Customer Contacts
-- 6 Tenants
-- 36 Support Requests Included per trailing 12-month period`;
-            case 'platinum':
-                return `The Platinum Support Plan is ideal for very complex organizational structures with the highest number of tenants, contacts, and support requests. It includes:
-- Microsoft Premier Support
-- 24×7×365 Support Hours
-- Level A, B or C Severity
-- 100 Customer Contacts
-- 100 Tenants
-- 100 Support Requests Included per trailing 12-month period`;
-            default:
-                return '';
-        }
-    },
-    /**
-     * Build HTML version of the email
+     * Build HTML version of the email with improved clarity and instructions
      * @param {EmailFormData} formData - The form data from the UI
      * @returns {String} - HTML formatted email content
      */
     buildEmailHTML: function (formData) {
-        // Get the selected tier
+        // Get the selected tier and language
         const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
+        const language = (formData.language || 'en');
         // Get tier color
         let tierColor = '';
         switch (formData.selectedTier) {
@@ -30131,107 +30568,296 @@ const emailBuilder = {
                 break;
         }
         // Generate subject if not provided
-        const subject = formData.subject || `${tier.name} Support Plan Onboarding for ${formData.companyName} - Microsoft 365 Administration Setup`;
+        const subject = formData.subject || this.translate('subject', language, {
+            tier: tier.name,
+            company: formData.companyName
+        });
+        // Build the full HTML email
         let htmlContent = `<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>${subject}</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
-        .header { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
-        .footer { margin-top: 30px; border-top: 1px solid #eee; padding-top: 10px; }
-        .bold { font-weight: bold; }
-        h1 { color: #333; }
-        h2 { color: #0078d4; margin-top: 25px; }
-        .company { font-weight: bold; }
-        .support-plans { color: #c00000; }
-        table.contact-table { border-collapse: collapse; width: 100%; margin: 15px 0; }
-        table.contact-table th, table.contact-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        table.contact-table th { background-color: #f5f5f5; }
-        .code-block { background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 15px; font-family: 'Courier New', monospace; white-space: pre-wrap; overflow-x: auto; font-size: 14px; line-height: 1.4; margin: 15px 0; }
-        .plan-header { padding: 10px; color: white; text-align: center; }
-        .bronze { background-color: #cd7f32; }
-        .silver { background-color: #C0C0C0; }
-        .gold { background-color: #FFD700; }
-        .platinum { background-color: #E5E4E2; }
-        .step-title { font-weight: bold; margin-top: 15px; margin-bottom: 5px; }
+    <!--[if mso]>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+    <style type="text/css">
+      table {border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;}
+      h1, h2, h3, h4, h5, h6, p, div, span {font-family: 'Segoe UI', Arial, sans-serif;}
+      .mso-text-raise-4 {mso-text-raise: 4pt;}
+      .mso-text-raise-7 {mso-text-raise: 7pt;}
     </style>
+    <![endif]-->
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1><span class="company">${formData.senderCompany.toUpperCase()}</span> <span class="support-plans">Support Plans</span></h1>
-            <div><span class="bold">To:</span> ${formData.to}</div>
-            ${formData.cc ? `<div><span class="bold">Cc:</span> ${formData.cc}</div>` : ''}
-            <div><span class="bold">Subject:</span> ${subject}</div>
-            <div><span class="bold">Date:</span> ${formData.currentDate}</div>
-        </div>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #ffffff;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+        <!-- Email Header -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 30px; border-bottom: 1px solid #eee;">
+            <tr>
+                <td style="padding: 0 0 20px 0;">
+                    <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333; font-family: 'Segoe UI', Arial, sans-serif;">
+                        <span style="font-weight: bold; color: #0078D4;">${formData.senderCompany.toUpperCase()}</span> 
+                        <span style="color: #333;">| ${tier.name} ${this.translate('supportPlanTitle', language, { tier: '' }).trim()}</span>
+                    </h1>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
+                    <strong style="font-weight: 600;">To:</strong> ${formData.to}
+                </td>
+            </tr>
+            ${formData.cc ? `
+            <tr>
+                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
+                    <strong style="font-weight: 600;">Cc:</strong> ${formData.cc}
+                </td>
+            </tr>` : ''}
+            <tr>
+                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
+                    <strong style="font-weight: 600;">Subject:</strong> ${subject}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
+                    <strong style="font-weight: 600;">Date:</strong> ${formData.currentDate}
+                </td>
+            </tr>
+        </table>
         
-        <div class="content">
-            <p>Dear ${formData.contactName},</p>
-            
-            <p>Thank you for choosing ${formData.senderCompany} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for ${formData.companyName}.</p>
-            
-            <p>Below is important information regarding your selected ${tier.name} Support Plan, administrative access, and security configurations we need to set up for your Microsoft 365 environment. Please review this information carefully and let us know if you have any questions.</p>`;
-        // Support Plan Section
+        <!-- Email Body -->
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+                <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
+                    <!-- Greeting -->
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('greeting', language, { name: formData.contactName })}
+                    </p>
+                    
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('intro1', language, {
+            company: formData.senderCompany,
+            clientCompany: formData.companyName
+        })}
+                    </p>
+                    
+                    <p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('intro2', language, { tier: tier.name })}
+                    </p>`;
+        // Support Plan Section with tier-specific styling
         htmlContent += `
-        <div class="plan-header ${formData.selectedTier}">
-            <h2>${tier.name.toUpperCase()} SUPPORT PLAN DETAILS</h2>
-        </div>
-        <p>${this.getSupportPlanTextHTML(formData.selectedTier)}</p>`;
+                    <!-- Support Plan Section -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 5px; background-color: ${tierColor}; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 14px 18px; text-align: center; font-family: 'Segoe UI', Arial, sans-serif;">
+                                <h2 style="margin: 0; padding: 0; color: white; font-size: 18px; font-weight: 600;">
+                                  ${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}
+                                </h2>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin: 25px 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('supportPlanIntro', language, {
+            tier: tier.name,
+            supportType: formData.selectedTier === 'bronze'
+                ? this.translate('supportType.bronze', language)
+                : this.translate('supportType.other', language)
+        })}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 18px 20px;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('supportTypeLabel', language)}</strong> 
+                                            ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('supportHoursLabel', language)}</strong> 
+                                            ${tier.supportHours}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('severityLevelsLabel', language)}</strong> 
+                                            ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('contactsLabel', language)}</strong> 
+                                            ${tier.authorizedContacts}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('tenantsLabel', language)}</strong> 
+                                            ${tier.tenants}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('requestsLabel', language)}</strong> 
+                                            ${tier.supportRequestsIncluded}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
+                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
+                                            <strong style="font-weight: 600; color: #333;">${this.translate('criticalLabel', language)}</strong> 
+                                            ${tier.criticalSituation
+            ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>'
+            : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>`;
         // Authorized Contacts Section
         if (formData.authorizedContacts.checked) {
+            const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
+            htmlContent += this.createSectionHeader(contactsSectionTitle, tierColor);
             htmlContent += `
-        <h2>AUTHORIZED CONTACTS</h2>
-        <p>Based on your ${tier.name} Support Plan, you can designate up to ${tier.authorizedContacts} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.</p>
-        <p>We recommend designating individuals for the following roles: ${formData.authorizedContacts.roles}.</p>
-        <p>Please complete the following table with the required information for each contact:</p>`;
-            // Create contact tables based on plan type
-            htmlContent += this.buildContactTableHTML(tier.authorizedContacts);
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('contactsIntro', language, {
+                tier: tier.name,
+                count: tier.authorizedContacts
+            })}
+                    </p>
+                    
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('contactsRolesIntro', language, {
+                roles: `<strong style="font-weight: 600;">${formData.authorizedContacts.roles}</strong>`
+            })}
+                    </p>
+                    
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('contactsInstruction', language)}
+                    </p>
+                    
+                    ${this.createContactsTable(tier.authorizedContacts, language)}`;
         }
         // Meeting Section
         if (formData.meetingDate) {
+            const meetingSectionTitle = this.translate('meetingTitle', language);
+            htmlContent += this.createSectionHeader(meetingSectionTitle, tierColor);
             htmlContent += `
-        <h2>ONBOARDING MEETING</h2>
-        <p>We have scheduled an onboarding meeting on ${formData.meetingDate} to discuss these items in detail and answer any questions you may have. Please ensure the appropriate team members can attend this meeting.</p>`;
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('meetingIntro', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                                <strong style="font-weight: 600; color: #333;">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4;">${formData.meetingDate}</span>` })}</strong>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('meetingAttendees', language)}
+                    </p>`;
         }
         // GDAP Section
         if (formData.gdap.checked) {
+            const gdapSectionTitle = this.translate('gdapTitle', language);
+            htmlContent += this.createSectionHeader(gdapSectionTitle, tierColor);
             htmlContent += `
-        <h2>GRANULAR DELEGATION OF ADMINISTRATIVE PRIVILEGES (GDAP)</h2>
-        <p>Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by ${formData.gdap.deadline}. We will request the "${formData.gdap.roles}" role.</p>
-        <p>This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.</p>
-        <p>Please visit the following link to approve the GDAP relationship: <a href="${formData.gdap.link}" target="_blank">${formData.gdap.link}</a></p>`;
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
+                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600;">${formData.gdap.roles}</strong>` })}
+                    </p>
+                    
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('gdapPermission', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                                <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">
+                                ${this.translate('gdapInstruction', language)}
+                                </p>
+                                <p style="margin: 0; text-align: center;">
+                                  <a href="${formData.gdap.link}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
+                                    ${this.translate('gdapLink', language)}
+                                  </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>`;
         }
         // RBAC Section
         if (formData.rbac.checked) {
+            const rbacSectionTitle = this.translate('rbacTitle', language);
+            htmlContent += this.createSectionHeader(rbacSectionTitle, tierColor);
             let permissionText = '';
             if (formData.rbac.azure && formData.rbac.m365) {
-                permissionText = 'This includes both Azure and Microsoft 365 access permissions.';
+                permissionText = this.translate('rbacPermissionBoth', language);
             }
             else if (formData.rbac.azure) {
-                permissionText = 'This includes Azure resources access permissions.';
+                permissionText = this.translate('rbacPermissionAzure', language);
             }
             else if (formData.rbac.m365) {
-                permissionText = 'This includes Microsoft 365 service access permissions.';
+                permissionText = this.translate('rbacPermission365', language);
             }
             htmlContent += `
-        <h2>ROLE-BASED ACCESS CONTROL (RBAC)</h2>
-        <p>We will configure ${formData.rbac.groups} to ensure users have the appropriate level of access to your environment based on their job functions. ${permissionText}</p>`;
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('rbacIntro', language, { groups: `<strong style="font-weight: 600;">${formData.rbac.groups}</strong>` })}
+                      ${permissionText}
+                    </p>`;
             if (formData.rbac.includeScript) {
                 htmlContent += `
-            <p>Please run the following PowerShell script to configure RBAC permissions:</p>
-            
-            <div class="step-title">STEP 1: Install Azure PowerShell</div>
-            <p>Source: <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>
-            <div class="code-block">Install-Module -Name Az -Repository PSGallery -Force</div>
-            <p>or update it:</p>
-            <div class="code-block">Update-Module Az.Resources -Force</div>
-            
-            <div class="step-title">STEP 2: Update the tenant and run the following script as one block:</div>
-            <div class="code-block"># Connect to the correct tenant
+                    <p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">
+                      ${this.translate('rbacInstruction', language)}
+                    </p>`;
+                // Step 1 - Install Azure PowerShell
+                htmlContent += this.createStepIndicator(1, this.translate('rbacStep1', language));
+                htmlContent += `
+                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('rbacStep1Source', language)} 
+                      <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">
+                        https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0
+                      </a>
+                    </p>`;
+                // Install script
+                htmlContent += `<div style="margin-left: 48px;">
+                      ${this.formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}
+                    </div>`;
+                htmlContent += `
+                    <p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      or update it:
+                    </p>`;
+                // Update script
+                htmlContent += `<div style="margin-left: 48px;">
+                      ${this.formatScriptBlock('Update-Module Az.Resources -Force', language)}
+                    </div>`;
+                // Step 2 - Run the script
+                htmlContent += this.createStepIndicator(2, this.translate('rbacStep2', language));
+                htmlContent += `
+                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('rbacStep2Instruction', language)}
+                    </p>`;
+                // The main RBAC script
+                htmlContent += `<div style="margin-left: 48px;">
+                      ${this.formatScriptBlock(`# Connect to the correct tenant
 Connect-AzAccount -TenantID ${formData.rbac.tenantId}
 
 $subscriptions = Get-AzSubscription
@@ -30254,54 +30880,115 @@ foreach ($subscription in $subscriptions) {
     } else {
         Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"
     }
-}</div>
-            <p>Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.</p>`;
+}`, language)}
+                    </div>`;
+                htmlContent += `
+                    <p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">
+                      ${this.translate('rbacScreenshot', language)}
+                    </p>`;
             }
         }
         // Conditional Access Section
         if (formData.conditionalAccess.checked) {
+            const caSectionTitle = this.translate('conditionalAccessTitle', language);
+            htmlContent += this.createSectionHeader(caSectionTitle, tierColor);
             htmlContent += `
-        <h2>CONDITIONAL ACCESS POLICIES</h2>
-        <p>We recommend implementing the following security policies for your environment:</p>
-        <ul>`;
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('conditionalAccessIntro', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0 0 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 16px 20px;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">`;
             if (formData.conditionalAccess.mfa) {
                 htmlContent += `
-            <li>Multi-Factor Authentication (MFA) requirements for all users</li>`;
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
+                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
+                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('mfaPolicy', language)}</span>
+                                        </td>
+                                    </tr>`;
             }
             if (formData.conditionalAccess.location) {
                 htmlContent += `
-            <li>Location-based access restrictions</li>`;
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
+                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
+                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('locationPolicy', language)}</span>
+                                        </td>
+                                    </tr>`;
             }
             if (formData.conditionalAccess.device) {
                 htmlContent += `
-            <li>Device compliance policies to ensure only secure devices can access your data</li>`;
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
+                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
+                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('devicePolicy', language)}</span>
+                                        </td>
+                                    </tr>`;
             }
             if (formData.conditionalAccess.signIn) {
                 htmlContent += `
-            <li>Sign-in risk-based policies to prevent suspicious login attempts</li>`;
+                                    <tr>
+                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
+                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
+                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('signInPolicy', language)}</span>
+                                        </td>
+                                    </tr>`;
             }
             htmlContent += `
-        </ul>`;
+                                </table>
+                            </td>
+                        </tr>
+                    </table>`;
         }
         // Additional Notes Section
         if (formData.additionalNotes) {
+            const additionalInfoTitle = this.translate('additionalInfoTitle', language);
+            htmlContent += this.createSectionHeader(additionalInfoTitle, tierColor);
+            // Process line breaks in the notes to preserve formatting
+            const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
             htmlContent += `
-        <h2>ADDITIONAL INFORMATION</h2>
-        <p>${formData.additionalNotes.replace(/\n/g, '<br>')}</p>`;
+                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${formattedNotes}
+                    </p>`;
         }
-        // Closing
+        // Closing and Footer
         htmlContent += `
-        <p>Please reply to this email to confirm receipt and let us know if you have any questions or concerns.</p>
+                    <p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('closing', language)}
+                    </p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px;">
+                        <tr>
+                            <td style="padding: 0;">
+                                <p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                                    ${this.translate('regards', language)}
+                                </p>
+                                <p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                                    <strong style="font-weight: 600;">${formData.senderName}</strong><br>
+                                    ${formData.senderTitle}<br>
+                                    ${formData.senderCompany}<br>
+                                    ${formData.senderContact || ''}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
         
-        <div class="footer">
-            <p>Best regards,</p>
-            <p>${formData.senderName}<br>
-            ${formData.senderTitle}<br>
-            ${formData.senderCompany}<br>
-            ${formData.senderContact || ''}</p>
-        </div>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px; border-top: 1px solid #eee;">
+            <tr>
+                <td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;">
+                    <p style="margin: 0; line-height: 1.5;">
+                        ${this.translate('footer', language)}
+                    </p>
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
 </body>
 </html>`;
         return htmlContent;
@@ -30309,94 +30996,68 @@ foreach ($subscription in $subscriptions) {
     /**
      * Get HTML formatted text description for the selected support plan
      */
-    getSupportPlanTextHTML: function (planType) {
+    getSupportPlanTextHTML: function (planType, language = 'en') {
+        const supportPlanIntro = this.translate('supportPlanIntro', language, {
+            tier: _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[planType].name,
+            supportType: planType === 'bronze'
+                ? this.translate('supportType.bronze', language)
+                : this.translate('supportType.other', language)
+        });
+        let bulletItems = '';
         switch (planType) {
             case 'bronze':
-                return `The Bronze Support Plan provides basic support availability for non-urgent cases for cloud products, with no Critical Situation coverage. It includes:<br><br>
-<ul>
-  <li>Microsoft Flexible Support</li>
-  <li>8×5 Support Hours</li>
-  <li>Level B or C Severity</li>
-  <li>2 Customer Contacts</li>
-  <li>1 Tenant</li>
-  <li>Pay As You Go support requests</li>
+                bulletItems = `
+<ul style="padding-left: 20px; margin: 0 0 15px 0;">
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Flexible Support</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">8×5 Support Hours</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level B or C Severity</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">2 Customer Contacts</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">1 Tenant</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Pay As You Go support requests</li>
 </ul>`;
+                break;
             case 'silver':
-                return `The Silver Support Plan provides full product coverage with Critical Situation Support, ideal for organizations with occasional support requests. It includes:<br><br>
-<ul>
-  <li>Microsoft Premier Support</li>
-  <li>24×7×365 Support Hours</li>
-  <li>Level A, B or C Severity</li>
-  <li>6 Customer Contacts</li>
-  <li>2 Tenants</li>
-  <li>12 Support Requests Included per trailing 12-month period</li>
+                bulletItems = `
+<ul style="padding-left: 20px; margin: 0 0 15px 0;">
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Premier Support</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">24×7×365 Support Hours</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level A, B or C Severity</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">6 Customer Contacts</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">2 Tenants</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">12 Support Requests Included per trailing 12-month period</li>
 </ul>`;
+                break;
             case 'gold':
-                return `The Gold Support Plan is our most popular option, providing three times the included cases and tenants compared to Silver, with double the customer contacts. It's well-suited for complex organizational structures. It includes:<br><br>
-<ul>
-  <li>Microsoft Premier Support</li>
-  <li>24×7×365 Support Hours</li>
-  <li>Level A, B or C Severity</li>
-  <li>12 Customer Contacts</li>
-  <li>6 Tenants</li>
-  <li>36 Support Requests Included per trailing 12-month period</li>
+                bulletItems = `
+<ul style="padding-left: 20px; margin: 0 0 15px 0;">
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Premier Support</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">24×7×365 Support Hours</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level A, B or C Severity</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">12 Customer Contacts</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">6 Tenants</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">36 Support Requests Included per trailing 12-month period</li>
 </ul>`;
+                break;
             case 'platinum':
-                return `The Platinum Support Plan is ideal for very complex organizational structures with the highest number of tenants, contacts, and support requests. It includes:<br><br>
-<ul>
-  <li>Microsoft Premier Support</li>
-  <li>24×7×365 Support Hours</li>
-  <li>Level A, B or C Severity</li>
-  <li>100 Customer Contacts</li>
-  <li>100 Tenants</li>
-  <li>100 Support Requests Included per trailing 12-month period</li>
+                bulletItems = `
+<ul style="padding-left: 20px; margin: 0 0 15px 0;">
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Premier Support</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">24×7×365 Support Hours</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level A, B or C Severity</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Customer Contacts</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Tenants</li>
+  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Support Requests Included per trailing 12-month period</li>
 </ul>`;
+                break;
             default:
-                return '';
+                bulletItems = '';
         }
-    },
-    /**
-     * Build HTML contact table for authorized contacts
-     */
-    buildContactTableHTML: function (numContacts) {
-        // Limit the number of rows to display in the HTML to a reasonable number
-        const displayContacts = Math.min(numContacts, 20);
-        let tableHTML = `
-<table class="contact-table">
-  <tr>
-    <th>#</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Office Phone</th>
-    <th>Mobile Phone</th>
-    <th>Email Address</th>
-    <th>IM Address (Teams)</th>
-    <th>Job Title</th>
-  </tr>`;
-        for (let i = 1; i <= displayContacts; i++) {
-            tableHTML += `
-  <tr>
-    <td>${i}</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>`;
-        }
-        tableHTML += `
-</table>`;
-        if (numContacts > displayContacts) {
-            tableHTML += `<p><em>Note: Your ${numContacts} authorized contacts can be managed through our customer portal after onboarding.</em></p>`;
-        }
-        return tableHTML;
+        return `${supportPlanIntro}<br><br>${bulletItems}`;
     },
     /**
      * Process form data into a structured email object
      */
-    processCustomerInfoToEmailData: function (info) {
+    processCustomerInfoToEmailData: function (info, language = 'en') {
         const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[info.selectedTier];
         // Handle date calculation safely
         const today = new Date();
@@ -30419,7 +31080,10 @@ foreach ($subscription in $subscriptions) {
             emailContacts: info.authorizedContacts,
             to: info.contactEmail || '',
             cc: '',
-            subject: `${tier.name} Support Plan Onboarding for ${info.companyName} - Microsoft 365 Administration Setup`,
+            subject: this.translate('subject', language, {
+                tier: tier.name,
+                company: info.companyName
+            }),
             gdap: {
                 checked: true,
                 deadline: futureDate.toLocaleDateString(),
@@ -30451,110 +31115,13 @@ foreach ($subscription in $subscriptions) {
             senderTitle: 'Support Specialist',
             senderCompany: 'Microsoft Partner Support',
             senderContact: 'support@microsoftpartner.com',
-            currentDate: currentDate
+            currentDate: currentDate,
+            language: language
         };
         return formData;
     }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (emailBuilder);
-
-
-/***/ }),
-
-/***/ "./src/utils/templateGenerator.ts":
-/*!****************************************!*\
-  !*** ./src/utils/templateGenerator.ts ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   generateTemplate: () => (/* binding */ generateTemplate)
-/* harmony export */ });
-/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../data/supportTiers */ "./src/data/supportTiers.ts");
-// src/utils/templateGenerator.ts
-
-const generateTemplate = (info) => {
-    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[info.selectedTier];
-    // Format date if valid
-    const formattedDate = info.proposedDate instanceof Date && !isNaN(info.proposedDate.getTime())
-        ? info.proposedDate.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        })
-        : '[DATE TO BE CONFIRMED]';
-    return `
-    <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; max-width: 800px;">
-      <h2 style="color: ${tier.color}; border-bottom: 1px solid ${tier.color}; padding-bottom: 10px;">Microsoft Support Onboarding - ${tier.name}</h2>
-      
-      <p>Dear ${info.contactName},</p>
-      
-      <p>Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong>${tier.name}</strong> plan.</p>
-      
-      <p>I propose we meet on <strong>${formattedDate}</strong> to discuss the following onboarding steps:</p>
-      
-      <h3 style="color: ${tier.color};">1. Support Tier Selection</h3>
-      <p>You have selected the <strong>${tier.name}</strong> plan which includes:</p>
-      <ul style="list-style-type: disc; padding-left: 20px;">
-        <li>Support Hours: ${tier.supportHours}</li>
-        <li>Authorized Contacts: ${tier.authorizedContacts}</li>
-        <li>Tenants: ${tier.tenants}</li>
-        <li>Support Requests: ${tier.supportRequestsIncluded}</li>
-        ${tier.criticalSituation
-        ? '<li>Critical Situation Support: <span style="color: green;">Yes</span></li>'
-        : '<li>Critical Situation Support: <span style="color: red;">No</span></li>'}
-      </ul>
-      
-      <h3 style="color: ${tier.color};">2. Authorized Customer Contacts</h3>
-      <p>Please confirm the following list of contacts authorized to open support requests:</p>
-      <table style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
-        <tr style="background-color: ${tier.color}30;">
-          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
-          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Email</th>
-          <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Phone</th>
-        </tr>
-        ${info.authorizedContacts.map((contact, index) => `
-          <tr style="background-color: ${index % 2 === 0 ? '#f9f9f9' : 'white'};">
-            <td style="border: 1px solid #ddd; padding: 8px;">${contact.name || ''}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${contact.email || ''}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${contact.phone || ''}</td>
-          </tr>
-        `).join('')}
-      </table>
-      
-      <h3 style="color: ${tier.color};">3. Tenant Microsoft ID Definition</h3>
-      <p>Your Microsoft Tenant ID: <strong>${info.tenantId || '<span style="color: red; font-style: italic;">[PLEASE PROVIDE]</span>'}</strong></p>
-      
-      <h3 style="color: ${tier.color};">4. GDAP Link Acceptance</h3>
-      <p>Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
-      
-      <h3 style="color: ${tier.color};">5. RBAC Role Establishment</h3>
-      <p>We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
-      <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; font-family: Consolas, Monaco, 'Courier New', monospace; margin-bottom: 20px; white-space: pre-wrap; font-size: 14px;">
-# Example PowerShell script to be executed
-Connect-AzAccount -Tenant "${info.tenantId || 'YOUR_TENANT_ID'}"
-New-AzRoleAssignment -SignInName "support@microsoft.com" -RoleDefinitionName "Support Request Contributor"
-      </div>
-      
-      <h3 style="color: ${tier.color};">6. Service Provider Acceptance</h3>
-      <p>Finally, please add Microsoft Support as a service provider in your conditional access policy to ensure seamless integration with your security protocols.</p>
-      
-      <p style="margin-top: 30px;">Looking forward to our meeting and to supporting your organization.</p>
-      
-      <p style="margin-top: 20px;">
-        Best regards,<br>
-        <em>Microsoft Support Team</em><br>
-        <a href="mailto:support@microsoft.com" style="color: #0078D4; text-decoration: none;">support@microsoft.com</a>
-      </p>
-      
-      <div style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 12px; color: #666;">
-        <p>This is an automated message generated by the Microsoft Onboarding Template Generator.</p>
-      </div>
-    </div>
-  `;
-};
 
 
 /***/ })
