@@ -52,6 +52,7 @@ const App: React.FC = () => {
   const { language, setLanguage } = useLanguage();
   
   const [showEmailPreview, setShowEmailPreview] = useState(false);
+  const [localEmailData, setLocalEmailData] = useState<any>(null);
   const [emailRecipients, setEmailRecipients] = useState({
     to: state.customerInfo.contactEmail || '',
     cc: '',
@@ -106,6 +107,10 @@ const App: React.FC = () => {
 
   // Generate email preview with all required properties
   const handlePreviewEmail = () => {
+    const senderNameInput = document.getElementById('sender-name') as HTMLInputElement;
+    const senderTitleInput = document.getElementById('sender-title') as HTMLInputElement;
+    const senderCompanyInput = document.getElementById('sender-company') as HTMLInputElement;
+    
     // Create an EmailFormData object with all the collected data
     const emailData = {
       to: emailRecipients.to,
@@ -113,6 +118,8 @@ const App: React.FC = () => {
       subject: emailRecipients.subject,
       // Add other fields from the form
       ...getEmailCustomerInfo(),
+      // Include emailContacts required by EmailFormData type
+      emailContacts: state.customerInfo.authorizedContacts,
       // These objects need to be properly initialized to prevent the "checked" property undefined error
       gdap: {
         checked: true,
@@ -140,15 +147,22 @@ const App: React.FC = () => {
         roles: 'Technical and Administrative contacts'
       },
       // These would actually come from the form inputs
-      senderName: "Your Name",
-      senderTitle: "Support Specialist",
-      senderCompany: "Microsoft Partner Support",
+      senderName: senderNameInput?.value || "Your Name",
+      senderTitle: senderTitleInput?.value || "Support Specialist",
+      senderCompany: senderCompanyInput?.value || "Microsoft Partner Support",
       senderContact: "support@example.com",
       currentDate: new Date().toLocaleDateString(),
       language: language
     };
     
+    // Store complete email data in local state for immediate use
+    const completeEmailData = {...emailData, language};
+    setLocalEmailData(completeEmailData);
+    
+    // Also update the app state (for persistence)
     updateEmailData(emailData);
+    
+    // Show the preview
     setShowEmailPreview(true);
   };
 
@@ -168,9 +182,9 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {showEmailPreview && state.emailData ? (
+      {showEmailPreview && localEmailData ? (
         <EmailPreview 
-          emailData={{...state.emailData, language}} 
+          emailData={localEmailData} 
           onBackToEdit={handleBackToEdit}
         />
       ) : (
