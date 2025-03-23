@@ -9,11 +9,15 @@ import { useAppState } from '../../../contexts/AppStateContext';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import '../../../styles/App.css';
 
+interface AppProps {
+  // You can add props here if needed in the future
+}
+
 /**
- * Main App Component for the options page
+ * Main App Component for the Onboarding Template Generator
  * Uses contexts for state management and i18n
  */
-const App: React.FC = () => {
+const App: React.FC<AppProps> = () => {
   const { 
     state, 
     updateCustomerInfo, 
@@ -77,19 +81,15 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container options-page">
-      <header className="generator-header">
-        <h1>Microsoft Support Onboarding Tool</h1>
-        <p>Configure customer details and generate rich text emails for onboarding</p>
-        
-        {/* Language selector */}
+    <div className="app-container onboarding-container">
+      {!showEmailPreview && (
         <div className="language-option">
           <LanguageSelector 
             selectedLanguage={language}
             onChange={setLanguage}
           />
         </div>
-      </header>
+      )}
 
       {showEmailPreview && state.emailData ? (
         <EmailPreview 
@@ -176,10 +176,6 @@ const App: React.FC = () => {
           </div>
         </div>
       )}
-
-      <footer className="app-footer">
-        <p>Microsoft Support Onboarding Tool - v1.0.2</p>
-      </footer>
     </div>
   );
 };
