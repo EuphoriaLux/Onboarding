@@ -104,14 +104,51 @@ const App: React.FC = () => {
     };
   };
 
-  // Generate email preview
-  const handleEmailPreview = (data: any) => {
-    // Make sure language is included in preview data
-    const dataWithLanguage = {
-      ...data,
-      language
+  // Generate email preview with all required properties
+  const handlePreviewEmail = () => {
+    // Create an EmailFormData object with all the collected data
+    const emailData = {
+      to: emailRecipients.to,
+      cc: emailRecipients.cc,
+      subject: emailRecipients.subject,
+      // Add other fields from the form
+      ...getEmailCustomerInfo(),
+      // These objects need to be properly initialized to prevent the "checked" property undefined error
+      gdap: {
+        checked: true,
+        deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        roles: "Service Support Administrator",
+        link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
+      },
+      rbac: {
+        checked: true,
+        groups: 'appropriate security groups',
+        tenantId: state.customerInfo.tenants[0]?.id || '[your-tenant-id]',
+        azure: true,
+        m365: true,
+        includeScript: true
+      },
+      conditionalAccess: {
+        checked: true,
+        mfa: true,
+        location: true,
+        device: true,
+        signIn: true
+      },
+      authorizedContacts: {
+        checked: true,
+        roles: 'Technical and Administrative contacts'
+      },
+      // These would actually come from the form inputs
+      senderName: "Your Name",
+      senderTitle: "Support Specialist",
+      senderCompany: "Microsoft Partner Support",
+      senderContact: "support@example.com",
+      currentDate: new Date().toLocaleDateString(),
+      language: language
     };
-    updateEmailData(dataWithLanguage);
+    
+    updateEmailData(emailData);
     setShowEmailPreview(true);
   };
 
@@ -418,25 +455,7 @@ const App: React.FC = () => {
               <button 
                 type="button" 
                 className="btn-preview"
-                onClick={() => {
-                  // Create an EmailFormData object with all the collected data
-                  const emailData = {
-                    to: emailRecipients.to,
-                    cc: emailRecipients.cc,
-                    subject: emailRecipients.subject,
-                    // Add other fields from the form
-                    ...getEmailCustomerInfo(),
-                    // These would actually come from the form inputs
-                    senderName: "Your Name",
-                    senderTitle: "Support Specialist",
-                    senderCompany: "Microsoft Partner Support",
-                    senderContact: "support@example.com",
-                    currentDate: new Date().toLocaleDateString(),
-                    language: language
-                  };
-                  
-                  handleEmailPreview(emailData);
-                }}
+                onClick={handlePreviewEmail}
               >
                 Preview Email
               </button>
