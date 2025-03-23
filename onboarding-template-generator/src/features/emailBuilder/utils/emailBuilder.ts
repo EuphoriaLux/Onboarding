@@ -1,5 +1,5 @@
-// src/utils/email/emailBuilder.ts - Export needed functions
-import { supportTiers } from '../../data/supportTiers';
+// src/features/emailBuilder/utils/emailBuilder.ts - Fix import
+import { supportTiers } from '../../supportTiers/constants';
 import { CustomerInfo, EmailFormData, Language } from './types';
 import { getTranslation } from './translationService';
 import {

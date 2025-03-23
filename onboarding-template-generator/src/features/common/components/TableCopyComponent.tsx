@@ -1,8 +1,8 @@
-// src/components/TableCopyComponent.tsx
+// src/features/common/components/TableCopyComponent.tsx
 import React, { useState } from 'react';
 import emailBuilder from '../../emailBuilder/utils/emailBuilder';
-import { CustomerInfo } from '../../emailBuilder/types';
-import { supportTiers } from '../../supportTiers/data/supportTiers';
+import { CustomerInfo } from '../../emailBuilder/utils/types';
+import { supportTiers } from '../../supportTiers/constants';
 // Import createContactsTable directly
 import { createContactsTable } from '../../emailBuilder/utils/components';
 

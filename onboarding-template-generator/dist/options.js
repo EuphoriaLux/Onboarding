@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/styles/App.css":
@@ -7,7 +8,6 @@
   \******************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -1149,7 +1149,6 @@ button:active {
   \*****************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /*
@@ -1244,7 +1243,6 @@ module.exports = function (cssWithMappingToString) {
   \************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 module.exports = function (item) {
@@ -1270,7 +1268,6 @@ module.exports = function (item) {
   \********************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /**
  * @license React
  * react-dom-client.development.js
@@ -25997,7 +25994,6 @@ module.exports = function (item) {
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /**
  * @license React
  * react-dom.development.js
@@ -26432,7 +26428,6 @@ module.exports = function (item) {
   \******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 function checkDCE() {
@@ -26476,7 +26471,6 @@ if (false) {} else {
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 function checkDCE() {
@@ -26520,7 +26514,6 @@ if (false) {} else {
   \*****************************************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 /**
  * @license React
  * react-jsx-runtime.development.js
@@ -27187,7 +27180,6 @@ if (false) {} else {
   \*****************************************************/
 /***/ ((module, exports, __webpack_require__) => {
 
-"use strict";
 /* module decorator */ module = __webpack_require__.nmd(module);
 /**
  * @license React
@@ -28720,7 +28712,6 @@ if (false) {} else {
   \*************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 if (false) {} else {
@@ -28736,7 +28727,6 @@ if (false) {} else {
   \*******************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 if (false) {} else {
@@ -28752,7 +28742,6 @@ if (false) {} else {
   \*************************************************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 /**
  * @license React
  * scheduler.development.js
@@ -29127,7 +29116,6 @@ if (false) {} else {
   \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 if (false) {} else {
@@ -29143,7 +29131,6 @@ if (false) {} else {
   \****************************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 var stylesInDOM = [];
@@ -29237,7 +29224,6 @@ module.exports = function (list, options) {
   \********************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 var memo = {};
@@ -29281,7 +29267,6 @@ module.exports = insertBySelector;
   \**********************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -29301,7 +29286,6 @@ module.exports = insertStyleElement;
   \**********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -29321,7 +29305,6 @@ module.exports = setAttributesWithoutAttributes;
   \***************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -29392,7 +29375,6 @@ module.exports = domAPI;
   \*********************************************************************/
 /***/ ((module) => {
 
-"use strict";
 
 
 /* istanbul ignore next  */
@@ -29416,7 +29398,6 @@ module.exports = styleTagTransform;
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AppStateProvider: () => (/* binding */ AppStateProvider),
@@ -29549,7 +29530,6 @@ const useAppState = () => {
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   LanguageProvider: () => (/* binding */ LanguageProvider),
@@ -29629,7 +29609,6 @@ const useLanguage = () => {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -29721,7 +29700,6 @@ const App = () => {
   \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -29742,7 +29720,6 @@ const LanguageSelector = ({ selectedLanguage, onChange }) => {
   \**************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   App: () => (/* reexport safe */ _components_App__WEBPACK_IMPORTED_MODULE_0__["default"]),
@@ -29763,7 +29740,6 @@ __webpack_require__.r(__webpack_exports__);
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -29802,7 +29778,6 @@ const ContactsForm = ({ contacts, selectedTier, onChange }) => {
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   supportTiers: () => (/* reexport safe */ _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers)
@@ -29821,7 +29796,6 @@ __webpack_require__.r(__webpack_exports__);
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ContactsForm: () => (/* reexport safe */ _components_ContactsForm__WEBPACK_IMPORTED_MODULE_0__["default"])
@@ -29849,7 +29823,6 @@ __webpack_require__.r(__webpack_exports__);
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // src/features/contacts/types/index.ts
 /**
@@ -29866,7 +29839,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -29932,7 +29904,6 @@ const EmailForm = ({ customerInfo, onSaveEmailData, onPreviewEmail, language = '
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -29953,7 +29924,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 
-// src/components/EmailPreview.tsx - Update imports
+// src/features/emailBuilder/components/EmailPreview.tsx
 
 
 
@@ -30056,7 +30027,6 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
   \**********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -30088,7 +30058,6 @@ const OutlookInstructions = ({ onClose }) => {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   EmailForm: () => (/* reexport safe */ _components_EmailForm__WEBPACK_IMPORTED_MODULE_0__["default"]),
@@ -30132,7 +30101,6 @@ __webpack_require__.r(__webpack_exports__);
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createInstructionBox: () => (/* binding */ createInstructionBox),
@@ -30222,7 +30190,6 @@ const createStepIndicator = (number, title) => {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createContactsTable: () => (/* binding */ createContactsTable),
@@ -30321,7 +30288,6 @@ const createContactsTable = (rows, language = 'en') => {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   createContactsTable: () => (/* reexport safe */ _formatters__WEBPACK_IMPORTED_MODULE_0__.createContactsTable),
@@ -30346,7 +30312,6 @@ __webpack_require__.r(__webpack_exports__);
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -30438,7 +30403,6 @@ const translations = {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -30530,7 +30494,6 @@ const translations = {
   \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -30622,7 +30585,6 @@ const translations = {
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -30652,7 +30614,6 @@ const translations = {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   copyFormattedContent: () => (/* binding */ copyFormattedContent),
@@ -30809,9 +30770,288 @@ const preprocessHtml = (html) => {
 /*!*******************************************************!*\
   !*** ./src/features/emailBuilder/utils/components.ts ***!
   \*******************************************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module parse failed: 'return' outside of function (1:0)\nFile was processed with these loaders:\n * ./node_modules/ts-loader/index.js\nYou may need an additional loader to handle the result of these loaders.\n> return `${standardTemplate}`;\n| /**\n|  * Creates an instruction box with visual styling");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createContactsTable: () => (/* binding */ createContactsTable),
+/* harmony export */   createImprovedContactsTable: () => (/* binding */ createImprovedContactsTable),
+/* harmony export */   createImprovedSectionHeader: () => (/* binding */ createImprovedSectionHeader),
+/* harmony export */   createInstructionBox: () => (/* binding */ createInstructionBox),
+/* harmony export */   createSectionHeader: () => (/* binding */ createSectionHeader),
+/* harmony export */   createStepIndicator: () => (/* binding */ createStepIndicator),
+/* harmony export */   formatImprovedScriptBlock: () => (/* binding */ formatImprovedScriptBlock),
+/* harmony export */   formatScriptBlock: () => (/* binding */ formatScriptBlock)
+/* harmony export */ });
+/* harmony import */ var _translationService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./translationService */ "./src/features/emailBuilder/utils/translationService.ts");
+
+/**
+ * Format script blocks for better copy-paste compatibility with email clients
+ *
+ * @param scriptContent - The PowerShell script content to format
+ * @param language - The language to use for translations
+ * @returns HTML string containing the formatted script block
+ */
+const formatScriptBlock = (scriptContent, language = 'en') => {
+    // Clean up the script content
+    const cleanedScript = scriptContent.trim()
+        .replace(/\t/g, '    ') // Replace tabs with spaces for consistency
+        .replace(/^\s*\n/gm, ''); // Remove empty lines
+    // Get translation for script header
+    const scriptHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('rbacScriptHeader', language);
+    // Plain pre-formatted text works better for copy-paste than styled HTML with syntax highlighting
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="powershell-script-container" style="border-collapse: collapse; margin: 25px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <tr>
+        <td style="padding: 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td style="padding: 12px 16px; background-color: #2b579a; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600;">
+                ${scriptHeader}
+              </td>
+            </tr>
+            <tr>
+              <td style="background-color: #f8f8f8; padding: 16px;">
+                <pre style="margin: 0; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: break-word;">${cleanedScript}</pre>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>`;
+};
+/**
+ * Format script blocks with improved styling for better copy-paste compatibility
+ */
+const formatImprovedScriptBlock = (scriptContent, language = 'en') => {
+    // Enhanced version with better styling for Outlook
+    const cleanedScript = scriptContent.trim()
+        .replace(/\t/g, '    ')
+        .replace(/^\s*\n/gm, '');
+    const scriptHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('rbacScriptHeader', language);
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0; border: 1px solid #ddd; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+      <tr>
+        <td style="padding: 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+            <tr>
+              <td style="padding: 12px 16px; background-color: #2b579a; color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 600;">
+                ${scriptHeader}
+              </td>
+            </tr>
+            <tr>
+              <td style="background-color: #f5f5f5; padding: 16px; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.5;">
+                <pre style="margin: 0; white-space: pre-wrap; overflow-wrap: break-word; background-color: #f5f5f5; font-family: Consolas, Monaco, 'Courier New', monospace;">${cleanedScript}</pre>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>`;
+};
+/**
+ * Create a multi-column table for contacts, compatible with Outlook
+ *
+ * @param rows - The number of rows to create in the table
+ * @param language - The language to use for translations
+ * @returns HTML string containing the contacts table
+ */
+const createContactsTable = (rows, language = 'en') => {
+    // Get translated headers
+    const numberHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('numberHeader', language);
+    const firstNameHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('firstNameHeader', language);
+    const lastNameHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('lastNameHeader', language);
+    const officePhoneHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('officePhoneHeader', language);
+    const mobilePhoneHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('mobilePhoneHeader', language);
+    const emailHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('emailHeader', language);
+    const jobTitleHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('jobTitleHeader', language);
+    // Create headers
+    let tableHTML = `
+  <table class="contacts-table" width="100%" cellpadding="0" cellspacing="0" border="1" style="border-collapse: collapse; margin: 25px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr style="background-color: #f0f0f0;">
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${numberHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${firstNameHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${lastNameHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${officePhoneHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${mobilePhoneHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${emailHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${jobTitleHeader}</th>
+    </tr>`;
+    // Create empty rows
+    for (let i = 1; i <= rows; i++) {
+        const bgColor = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
+        tableHTML += `
+    <tr style="background-color: ${bgColor};">
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;">${i}</td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-weight: normal;"></td>
+    </tr>`;
+    }
+    tableHTML += `
+  </table>`;
+    return tableHTML;
+};
+/**
+ * Create an improved contacts table with better formatting
+ */
+const createImprovedContactsTable = (rows, language = 'en') => {
+    // Enhanced version with better styling for Outlook
+    // Get translated headers
+    const numberHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('numberHeader', language);
+    const firstNameHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('firstNameHeader', language);
+    const lastNameHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('lastNameHeader', language);
+    const officePhoneHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('officePhoneHeader', language);
+    const mobilePhoneHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('mobilePhoneHeader', language);
+    const emailHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('emailHeader', language);
+    const jobTitleHeader = (0,_translationService__WEBPACK_IMPORTED_MODULE_0__.getTranslation)('jobTitleHeader', language);
+    // Create headers with improved styling
+    let tableHTML = `
+  <!--[if mso]>
+  <style>
+    table.contacts-table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid #dddddd;
+    }
+    table.contacts-table th, table.contacts-table td {
+      border: 1px solid #dddddd;
+      padding: 10px;
+      text-align: left;
+    }
+    table.contacts-table th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+    }
+  </style>
+  <![endif]-->
+  
+  <table class="contacts-table" width="100%" cellpadding="10" cellspacing="0" border="1" style="border-collapse: collapse; margin: 25px 0; border: 1px solid #dddddd; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+    <tr style="background-color: #f0f0f0;">
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${numberHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${firstNameHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${lastNameHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${officePhoneHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${mobilePhoneHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${emailHeader}</th>
+      <th style="border: 1px solid #ddd; padding: 10px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; font-weight: bold; background-color: #f0f0f0;">${jobTitleHeader}</th>
+    </tr>`;
+    // Create empty rows with alternating colors
+    for (let i = 1; i <= rows; i++) {
+        const bgColor = i % 2 === 0 ? '#f9f9f9' : '#ffffff';
+        tableHTML += `
+    <tr style="background-color: ${bgColor};">
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;">${i}</td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;"></td>
+      <td style="border: 1px solid #ddd; padding: 10px; font-family: 'Segoe UI', Arial, sans-serif;"></td>
+    </tr>`;
+    }
+    tableHTML += `
+  </table>`;
+    return tableHTML;
+};
+/**
+ * Creates a section header with tier-specific styling
+ *
+ * @param title - The section title to display
+ * @param color - The tier-specific color to use
+ * @returns HTML string for the section header
+ */
+const createSectionHeader = (title, color) => {
+    return `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 35px 0 20px 0;">
+    <tr>
+      <td style="padding: 0; background-color: #FFFFFF;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f8f8f8; border-left: 4px solid ${color}; border-radius: 0 4px 4px 0;">
+          <tr>
+            <td style="padding: 16px;">
+              <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 0; font-weight: 600; background-color: #f8f8f8;">${title}</h3>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+};
+/**
+ * Creates an improved section header with better Outlook compatibility
+ */
+const createImprovedSectionHeader = (title, color) => {
+    return `
+  <!--[if mso]>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="mso-cellspacing: 0; mso-padding-alt: 0px 0px 0px 0px;">
+    <tr>
+      <td style="background-color: ${color}; width: 4px; padding: 0;">&nbsp;</td>
+      <td style="padding: 16px; background-color: #f8f8f8;">
+        <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; font-weight: 600;">${title}</h3>
+      </td>
+    </tr>
+  </table>
+  <![endif]-->
+  
+  <!-- Non-Outlook version -->
+  <div style="border-left: 4px solid ${color}; padding-left: 15px; margin: 30px 0 20px 0; background-color: #f8f8f8; border-radius: 0 4px 4px 0;">
+    <h3 style="color: #333333; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0; padding: 16px; font-weight: 600;">${title}</h3>
+  </div>`;
+};
+/**
+ * Creates an instruction box with visual styling
+ *
+ * @param title - The title of the instruction box
+ * @param content - The content for the instruction box
+ * @returns HTML string for the instruction box
+ */
+const createInstructionBox = (title, content) => {
+    return `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #FFFFFF;">
+    <tr>
+      <td style="padding: 0; background-color: #FFFFFF;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f0f7ff; border: 1px solid #cfe5ff; border-radius: 4px;">
+          <tr>
+            <td style="padding: 16px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; line-height: 1.5; color: #333; background-color: #f0f7ff;">
+              <div style="font-weight: bold; color: #0078D4; margin-bottom: 8px; font-size: 15px; background-color: #f0f7ff;">${title}</div>
+              <div style="color: #333; background-color: #f0f7ff;">${content}</div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+};
+/**
+ * Creates a step indicator for numbered instructions
+ *
+ * @param number - The step number
+ * @param title - The step title
+ * @returns HTML string for the step indicator
+ */
+const createStepIndicator = (number, title) => {
+    return `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 25px 0 15px 0; background-color: #FFFFFF;">
+    <tr>
+      <td style="padding: 0; vertical-align: middle; background-color: #FFFFFF;">
+        <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #FFFFFF;">
+          <tr>
+            <td style="width: 36px; height: 36px; background-color: #0078D4; border-radius: 50%; text-align: center; vertical-align: middle;">
+              <span style="color: white; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; font-weight: bold; background-color: #0078D4;">${number}</span>
+            </td>
+            <td style="padding-left: 12px; background-color: #FFFFFF;">
+              <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333; background-color: #FFFFFF;">${title}</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+};
+
 
 /***/ }),
 
@@ -30821,16 +31061,14 @@ throw new Error("Module parse failed: 'return' outside of function (1:0)\nFile w
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../data/supportTiers'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportTiers/constants */ "./src/features/supportTiers/constants.ts");
 /* harmony import */ var _translationService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./translationService */ "./src/features/emailBuilder/utils/translationService.ts");
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components */ "./src/features/emailBuilder/utils/components.ts");
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_components__WEBPACK_IMPORTED_MODULE_2__);
-// src/utils/email/emailBuilder.ts - Export needed functions
+// src/features/emailBuilder/utils/emailBuilder.ts - Fix import
 
 
 
@@ -30862,7 +31100,7 @@ const emailBuilder = {
      */
     buildEmailBody: function (formData) {
         // Get the selected tier and language
-        const tier = Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../data/supportTiers'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[formData.selectedTier];
+        const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
         // Start with greeting
         let body = this.translate('greeting', language, { name: formData.contactName }) + '\n\n';
@@ -31025,7 +31263,7 @@ const emailBuilder = {
      */
     buildEmailHTML: function (formData) {
         // Get the selected tier and language
-        const tier = Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../data/supportTiers'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[formData.selectedTier];
+        const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
         // Get tier color
         let tierColor = '';
@@ -31474,7 +31712,7 @@ foreach ($subscription in $subscriptions) {
      */
     getSupportPlanTextHTML: function (planType, language = 'en') {
         const supportPlanIntro = this.translate('supportPlanIntro', language, {
-            tier: Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../data/supportTiers'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[planType].name,
+            tier: _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[planType].name,
             supportType: planType === 'bronze'
                 ? this.translate('supportType.bronze', language)
                 : this.translate('supportType.other', language)
@@ -31534,7 +31772,7 @@ foreach ($subscription in $subscriptions) {
      * Process form data into a structured email object
      */
     processCustomerInfoToEmailData: function (info, language = 'en') {
-        const tier = Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../data/supportTiers'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[info.selectedTier];
+        const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[info.selectedTier];
         // Handle date calculation safely
         const today = new Date();
         const futureDate = new Date();
@@ -31617,7 +31855,6 @@ foreach ($subscription in $subscriptions) {
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getTranslation: () => (/* binding */ getTranslation)
@@ -31664,7 +31901,6 @@ const getTranslation = (key, language = 'en', replacements) => {
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 
 
@@ -31677,7 +31913,6 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -31703,7 +31938,6 @@ const TierSelector = ({ selectedTier, onChange }) => {
   \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   supportTiers: () => (/* binding */ supportTiers)
@@ -31775,7 +32009,6 @@ const supportTiers = {
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   supportTiers: () => (/* binding */ supportTiers)
@@ -31847,7 +32080,6 @@ const supportTiers = {
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TierSelector: () => (/* reexport safe */ _components_TierSelector__WEBPACK_IMPORTED_MODULE_0__["default"]),
@@ -31879,7 +32111,6 @@ __webpack_require__.r(__webpack_exports__);
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // src/features/supportTiers/types/index.ts
 /**
@@ -31896,7 +32127,6 @@ __webpack_require__.r(__webpack_exports__);
   \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -31917,7 +32147,6 @@ const TenantForm = ({ tenantId, companyName, onChange }) => {
   \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -31959,7 +32188,6 @@ const TenantManager = ({ tenants, selectedTier, onChange }) => {
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   supportTiers: () => (/* reexport safe */ _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers)
@@ -31978,7 +32206,6 @@ __webpack_require__.r(__webpack_exports__);
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   TenantForm: () => (/* reexport safe */ _components_TenantForm__WEBPACK_IMPORTED_MODULE_0__["default"]),
@@ -32009,7 +32236,6 @@ __webpack_require__.r(__webpack_exports__);
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // src/features/tenants/types/index.ts
 /**
@@ -32026,7 +32252,6 @@ __webpack_require__.r(__webpack_exports__);
   \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   I18nService: () => (/* binding */ I18nService)
@@ -32106,7 +32331,6 @@ class I18nService {
   \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   StorageService: () => (/* binding */ StorageService)
@@ -32238,7 +32462,6 @@ class StorageService {
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -32371,9 +32594,8 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!*************************!*\
   !*** ./src/options.tsx ***!
   \*************************/
