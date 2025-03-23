@@ -15,6 +15,7 @@
       "isolatedModules": true,
       "noEmit": false,
       "jsx": "react-jsx",
+      "baseUrl": "./",
       "paths": {
         "@features/*": ["src/features/*"],
         "@services/*": ["src/services/*"],

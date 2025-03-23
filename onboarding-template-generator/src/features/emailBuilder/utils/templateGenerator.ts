@@ -1,6 +1,6 @@
 // src/features/emailBuilder/utils/templateGenerator.ts
 import { supportTiers } from '../../supportTiers/constants';
-import { CustomerInfo } from '../types';
+import { CustomerInfo } from './types';
 
 // Helper functions for email formatting
 const formatScriptBlock = (scriptContent: string): string => {

@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { Language } from '../services/i18n';
 import { StorageService } from '../services/storage';
 import { TenantInfo } from '../features/tenants/types';
-import { EmailFormData } from '../features/emailBuilder/types';
+import { EmailFormData } from '../features/emailBuilder/utils/types';
 import { SupportTier } from '../features/supportTiers/types';
 
 interface Contact {

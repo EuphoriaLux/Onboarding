@@ -1,5 +1,5 @@
 // src/features/emailBuilder/templates/builders.ts
-import { Language } from '../types';
+import { Language } from '../utils/types';
 import { getTranslation } from '../utils/translationService';
 
 /**

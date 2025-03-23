@@ -1,5 +1,5 @@
 // src/features/emailBuilder/translations/en.ts
-import { Translations } from '../types';
+import { Translations } from '../utils/types';
 
 /**
  * English translations for the email template

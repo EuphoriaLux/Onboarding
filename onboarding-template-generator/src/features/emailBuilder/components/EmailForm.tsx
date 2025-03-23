@@ -1,7 +1,7 @@
 // src/components/EmailForm.tsx - Update imports and fix implicit any errors
 import React, { useState, useEffect } from 'react';
 import { supportTiers } from '../../supportTiers/constants';
-import { CustomerInfo, EmailFormData } from '../types';
+import { CustomerInfo, EmailFormData } from '../utils/types';
 import { Language } from '../../../services/i18n';
 import emailBuilder from '../utils/emailBuilder';
 

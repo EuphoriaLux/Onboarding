@@ -4,7 +4,7 @@
  * Manages translations and language support
  */
 
-import { Translations } from '../../features/emailBuilder/types'; 
+import { Translations } from '../../features/emailBuilder/utils/types'; 
 import translations from '../../features/emailBuilder/translations';
 
 // Supported languages

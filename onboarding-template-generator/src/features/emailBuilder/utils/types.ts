@@ -1,5 +1,5 @@
 // src/features/emailBuilder/types.ts
-import { SupportTier } from '../supportTiers/types';
+import { SupportTier } from '../../supportTiers/types';
 
 /**
  * Email form data interface defining the structure for email templates

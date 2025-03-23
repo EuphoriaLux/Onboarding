@@ -29603,6 +29603,308 @@ const useLanguage = () => {
 
 /***/ }),
 
+/***/ "./src/features/emailBuilder/translations/de.ts":
+/*!******************************************************!*\
+  !*** ./src/features/emailBuilder/translations/de.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * French translations for the email template
+ */
+const translations = {
+    // Email general
+    'subject': 'Intégration du Plan de Support {tier} pour {company} - Configuration Administrative Microsoft 365',
+    'greeting': 'Cher/Chère {name},',
+    'intro1': 'Merci d\'avoir choisi {company} comme partenaire d\'administration Microsoft 365. Nous sommes ravis de commencer le processus d\'intégration pour {clientCompany}.',
+    'intro2': 'Vous trouverez ci-dessous les étapes importantes pour compléter votre processus d\'intégration. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer votre Plan de Support {tier} et les configurations d\'accès nécessaires.',
+    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.',
+    'regards': 'Cordialement,',
+    'footer': 'Ceci est un message généré automatiquement par le Générateur de Modèles d\'Intégration Microsoft.',
+    // Section titles
+    'supportPlanTitle': 'DÉTAILS DU PLAN DE SUPPORT {tier}',
+    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS',
+    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT',
+    'gdapTitle': 'ACTION REQUISE : DÉLÉGATION GDAP',
+    'rbacTitle': 'ACTION REQUISE : CONFIGURATION RBAC',
+    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL',
+    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION',
+    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES',
+    // Support plan section
+    'supportPlanIntro': 'Le Plan de Support {tier} offre {supportType} avec les fonctionnalités suivantes :',
+    'supportType.bronze': 'une disponibilité de support de base pour les cas non urgents, sans couverture des situations critiques',
+    'supportType.other': 'un support complet avec couverture des situations critiques',
+    'supportTypeLabel': 'Type de support :',
+    'supportHoursLabel': 'Heures de support :',
+    'severityLevelsLabel': 'Niveaux de gravité :',
+    'contactsLabel': 'Contacts autorisés :',
+    'tenantsLabel': 'Tenants :',
+    'requestsLabel': 'Demandes de support :',
+    'criticalLabel': 'Support pour situations critiques :',
+    'yes': 'Oui',
+    'no': 'Non',
+    // Contacts section
+    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft 365.',
+    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.',
+    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :',
+    'contactsNote': 'Remarque : Votre plan {tier} inclut {count} contacts autorisés. Des contacts supplémentaires peuvent être gérés via notre portail client après la configuration initiale.',
+    // Table headers
+    'numberHeader': 'N°',
+    'firstNameHeader': 'Prénom',
+    'lastNameHeader': 'Nom',
+    'officePhoneHeader': 'Téléphone bureau',
+    'mobilePhoneHeader': 'Téléphone mobile',
+    'emailHeader': 'Adresse e-mail',
+    'jobTitleHeader': 'Fonction',
+    // Meeting section
+    'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
+    'meetingDate': 'Date : {date}',
+    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.',
+    // GDAP section
+    'gdapIntro': 'Microsoft exige désormais que les partenaires utilisent GDAP pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}.',
+    'gdapRoles': 'Nous demanderons le rôle "{roles}".',
+    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité.',
+    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :',
+    'gdapLink': 'Lien d\'approbation GDAP',
+    // RBAC section
+    'rbacIntro': 'Nous configurerons {groups} pour garantir que les utilisateurs disposent du niveau d\'accès approprié à votre environnement en fonction de leurs rôles professionnels.',
+    'rbacPermissionBoth': 'Cela inclut des autorisations d\'accès pour Azure et Microsoft 365.',
+    'rbacPermissionAzure': 'Cela inclut des autorisations d\'accès aux ressources Azure.',
+    'rbacPermission365': 'Cela inclut des autorisations d\'accès aux services Microsoft 365.',
+    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :',
+    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell',
+    'rbacStep1Source': 'Source :',
+    'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
+    'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
+    'rbacScriptHeader': 'Script PowerShell (Copier et coller dans la console PowerShell)',
+    'rbacScreenshot': 'Veuillez nous envoyer une capture d\'écran du résultat du script ci-dessus ou nous indiquer si vous préférez planifier une réunion Teams pour effectuer cette configuration ensemble.',
+    // Conditional Access section
+    'conditionalAccessIntro': 'Nous recommandons la mise en œuvre des politiques de sécurité suivantes pour votre environnement :',
+    'mfaPolicy': 'Exigences d\'authentification multifacteur (MFA) pour tous les utilisateurs',
+    'locationPolicy': 'Restrictions d\'accès basées sur la localisation',
+    'devicePolicy': 'Politiques de conformité des appareils pour garantir que seuls les appareils sécurisés peuvent accéder à vos données',
+    'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/translations/en.ts":
+/*!******************************************************!*\
+  !*** ./src/features/emailBuilder/translations/en.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * English translations for the email template
+ */
+const translations = {
+    // Email general
+    'subject': '{tier} Support Plan Onboarding for {company} - Microsoft 365 Administration Setup',
+    'greeting': 'Dear {name},',
+    'intro1': 'Thank you for choosing {company} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for {clientCompany}.',
+    'intro2': 'Below are the important steps to complete your onboarding process. Please review each section carefully and follow the instructions to set up your {tier} Support Plan and the necessary access configurations.',
+    'closing': 'Please reply to this email to confirm receipt and let us know if you have any questions or concerns.',
+    'regards': 'Best regards,',
+    'footer': 'This is an automated message generated by the Microsoft Onboarding Template Generator.',
+    // Section titles
+    'supportPlanTitle': '{tier} SUPPORT PLAN DETAILS',
+    'authorizedContactsTitle': 'ACTION REQUIRED: AUTHORIZED CONTACTS',
+    'tenantTitle': 'ACTION REQUIRED: TENANT INFORMATION',
+    'gdapTitle': 'ACTION REQUIRED: GDAP DELEGATION',
+    'rbacTitle': 'ACTION REQUIRED: RBAC CONFIGURATION',
+    'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES',
+    'meetingTitle': 'SCHEDULED: ONBOARDING MEETING',
+    'additionalInfoTitle': 'ADDITIONAL INFORMATION',
+    // Support plan section
+    'supportPlanIntro': 'The {tier} Support Plan provides {supportType} with the following features:',
+    'supportType.bronze': 'basic support availability for non-urgent cases, with no Critical Situation coverage',
+    'supportType.other': 'comprehensive support with Critical Situation coverage',
+    'supportTypeLabel': 'Support Type:',
+    'supportHoursLabel': 'Support Hours:',
+    'severityLevelsLabel': 'Severity Levels:',
+    'contactsLabel': 'Authorized Contacts:',
+    'tenantsLabel': 'Tenants:',
+    'requestsLabel': 'Support Requests:',
+    'criticalLabel': 'Critical Situation Support:',
+    'yes': 'Yes',
+    'no': 'No',
+    // Contacts section
+    'contactsIntro': 'Based on your {tier} Support Plan, you can designate up to {count} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.',
+    'contactsRolesIntro': 'We recommend designating individuals for the following roles: {roles}.',
+    'contactsInstruction': 'Please complete the following table with the required information for each contact:',
+    'contactsNote': 'Note: Your {tier} plan includes {count} authorized contacts. Additional contacts can be managed through our customer portal after initial setup.',
+    // Table headers
+    'numberHeader': '#',
+    'firstNameHeader': 'First Name',
+    'lastNameHeader': 'Last Name',
+    'officePhoneHeader': 'Office Phone',
+    'mobilePhoneHeader': 'Mobile Phone',
+    'emailHeader': 'Email Address',
+    'jobTitleHeader': 'Job Title',
+    // Meeting section
+    'meetingIntro': 'We have scheduled an onboarding meeting to discuss these items in detail and answer any questions you may have:',
+    'meetingDate': 'Date: {date}',
+    'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
+    // GDAP section
+    'gdapIntro': 'Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by {deadline}.',
+    'gdapRoles': 'We will request the "{roles}" role.',
+    'gdapPermission': 'This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.',
+    'gdapInstruction': 'Please visit the following link to approve the GDAP relationship:',
+    'gdapLink': 'GDAP Approval Link',
+    // RBAC section
+    'rbacIntro': 'We will configure {groups} to ensure users have the appropriate level of access to your environment based on their job functions.',
+    'rbacPermissionBoth': 'This includes both Azure and Microsoft 365 access permissions.',
+    'rbacPermissionAzure': 'This includes Azure resources access permissions.',
+    'rbacPermission365': 'This includes Microsoft 365 service access permissions.',
+    'rbacInstruction': 'Please complete the following steps to configure RBAC permissions:',
+    'rbacStep1': 'STEP 1: Install Azure PowerShell',
+    'rbacStep1Source': 'Source:',
+    'rbacStep2': 'STEP 2: Update the tenant and run the following script',
+    'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console',
+    'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)',
+    'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.',
+    // Conditional Access section
+    'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:',
+    'mfaPolicy': 'Multi-Factor Authentication (MFA) requirements for all users',
+    'locationPolicy': 'Location-based access restrictions',
+    'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
+    'signInPolicy': 'Sign-in risk-based policies to prevent suspicious login attempts'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/translations/fr.ts":
+/*!******************************************************!*\
+  !*** ./src/features/emailBuilder/translations/fr.ts ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/**
+ * French translations for the email template
+ */
+const translations = {
+    // Email general
+    'subject': 'Intégration du Plan de Support {tier} pour {company} - Configuration Administrative Microsoft 365',
+    'greeting': 'Cher/Chère {name},',
+    'intro1': 'Merci d\'avoir choisi {company} comme partenaire d\'administration Microsoft 365. Nous sommes ravis de commencer le processus d\'intégration pour {clientCompany}.',
+    'intro2': 'Vous trouverez ci-dessous les étapes importantes pour compléter votre processus d\'intégration. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer votre Plan de Support {tier} et les configurations d\'accès nécessaires.',
+    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.',
+    'regards': 'Cordialement,',
+    'footer': 'Ceci est un message généré automatiquement par le Générateur de Modèles d\'Intégration Microsoft.',
+    // Section titles
+    'supportPlanTitle': 'DÉTAILS DU PLAN DE SUPPORT {tier}',
+    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS',
+    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT',
+    'gdapTitle': 'ACTION REQUISE : DÉLÉGATION GDAP',
+    'rbacTitle': 'ACTION REQUISE : CONFIGURATION RBAC',
+    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL',
+    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION',
+    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES',
+    // Support plan section
+    'supportPlanIntro': 'Le Plan de Support {tier} offre {supportType} avec les fonctionnalités suivantes :',
+    'supportType.bronze': 'une disponibilité de support de base pour les cas non urgents, sans couverture des situations critiques',
+    'supportType.other': 'un support complet avec couverture des situations critiques',
+    'supportTypeLabel': 'Type de support :',
+    'supportHoursLabel': 'Heures de support :',
+    'severityLevelsLabel': 'Niveaux de gravité :',
+    'contactsLabel': 'Contacts autorisés :',
+    'tenantsLabel': 'Tenants :',
+    'requestsLabel': 'Demandes de support :',
+    'criticalLabel': 'Support pour situations critiques :',
+    'yes': 'Oui',
+    'no': 'Non',
+    // Contacts section
+    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft 365.',
+    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.',
+    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :',
+    'contactsNote': 'Remarque : Votre plan {tier} inclut {count} contacts autorisés. Des contacts supplémentaires peuvent être gérés via notre portail client après la configuration initiale.',
+    // Table headers
+    'numberHeader': 'N°',
+    'firstNameHeader': 'Prénom',
+    'lastNameHeader': 'Nom',
+    'officePhoneHeader': 'Téléphone bureau',
+    'mobilePhoneHeader': 'Téléphone mobile',
+    'emailHeader': 'Adresse e-mail',
+    'jobTitleHeader': 'Fonction',
+    // Meeting section
+    'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
+    'meetingDate': 'Date : {date}',
+    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.',
+    // GDAP section
+    'gdapIntro': 'Microsoft exige désormais que les partenaires utilisent GDAP pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}.',
+    'gdapRoles': 'Nous demanderons le rôle "{roles}".',
+    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité.',
+    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :',
+    'gdapLink': 'Lien d\'approbation GDAP',
+    // RBAC section
+    'rbacIntro': 'Nous configurerons {groups} pour garantir que les utilisateurs disposent du niveau d\'accès approprié à votre environnement en fonction de leurs rôles professionnels.',
+    'rbacPermissionBoth': 'Cela inclut des autorisations d\'accès pour Azure et Microsoft 365.',
+    'rbacPermissionAzure': 'Cela inclut des autorisations d\'accès aux ressources Azure.',
+    'rbacPermission365': 'Cela inclut des autorisations d\'accès aux services Microsoft 365.',
+    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :',
+    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell',
+    'rbacStep1Source': 'Source :',
+    'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
+    'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
+    'rbacScriptHeader': 'Script PowerShell (Copier et coller dans la console PowerShell)',
+    'rbacScreenshot': 'Veuillez nous envoyer une capture d\'écran du résultat du script ci-dessus ou nous indiquer si vous préférez planifier une réunion Teams pour effectuer cette configuration ensemble.',
+    // Conditional Access section
+    'conditionalAccessIntro': 'Nous recommandons la mise en œuvre des politiques de sécurité suivantes pour votre environnement :',
+    'mfaPolicy': 'Exigences d\'authentification multifacteur (MFA) pour tous les utilisateurs',
+    'locationPolicy': 'Restrictions d\'accès basées sur la localisation',
+    'devicePolicy': 'Politiques de conformité des appareils pour garantir que seuls les appareils sécurisés peuvent accéder à vos données',
+    'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes'
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/translations/index.ts":
+/*!*********************************************************!*\
+  !*** ./src/features/emailBuilder/translations/index.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _en__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./en */ "./src/features/emailBuilder/translations/en.ts");
+/* harmony import */ var _fr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fr */ "./src/features/emailBuilder/translations/fr.ts");
+/* harmony import */ var _de__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./de */ "./src/features/emailBuilder/translations/de.ts");
+
+
+
+/**
+ * All translations organized by language code
+ */
+const translations = {
+    en: _en__WEBPACK_IMPORTED_MODULE_0__["default"],
+    fr: _fr__WEBPACK_IMPORTED_MODULE_1__["default"],
+    de: _de__WEBPACK_IMPORTED_MODULE_2__["default"]
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
+
+
+/***/ }),
+
 /***/ "./src/services/i18n/index.ts":
 /*!************************************!*\
   !*** ./src/services/i18n/index.ts ***!
@@ -29613,7 +29915,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   I18nService: () => (/* binding */ I18nService)
 /* harmony export */ });
-Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _features_emailBuilder_translations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../features/emailBuilder/translations */ "./src/features/emailBuilder/translations/index.ts");
 // src/services/i18n/index.ts
 /**
  * Internationalization (i18n) Service
@@ -29630,8 +29932,8 @@ class I18nService {
      * @returns The translated string
      */
     static translate(key, language = 'en', replacements) {
-        const langTranslations = Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[language] || Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-        let result = langTranslations[key] || Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[key] || key;
+        const langTranslations = _features_emailBuilder_translations__WEBPACK_IMPORTED_MODULE_0__["default"][language] || _features_emailBuilder_translations__WEBPACK_IMPORTED_MODULE_0__["default"].en;
+        let result = langTranslations[key] || _features_emailBuilder_translations__WEBPACK_IMPORTED_MODULE_0__["default"].en[key] || key;
         // Special handling for support type based on tier
         if (key === 'supportType' && (replacements === null || replacements === void 0 ? void 0 : replacements.tier)) {
             const tierKey = `supportType.${replacements.tier}`;

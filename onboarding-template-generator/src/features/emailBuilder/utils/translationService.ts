@@ -1,5 +1,5 @@
 // src/features/emailBuilder/utils/translationService.ts
-import { Language } from '../types';
+import { Language } from './types';
 import translations from '../translations';
 
 /**

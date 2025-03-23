@@ -7,7 +7,7 @@
 export * from '../features/supportTiers/types';
 export * from '../features/tenants/types';
 export * from '../features/contacts/types';
-export * from '../features/emailBuilder/types';
+export * from '../features/emailBuilder/utils/types';
 
 /**
  * Base user interface

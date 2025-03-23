@@ -16,4 +16,4 @@ export { default as emailBuilder } from './utils/emailBuilder';
 export * from './templates';
 
 // Types
-export * from './types';
+export * from './utils/types';
