@@ -9,15 +9,37 @@ import { useAppState } from '../../../contexts/AppStateContext';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import '../../../styles/App.css';
 
-interface AppProps {
-  // You can add props here if needed in the future
-}
+// Collapsible Section component for onboarding components
+const CollapsibleSection: React.FC<{
+  title: string;
+  children: React.ReactNode;
+  initialExpanded?: boolean;
+}> = ({ title, children, initialExpanded = false }) => {
+  const [isExpanded, setIsExpanded] = useState(initialExpanded);
+
+  return (
+    <div className="form-section collapsible-section">
+      <div 
+        className={`collapsible-header ${isExpanded ? 'expanded' : ''}`}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <h3>{title}</h3>
+        <span className="toggle-icon">{isExpanded ? '−' : '+'}</span>
+      </div>
+      {isExpanded && (
+        <div className="collapsible-content">
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
 
 /**
  * Main App Component for the Onboarding Template Generator
  * Uses contexts for state management and i18n
  */
-const App: React.FC<AppProps> = () => {
+const App: React.FC = () => {
   const { 
     state, 
     updateCustomerInfo, 
@@ -27,9 +49,14 @@ const App: React.FC<AppProps> = () => {
     updateEmailData
   } = useAppState();
   
-  const { language, setLanguage, getLanguageDisplay } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   
   const [showEmailPreview, setShowEmailPreview] = useState(false);
+  const [emailRecipients, setEmailRecipients] = useState({
+    to: state.customerInfo.contactEmail || '',
+    cc: '',
+    subject: ''
+  });
 
   // Handle date change with proper type handling
   const handleDateChange = (date: string) => {
@@ -45,6 +72,19 @@ const App: React.FC<AppProps> = () => {
       }
     } catch (err) {
       console.error("Error parsing date: ", err);
+    }
+  };
+
+  // Handle email recipient changes
+  const handleEmailRecipientsChange = (field: string, value: string) => {
+    setEmailRecipients({
+      ...emailRecipients,
+      [field]: value
+    });
+    
+    // If it's the 'to' field, also update the primary contact email
+    if (field === 'to') {
+      updateCustomerInfo('contactEmail', value);
     }
   };
 
@@ -98,6 +138,51 @@ const App: React.FC<AppProps> = () => {
         />
       ) : (
         <div className="comprehensive-form">
+          <div className="generator-header">
+            <h1>Microsoft Support Onboarding Template Generator</h1>
+            <p>Create customized onboarding emails for new support customers</p>
+          </div>
+          
+          {/* 1. Email Recipients & Subject */}
+          <div className="form-section email-recipients-section">
+            <h2>Email Recipients</h2>
+            <div className="form-group">
+              <label htmlFor="to-field">To:</label>
+              <input
+                id="to-field"
+                type="email"
+                value={emailRecipients.to}
+                onChange={(e) => handleEmailRecipientsChange('to', e.target.value)}
+                placeholder="recipient@example.com"
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="cc-field">Cc:</label>
+              <input
+                id="cc-field"
+                type="email"
+                value={emailRecipients.cc}
+                onChange={(e) => handleEmailRecipientsChange('cc', e.target.value)}
+                placeholder="cc@example.com"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="subject-field">Subject:</label>
+              <input
+                id="subject-field"
+                type="text"
+                value={emailRecipients.subject}
+                onChange={(e) => handleEmailRecipientsChange('subject', e.target.value)}
+                placeholder="[CompanyName] Microsoft Support Onboarding - [TierName] Support Plan"
+              />
+              <small className="form-text">Leave blank to use the default subject based on tier and company name</small>
+            </div>
+          </div>
+          
+          {/* 2. Support Tier Selection */}
           <div className="form-section tier-section">
             <TierSelector 
               selectedTier={state.customerInfo.selectedTier}
@@ -105,6 +190,7 @@ const App: React.FC<AppProps> = () => {
             />
           </div>
           
+          {/* 3. Customer Contact Information */}
           <div className="form-section customer-info-section">
             <h2>Customer Contact Information</h2>
             
@@ -129,7 +215,9 @@ const App: React.FC<AppProps> = () => {
                 onChange={(e) => updateCustomerInfo('contactEmail', e.target.value)}
                 placeholder="email@company.com"
                 required
+                disabled={true}
               />
+              <small className="form-text">This is synchronized with the email recipient above</small>
             </div>
             
             <div className="form-group">
@@ -146,14 +234,7 @@ const App: React.FC<AppProps> = () => {
             </div>
           </div>
           
-          <div className="form-section tenant-section">
-            <TenantManager
-              tenants={state.customerInfo.tenants}
-              selectedTier={state.customerInfo.selectedTier}
-              onChange={updateTenants}
-            />
-          </div>
-          
+          {/* 4. Authorized Contacts */}
           <div className="form-section contacts-section">
             <ContactsForm
               contacts={state.customerInfo.authorizedContacts}
@@ -162,17 +243,204 @@ const App: React.FC<AppProps> = () => {
             />
           </div>
           
-          <div className="form-section email-section">
-            <h2>Email Builder</h2>
-            <p className="section-description">
-              Customize the email template that will be sent to the customer as part of the onboarding process.
-            </p>
-            <EmailForm
-              customerInfo={getEmailCustomerInfo()}
-              onSaveEmailData={updateEmailData}
-              onPreviewEmail={handleEmailPreview}
-              language={language}
+          {/* 5. Tenant Information */}
+          <div className="form-section tenant-section">
+            <TenantManager
+              tenants={state.customerInfo.tenants}
+              selectedTier={state.customerInfo.selectedTier}
+              onChange={updateTenants}
             />
+          </div>
+          
+          {/* 6. Onboarding Components (Collapsible) */}
+          <div className="form-section onboarding-components-section">
+            <h2>Onboarding Components</h2>
+            <p className="section-description">
+              Configure the detailed sections to include in your onboarding email
+            </p>
+            
+            <CollapsibleSection title="GDAP Delegation">
+              <div className="form-group">
+                <label htmlFor="gdap-deadline">Implementation Deadline:</label>
+                <input
+                  id="gdap-deadline"
+                  type="text"
+                  placeholder="e.g., June 30, 2025"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="gdap-link">GDAP Link:</label>
+                <input
+                  id="gdap-link"
+                  type="text"
+                  placeholder="GDAP approval link"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="gdap-roles">Requested Roles:</label>
+                <input
+                  id="gdap-roles"
+                  type="text"
+                  placeholder="e.g., Service Support Administrator"
+                />
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection title="RBAC Configuration">
+              <div className="form-group">
+                <label htmlFor="rbac-groups">Security Groups to Configure:</label>
+                <input
+                  id="rbac-groups"
+                  type="text"
+                  placeholder="e.g., IT Admins, Finance Team, HR"
+                />
+              </div>
+              <div className="form-group">
+                <label>Permission Level:</label>
+                <div className="inline-checks">
+                  <div className="checkbox-container">
+                    <input 
+                      type="checkbox" 
+                      id="rbacAzure" 
+                      defaultChecked={true}
+                    />
+                    <label htmlFor="rbacAzure">Azure RBAC</label>
+                  </div>
+                  <div className="checkbox-container">
+                    <input 
+                      type="checkbox" 
+                      id="rbacM365" 
+                      defaultChecked={true}
+                    />
+                    <label htmlFor="rbacM365">Microsoft 365 RBAC</label>
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <div className="checkbox-container">
+                  <input 
+                    type="checkbox" 
+                    id="includeRbacScript" 
+                    defaultChecked={true}
+                  />
+                  <label htmlFor="includeRbacScript">Include PowerShell Script</label>
+                </div>
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection title="Conditional Access">
+              <div className="form-group">
+                <label>Policies to Implement:</label>
+                <div className="inline-checks">
+                  <div className="checkbox-container">
+                    <input 
+                      type="checkbox" 
+                      id="caMfa" 
+                      defaultChecked={true}
+                    />
+                    <label htmlFor="caMfa">MFA Requirements</label>
+                  </div>
+                  <div className="checkbox-container">
+                    <input 
+                      type="checkbox" 
+                      id="caLocation" 
+                      defaultChecked={true}
+                    />
+                    <label htmlFor="caLocation">Location-Based Access</label>
+                  </div>
+                  <div className="checkbox-container">
+                    <input 
+                      type="checkbox" 
+                      id="caDevice" 
+                      defaultChecked={true}
+                    />
+                    <label htmlFor="caDevice">Device Compliance</label>
+                  </div>
+                  <div className="checkbox-container">
+                    <input 
+                      type="checkbox" 
+                      id="caSignIn" 
+                      defaultChecked={true}
+                    />
+                    <label htmlFor="caSignIn">Sign-in Risk Policies</label>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleSection>
+            
+            <CollapsibleSection title="Additional Notes">
+              <div className="form-group">
+                <label htmlFor="additional-notes">Notes or Instructions:</label>
+                <textarea
+                  id="additional-notes"
+                  placeholder="Any additional information for the client..."
+                  rows={4}
+                ></textarea>
+              </div>
+            </CollapsibleSection>
+          </div>
+          
+          {/* 7. Email Builder with Preview Button */}
+          <div className="form-section email-section">
+            <h2>Email Preview & Generate</h2>
+            <p className="section-description">
+              Preview the email template and generate it for sending
+            </p>
+            
+            <div className="form-group">
+              <label htmlFor="sender-name">Your Name:</label>
+              <input
+                id="sender-name"
+                type="text"
+                placeholder="Your full name"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="sender-title">Your Title:</label>
+              <input
+                id="sender-title"
+                type="text"
+                placeholder="Your job title"
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="sender-company">Your Company:</label>
+              <input
+                id="sender-company"
+                type="text"
+                placeholder="Your company name"
+              />
+            </div>
+            
+            <div className="form-actions">
+              <button 
+                type="button" 
+                className="btn-preview"
+                onClick={() => {
+                  // Create an EmailFormData object with all the collected data
+                  const emailData = {
+                    to: emailRecipients.to,
+                    cc: emailRecipients.cc,
+                    subject: emailRecipients.subject,
+                    // Add other fields from the form
+                    ...getEmailCustomerInfo(),
+                    // These would actually come from the form inputs
+                    senderName: "Your Name",
+                    senderTitle: "Support Specialist",
+                    senderCompany: "Microsoft Partner Support",
+                    senderContact: "support@example.com",
+                    currentDate: new Date().toLocaleDateString(),
+                    language: language
+                  };
+                  
+                  handleEmailPreview(emailData);
+                }}
+              >
+                Preview Email
+              </button>
+            </div>
           </div>
         </div>
       )}
