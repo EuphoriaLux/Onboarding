@@ -1,5 +1,8 @@
+// src/popup.tsx
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { AppStateProvider } from './contexts/AppStateContext';
+import { LanguageProvider } from './contexts/LanguageContext';
 import './styles/App.css';
 
 const Popup: React.FC = () => {
@@ -18,9 +21,15 @@ const Popup: React.FC = () => {
   );
 };
 
-// Create root element for React
+// Create root element for React with context providers
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
-  root.render(<Popup />);
+  root.render(
+    <LanguageProvider>
+      <AppStateProvider>
+        <Popup />
+      </AppStateProvider>
+    </LanguageProvider>
+  );
 }

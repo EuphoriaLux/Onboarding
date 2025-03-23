@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "webpack.config.js",
 "scripts": {
-  "setup": "node create-structure.js",
-  "create-icons": "node create-icons.js",
+  "setup": "",
+  "create-icons": "",
   "prestart": "npm run setup",
   "prebuild": "npm run setup",
   "start": "webpack --watch --progress --config webpack.config.js",

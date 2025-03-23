@@ -29,7 +29,14 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      '@features': path.resolve(__dirname, 'src/features'),
+      '@services': path.resolve(__dirname, 'src/services'),
+      '@contexts': path.resolve(__dirname, 'src/contexts'),
+      '@types': path.resolve(__dirname, 'src/types'),
+      '@styles': path.resolve(__dirname, 'src/styles')
+    }
   },
   module: {
     rules: [

@@ -29392,6 +29392,427 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./src/contexts/AppStateContext.tsx":
+/*!******************************************!*\
+  !*** ./src/contexts/AppStateContext.tsx ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AppStateProvider: () => (/* binding */ AppStateProvider),
+/* harmony export */   useAppState: () => (/* binding */ useAppState)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/storage */ "./src/services/storage/index.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+// src/contexts/AppStateContext.tsx
+
+
+const defaultState = {
+    customerInfo: {
+        contactName: '',
+        contactEmail: '',
+        proposedDate: new Date(),
+        authorizedContacts: [{ name: '', email: '', phone: '' }],
+        selectedTier: 'silver',
+        tenants: [{ id: '', companyName: '' }],
+    },
+    emailData: null,
+    language: 'en'
+};
+const AppStateContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(undefined);
+const AppStateProvider = ({ children }) => {
+    const [state, setState] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(defaultState);
+    // Load initial state from storage
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const loadState = () => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const savedState = yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.getAll(['customerInfo', 'emailData', 'language']);
+                if (savedState) {
+                    const newState = Object.assign({}, defaultState);
+                    if (savedState.customerInfo) {
+                        // Process proposedDate from storage (convert string to Date)
+                        let customerInfo = savedState.customerInfo;
+                        if (customerInfo.proposedDate) {
+                            const parsedDate = new Date(customerInfo.proposedDate);
+                            if (!isNaN(parsedDate.getTime())) {
+                                customerInfo.proposedDate = parsedDate;
+                            }
+                            else {
+                                customerInfo.proposedDate = new Date();
+                            }
+                        }
+                        newState.customerInfo = Object.assign(Object.assign({}, defaultState.customerInfo), customerInfo);
+                    }
+                    if (savedState.emailData) {
+                        newState.emailData = savedState.emailData;
+                    }
+                    if (savedState.language) {
+                        newState.language = savedState.language;
+                    }
+                    setState(newState);
+                }
+            }
+            catch (error) {
+                console.error('Error loading state from storage:', error);
+            }
+        });
+        loadState();
+    }, []);
+    // Save state to storage when it changes
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('customerInfo', state.customerInfo);
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('language', state.language);
+        if (state.emailData) {
+            _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('emailData', state.emailData);
+        }
+    }, [state]);
+    // Handler functions
+    const updateCustomerInfo = (field, value) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { [field]: value }) })));
+    };
+    const updateContacts = (contacts) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { authorizedContacts: contacts }) })));
+    };
+    const updateTenants = (tenants) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { tenants }) })));
+    };
+    const updateTier = (tier) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { selectedTier: tier }) })));
+    };
+    const updateEmailData = (data) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { emailData: data })));
+    };
+    const updateLanguage = (language) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { language })));
+    };
+    const resetState = () => {
+        setState(defaultState);
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.clear();
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(AppStateContext.Provider, { value: {
+            state,
+            updateCustomerInfo,
+            updateContacts,
+            updateTenants,
+            updateTier,
+            updateEmailData,
+            updateLanguage,
+            resetState
+        }, children: children }));
+};
+const useAppState = () => {
+    const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(AppStateContext);
+    if (context === undefined) {
+        throw new Error('useAppState must be used within an AppStateProvider');
+    }
+    return context;
+};
+
+
+/***/ }),
+
+/***/ "./src/contexts/LanguageContext.tsx":
+/*!******************************************!*\
+  !*** ./src/contexts/LanguageContext.tsx ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LanguageProvider: () => (/* binding */ LanguageProvider),
+/* harmony export */   useLanguage: () => (/* binding */ useLanguage)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/i18n */ "./src/services/i18n/index.ts");
+/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/storage */ "./src/services/storage/index.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+// src/contexts/LanguageContext.tsx
+
+
+
+const LanguageContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(undefined);
+const LanguageProvider = ({ children }) => {
+    const [language, setLanguageState] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('en');
+    // Load language from storage on initial render
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const loadLanguage = () => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const savedLanguage = yield _services_storage__WEBPACK_IMPORTED_MODULE_3__.StorageService.get('language');
+                if (savedLanguage) {
+                    setLanguageState(savedLanguage);
+                }
+            }
+            catch (error) {
+                console.error('Error loading language from storage:', error);
+            }
+        });
+        loadLanguage();
+    }, []);
+    // Save language to storage when it changes
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        _services_storage__WEBPACK_IMPORTED_MODULE_3__.StorageService.set('language', language);
+    }, [language]);
+    const setLanguage = (newLanguage) => {
+        setLanguageState(newLanguage);
+    };
+    const translate = (key, replacements) => {
+        return _services_i18n__WEBPACK_IMPORTED_MODULE_2__.I18nService.translate(key, language, replacements);
+    };
+    const getLanguageDisplay = () => {
+        return _services_i18n__WEBPACK_IMPORTED_MODULE_2__.I18nService.getLanguageDisplay(language);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(LanguageContext.Provider, { value: {
+            language,
+            setLanguage,
+            translate,
+            getLanguageDisplay
+        }, children: children }));
+};
+const useLanguage = () => {
+    const context = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(LanguageContext);
+    if (context === undefined) {
+        throw new Error('useLanguage must be used within a LanguageProvider');
+    }
+    return context;
+};
+
+
+/***/ }),
+
+/***/ "./src/services/i18n/index.ts":
+/*!************************************!*\
+  !*** ./src/services/i18n/index.ts ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   I18nService: () => (/* binding */ I18nService)
+/* harmony export */ });
+Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+// src/services/i18n/index.ts
+/**
+ * Internationalization (i18n) Service
+ * Manages translations and language support
+ */
+
+class I18nService {
+    /**
+     * Get translation for a key in the specified language
+     *
+     * @param key - The translation key
+     * @param language - The language code (en, de, fr)
+     * @param replacements - Optional replacements for placeholders
+     * @returns The translated string
+     */
+    static translate(key, language = 'en', replacements) {
+        const langTranslations = Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[language] || Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+        let result = langTranslations[key] || Object(function webpackMissingModule() { var e = new Error("Cannot find module '../../features/emailBuilder/translations'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())[key] || key;
+        // Special handling for support type based on tier
+        if (key === 'supportType' && (replacements === null || replacements === void 0 ? void 0 : replacements.tier)) {
+            const tierKey = `supportType.${replacements.tier}`;
+            if (langTranslations[tierKey]) {
+                result = langTranslations[tierKey];
+            }
+            else if (langTranslations['supportType.other']) {
+                result = langTranslations['supportType.other'];
+            }
+        }
+        // Replace placeholders
+        if (replacements) {
+            Object.keys(replacements).forEach(placeholder => {
+                const value = replacements[placeholder];
+                result = result.replace(new RegExp(`{${placeholder}}`, 'g'), String(value));
+            });
+        }
+        return result;
+    }
+    /**
+     * Get the display name for a language code
+     *
+     * @param language - Language code
+     * @returns Display name of the language
+     */
+    static getLanguageDisplay(language) {
+        switch (language) {
+            case 'en': return 'English';
+            case 'de': return 'Deutsch';
+            case 'fr': return 'Français';
+            default: return 'English';
+        }
+    }
+    /**
+     * Get all supported languages
+     *
+     * @returns Array of language objects with code and display name
+     */
+    static getSupportedLanguages() {
+        return [
+            { code: 'en', name: 'English' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'fr', name: 'Français' }
+        ];
+    }
+}
+
+
+/***/ }),
+
+/***/ "./src/services/storage/index.ts":
+/*!***************************************!*\
+  !*** ./src/services/storage/index.ts ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StorageService: () => (/* binding */ StorageService)
+/* harmony export */ });
+// src/services/storage/index.ts
+/**
+ * Storage Service
+ * Abstraction layer over Chrome Storage API
+ */
+class StorageService {
+    /**
+     * Save data to Chrome's sync storage
+     */
+    static set(key, value) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.storage.sync.set({ [key]: value }, () => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            }
+            catch (error) {
+                // Handle errors in environments where chrome is not available (like tests)
+                console.error('Storage service error:', error);
+                reject(error);
+            }
+        });
+    }
+    /**
+     * Get data from Chrome's sync storage
+     */
+    static get(key) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.storage.sync.get(key, (result) => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    }
+                    else {
+                        resolve(result[key]);
+                    }
+                });
+            }
+            catch (error) {
+                // Handle errors in environments where chrome is not available
+                console.error('Storage service error:', error);
+                reject(error);
+            }
+        });
+    }
+    /**
+     * Get multiple data items from Chrome's sync storage
+     */
+    static getAll(keys) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.storage.sync.get(keys, (result) => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    }
+                    else {
+                        resolve(result);
+                    }
+                });
+            }
+            catch (error) {
+                // Handle errors in environments where chrome is not available
+                console.error('Storage service error:', error);
+                reject(error);
+            }
+        });
+    }
+    /**
+     * Remove data from Chrome's sync storage
+     */
+    static remove(key) {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.storage.sync.remove(key, () => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            }
+            catch (error) {
+                // Handle errors in environments where chrome is not available
+                console.error('Storage service error:', error);
+                reject(error);
+            }
+        });
+    }
+    /**
+     * Clear all data from Chrome's sync storage
+     */
+    static clear() {
+        return new Promise((resolve, reject) => {
+            try {
+                chrome.storage.sync.clear(() => {
+                    if (chrome.runtime.lastError) {
+                        reject(chrome.runtime.lastError);
+                    }
+                    else {
+                        resolve();
+                    }
+                });
+            }
+            catch (error) {
+                // Handle errors in environments where chrome is not available
+                console.error('Storage service error:', error);
+                reject(error);
+            }
+        });
+    }
+}
+
+
+/***/ }),
+
 /***/ "./src/styles/App.css":
 /*!****************************!*\
   !*** ./src/styles/App.css ***!
@@ -29538,7 +29959,11 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
+/* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
+/* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
+
+
 
 
 
@@ -29548,11 +29973,11 @@ const Popup = () => {
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "popup-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Microsoft Support Onboarding" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Click below to open the email builder" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "primary-button", onClick: openOptions, children: "Open Email Builder" })] }));
 };
-// Create root element for React
+// Create root element for React with context providers
 const container = document.getElementById('root');
 if (container) {
     const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(container);
-    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Popup, {}));
+    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_3__.LanguageProvider, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_2__.AppStateProvider, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(Popup, {}) }) }));
 }
 
 })();
