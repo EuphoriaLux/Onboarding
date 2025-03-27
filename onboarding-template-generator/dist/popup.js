@@ -29532,7 +29532,8 @@ const defaultState = {
         proposedDate: new Date(),
         authorizedContacts: [{ name: '', email: '', phone: '' }],
         selectedTier: 'silver',
-        tenants: [{ id: '', companyName: '' }],
+        // Initialize default tenant with tenantDomain
+        tenants: [{ id: '', companyName: '', tenantDomain: '' }],
     },
     emailData: null,
     language: 'en'

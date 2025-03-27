@@ -1,14 +1,12 @@
 // src/components/TenantManager.tsx
 import React from 'react';
 import { supportTiers } from '../data/supportTiers';
+import { TenantInfo } from '../types'; // Import updated TenantInfo type
 
-export interface TenantInfo {
-  id: string;
-  companyName: string;
-}
+// Remove local TenantInfo definition
 
 interface TenantManagerProps {
-  tenants: TenantInfo[];
+  tenants: TenantInfo[]; // Use imported TenantInfo
   selectedTier: string;
   onChange: (tenants: TenantInfo[]) => void;
 }
@@ -16,17 +14,22 @@ interface TenantManagerProps {
 const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange }) => {
   const tier = supportTiers[selectedTier];
   
-  // Handle tenant field changes
+  // Handle tenant field changes, including gdapLink
   const handleTenantChange = (index: number, field: keyof TenantInfo, value: string) => {
-    const updatedTenants = [...tenants];
-    updatedTenants[index] = { ...updatedTenants[index], [field]: value };
+    const updatedTenants = tenants.map((tenant, i) => {
+      if (i === index) {
+        return { ...tenant, [field]: value };
+      }
+      return tenant;
+    });
     onChange(updatedTenants);
   };
 
-  // Add a new tenant
+  // Add a new tenant, initializing tenantDomain and gdapLink
   const addTenant = () => {
     if (tenants.length < tier.tenants) {
-      onChange([...tenants, { id: '', companyName: '' }]);
+      // Initialize tenantDomain as empty string
+      onChange([...tenants, { id: '', companyName: '', tenantDomain: '', gdapLink: '' }]);
     }
   };
 
@@ -72,6 +75,22 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
                 required
               />
             </div>
+
+            {/* Add Tenant Domain Input */}
+            <div className="form-group">
+              <label htmlFor={`tenant-domain-${index}`}>Tenant Domain</label>
+              <input
+                id={`tenant-domain-${index}`}
+                type="text"
+                value={tenant.tenantDomain}
+                onChange={(e) => handleTenantChange(index, 'tenantDomain', e.target.value)}
+                placeholder="contoso.onmicrosoft.com"
+                required
+              />
+              <small className="form-text">
+                The primary domain name (e.g., contoso.onmicrosoft.com).
+              </small>
+            </div>
             
             <div className="form-group">
               <label htmlFor={`tenant-id-${index}`}>Microsoft Tenant ID</label>
@@ -85,6 +104,21 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               />
               <small className="form-text">
                 Format: 00000000-0000-0000-0000-000000000000
+              </small>
+            </div>
+
+            {/* Add GDAP Link Input */}
+            <div className="form-group">
+              <label htmlFor={`gdap-link-${index}`}>Tenant-Specific GDAP Link (Optional)</label>
+              <input
+                id={`gdap-link-${index}`}
+                type="url"
+                value={tenant.gdapLink || ''}
+                onChange={(e) => handleTenantChange(index, 'gdapLink', e.target.value)}
+                placeholder="https://partner.microsoft.com/..."
+              />
+              <small className="form-text">
+                If provided, this link will be used for this tenant. Otherwise, a default link will be used.
               </small>
             </div>
           </div>

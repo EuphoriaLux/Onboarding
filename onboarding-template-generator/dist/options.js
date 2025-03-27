@@ -29887,7 +29887,8 @@ const defaultState = {
         proposedDate: new Date(),
         authorizedContacts: [{ name: '', email: '', phone: '' }],
         selectedTier: 'silver',
-        tenants: [{ id: '', companyName: '' }],
+        // Initialize default tenant with tenantDomain
+        tenants: [{ id: '', companyName: '', tenantDomain: '' }],
     },
     emailData: null,
     language: 'en'
@@ -30202,6 +30203,12 @@ const App = () => {
         const companyName = customerInfo.companyName || 'Customer'; // Get company name safely
         const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
         // --- End Automatic Subject ---
+        // --- Determine GDAP Link ---
+        // Use the first tenant by default for the email content
+        const primaryTenant = state.customerInfo.tenants[0];
+        const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
+        const tenantSpecificGdapLink = (primaryTenant === null || primaryTenant === void 0 ? void 0 : primaryTenant.gdapLink) || defaultGdapLink;
+        // --- End Determine GDAP Link ---
         // Create an EmailFormData object with all the collected data
         // Note: EmailFormData type in types.ts might need updating if it doesn't match this structure
         const emailData = Object.assign(Object.assign({ to: emailRecipients.to, cc: emailRecipients.cc, subject: autoSubject }, customerInfo), { 
@@ -30212,7 +30219,7 @@ const App = () => {
                 checked: includeGdap, // Use state variable
                 deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), // Keep defaults for now
                 roles: "Service Support Administrator",
-                link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
+                link: tenantSpecificGdapLink // Use the determined link
             }, rbac: {
                 checked: includeRbac, // Use state variable
                 groups: 'appropriate security groups', // Keep defaults for now - TODO: Read from form input
@@ -30253,8 +30260,10 @@ const App = () => {
         setShowEmailPreview(false);
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container onboarding-container", children: [!showEmailPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__["default"], { selectedLanguage: language, onChange: setLanguage }) })), showEmailPreview && localEmailData ? (
-            // Construct customerInfo object here for generateTemplate
-            (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, customerInfo: getEmailCustomerInfo(), 
+            // Pass the full tenants array to EmailPreview
+            (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, 
+                // customerInfo={getEmailCustomerInfo()} // No longer needed by EmailPreview directly for HTML generation
+                tenants: state.customerInfo.tenants, 
                 // Pass agent details separately as expected by EmailPreview props
                 agentName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName, agentTitle: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle, companyName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName, agentEmail: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail, 
                 // Pass conditional flags and notes to EmailPreview -> generateTemplate
@@ -30467,10 +30476,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/templateGenerator */ "./src/features/emailBuilder/utils/templateGenerator.ts");
-/* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/features/emailBuilder/utils/emailBuilder.ts");
-/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/features/emailBuilder/utils/clipboardUtils.ts");
-/* harmony import */ var _OutlookInstructions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OutlookInstructions */ "./src/features/emailBuilder/components/OutlookInstructions.tsx");
+/* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/features/emailBuilder/utils/emailBuilder.ts");
+/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/features/emailBuilder/utils/clipboardUtils.ts");
+/* harmony import */ var _OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./OutlookInstructions */ "./src/features/emailBuilder/components/OutlookInstructions.tsx");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -30483,12 +30491,13 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 // src/features/emailBuilder/components/EmailPreview.tsx
 
-// Import generateTemplate directly, bypassing emailBuilder for HTML
-
- // Keep for buildEmailBody (plain text)
+// Remove generateTemplate import, use emailBuilder for HTML
 
 
-const EmailPreview = ({ emailData, customerInfo, // Receive customerInfo
+
+const EmailPreview = ({ emailData, 
+// customerInfo, // Remove from destructuring
+tenants, // Add tenants to destructuring
 agentName, agentTitle, companyName, agentEmail, flags, // Destructure flags
 additionalNotes, // Destructure notes
 onBackToEdit }) => {
@@ -30500,21 +30509,19 @@ onBackToEdit }) => {
     // Use the language from emailData, defaulting to English
     const language = (emailData.language || 'en');
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        // Generate HTML using the imported generateTemplate
-        const html = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo, agentName, agentTitle, companyName, agentEmail, flags, // Pass flags to generateTemplate
-        additionalNotes // Pass notes to generateTemplate
-        );
-        // Keep using emailBuilder for plain text for now
-        const text = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_3__["default"].buildEmailBody(emailData);
+        // Generate HTML using emailBuilder.buildEmailHTML, passing tenants
+        const html = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailHTML(emailData, tenants);
+        // Generate plain text using emailBuilder.buildEmailBody, passing tenants
+        const text = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailBody(emailData, tenants);
         setHtmlContent(html);
         setPlainText(text);
-        // Depend on all data used for generation
-    }, [customerInfo, agentName, agentTitle, companyName, agentEmail, flags, additionalNotes, emailData]);
+        // Depend on emailData and tenants
+    }, [emailData, tenants]);
     const handleCopyToClipboard = (contentType) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             if (contentType === 'html') {
                 // Copy with HTML formatting preserved
-                yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_4__.copyFormattedContent)(htmlContent, plainText);
+                yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText);
                 // Show instructions when copying HTML (first time only)
                 const hasSeenInstructions = localStorage.getItem('hasSeenCopyInstructions');
                 if (!hasSeenInstructions) {
@@ -30549,7 +30556,7 @@ onBackToEdit }) => {
     };
     const handleOpenInOutlook = () => {
         // First copy the HTML content to clipboard with enhanced formatting preserved
-        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_4__.copyFormattedContent)(htmlContent, plainText).then(() => {
+        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText).then(() => {
             // Create a mailto URL
             const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
             // Open the default email client
@@ -30576,7 +30583,7 @@ onBackToEdit }) => {
                 return 'English';
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_5__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
                                         (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
@@ -31659,12 +31666,14 @@ const emailBuilder = {
      * Build the plain text version of the email body
      *
      * @param formData - The form data from the UI
+     * @param tenants - Array of tenant information
      * @returns Plain text email content
      */
-    buildEmailBody: function (formData) {
+    buildEmailBody: function (formData, tenants = []) {
         // Get the selected tier and language
         const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
+        const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin"; // Define default link
         // Start with greeting
         let body = this.translate('greeting', language, { name: formData.contactName }) + '\n\n';
         // Introduction
@@ -31726,14 +31735,28 @@ const emailBuilder = {
             body += this.translate('meetingDate', language, { date: formData.meetingDate }) + '\n';
             body += this.translate('meetingAttendees', language) + '\n\n';
         }
-        // GDAP Section
-        if (formData.gdap.checked) {
+        // GDAP Section - Iterate through tenants
+        if (formData.gdap.checked && tenants.length > 0) {
+            tenants.forEach((tenant, index) => {
+                const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+                // Always use tenantDomain in the title
+                const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
+                body += `**${sectionTitle}**\n\n`;
+                body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
+                body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
+                body += this.translate('gdapPermission', language) + '\n\n';
+                body += this.translate('gdapInstruction', language) + '\n';
+                body += tenantGdapLink + '\n\n';
+            });
+        }
+        else if (formData.gdap.checked) {
+            // Fallback if no tenants array provided but GDAP checked (shouldn't happen with App.tsx changes)
             body += `**${this.translate('gdapTitle', language)}**\n\n`;
             body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
             body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
             body += this.translate('gdapPermission', language) + '\n\n';
             body += this.translate('gdapInstruction', language) + '\n';
-            body += formData.gdap.link + '\n\n';
+            body += formData.gdap.link + '\n\n'; // Use link from formData as fallback
         }
         // RBAC Section
         if (formData.rbac.checked) {
@@ -31822,12 +31845,14 @@ const emailBuilder = {
      * Build HTML version of the email with improved clarity and instructions
      *
      * @param formData - The form data from the UI
+     * @param tenants - Array of tenant information
      * @returns HTML formatted email content
      */
-    buildEmailHTML: function (formData) {
+    buildEmailHTML: function (formData, tenants = []) {
         // Get the selected tier and language
         const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
+        const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin"; // Define default link
         // Get tier color
         let tierColor = '';
         switch (formData.selectedTier) {
@@ -32052,11 +32077,14 @@ const emailBuilder = {
                       ${this.translate('meetingAttendees', language)}
                     </p>`;
         }
-        // GDAP Section
-        if (formData.gdap.checked) {
-            const gdapSectionTitle = this.translate('gdapTitle', language);
-            htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(gdapSectionTitle, tierColor);
-            htmlContent += `
+        // GDAP Section - Iterate through tenants
+        if (formData.gdap.checked && tenants.length > 0) {
+            tenants.forEach((tenant, index) => {
+                const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+                // Always use tenantDomain in the title
+                const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
+                htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(sectionTitle, tierColor);
+                htmlContent += `
                     <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
                       ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
                       ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600;">${formData.gdap.roles}</strong>` })}
@@ -32066,6 +32094,34 @@ const emailBuilder = {
                       ${this.translate('gdapPermission', language)}
                     </p>
                     
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                                <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">
+                                ${this.translate('gdapInstruction', language)}
+                                </p>
+                                <p style="margin: 0; text-align: center;">
+                                  <a href="${tenantGdapLink}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
+                                    ${this.translate('gdapLink', language)}
+                                  </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>`;
+            });
+        }
+        else if (formData.gdap.checked) {
+            // Fallback if no tenants array provided but GDAP checked
+            const gdapSectionTitle = this.translate('gdapTitle', language);
+            htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(gdapSectionTitle, tierColor);
+            htmlContent += `
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
+                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600;">${formData.gdap.roles}</strong>` })}
+                    </p>
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('gdapPermission', language)}
+                    </p>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
                         <tr>
                             <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
@@ -32397,317 +32453,17 @@ foreach ($subscription in $subscriptions) {
         };
         return formData;
     },
-    // The enhanced email version - due to length constraints, we'll just reference it
-    // The full implementation would be similar to buildEmailHTML but with improved styling
-    buildEnhancedEmailHTML: function (formData) {
+    // The enhanced email version - needs to accept tenants too
+    buildEnhancedEmailHTML: function (formData, tenants = []) {
         // Implementation similar to buildEmailHTML but with improved styling for better copying
         // Using createImprovedSectionHeader, createImprovedContactsTable, and formatImprovedScriptBlock
         // For brevity, not including the full implementation here
         // This would be similar to the original implementation but using the improved components
-        return this.buildEmailHTML(formData); // Temporarily return standard HTML version
+        // AND including the tenant iteration logic for GDAP
+        return this.buildEmailHTML(formData, tenants); // Temporarily return standard HTML version
     }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (emailBuilder);
-
-
-/***/ }),
-
-/***/ "./src/features/emailBuilder/utils/templateGenerator.ts":
-/*!**************************************************************!*\
-  !*** ./src/features/emailBuilder/utils/templateGenerator.ts ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   generateTemplate: () => (/* binding */ generateTemplate)
-/* harmony export */ });
-/* harmony import */ var _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
-// src/features/emailBuilder/utils/templateGenerator.ts
- // Updated import path
-// --- Constants ---
-// Constants for RBAC Script
-const HELP_DESK_AGENTS_OBJECT_ID = "b6770181-d9f5-4818-b5b1-ea51cd9f66e5";
-const ADMIN_AGENTS_OBJECT_ID = "9a838974-22d3-415b-8136-c790e285afeb";
-const SUPPORT_REQUEST_CONTRIBUTOR_ROLE = "Support Request Contributor";
-const OWNER_ROLE = "Owner";
-const RBAC_POWERSHELL_SCRIPT_TEMPLATE = `
-# Connect to Azure with your tenant ID
-Connect-AzAccount -Tenant "{TENANT_ID}"
-
-# Get all available subscriptions
-$subscriptions = Get-AzSubscription
-
-# Loop through each subscription
-foreach ($subscription in $subscriptions) {
-    # Set the current context to this subscription
-    Set-AzContext -SubscriptionId $subscription.Id
-
-    # Add the ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role to Foreign Principal HelpDeskAgents
-    New-AzRoleAssignment -ObjectID "${HELP_DESK_AGENTS_OBJECT_ID}" -RoleDefinitionName "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
-
-    # Test if the ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role is assigned
-    $supportRole = Get-AzRoleAssignment -ObjectId "${HELP_DESK_AGENTS_OBJECT_ID}" | Where-Object { $_.RoleDefinitionName -eq "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" }
-
-    if ($supportRole) {
-        Write-Host "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role is assigned to Foreign Principal HelpDeskAgents."
-
-        # Test if the ${OWNER_ROLE} role for the Foreign Principal AdminAgents exists
-        $ownerRole = Get-AzRoleAssignment -ObjectId "${ADMIN_AGENTS_OBJECT_ID}" | Where-Object { $_.RoleDefinitionName -eq "${OWNER_ROLE}" }
-
-        if ($ownerRole) {
-            # If the ${OWNER_ROLE} role exists, remove it
-            Remove-AzRoleAssignment -ObjectID "${ADMIN_AGENTS_OBJECT_ID}" -RoleDefinitionName "${OWNER_ROLE}"
-        } else {
-            Write-Host "${OWNER_ROLE} role for Foreign Principal AdminAgents does not exist."
-        }
-    } else {
-        Write-Host "Error: Could not assign ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role for Foreign Principal HelpDeskAgents!"
-    }
-}`;
-// --- Helper Functions for Email Formatting ---
-const _formatScriptBlock = (scriptContent) => {
-    const cleanedScript = scriptContent.trim()
-        .replace(/\t/g, '    ')
-        .replace(/^\s*\n/gm, '');
-    return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0;">
-      <tr>
-        <td style="padding: 0;">
-          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px;">
-            <tr>
-              <td style="padding: 12px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;">
-                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #555; font-weight: 600;">PowerShell Script</span>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 15px; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.45; color: #333; white-space: pre-wrap; word-break: break-all;">
-${cleanedScript}
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>`;
-};
-const _createContactsTable = (contacts) => {
-    let tableRows = '';
-    contacts.forEach((contact, index) => {
-        const bgColor = index % 2 === 0 ? '#f9f9f9' : 'white';
-        tableRows += `
-      <tr style="background-color: ${bgColor};">
-        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.name || ''}</td>
-        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.email || ''}</td>
-        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.phone || ''}</td>
-      </tr>`;
-    });
-    return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0;">
-      <tr style="background-color: #f0f0f0;">
-        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Name</th>
-        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Email</th>
-        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Phone</th>
-      </tr>
-      ${tableRows}
-    </table>`;
-};
-const _formatDate = (date) => {
-    if (date instanceof Date && !isNaN(date.getTime())) {
-        return date.toLocaleDateString('en-US', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
-    return '[DATE TO BE CONFIRMED]';
-};
-// --- Email Section Generators ---
-const _generateHeader = (tier) => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
-    <tr>
-      <td style="padding: 0;">
-        <h2 style="color: ${tier.color}; border-bottom: 1px solid ${tier.color}; padding-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; margin: 0 0 15px 0;">Microsoft Support Onboarding - ${tier.name}</h2>
-      </td>
-    </tr>
-  </table>`;
-const _generateGreeting = (info) => `
-  <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Dear ${info.contactName},</p>`;
-const _generateMeetingProposal = (info, tier) => {
-    const formattedDate = _formatDate(info.proposedDate);
-    return `
-    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong style="font-weight: 600;">${tier.name}</strong> plan.</p>
-    <p style="margin: 0 0 20px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">I propose we meet on <strong style="font-weight: 600;">${formattedDate}</strong> to discuss the following onboarding steps:</p>`;
-};
-const _generateTierDetailsSection = (tier) => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-    <tr>
-      <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">1. Support Tier Selection</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">You have selected the <strong style="font-weight: 600;">${tier.name}</strong> plan which includes:</p>
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 10px 0 15px 0;">
-          <tr>
-            <td style="padding: 0 0 0 20px;">
-              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Support Hours: ${tier.supportHours}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Authorized Contacts: ${tier.authorizedContacts}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Tenants: ${tier.tenants}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Support Requests: ${tier.supportRequestsIncluded}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Critical Situation Support: ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">Yes</span>' : '<span style="color: #d83b01; font-weight: 600;">No</span>'}</td></tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>`;
-const _generateContactsSection = (info, tier) => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-    <tr>
-      <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">2. Authorized Customer Contacts</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Please confirm the following list of contacts authorized to open support requests:</p>
-        ${_createContactsTable(info.authorizedContacts)}
-      </td>
-    </tr>
-  </table>`;
-const _generateTenantSection = (info, tier) => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-    <tr>
-      <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">3. Tenant Microsoft ID Definition</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Your Microsoft Tenant ID: <strong style="font-weight: 600;">${info.tenantId || '<span style="color: #d83b01; font-style: italic;">[PLEASE PROVIDE]</span>'}</strong></p>
-      </td>
-    </tr>
-  </table>`;
-const _generateGdapSection = (tier) => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-    <tr>
-      <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">4. GDAP Link Acceptance</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
-      </td>
-    </tr>
-  </table>`;
-const _generateRbacSection = (info, tier) => {
-    const tenantIdPlaceholder = info.tenantId || 'YOUR_TENANT_ID';
-    const script = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
-    return `
-    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-      <tr>
-        <td style="padding: 0;">
-          <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">5. RBAC Role Establishment</h3>
-          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
-          ${_formatScriptBlock(script)}
-        </td>
-      </tr>
-    </table>`;
-};
-const _generateServiceProviderSection = (tier) => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-    <tr>
-      <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">6. Service Provider Acceptance</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Finally, please add Microsoft Support as a service provider in your conditional access policy to ensure seamless integration with your security protocols.</p>
-      </td>
-    </tr>
-  </table>`;
-// Updated to accept agent details including email
-const _generateClosing = (agentName, agentTitle, companyName, agentEmail) => {
-    const nameLine = agentName || 'Microsoft Support Team'; // Default if not provided
-    const titleLine = agentTitle ? `<br>${agentTitle}` : '';
-    const companyLine = companyName ? `<br>${companyName}` : '';
-    // Use provided agent email or fallback
-    const email = agentEmail || (agentName ? `${agentName.toLowerCase().replace(' ', '.')}@${(companyName === null || companyName === void 0 ? void 0 : companyName.toLowerCase()) || 'microsoft.com'}` : 'support@microsoft.com');
-    const mailtoLink = `mailto:${email}`;
-    return `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 30px;">
-    <tr>
-      <td style="padding: 0;">
-        <p style="margin: 0 0 10px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Looking forward to our meeting and to supporting your organization.</p>
-        <p style="margin: 20px 0 5px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">
-          Best regards,<br>
-          ${nameLine}
-          ${titleLine}
-          ${companyLine}
-          <br><a href="${mailtoLink}" style="color: #0078D4; text-decoration: none;">${email}</a>
-        </p>
-      </td>
-    </tr>
-  </table>`;
-};
-// --- Add new section generator for Additional Notes ---
-const _generateAdditionalNotesSection = (notes, tier) => {
-    // Process line breaks
-    const formattedNotes = notes.replace(/\n/g, '<br>');
-    return `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
-    <tr>
-      <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">Additional Notes</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-          ${formattedNotes}
-        </p>
-      </td>
-    </tr>
-  </table>`;
-};
-const _generateFooter = () => `
-  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 30px; border-top: 1px solid #ddd;">
-    <tr>
-      <td style="padding: 10px 0 0 0;">
-        <p style="margin: 0; font-size: 12px; color: #666; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">This is an automated message generated by the Microsoft Onboarding Template Generator.</p>
-      </td>
-    </tr>
-  </table>`;
-// Updated signature to accept agent details and flags
-const generateTemplate = (info, agentName, agentTitle, companyName, agentEmail, flags, // Add flags parameter
-additionalNotes // Add notes parameter
-) => {
-    // Ensure selectedTier is valid, default if not
-    const validTierKey = info.selectedTier in _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers ? info.selectedTier : Object.keys(_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers)[0];
-    const tier = _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[validTierKey];
-    return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Outlook specific styles -->
-  <!--[if mso]>
-  <style type="text/css">
-    body, table, td, th, div, p, h1, h2, h3, h4, h5, h6 {font-family: 'Segoe UI', Arial, sans-serif !important;}
-    table {border-collapse: collapse;}
-    .mso-button { padding: 12px 30px; background-color: ${tier.color}; color: white; text-decoration: none; font-weight: bold; display: inline-block; }
-  </style>
-  <![endif]-->
-</head>
-<body>
-  <div style="max-width: 700px; margin: 0 auto; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; color: #333;">
-    ${_generateHeader(tier)}
-    ${_generateGreeting(info)}
-    ${_generateMeetingProposal(info, tier)}
-    ${_generateTierDetailsSection(tier)}
-    ${_generateContactsSection(info, tier)}
-    ${_generateTenantSection(info, tier)}
-    ${ /* Conditionally render sections based on flags */''}
-    ${(flags === null || flags === void 0 ? void 0 : flags.includeGdap) ? _generateGdapSection(tier) : ''}
-    ${(flags === null || flags === void 0 ? void 0 : flags.includeRbac) ? _generateRbacSection(info, tier) : ''}
-    ${(flags === null || flags === void 0 ? void 0 : flags.includeConditionalAccess) ? _generateServiceProviderSection(tier) : ''}
-    ${ /* Conditionally render notes */''}
-    ${(flags === null || flags === void 0 ? void 0 : flags.includeNotes) && additionalNotes ? _generateAdditionalNotesSection(additionalNotes, tier) : ''}
-    ${_generateClosing(agentName, agentTitle, companyName, agentEmail)}
-    ${_generateFooter()}
-  </div>
-</body>
-</html>`;
-};
-// Exporting the main function if needed elsewhere, otherwise internal helpers are sufficient
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-    generateTemplate
-});
 
 
 /***/ }),
@@ -33248,8 +33004,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
-const TenantForm = ({ tenantId, companyName, onChange }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "3. Tenant Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "company-name", children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "company-name", type: "text", value: companyName, onChange: (e) => onChange('companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "tenant-id", children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "tenant-id", type: "text", value: tenantId, onChange: (e) => onChange('tenantId', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }));
+const TenantForm = ({ tenantId, companyName, gdapLink, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "company-name", children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "company-name", type: "text", value: companyName, onChange: (e) => onChange('companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "tenant-id", children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "tenant-id", type: "text", value: tenantId, onChange: (e) => onChange('tenantId', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-link", children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-link", type: "url" // Use URL type for better validation
+                        , value: gdapLink || '', onChange: (e) => onChange('gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantForm);
 
@@ -33272,16 +33029,21 @@ __webpack_require__.r(__webpack_exports__);
 
 const TenantManager = ({ tenants, selectedTier, onChange }) => {
     const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers[selectedTier];
-    // Handle tenant field changes
+    // Handle tenant field changes, including gdapLink
     const handleTenantChange = (index, field, value) => {
-        const updatedTenants = [...tenants];
-        updatedTenants[index] = Object.assign(Object.assign({}, updatedTenants[index]), { [field]: value });
+        const updatedTenants = tenants.map((tenant, i) => {
+            if (i === index) {
+                return Object.assign(Object.assign({}, tenant), { [field]: value });
+            }
+            return tenant;
+        });
         onChange(updatedTenants);
     };
-    // Add a new tenant
+    // Add a new tenant, initializing tenantDomain and gdapLink
     const addTenant = () => {
         if (tenants.length < tier.tenants) {
-            onChange([...tenants, { id: '', companyName: '' }]);
+            // Initialize tenantDomain as empty string
+            onChange([...tenants, { id: '', companyName: '', tenantDomain: '', gdapLink: '' }]);
         }
     };
     // Remove a tenant
@@ -33290,7 +33052,7 @@ const TenantManager = ({ tenants, selectedTier, onChange }) => {
         updatedTenants.splice(index, 1);
         onChange(updatedTenants);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }, index))), tenants.length < tier.tenants && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addTenant, children: "Add Tenant" }))] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-domain-${index}`, children: "Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-domain-${index}`, type: "text", value: tenant.tenantDomain, onChange: (e) => handleTenantChange(index, 'tenantDomain', e.target.value), placeholder: "contoso.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The primary domain name (e.g., contoso.onmicrosoft.com)." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `gdap-link-${index}`, children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `gdap-link-${index}`, type: "url", value: tenant.gdapLink || '', onChange: (e) => handleTenantChange(index, 'gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }, index))), tenants.length < tier.tenants && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addTenant, children: "Add Tenant" }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantManager);
 

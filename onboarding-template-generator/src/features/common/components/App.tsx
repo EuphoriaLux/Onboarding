@@ -164,6 +164,12 @@ const App: React.FC = () => {
     const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
     // --- End Automatic Subject ---
 
+    // --- Determine GDAP Link ---
+    // Use the first tenant by default for the email content
+    const primaryTenant = state.customerInfo.tenants[0];
+    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
+    const tenantSpecificGdapLink = primaryTenant?.gdapLink || defaultGdapLink;
+    // --- End Determine GDAP Link ---
 
     // Create an EmailFormData object with all the collected data
     // Note: EmailFormData type in types.ts might need updating if it doesn't match this structure
@@ -180,7 +186,7 @@ const App: React.FC = () => {
         checked: includeGdap, // Use state variable
         deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), // Keep defaults for now
         roles: "Service Support Administrator",
-        link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
+        link: tenantSpecificGdapLink // Use the determined link
       },
       rbac: {
         checked: includeRbac, // Use state variable
@@ -244,10 +250,11 @@ const App: React.FC = () => {
       )}
 
       {showEmailPreview && localEmailData ? (
-        // Construct customerInfo object here for generateTemplate
+        // Pass the full tenants array to EmailPreview
         <EmailPreview
           emailData={localEmailData} // Contains subject, recipients, sender details etc.
-          customerInfo={getEmailCustomerInfo()} // Pass the constructed CustomerInfo object
+          // customerInfo={getEmailCustomerInfo()} // No longer needed by EmailPreview directly for HTML generation
+          tenants={state.customerInfo.tenants} // Pass the full tenants array
           // Pass agent details separately as expected by EmailPreview props
           agentName={agentSettings?.agentName}
           agentTitle={agentSettings?.agentTitle}

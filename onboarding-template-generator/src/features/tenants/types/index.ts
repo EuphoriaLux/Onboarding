@@ -9,6 +9,8 @@
 export interface TenantInfo {
     id: string;  // Microsoft Tenant ID
     companyName: string;
+    tenantDomain: string; // Added tenant domain
+    gdapLink?: string; // Optional GDAP link specific to this tenant
   }
   
   /**
@@ -26,5 +28,6 @@ export interface TenantInfo {
   export interface TenantFormProps {
     tenantId: string;
     companyName: string;
+    tenantDomain: string; // Added tenant domain
     onChange: (field: string, value: string) => void;
   }

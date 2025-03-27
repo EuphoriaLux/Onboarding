@@ -1,16 +1,16 @@
 // src/features/emailBuilder/components/EmailPreview.tsx
 import React, { useState, useEffect } from 'react';
-import { EmailFormData, Language, CustomerInfo } from '../utils/types'; // Added CustomerInfo
-// Import generateTemplate directly, bypassing emailBuilder for HTML
-import { generateTemplate } from '../utils/templateGenerator';
-import emailBuilder from '../utils/emailBuilder'; // Keep for buildEmailBody (plain text)
+import { EmailFormData, Language, CustomerInfo } from '../utils/types';
+import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
+// Remove generateTemplate import, use emailBuilder for HTML
+import emailBuilder from '../utils/emailBuilder';
 import { copyFormattedContent } from '../utils/clipboardUtils';
 import OutlookInstructions from './OutlookInstructions';
 
 interface EmailPreviewProps {
-  // Keep emailData for subject, recipients etc. but add specific props for generateTemplate
   emailData: EmailFormData; // Contains subject, recipients, sender details etc.
-  customerInfo: CustomerInfo; // Contains data needed by generateTemplate
+  // customerInfo: CustomerInfo; // No longer needed directly here
+  tenants: TenantInfo[]; // Add tenants prop
   agentName?: string;
   agentTitle?: string;
   companyName?: string; // Agent's company
@@ -27,7 +27,8 @@ interface EmailPreviewProps {
 
 const EmailPreview: React.FC<EmailPreviewProps> = ({
   emailData,
-  customerInfo, // Receive customerInfo
+  // customerInfo, // Remove from destructuring
+  tenants, // Add tenants to destructuring
   agentName,
   agentTitle,
   companyName,
@@ -46,24 +47,16 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
   const language = (emailData.language || 'en') as Language;
 
   useEffect(() => {
-    // Generate HTML using the imported generateTemplate
-    const html = generateTemplate(
-      customerInfo,
-      agentName,
-      agentTitle,
-      companyName,
-      agentEmail,
-      flags, // Pass flags to generateTemplate
-      additionalNotes // Pass notes to generateTemplate
-    );
+    // Generate HTML using emailBuilder.buildEmailHTML, passing tenants
+    const html = emailBuilder.buildEmailHTML(emailData, tenants);
 
-    // Keep using emailBuilder for plain text for now
-    const text = emailBuilder.buildEmailBody(emailData);
+    // Generate plain text using emailBuilder.buildEmailBody, passing tenants
+    const text = emailBuilder.buildEmailBody(emailData, tenants);
 
     setHtmlContent(html);
     setPlainText(text);
-    // Depend on all data used for generation
-  }, [customerInfo, agentName, agentTitle, companyName, agentEmail, flags, additionalNotes, emailData]);
+    // Depend on emailData and tenants
+  }, [emailData, tenants]);
 
   const handleCopyToClipboard = async (contentType: 'html' | 'text') => {
     try {

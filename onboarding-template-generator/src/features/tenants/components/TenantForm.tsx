@@ -4,13 +4,15 @@ import React from 'react';
 interface TenantFormProps {
   tenantId: string;
   companyName: string;
+  gdapLink?: string; // Add optional gdapLink prop
   onChange: (field: string, value: string) => void;
 }
 
-const TenantForm: React.FC<TenantFormProps> = ({ tenantId, companyName, onChange }) => {
+const TenantForm: React.FC<TenantFormProps> = ({ tenantId, companyName, gdapLink, onChange }) => {
   return (
     <div className="tenant-form">
-      <h2>3. Tenant Information</h2>
+      {/* Keep h2 if this form is standalone, remove if TenantManager provides it */}
+      {/* <h2>3. Tenant Information</h2> */}
       
       <div className="form-group">
         <label htmlFor="company-name">Company Name</label>
@@ -36,6 +38,21 @@ const TenantForm: React.FC<TenantFormProps> = ({ tenantId, companyName, onChange
         />
         <small className="form-text">
           Format: 00000000-0000-0000-0000-000000000000
+        </small>
+      </div>
+
+      {/* Add GDAP Link Input */}
+      <div className="form-group">
+        <label htmlFor="gdap-link">Tenant-Specific GDAP Link (Optional)</label>
+        <input
+          id="gdap-link"
+          type="url" // Use URL type for better validation
+          value={gdapLink || ''}
+          onChange={(e) => onChange('gdapLink', e.target.value)}
+          placeholder="https://partner.microsoft.com/..."
+        />
+         <small className="form-text">
+          If provided, this link will be used for this tenant. Otherwise, a default link will be used.
         </small>
       </div>
       

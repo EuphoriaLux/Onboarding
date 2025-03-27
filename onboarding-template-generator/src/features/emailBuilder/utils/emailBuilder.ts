@@ -1,6 +1,7 @@
 // src/features/emailBuilder/utils/emailBuilder.ts - Fix import
 import { supportTiers } from '../../supportTiers/constants';
 import { CustomerInfo, EmailFormData, Language } from './types';
+import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
 import { getTranslation } from './translationService';
 import {
   createSectionHeader,
@@ -39,12 +40,14 @@ const emailBuilder = {
    * Build the plain text version of the email body
    * 
    * @param formData - The form data from the UI
+   * @param tenants - Array of tenant information
    * @returns Plain text email content
    */
-  buildEmailBody: function(formData: EmailFormData): string {
+  buildEmailBody: function(formData: EmailFormData, tenants: TenantInfo[] = []): string { // Add tenants param
     // Get the selected tier and language
     const tier = supportTiers[formData.selectedTier];
     const language = (formData.language || 'en') as Language;
+    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin"; // Define default link
     
     // Start with greeting
     let body = this.translate('greeting', language, { name: formData.contactName }) + '\n\n';
@@ -123,16 +126,28 @@ const emailBuilder = {
       body += this.translate('meetingAttendees', language) + '\n\n';
     }
     
-    // GDAP Section
-    if (formData.gdap.checked) {
-      body += `**${this.translate('gdapTitle', language)}**\n\n`;
-      
-      body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
-      body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
-      body += this.translate('gdapPermission', language) + '\n\n';
-      
-      body += this.translate('gdapInstruction', language) + '\n';
-      body += formData.gdap.link + '\n\n';
+    // GDAP Section - Iterate through tenants
+    if (formData.gdap.checked && tenants.length > 0) {
+      tenants.forEach((tenant, index) => {
+        const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+        // Always use tenantDomain in the title
+        const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
+
+        body += `**${sectionTitle}**\n\n`;
+        body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
+        body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
+        body += this.translate('gdapPermission', language) + '\n\n';
+        body += this.translate('gdapInstruction', language) + '\n';
+        body += tenantGdapLink + '\n\n';
+      });
+    } else if (formData.gdap.checked) {
+        // Fallback if no tenants array provided but GDAP checked (shouldn't happen with App.tsx changes)
+        body += `**${this.translate('gdapTitle', language)}**\n\n`;
+        body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
+        body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
+        body += this.translate('gdapPermission', language) + '\n\n';
+        body += this.translate('gdapInstruction', language) + '\n';
+        body += formData.gdap.link + '\n\n'; // Use link from formData as fallback
     }
     
     // RBAC Section
@@ -237,12 +252,14 @@ const emailBuilder = {
    * Build HTML version of the email with improved clarity and instructions
    * 
    * @param formData - The form data from the UI
+   * @param tenants - Array of tenant information
    * @returns HTML formatted email content
    */
-  buildEmailHTML: function(formData: EmailFormData): string {
+  buildEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = []): string { // Add tenants param
     // Get the selected tier and language
     const tier = supportTiers[formData.selectedTier];
     const language = (formData.language || 'en') as Language;
+    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin"; // Define default link
     
     // Get tier color
     let tierColor = '';
@@ -468,11 +485,15 @@ const emailBuilder = {
                     </p>`;
     }
     
-    // GDAP Section
-    if (formData.gdap.checked) {
-        const gdapSectionTitle = this.translate('gdapTitle', language);
-        htmlContent += createSectionHeader(gdapSectionTitle, tierColor);
-        
+    // GDAP Section - Iterate through tenants
+    if (formData.gdap.checked && tenants.length > 0) {
+      tenants.forEach((tenant, index) => {
+        const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+        // Always use tenantDomain in the title
+        const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
+
+        htmlContent += createSectionHeader(sectionTitle, tierColor);
+
         htmlContent += `
                     <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
                       ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
@@ -483,6 +504,33 @@ const emailBuilder = {
                       ${this.translate('gdapPermission', language)}
                     </p>
                     
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
+                        <tr>
+                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                                <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">
+                                ${this.translate('gdapInstruction', language)}
+                                </p>
+                                <p style="margin: 0; text-align: center;">
+                                  <a href="${tenantGdapLink}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
+                                    ${this.translate('gdapLink', language)}
+                                  </a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>`;
+      });
+    } else if (formData.gdap.checked) {
+        // Fallback if no tenants array provided but GDAP checked
+        const gdapSectionTitle = this.translate('gdapTitle', language);
+        htmlContent += createSectionHeader(gdapSectionTitle, tierColor);
+        htmlContent += `
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
+                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600;">${formData.gdap.roles}</strong>` })}
+                    </p>
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      ${this.translate('gdapPermission', language)}
+                    </p>
                     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
                         <tr>
                             <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
@@ -851,16 +899,16 @@ foreach ($subscription in $subscriptions) {
     return formData;
   },
   
-  // The enhanced email version - due to length constraints, we'll just reference it
-  // The full implementation would be similar to buildEmailHTML but with improved styling
-  buildEnhancedEmailHTML: function(formData: EmailFormData): string {
+  // The enhanced email version - needs to accept tenants too
+  buildEnhancedEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = []): string {
     // Implementation similar to buildEmailHTML but with improved styling for better copying
     // Using createImprovedSectionHeader, createImprovedContactsTable, and formatImprovedScriptBlock
     
     // For brevity, not including the full implementation here
     // This would be similar to the original implementation but using the improved components
+    // AND including the tenant iteration logic for GDAP
     
-    return this.buildEmailHTML(formData); // Temporarily return standard HTML version
+    return this.buildEmailHTML(formData, tenants); // Temporarily return standard HTML version
   }
 };
 
