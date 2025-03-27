@@ -10,6 +10,7 @@ export interface TenantInfo {
     id: string;  // Microsoft Tenant ID
     companyName: string;
     tenantDomain: string; // Added tenant domain
+    microsoftTenantDomain: string; // Added MS domain (.onmicrosoft.com)
     implementationDeadline: Date | null; // Added implementation deadline
     hasAzure: boolean; // Added flag for Azure relevance
     includeRbacScript: boolean; // Added flag for including RBAC script
@@ -32,6 +33,7 @@ export interface TenantInfo {
     tenantId: string;
     companyName: string;
     tenantDomain: string; // Added tenant domain
+    microsoftTenantDomain: string; // Added MS domain (.onmicrosoft.com)
     implementationDeadline: Date | null; // Added implementation deadline
     hasAzure: boolean; // Added flag for Azure relevance
     includeRbacScript: boolean; // Added flag for including RBAC script

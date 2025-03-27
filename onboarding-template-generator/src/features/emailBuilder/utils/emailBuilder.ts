@@ -117,7 +117,7 @@ const emailBuilder = {
       // GDAP Link & Deadline Section (Per Tenant)
       const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
       const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
-      body += `**${gdapSectionTitle}**\n\n`;
+      body += `\n---\n**${gdapSectionTitle}**\n\n`; // Added separator
       body += this.translate('gdapPermission', language) + '\n\n';
       body += this.translate('gdapInstruction', language) + '\n';
       body += tenantGdapLink + '\n\n';
@@ -129,10 +129,8 @@ const emailBuilder = {
       if (tenant.hasAzure) {
         const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
         body += `**${rbacSectionTitle}**\n\n`;
-        // Assuming rbacIntro and permissions are still relevant conceptually, but might need adjustment
-        // For now, keeping a generic intro. TODO: Revisit if specific group/permission text is needed per tenant.
         body += this.translate('rbacIntro', language, { groups: 'relevant security groups' }) + ' ';
-        body += this.translate('rbacPermissionAzure', language) + '\n\n'; // Assuming Azure permission if hasAzure is true
+        body += this.translate('rbacPermissionAzure', language) + '\n\n';
 
         if (tenant.includeRbacScript) {
           body += this.translate('rbacInstruction', language) + '\n\n';
@@ -144,24 +142,23 @@ const emailBuilder = {
           body += `2. ${this.translate('rbacStep2', language)}\n`;
           body += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
 
-          // Use tenant.id in the script
           const rbacScript = `# Connect to the correct tenant
 Connect-AzAccount -TenantID ${tenant.id} # Using tenant-specific ID
 
 # Define the domain if needed elsewhere in script (Example placeholder)
-# $tenantDomain = "${tenant.tenantDomain}" 
+# $tenantDomain = "${tenant.tenantDomain}"
 
 $subscriptions = Get-AzSubscription
 foreach ($subscription in $subscriptions) {
-    Set-AzContext -SubscriptionId $subscription.Id 
+    Set-AzContext -SubscriptionId $subscription.Id
     # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
-    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue 
+    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
     # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
-    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" }
     if ($supportRole) {
-        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'." 
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'."
         # Test if the Owner role for the Foreign Principal AdminAgents exists:
-        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" }
         if ($ownerRole) {
             # If the Owner role for Foreign Principal AdminAgents exists, remove it:
             Write-Host "Removing Owner role for Foreign Principal AdminAgents from subscription '$($subscription.Name)'..."
@@ -177,26 +174,18 @@ foreach ($subscription in $subscriptions) {
           body += this.translate('rbacScreenshot', language) + '\n\n';
         }
       }
+      body += "---\n"; // Added separator
     });
     // --- End Tenant Specific Sections ---
 
     // Conditional Access Section (Remains Global for now)
-    // TODO: Determine if this should also become tenant-specific
     if (formData.conditionalAccess.checked) {
       body += `**${this.translate('conditionalAccessTitle', language)}**\n\n`;
       body += this.translate('conditionalAccessIntro', language) + '\n\n';
-      if (formData.conditionalAccess.mfa) {
-        body += `• ${this.translate('mfaPolicy', language)}\n`;
-      }
-      if (formData.conditionalAccess.location) {
-        body += `• ${this.translate('locationPolicy', language)}\n`;
-      }
-      if (formData.conditionalAccess.device) {
-        body += `• ${this.translate('devicePolicy', language)}\n`;
-      }
-      if (formData.conditionalAccess.signIn) {
-        body += `• ${this.translate('signInPolicy', language)}\n`;
-      }
+      if (formData.conditionalAccess.mfa) { body += `• ${this.translate('mfaPolicy', language)}\n`; }
+      if (formData.conditionalAccess.location) { body += `• ${this.translate('locationPolicy', language)}\n`; }
+      if (formData.conditionalAccess.device) { body += `• ${this.translate('devicePolicy', language)}\n`; }
+      if (formData.conditionalAccess.signIn) { body += `• ${this.translate('signInPolicy', language)}\n`; }
       body += '\n';
     }
 
@@ -244,6 +233,21 @@ foreach ($subscription in $subscriptions) {
       company: formData.companyName
     });
 
+    // Define common styles for Outlook compatibility
+    const bodyStyle = "margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #ffffff;";
+    const containerStyle = "max-width: 800px; margin: 0 auto; padding: 20px;";
+    const pStyle = "margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;";
+    const tableStyle = "border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"; // For Outlook
+    const sectionHeaderStyle = `padding: 14px 18px; text-align: center; font-family: 'Segoe UI', Arial, sans-serif; color: white; font-size: 18px; font-weight: 600;`;
+    const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px;`;
+    const sectionBoxCellStyle = `padding: 18px 20px;`;
+    const listItemStyle = `padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;`;
+    const bulletStyle = `display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px; vertical-align: middle;`; // Added vertical-align
+    const strongStyle = `font-weight: 600; color: #333;`;
+    const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;`;
+    const deadlineHighlightStyle = `margin: 15px 0 0 0; text-align: center; font-size: 14px; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;`; // Yellow background
+    const deadlineStrongStyle = `font-weight: 600; color: #333;`; // Changed deadline text color for better contrast on yellow
+
     let htmlContent = `<!DOCTYPE html>
 <html>
 <head>
@@ -259,17 +263,19 @@ foreach ($subscription in $subscriptions) {
       </o:OfficeDocumentSettings>
     </xml>
     <style type="text/css">
-      table {border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;}
+      table {${tableStyle}}
       h1, h2, h3, h4, h5, h6, p, div, span {font-family: 'Segoe UI', Arial, sans-serif;}
       .mso-text-raise-4 {mso-text-raise: 4pt;}
       .mso-text-raise-7 {mso-text-raise: 7pt;}
+      /* Add specific Outlook fixes if needed */
     </style>
     <![endif]-->
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #ffffff;">
-    <div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+<body style="${bodyStyle}">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} background-color: #ffffff;"><tr><td> <!-- Email Wrapper Table -->
+    <div style="${containerStyle}">
         <!-- Email Header -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 30px; border-bottom: 1px solid #eee;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-bottom: 30px; border-bottom: 1px solid #eee;">
             <tr>
                 <td style="padding: 0 0 20px 0;">
                     <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333; font-family: 'Segoe UI', Arial, sans-serif;">
@@ -278,104 +284,109 @@ foreach ($subscription in $subscriptions) {
                     </h1>
                 </td>
             </tr>
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">To:</strong> ${formData.to}</td></tr>
-            ${formData.cc ? `<tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">Cc:</strong> ${formData.cc}</td></tr>` : ''}
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">Subject:</strong> ${subject}</td></tr>
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">Date:</strong> ${formData.currentDate}</td></tr>
+            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">To:</strong> ${formData.to}</td></tr>
+            ${formData.cc ? `<tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Cc:</strong> ${formData.cc}</td></tr>` : ''}
+            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Subject:</strong> ${subject}</td></tr>
+            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Date:</strong> ${formData.currentDate}</td></tr>
         </table>
 
         <!-- Email Body -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}">
             <tr>
                 <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('greeting', language, { name: formData.contactName })}</p>
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('intro1', language, { company: formData.senderCompany, clientCompany: formData.companyName })}</p>
+                    <p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>
+                    <p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany, clientCompany: formData.companyName })}</p>
                     <p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('intro2', language, { tier: tier.name })}</p>`;
 
     // Support Plan Section
     htmlContent += `<!-- Support Plan Section -->
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 5px; background-color: ${tierColor}; border-radius: 4px;"><tr><td style="padding: 14px 18px; text-align: center; font-family: 'Segoe UI', Arial, sans-serif;"><h2 style="margin: 0; padding: 0; color: white; font-size: 18px; font-weight: 600;">${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}</h2></td></tr></table>
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-bottom: 5px; background-color: ${tierColor}; border-radius: 4px;"><tr><td style="${sectionHeaderStyle}">${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}</h2></td></tr></table>
                     <p style="margin: 25px 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('supportPlanIntro', language, { tier: tier.name, supportType: formData.selectedTier === 'bronze' ? this.translate('supportType.bronze', language) : this.translate('supportType.other', language) })}</p>
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 18px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('supportTypeLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</td></tr>
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('supportHoursLabel', language)}</strong> ${tier.supportHours}</td></tr>
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('severityLevelsLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</td></tr>
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('contactsLabel', language)}</strong> ${tier.authorizedContacts}</td></tr>
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('tenantsLabel', language)}</strong> ${tier.tenants}</td></tr>
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('requestsLabel', language)}</strong> ${tier.supportRequestsIncluded}</td></tr>
-                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('criticalLabel', language)}</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</td></tr>
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${sectionBoxStyle}"><tr><td style="${sectionBoxCellStyle}"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}">
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportTypeLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</td></tr>
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}</strong> ${tier.supportHours}</td></tr>
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</td></tr>
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}</strong> ${tier.authorizedContacts}</td></tr>
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}</strong> ${tier.tenants}</td></tr>
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}</strong> ${tier.supportRequestsIncluded}</td></tr>
+                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</td></tr>
                     </table></td></tr></table>`;
 
     // Authorized Contacts Section
     if (formData.authorizedContacts.checked) {
         const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
-        htmlContent += createSectionHeader(contactsSectionTitle, tierColor);
-        htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>
-                       <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('contactsRolesIntro', language, { roles: `<strong style="font-weight: 600;">${formData.authorizedContacts.roles}</strong>` })}</p>
-                       <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('contactsInstruction', language)}</p>
-                       ${createContactsTable(tier.authorizedContacts, language)}`;
+        htmlContent += createSectionHeader(contactsSectionTitle, tierColor); // Assuming createSectionHeader uses tables/inline styles
+        htmlContent += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>
+                       <p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>
+                       <p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>
+                       ${createContactsTable(tier.authorizedContacts, language)}`; // Assuming this component is Outlook-friendly
     }
 
     // Meeting Section
     if (formData.meetingDate) {
         const meetingSectionTitle = this.translate('meetingTitle', language);
         htmlContent += createSectionHeader(meetingSectionTitle, tierColor);
-        htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('meetingIntro', language)}</p>
-                       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;"><strong style="font-weight: 600; color: #333;">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4;">${formData.meetingDate}</span>` })}</strong></td></tr></table>
+        htmlContent += `<p style="${pStyle}">${this.translate('meetingIntro', language)}</p>
+                       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;"><strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4;">${formData.meetingDate}</span>` })}</strong></td></tr></table>
                        <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('meetingAttendees', language)}</p>`;
     }
 
     // --- Tenant Specific Sections ---
-    tenants.forEach((tenant, index) => {
-      const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
+    // Wrap tenant sections in a container table row for background color
+    if (tenants.length > 0) {
+        htmlContent += `<tr><td style="padding-top: 15px;"><!-- Tenant Sections Start -->`; // Add padding above tenant sections
+        tenants.forEach((tenant, index) => {
+            const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
+            const tenantBgColor = '#f8f8f8'; // Light grey background
 
-      // GDAP Link & Deadline Section (Per Tenant)
-      const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-      const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
-      htmlContent += createSectionHeader(gdapSectionTitle, tierColor);
-      htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('gdapPermission', language)}</p>
-                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">${this.translate('gdapInstruction', language)}</p>
-                      <p style="margin: 0; text-align: center;"><a href="${tenantGdapLink}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">${this.translate('gdapLink', language)}</a></p>`;
-      if (tenant.implementationDeadline) {
-        htmlContent += `<p style="margin: 15px 0 0 0; text-align: center; font-size: 14px; color: #d83b01; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;"><strong style="font-weight: 600;">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</p>`;
-      }
-      htmlContent += `</td></tr></table>`;
+            htmlContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-bottom: 20px; background-color: ${tenantBgColor}; border: 1px solid #ddd; border-radius: 4px;"><tr><td style="padding: 20px;">`; // Table for grey background
 
-      // RBAC Section (Per Tenant, if hasAzure is true)
-      if (tenant.hasAzure) {
-        const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
-        htmlContent += createSectionHeader(rbacSectionTitle, tierColor);
-        htmlContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`; // Simplified intro
+            // GDAP Link & Deadline Section (Per Tenant)
+            const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+            const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
+            htmlContent += createSectionHeader(gdapSectionTitle, tierColor); // Use existing header component
+            htmlContent += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; text-align: center;">
+                            <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">${this.translate('gdapInstruction', language)}</p>
+                            <a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
+            if (tenant.implementationDeadline) {
+                htmlContent += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`; // Use span for inline-block highlight
+            }
+            htmlContent += `</td></tr></table>`;
 
-        if (tenant.includeRbacScript) {
-          htmlContent += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
-          htmlContent += createStepIndicator(1, this.translate('rbacStep1', language));
-          htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
-          htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`;
-          htmlContent += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
-          htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock('Update-Module Az.Resources -Force', language)}</div>`;
-          htmlContent += createStepIndicator(2, this.translate('rbacStep2', language));
-          htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
+            // RBAC Section (Per Tenant, if hasAzure is true)
+            if (tenant.hasAzure) {
+                const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
+                htmlContent += createSectionHeader(rbacSectionTitle, tierColor);
+                htmlContent += `<p style="${pStyle}">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`;
 
-          // Use tenant.id in the script
-          const rbacScript = `# Connect to the correct tenant
+                if (tenant.includeRbacScript) {
+                    htmlContent += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
+                    htmlContent += createStepIndicator(1, this.translate('rbacStep1', language)); // Assuming this uses tables/inline styles
+                    htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
+                    htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`; // Assuming this uses tables/inline styles
+                    htmlContent += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
+                    htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock('Update-Module Az.Resources -Force', language)}</div>`;
+                    htmlContent += createStepIndicator(2, this.translate('rbacStep2', language));
+                    htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
+
+                    const rbacScript = `# Connect to the correct tenant
 Connect-AzAccount -TenantID ${tenant.id} # Using tenant-specific ID
 
 # Define the domain if needed elsewhere in script (Example placeholder)
-# $tenantDomain = "${tenant.tenantDomain}" 
+# $tenantDomain = "${tenant.tenantDomain}"
 
 $subscriptions = Get-AzSubscription
 foreach ($subscription in $subscriptions) {
-    Set-AzContext -SubscriptionId $subscription.Id 
+    Set-AzContext -SubscriptionId $subscription.Id
     # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
-    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue 
+    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
     # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
-    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" }
     if ($supportRole) {
-        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'." 
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'."
         # Test if the Owner role for the Foreign Principal AdminAgents exists:
-        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" }
         if ($ownerRole) {
             # If the Owner role for Foreign Principal AdminAgents exists, remove it:
             Write-Host "Removing Owner role for Foreign Principal AdminAgents from subscription '$($subscription.Name)'..."
@@ -387,23 +398,26 @@ foreach ($subscription in $subscriptions) {
         Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents in subscription '$($subscription.Name)'!"
     }
 }`;
-          htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock(rbacScript, language)}</div>`;
-          htmlContent += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
-        }
-      }
-    });
+                    htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock(rbacScript, language)}</div>`;
+                    htmlContent += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
+                }
+            }
+            htmlContent += `</td></tr></table>`; // End grey background table for tenant
+        });
+        htmlContent += `</td></tr><!-- Tenant Sections End -->`;
+    }
     // --- End Tenant Specific Sections ---
 
     // Conditional Access Section (Remains Global)
     if (formData.conditionalAccess.checked) {
         const caSectionTitle = this.translate('conditionalAccessTitle', language);
         htmlContent += createSectionHeader(caSectionTitle, tierColor);
-        htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('conditionalAccessIntro', language)}</p>
-                       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0 0 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">`;
-        if (formData.conditionalAccess.mfa) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('mfaPolicy', language)}</span></td></tr>`; }
-        if (formData.conditionalAccess.location) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('locationPolicy', language)}</span></td></tr>`; }
-        if (formData.conditionalAccess.device) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('devicePolicy', language)}</span></td></tr>`; }
-        if (formData.conditionalAccess.signIn) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('signInPolicy', language)}</span></td></tr>`; }
+        htmlContent += `<p style="${pStyle}">${this.translate('conditionalAccessIntro', language)}</p>
+                       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 0 0 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}">`;
+        if (formData.conditionalAccess.mfa) { htmlContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('mfaPolicy', language)}</span></td></tr>`; }
+        if (formData.conditionalAccess.location) { htmlContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('locationPolicy', language)}</span></td></tr>`; }
+        if (formData.conditionalAccess.device) { htmlContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('devicePolicy', language)}</span></td></tr>`; }
+        if (formData.conditionalAccess.signIn) { htmlContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('signInPolicy', language)}</span></td></tr>`; }
         htmlContent += `</table></td></tr></table>`;
     }
 
@@ -417,12 +431,13 @@ foreach ($subscription in $subscriptions) {
 
     // Closing and Footer
     htmlContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('closing', language)}</p>
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px;"><tr><td style="padding: 0;"><p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('regards', language)}</p><p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;"><strong style="font-weight: 600;">${formData.senderName}</strong><br>${formData.senderTitle}<br>${formData.senderCompany}<br>${formData.senderContact || ''}</p></td></tr></table>
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-top: 40px;"><tr><td style="padding: 0;"><p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('regards', language)}</p><p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;"><strong style="${strongStyle}">${formData.senderName}</strong><br>${formData.senderTitle}<br>${formData.senderCompany}<br>${formData.senderContact || ''}</p></td></tr></table>
                 </td>
             </tr>
         </table>
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px; border-top: 1px solid #eee;"><tr><td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;"><p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p></td></tr></table>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-top: 40px; border-top: 1px solid #eee;"><tr><td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;"><p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p></td></tr></table>
     </div>
+    </td></tr></table> <!-- Email Wrapper Table End -->
 </body>
 </html>`;
 

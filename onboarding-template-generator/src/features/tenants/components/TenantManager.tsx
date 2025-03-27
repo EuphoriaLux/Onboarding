@@ -102,7 +102,26 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               </small>
             </div>
 
-            {/* Add Implementation Deadline Date Picker */}
+            {/* Moved Tenant ID Up */}
+            <div className="form-group">
+              <label htmlFor={`tenant-id-${index}`}>Microsoft Tenant ID</label>
+              <input
+                id={`tenant-id-${index}`}
+                type="text"
+                value={tenant.id}
+                onChange={(e) => handleTenantChange(index, 'id', e.target.value)}
+                placeholder="00000000-0000-0000-0000-000000000000"
+                pattern="^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+              />
+              <small className="form-text">
+                Format: 00000000-0000-0000-0000-000000000000
+              </small>
+            </div>
+
+            {/* Configuration Section Starts Here */}
+            <hr className="tenant-divider" /> {/* Optional visual divider */}
+
+            {/* Implementation Deadline Date Picker */}
             <div className="form-group">
               <label htmlFor={`implementation-deadline-${index}`}>Implementation Deadline</label>
               <DatePicker
@@ -145,22 +164,7 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               </div>
             )}
             
-            <div className="form-group">
-              <label htmlFor={`tenant-id-${index}`}>Microsoft Tenant ID</label>
-              <input
-                id={`tenant-id-${index}`}
-                type="text"
-                value={tenant.id}
-                onChange={(e) => handleTenantChange(index, 'id', e.target.value)}
-                placeholder="00000000-0000-0000-0000-000000000000"
-                pattern="^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-              />
-              <small className="form-text">
-                Format: 00000000-0000-0000-0000-000000000000
-              </small>
-            </div>
-
-            {/* Add GDAP Link Input */}
+            {/* GDAP Link Input */}
             <div className="form-group">
               <label htmlFor={`gdap-link-${index}`}>Tenant-Specific GDAP Link (Optional)</label>
               <input
