@@ -20,6 +20,9 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
   const handleContactChange = (index: number, field: keyof Contact, value: string) => {
     const updatedContacts = [...contacts];
     updatedContacts[index] = { ...updatedContacts[index], [field]: value };
+    // --- DEBUGGING START ---
+    console.log(`ContactsForm: Updating index ${index}, field ${field} to "${value}". New contacts array:`, JSON.stringify(updatedContacts));
+    // --- DEBUGGING END ---
     onChange(updatedContacts);
   };
 

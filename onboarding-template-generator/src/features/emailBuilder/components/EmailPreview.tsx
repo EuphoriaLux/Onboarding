@@ -1,18 +1,43 @@
 // src/features/emailBuilder/components/EmailPreview.tsx
 import React, { useState, useEffect } from 'react';
-import { EmailFormData, Language } from '../utils/types'; // Fixed import path
-import emailBuilder from '../utils/emailBuilder';
+import { EmailFormData, Language, CustomerInfo } from '../utils/types'; // Added CustomerInfo
+// Import generateTemplate directly, bypassing emailBuilder for HTML
+import { generateTemplate } from '../utils/templateGenerator';
+import emailBuilder from '../utils/emailBuilder'; // Keep for buildEmailBody (plain text)
 import { copyFormattedContent } from '../utils/clipboardUtils';
 import OutlookInstructions from './OutlookInstructions';
 
 interface EmailPreviewProps {
-  emailData: EmailFormData;
+  // Keep emailData for subject, recipients etc. but add specific props for generateTemplate
+  emailData: EmailFormData; // Contains subject, recipients, sender details etc.
+  customerInfo: CustomerInfo; // Contains data needed by generateTemplate
+  agentName?: string;
+  agentTitle?: string;
+  companyName?: string; // Agent's company
+  agentEmail?: string;
+  flags?: { // Add flags prop
+    includeGdap?: boolean;
+    includeRbac?: boolean;
+    includeConditionalAccess?: boolean;
+    includeNotes?: boolean;
+  };
+  additionalNotes?: string; // Add notes prop
   onBackToEdit: () => void;
 }
 
-const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) => {
+const EmailPreview: React.FC<EmailPreviewProps> = ({
+  emailData,
+  customerInfo, // Receive customerInfo
+  agentName,
+  agentTitle,
+  companyName,
+  agentEmail,
+  flags, // Destructure flags
+  additionalNotes, // Destructure notes
+  onBackToEdit
+}) => {
   const [htmlContent, setHtmlContent] = useState('');
-  const [plainText, setPlainText] = useState('');
+  const [plainText, setPlainText] = useState(''); // Keep plain text generation for now
   const [viewMode, setViewMode] = useState<'html' | 'text'>('html');
   const [copySuccess, setCopySuccess] = useState('');
   const [showInstructions, setShowInstructions] = useState(false);
@@ -21,17 +46,24 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({ emailData, onBackToEdit }) 
   const language = (emailData.language || 'en') as Language;
 
   useEffect(() => {
-    // Generate email content with the selected language
-    // Use the enhanced HTML method if available, otherwise use standard
-    const html = emailBuilder.buildEnhancedEmailHTML 
-      ? emailBuilder.buildEnhancedEmailHTML(emailData) 
-      : emailBuilder.buildEmailHTML(emailData);
-    
+    // Generate HTML using the imported generateTemplate
+    const html = generateTemplate(
+      customerInfo,
+      agentName,
+      agentTitle,
+      companyName,
+      agentEmail,
+      flags, // Pass flags to generateTemplate
+      additionalNotes // Pass notes to generateTemplate
+    );
+
+    // Keep using emailBuilder for plain text for now
     const text = emailBuilder.buildEmailBody(emailData);
-    
+
     setHtmlContent(html);
     setPlainText(text);
-  }, [emailData]);
+    // Depend on all data used for generation
+  }, [customerInfo, agentName, agentTitle, companyName, agentEmail, flags, additionalNotes, emailData]);
 
   const handleCopyToClipboard = async (contentType: 'html' | 'text') => {
     try {

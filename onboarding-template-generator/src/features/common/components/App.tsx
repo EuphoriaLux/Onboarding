@@ -1,5 +1,5 @@
 // src/features/common/components/App.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Added useEffect
 import { TierSelector } from '../../supportTiers';
 import { ContactsForm } from '../../contacts';
 import { TenantManager } from '../../tenants';
@@ -7,7 +7,17 @@ import { EmailForm, EmailPreview } from '../../emailBuilder';
 import LanguageSelector from './LanguageSelector';
 import { useAppState } from '../../../contexts/AppStateContext';
 import { useLanguage } from '../../../contexts/LanguageContext';
+import { StorageService } from '../../../services/storage'; // Import StorageService
+import { supportTiers } from '../../supportTiers/data/supportTiers'; // Import supportTiers
 import '../../../styles/App.css';
+
+// Define AgentSettings interface (can be moved to a shared types file later)
+interface AgentSettings {
+  agentName: string;
+  agentTitle: string;
+  companyName: string;
+  agentEmail: string; // Add agentEmail
+}
 
 // Collapsible Section component for onboarding components
 const CollapsibleSection: React.FC<{
@@ -19,7 +29,7 @@ const CollapsibleSection: React.FC<{
 
   return (
     <div className="form-section collapsible-section">
-      <div 
+      <div
         className={`collapsible-header ${isExpanded ? 'expanded' : ''}`}
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -40,31 +50,58 @@ const CollapsibleSection: React.FC<{
  * Uses contexts for state management and i18n
  */
 const App: React.FC = () => {
-  const { 
-    state, 
-    updateCustomerInfo, 
-    updateContacts, 
+  const {
+    state,
+    updateCustomerInfo,
+    updateContacts,
     updateTenants,
     updateTier,
     updateEmailData
   } = useAppState();
-  
+
   const { language, setLanguage } = useLanguage();
-  
+
   const [showEmailPreview, setShowEmailPreview] = useState(false);
-  const [localEmailData, setLocalEmailData] = useState<any>(null);
+  const [localEmailData, setLocalEmailData] = useState<any>(null); // Consider using a more specific type
+  const [agentSettings, setAgentSettings] = useState<AgentSettings | null>(null); // State for agent settings
   const [emailRecipients, setEmailRecipients] = useState({
     to: state.customerInfo.contactEmail || '',
     cc: '',
     subject: ''
   });
+  // State for conditional sections
+  const [includeGdap, setIncludeGdap] = useState(true);
+  const [includeRbac, setIncludeRbac] = useState(true);
+  const [includeConditionalAccess, setIncludeConditionalAccess] = useState(true);
+  const [includeNotes, setIncludeNotes] = useState(true); // Assuming notes are optional too
+  const [additionalNotes, setAdditionalNotes] = useState('');
+
+
+  // Fetch agent settings on mount
+  useEffect(() => {
+    StorageService.get<AgentSettings>('agentSettings')
+      .then(settings => {
+        if (settings) {
+          setAgentSettings(settings);
+        } else {
+          // Set default settings if none are found in storage
+          setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+        }
+      })
+      .catch(error => {
+        console.error("Error loading agent settings in App:", error);
+        // Set default settings on error as well
+        setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+      });
+  }, []); // Empty dependency array ensures this runs only once on mount
+
 
   // Handle date change with proper type handling
   const handleDateChange = (date: string) => {
     try {
       // Create a Date object safely
       const newDate = new Date(date);
-      
+
       // Verify it's a valid date before setting it
       if (!isNaN(newDate.getTime())) {
         updateCustomerInfo('proposedDate', newDate);
@@ -82,7 +119,7 @@ const App: React.FC = () => {
       ...emailRecipients,
       [field]: value
     });
-    
+
     // If it's the 'to' field, also update the primary contact email
     if (field === 'to') {
       updateCustomerInfo('contactEmail', value);
@@ -93,7 +130,7 @@ const App: React.FC = () => {
   const getEmailCustomerInfo = () => {
     // Use the first tenant's info for the email by default
     const primaryTenant = state.customerInfo.tenants[0] || { id: '', companyName: '' };
-    
+
     return {
       companyName: primaryTenant.companyName,
       contactName: state.customerInfo.contactName,
@@ -107,61 +144,85 @@ const App: React.FC = () => {
 
   // Generate email preview with all required properties
   const handlePreviewEmail = () => {
-    const senderNameInput = document.getElementById('sender-name') as HTMLInputElement;
-    const senderTitleInput = document.getElementById('sender-title') as HTMLInputElement;
-    const senderCompanyInput = document.getElementById('sender-company') as HTMLInputElement;
-    
+    // --- DEBUGGING START ---
+    console.log("State before preview:", JSON.stringify(state.customerInfo, null, 2));
+    console.log("Tenants:", JSON.stringify(state.customerInfo.tenants, null, 2));
+    console.log("Contacts:", JSON.stringify(state.customerInfo.authorizedContacts, null, 2));
+    // --- DEBUGGING END ---
+
+    // Use fetched agent settings, provide defaults if not loaded yet or empty
+    const currentAgentName = agentSettings?.agentName || 'Your Name';
+    const currentAgentTitle = agentSettings?.agentTitle || 'Support Specialist';
+    const currentCompanyName = agentSettings?.companyName || 'Microsoft Partner Support';
+    const currentAgentEmail = agentSettings?.agentEmail || ''; // Get email, default to empty
+
+    // --- Automatic Subject Line ---
+    const customerInfo = getEmailCustomerInfo(); // Get customer info first
+    // Ensure supportTiers is imported and used correctly
+    const tierName = supportTiers[customerInfo.selectedTier as keyof typeof supportTiers]?.name || 'Support'; // Get tier name safely with type assertion
+    const companyName = customerInfo.companyName || 'Customer'; // Get company name safely
+    const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
+    // --- End Automatic Subject ---
+
+
     // Create an EmailFormData object with all the collected data
+    // Note: EmailFormData type in types.ts might need updating if it doesn't match this structure
     const emailData = {
       to: emailRecipients.to,
       cc: emailRecipients.cc,
-      subject: emailRecipients.subject,
+      subject: autoSubject, // Use automatically generated subject
       // Add other fields from the form
-      ...getEmailCustomerInfo(),
+      ...customerInfo, // Use the customerInfo object we already got
       // Include emailContacts required by EmailFormData type
       emailContacts: state.customerInfo.authorizedContacts,
-      // These objects need to be properly initialized to prevent the "checked" property undefined error
+      // Pass conditional flags based on state
       gdap: {
-        checked: true,
-        deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        checked: includeGdap, // Use state variable
+        deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), // Keep defaults for now
         roles: "Service Support Administrator",
         link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
       },
       rbac: {
-        checked: true,
-        groups: 'appropriate security groups',
+        checked: includeRbac, // Use state variable
+        groups: 'appropriate security groups', // Keep defaults for now - TODO: Read from form input
         tenantId: state.customerInfo.tenants[0]?.id || '[your-tenant-id]',
-        azure: true,
+        azure: true, // Keep defaults for now
         m365: true,
-        includeScript: true
+        includeScript: true // Keep defaults for now
       },
       conditionalAccess: {
-        checked: true,
-        mfa: true,
+        checked: includeConditionalAccess, // Use state variable
+        mfa: true, // Keep defaults for now
         location: true,
         device: true,
         signIn: true
       },
+      // This seems redundant if emailContacts holds the list? Check usage.
+      // Keeping structure for now, but using includeContacts flag if needed later.
       authorizedContacts: {
-        checked: true,
-        roles: 'Technical and Administrative contacts'
+         checked: true, // Maybe control this section too?
+         roles: 'Technical and Administrative contacts' // Keep default for now
       },
-      // These would actually come from the form inputs
-      senderName: senderNameInput?.value || "Your Name",
-      senderTitle: senderTitleInput?.value || "Support Specialist",
-      senderCompany: senderCompanyInput?.value || "Microsoft Partner Support",
-      senderContact: "support@example.com",
+      // Add additional notes from state
+      additionalNotes: includeNotes ? additionalNotes : '', // Only include notes if flag is true
+      // Use fetched agent settings here
+      senderName: currentAgentName,
+      senderTitle: currentAgentTitle,
+      senderCompany: currentCompanyName,
+      // Use the fetched agent email here
+      senderContact: currentAgentEmail, // Renamed from senderContact to match template usage? Check templateGenerator.ts if needed. Assuming senderContact maps to agentEmail.
       currentDate: new Date().toLocaleDateString(),
       language: language
     };
-    
+
     // Store complete email data in local state for immediate use
+    // Pass agent settings separately to EmailPreview if needed there, or rely on them being in emailData
     const completeEmailData = {...emailData, language};
     setLocalEmailData(completeEmailData);
-    
-    // Also update the app state (for persistence)
+
+    // Also update the app state (for persistence) - ensure updateEmailData handles the full structure
     updateEmailData(emailData);
-    
+
     // Show the preview
     setShowEmailPreview(true);
   };
@@ -175,7 +236,7 @@ const App: React.FC = () => {
     <div className="app-container onboarding-container">
       {!showEmailPreview && (
         <div className="language-option">
-          <LanguageSelector 
+          <LanguageSelector
             selectedLanguage={language}
             onChange={setLanguage}
           />
@@ -183,8 +244,18 @@ const App: React.FC = () => {
       )}
 
       {showEmailPreview && localEmailData ? (
-        <EmailPreview 
-          emailData={localEmailData} 
+        // Construct customerInfo object here for generateTemplate
+        <EmailPreview
+          emailData={localEmailData} // Contains subject, recipients, sender details etc.
+          customerInfo={getEmailCustomerInfo()} // Pass the constructed CustomerInfo object
+          // Pass agent details separately as expected by EmailPreview props
+          agentName={agentSettings?.agentName}
+          agentTitle={agentSettings?.agentTitle}
+          companyName={agentSettings?.companyName} // Agent's company
+          agentEmail={agentSettings?.agentEmail}
+          // Pass conditional flags and notes to EmailPreview -> generateTemplate
+          flags={{ includeGdap, includeRbac, includeConditionalAccess, includeNotes }}
+          additionalNotes={includeNotes ? additionalNotes : undefined}
           onBackToEdit={handleBackToEdit}
         />
       ) : (
@@ -193,7 +264,7 @@ const App: React.FC = () => {
             <h1>Microsoft Support Onboarding Template Generator</h1>
             <p>Create customized onboarding emails for new support customers</p>
           </div>
-          
+
           {/* 1. Email Recipients & Subject */}
           <div className="form-section email-recipients-section">
             <h2>Email Recipients</h2>
@@ -208,7 +279,7 @@ const App: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="cc-field">Cc:</label>
               <input
@@ -219,32 +290,22 @@ const App: React.FC = () => {
                 placeholder="cc@example.com"
               />
             </div>
-            
-            <div className="form-group">
-              <label htmlFor="subject-field">Subject:</label>
-              <input
-                id="subject-field"
-                type="text"
-                value={emailRecipients.subject}
-                onChange={(e) => handleEmailRecipientsChange('subject', e.target.value)}
-                placeholder="[CompanyName] Microsoft Support Onboarding - [TierName] Support Plan"
-              />
-              <small className="form-text">Leave blank to use the default subject based on tier and company name</small>
-            </div>
+
+            {/* Removed manual subject input field */}
           </div>
-          
+
           {/* 2. Support Tier Selection */}
           <div className="form-section tier-section">
-            <TierSelector 
+            <TierSelector
               selectedTier={state.customerInfo.selectedTier}
               onChange={updateTier}
             />
           </div>
-          
+
           {/* 3. Customer Contact Information */}
           <div className="form-section customer-info-section">
             <h2>Customer Contact Information</h2>
-            
+
             <div className="form-group">
               <label htmlFor="contact-name">Primary Contact Name</label>
               <input
@@ -256,7 +317,7 @@ const App: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="contact-email">Primary Contact Email</label>
               <input
@@ -266,11 +327,11 @@ const App: React.FC = () => {
                 onChange={(e) => updateCustomerInfo('contactEmail', e.target.value)}
                 placeholder="email@company.com"
                 required
-                disabled={true}
+                disabled={true} // Keep disabled as it syncs with 'To' field
               />
               <small className="form-text">This is synchronized with the email recipient above</small>
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="proposed-date">Proposed Meeting Date</label>
               <input
@@ -284,7 +345,7 @@ const App: React.FC = () => {
               />
             </div>
           </div>
-          
+
           {/* 4. Authorized Contacts */}
           <div className="form-section contacts-section">
             <ContactsForm
@@ -293,7 +354,7 @@ const App: React.FC = () => {
               onChange={updateContacts}
             />
           </div>
-          
+
           {/* 5. Tenant Information */}
           <div className="form-section tenant-section">
             <TenantManager
@@ -302,176 +363,107 @@ const App: React.FC = () => {
               onChange={updateTenants}
             />
           </div>
-          
+
           {/* 6. Onboarding Components (Collapsible) */}
           <div className="form-section onboarding-components-section">
             <h2>Onboarding Components</h2>
             <p className="section-description">
               Configure the detailed sections to include in your onboarding email
             </p>
-            
+
             <CollapsibleSection title="GDAP Delegation">
+               <div className="form-group checkbox-container inline-label">
+                 <input type="checkbox" id="includeGdap" checked={includeGdap} onChange={(e) => setIncludeGdap(e.target.checked)} />
+                 <label htmlFor="includeGdap">Include GDAP Section</label>
+               </div>
+              {/* Inputs for GDAP - Assuming these are handled elsewhere or hardcoded for now */}
               <div className="form-group">
                 <label htmlFor="gdap-deadline">Implementation Deadline:</label>
-                <input
-                  id="gdap-deadline"
-                  type="text"
-                  placeholder="e.g., June 30, 2025"
-                />
+                <input id="gdap-deadline" type="text" placeholder="e.g., June 30, 2025" />
               </div>
               <div className="form-group">
                 <label htmlFor="gdap-link">GDAP Link:</label>
-                <input
-                  id="gdap-link"
-                  type="text"
-                  placeholder="GDAP approval link"
-                />
+                <input id="gdap-link" type="text" placeholder="GDAP approval link" />
               </div>
               <div className="form-group">
                 <label htmlFor="gdap-roles">Requested Roles:</label>
-                <input
-                  id="gdap-roles"
-                  type="text"
-                  placeholder="e.g., Service Support Administrator"
-                />
+                <input id="gdap-roles" type="text" placeholder="e.g., Service Support Administrator" />
               </div>
             </CollapsibleSection>
-            
+
             <CollapsibleSection title="RBAC Configuration">
-              <div className="form-group">
+               <div className="form-group checkbox-container inline-label">
+                 <input type="checkbox" id="includeRbac" checked={includeRbac} onChange={(e) => setIncludeRbac(e.target.checked)} />
+                 <label htmlFor="includeRbac">Include RBAC Section</label>
+               </div>
+              {/* Inputs for RBAC */}
+               <div className="form-group">
                 <label htmlFor="rbac-groups">Security Groups to Configure:</label>
-                <input
-                  id="rbac-groups"
-                  type="text"
-                  placeholder="e.g., IT Admins, Finance Team, HR"
-                />
+                <input id="rbac-groups" type="text" placeholder="e.g., IT Admins, Finance Team, HR" />
               </div>
               <div className="form-group">
                 <label>Permission Level:</label>
                 <div className="inline-checks">
-                  <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="rbacAzure" 
-                      defaultChecked={true}
-                    />
-                    <label htmlFor="rbacAzure">Azure RBAC</label>
-                  </div>
-                  <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="rbacM365" 
-                      defaultChecked={true}
-                    />
-                    <label htmlFor="rbacM365">Microsoft 365 RBAC</label>
-                  </div>
+                  <div className="checkbox-container"><input type="checkbox" id="rbacAzure" defaultChecked={true} /><label htmlFor="rbacAzure">Azure RBAC</label></div>
+                  <div className="checkbox-container"><input type="checkbox" id="rbacM365" defaultChecked={true} /><label htmlFor="rbacM365">Microsoft 365 RBAC</label></div>
                 </div>
               </div>
               <div className="form-group">
-                <div className="checkbox-container">
-                  <input 
-                    type="checkbox" 
-                    id="includeRbacScript" 
-                    defaultChecked={true}
-                  />
-                  <label htmlFor="includeRbacScript">Include PowerShell Script</label>
-                </div>
+                <div className="checkbox-container"><input type="checkbox" id="includeRbacScript" defaultChecked={true} /><label htmlFor="includeRbacScript">Include PowerShell Script</label></div>
               </div>
             </CollapsibleSection>
-            
+
             <CollapsibleSection title="Conditional Access">
+               <div className="form-group checkbox-container inline-label">
+                 <input type="checkbox" id="includeConditionalAccess" checked={includeConditionalAccess} onChange={(e) => setIncludeConditionalAccess(e.target.checked)} />
+                 <label htmlFor="includeConditionalAccess">Include Conditional Access Section</label>
+               </div>
+              {/* Inputs for Conditional Access */}
               <div className="form-group">
                 <label>Policies to Implement:</label>
                 <div className="inline-checks">
-                  <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="caMfa" 
-                      defaultChecked={true}
-                    />
-                    <label htmlFor="caMfa">MFA Requirements</label>
-                  </div>
-                  <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="caLocation" 
-                      defaultChecked={true}
-                    />
-                    <label htmlFor="caLocation">Location-Based Access</label>
-                  </div>
-                  <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="caDevice" 
-                      defaultChecked={true}
-                    />
-                    <label htmlFor="caDevice">Device Compliance</label>
-                  </div>
-                  <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="caSignIn" 
-                      defaultChecked={true}
-                    />
-                    <label htmlFor="caSignIn">Sign-in Risk Policies</label>
-                  </div>
+                  <div className="checkbox-container"><input type="checkbox" id="caMfa" defaultChecked={true} /><label htmlFor="caMfa">MFA Requirements</label></div>
+                  <div className="checkbox-container"><input type="checkbox" id="caLocation" defaultChecked={true} /><label htmlFor="caLocation">Location-Based Access</label></div>
+                  <div className="checkbox-container"><input type="checkbox" id="caDevice" defaultChecked={true} /><label htmlFor="caDevice">Device Compliance</label></div>
+                  <div className="checkbox-container"><input type="checkbox" id="caSignIn" defaultChecked={true} /><label htmlFor="caSignIn">Sign-in Risk Policies</label></div>
                 </div>
               </div>
             </CollapsibleSection>
-            
+
             <CollapsibleSection title="Additional Notes">
+               <div className="form-group checkbox-container inline-label">
+                 <input type="checkbox" id="includeNotes" checked={includeNotes} onChange={(e) => setIncludeNotes(e.target.checked)} />
+                 <label htmlFor="includeNotes">Include Additional Notes Section</label>
+               </div>
+              {/* Input for Additional Notes */}
               <div className="form-group">
                 <label htmlFor="additional-notes">Notes or Instructions:</label>
                 <textarea
                   id="additional-notes"
                   placeholder="Any additional information for the client..."
                   rows={4}
+                  value={additionalNotes}
+                  onChange={(e) => setAdditionalNotes(e.target.value)}
                 ></textarea>
               </div>
             </CollapsibleSection>
           </div>
-          
+
           {/* 7. Email Builder with Preview Button */}
+          {/* Removed sender input fields as they now come from settings */}
           <div className="form-section email-section">
             <h2>Email Preview & Generate</h2>
             <p className="section-description">
-              Preview the email template and generate it for sending
+              Preview the email template and generate it for sending. Agent details are configured in Extension Settings.
             </p>
-            
-            <div className="form-group">
-              <label htmlFor="sender-name">Your Name:</label>
-              <input
-                id="sender-name"
-                type="text"
-                placeholder="Your full name"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="sender-title">Your Title:</label>
-              <input
-                id="sender-title"
-                type="text"
-                placeholder="Your job title"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="sender-company">Your Company:</label>
-              <input
-                id="sender-company"
-                type="text"
-                placeholder="Your company name"
-              />
-            </div>
-            
             <div className="form-actions">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="btn-preview"
                 onClick={handlePreviewEmail}
+                disabled={!agentSettings} // Disable button until settings are loaded
               >
-                Preview Email
+                {agentSettings ? 'Preview Email' : 'Loading Settings...'}
               </button>
             </div>
           </div>

@@ -2,6 +2,127 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/features/settings/components/SettingsPage.css":
+/*!*************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/features/settings/components/SettingsPage.css ***!
+  \*************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* src/features/settings/components/SettingsPage.css */
+
+.settings-page {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.settings-page h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.settings-page p {
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 14px;
+}
+
+.settings-loading {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
+
+.settings-form .form-group {
+  margin-bottom: 15px;
+}
+
+.settings-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #444;
+  font-size: 14px;
+}
+
+.settings-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+  font-size: 14px;
+}
+
+.settings-form input[type="text"]:focus {
+  border-color: #0078D4;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.3);
+}
+
+.form-actions {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  background-color: #0078D4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.form-actions button:hover:not(:disabled) {
+  background-color: #005a9e;
+}
+
+.form-actions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.save-status {
+  margin-left: 15px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.save-status.success {
+  color: #107c10; /* Green */
+}
+
+.save-status.error {
+  color: #d83b01; /* Red */
+}
+`, "",{"version":3,"sources":["webpack://./src/features/settings/components/SettingsPage.css"],"names":[],"mappings":"AAAA,sDAAsD;;AAEtD;EACE,aAAa;EACb,yBAAyB;EACzB,kBAAkB;EAClB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,WAAW;EACX,6BAA6B;EAC7B,oBAAoB;AACtB;;AAEA;EACE,mBAAmB;EACnB,WAAW;EACX,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,kBAAkB;EAClB,WAAW;AACb;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,cAAc;EACd,kBAAkB;EAClB,gBAAgB;EAChB,WAAW;EACX,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,kBAAkB;EAClB,sBAAsB,EAAE,mEAAmE;EAC3F,eAAe;AACjB;;AAEA;EACE,qBAAqB;EACrB,aAAa;EACb,4CAA4C;AAC9C;;AAEA;EACE,gBAAgB;EAChB,aAAa;EACb,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;EAClB,yBAAyB;EACzB,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,eAAe;EACf,sCAAsC;AACxC;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,cAAc,EAAE,UAAU;AAC5B;;AAEA;EACE,cAAc,EAAE,QAAQ;AAC1B","sourcesContent":["/* src/features/settings/components/SettingsPage.css */\r\n\r\n.settings-page {\r\n  padding: 20px;\r\n  background-color: #f9f9f9;\r\n  border-radius: 8px;\r\n  margin: 20px 0;\r\n}\r\n\r\n.settings-page h2 {\r\n  margin-top: 0;\r\n  margin-bottom: 10px;\r\n  color: #333;\r\n  border-bottom: 1px solid #eee;\r\n  padding-bottom: 10px;\r\n}\r\n\r\n.settings-page p {\r\n  margin-bottom: 20px;\r\n  color: #555;\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-loading {\r\n  padding: 40px;\r\n  text-align: center;\r\n  color: #666;\r\n}\r\n\r\n.settings-form .form-group {\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.settings-form label {\r\n  display: block;\r\n  margin-bottom: 5px;\r\n  font-weight: 600;\r\n  color: #444;\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-form input[type=\"text\"] {\r\n  width: 100%;\r\n  padding: 10px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box; /* Include padding and border in element's total width and height */\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-form input[type=\"text\"]:focus {\r\n  border-color: #0078D4;\r\n  outline: none;\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.3);\r\n}\r\n\r\n.form-actions {\r\n  margin-top: 25px;\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n.form-actions button {\r\n  padding: 10px 20px;\r\n  background-color: #0078D4;\r\n  color: white;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  transition: background-color 0.2s ease;\r\n}\r\n\r\n.form-actions button:hover:not(:disabled) {\r\n  background-color: #005a9e;\r\n}\r\n\r\n.form-actions button:disabled {\r\n  background-color: #ccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.save-status {\r\n  margin-left: 15px;\r\n  font-size: 14px;\r\n  font-weight: 600;\r\n}\r\n\r\n.save-status.success {\r\n  color: #107c10; /* Green */\r\n}\r\n\r\n.save-status.error {\r\n  color: #d83b01; /* Red */\r\n}\r\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/styles/App.css":
 /*!******************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/styles/App.css ***!
@@ -29962,9 +30083,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LanguageSelector__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./LanguageSelector */ "./src/features/common/components/LanguageSelector.tsx");
 /* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
 /* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../styles/App.css */ "./src/styles/App.css");
+/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/storage */ "./src/services/storage/index.ts");
+/* harmony import */ var _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../styles/App.css */ "./src/styles/App.css");
 
 // src/features/common/components/App.tsx
+ // Added useEffect
 
 
 
@@ -29972,7 +30096,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ // Import StorageService
+ // Import supportTiers
 
 // Collapsible Section component for onboarding components
 const CollapsibleSection = ({ title, children, initialExpanded = false }) => {
@@ -29987,12 +30112,37 @@ const App = () => {
     const { state, updateCustomerInfo, updateContacts, updateTenants, updateTier, updateEmailData } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__.useAppState)();
     const { language, setLanguage } = (0,_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__.useLanguage)();
     const [showEmailPreview, setShowEmailPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [localEmailData, setLocalEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [localEmailData, setLocalEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // Consider using a more specific type
+    const [agentSettings, setAgentSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // State for agent settings
     const [emailRecipients, setEmailRecipients] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
         to: state.customerInfo.contactEmail || '',
         cc: '',
         subject: ''
     });
+    // State for conditional sections
+    const [includeGdap, setIncludeGdap] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    const [includeRbac, setIncludeRbac] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    const [includeConditionalAccess, setIncludeConditionalAccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    const [includeNotes, setIncludeNotes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true); // Assuming notes are optional too
+    const [additionalNotes, setAdditionalNotes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    // Fetch agent settings on mount
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        _services_storage__WEBPACK_IMPORTED_MODULE_9__.StorageService.get('agentSettings')
+            .then(settings => {
+            if (settings) {
+                setAgentSettings(settings);
+            }
+            else {
+                // Set default settings if none are found in storage
+                setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+            }
+        })
+            .catch(error => {
+            console.error("Error loading agent settings in App:", error);
+            // Set default settings on error as well
+            setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+        });
+    }, []); // Empty dependency array ensures this runs only once on mount
     // Handle date change with proper type handling
     const handleDateChange = (date) => {
         try {
@@ -30034,43 +30184,66 @@ const App = () => {
     };
     // Generate email preview with all required properties
     const handlePreviewEmail = () => {
-        var _a;
-        const senderNameInput = document.getElementById('sender-name');
-        const senderTitleInput = document.getElementById('sender-title');
-        const senderCompanyInput = document.getElementById('sender-company');
+        var _a, _b;
+        // --- DEBUGGING START ---
+        console.log("State before preview:", JSON.stringify(state.customerInfo, null, 2));
+        console.log("Tenants:", JSON.stringify(state.customerInfo.tenants, null, 2));
+        console.log("Contacts:", JSON.stringify(state.customerInfo.authorizedContacts, null, 2));
+        // --- DEBUGGING END ---
+        // Use fetched agent settings, provide defaults if not loaded yet or empty
+        const currentAgentName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName) || 'Your Name';
+        const currentAgentTitle = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle) || 'Support Specialist';
+        const currentCompanyName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName) || 'Microsoft Partner Support';
+        const currentAgentEmail = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail) || ''; // Get email, default to empty
+        // --- Automatic Subject Line ---
+        const customerInfo = getEmailCustomerInfo(); // Get customer info first
+        // Ensure supportTiers is imported and used correctly
+        const tierName = ((_a = _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__.supportTiers[customerInfo.selectedTier]) === null || _a === void 0 ? void 0 : _a.name) || 'Support'; // Get tier name safely with type assertion
+        const companyName = customerInfo.companyName || 'Customer'; // Get company name safely
+        const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
+        // --- End Automatic Subject ---
         // Create an EmailFormData object with all the collected data
-        const emailData = Object.assign(Object.assign({ to: emailRecipients.to, cc: emailRecipients.cc, subject: emailRecipients.subject }, getEmailCustomerInfo()), { 
+        // Note: EmailFormData type in types.ts might need updating if it doesn't match this structure
+        const emailData = Object.assign(Object.assign({ to: emailRecipients.to, cc: emailRecipients.cc, subject: autoSubject }, customerInfo), { 
             // Include emailContacts required by EmailFormData type
             emailContacts: state.customerInfo.authorizedContacts, 
-            // These objects need to be properly initialized to prevent the "checked" property undefined error
+            // Pass conditional flags based on state
             gdap: {
-                checked: true,
-                deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+                checked: includeGdap, // Use state variable
+                deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), // Keep defaults for now
                 roles: "Service Support Administrator",
                 link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
             }, rbac: {
-                checked: true,
-                groups: 'appropriate security groups',
-                tenantId: ((_a = state.customerInfo.tenants[0]) === null || _a === void 0 ? void 0 : _a.id) || '[your-tenant-id]',
-                azure: true,
+                checked: includeRbac, // Use state variable
+                groups: 'appropriate security groups', // Keep defaults for now - TODO: Read from form input
+                tenantId: ((_b = state.customerInfo.tenants[0]) === null || _b === void 0 ? void 0 : _b.id) || '[your-tenant-id]',
+                azure: true, // Keep defaults for now
                 m365: true,
-                includeScript: true
+                includeScript: true // Keep defaults for now
             }, conditionalAccess: {
-                checked: true,
-                mfa: true,
+                checked: includeConditionalAccess, // Use state variable
+                mfa: true, // Keep defaults for now
                 location: true,
                 device: true,
                 signIn: true
-            }, authorizedContacts: {
-                checked: true,
-                roles: 'Technical and Administrative contacts'
             }, 
-            // These would actually come from the form inputs
-            senderName: (senderNameInput === null || senderNameInput === void 0 ? void 0 : senderNameInput.value) || "Your Name", senderTitle: (senderTitleInput === null || senderTitleInput === void 0 ? void 0 : senderTitleInput.value) || "Support Specialist", senderCompany: (senderCompanyInput === null || senderCompanyInput === void 0 ? void 0 : senderCompanyInput.value) || "Microsoft Partner Support", senderContact: "support@example.com", currentDate: new Date().toLocaleDateString(), language: language });
+            // This seems redundant if emailContacts holds the list? Check usage.
+            // Keeping structure for now, but using includeContacts flag if needed later.
+            authorizedContacts: {
+                checked: true, // Maybe control this section too?
+                roles: 'Technical and Administrative contacts' // Keep default for now
+            }, 
+            // Add additional notes from state
+            additionalNotes: includeNotes ? additionalNotes : '', 
+            // Use fetched agent settings here
+            senderName: currentAgentName, senderTitle: currentAgentTitle, senderCompany: currentCompanyName, 
+            // Use the fetched agent email here
+            senderContact: currentAgentEmail, currentDate: new Date().toLocaleDateString(), language: language });
         // Store complete email data in local state for immediate use
+        // Pass agent settings separately to EmailPreview if needed there, or rely on them being in emailData
         const completeEmailData = Object.assign(Object.assign({}, emailData), { language });
         setLocalEmailData(completeEmailData);
-        // Also update the app state (for persistence)
+        // Also update the app state (for persistence) - ensure updateEmailData handles the full structure
         updateEmailData(emailData);
         // Show the preview
         setShowEmailPreview(true);
@@ -30079,9 +30252,15 @@ const App = () => {
     const handleBackToEdit = () => {
         setShowEmailPreview(false);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container onboarding-container", children: [!showEmailPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__["default"], { selectedLanguage: language, onChange: setLanguage }) })), showEmailPreview && localEmailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "subject-field", children: "Subject:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "subject-field", type: "text", value: emailRecipients.subject, onChange: (e) => handleEmailRecipientsChange('subject', e.target.value), placeholder: "[CompanyName] Microsoft Support Onboarding - [TierName] Support Plan" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Leave blank to use the default subject based on tier and company name" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: state.customerInfo.proposedDate instanceof Date && !isNaN(state.customerInfo.proposedDate.getTime())
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container onboarding-container", children: [!showEmailPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__["default"], { selectedLanguage: language, onChange: setLanguage }) })), showEmailPreview && localEmailData ? (
+            // Construct customerInfo object here for generateTemplate
+            (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, customerInfo: getEmailCustomerInfo(), 
+                // Pass agent details separately as expected by EmailPreview props
+                agentName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName, agentTitle: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle, companyName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName, agentEmail: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail, 
+                // Pass conditional flags and notes to EmailPreview -> generateTemplate
+                flags: { includeGdap, includeRbac, includeConditionalAccess, includeNotes }, additionalNotes: includeNotes ? additionalNotes : undefined, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: state.customerInfo.proposedDate instanceof Date && !isNaN(state.customerInfo.proposedDate.getTime())
                                             ? state.customerInfo.proposedDate.toISOString().split('T')[0]
-                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "GDAP Delegation", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-deadline", children: "Implementation Deadline:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-deadline", type: "text", placeholder: "e.g., June 30, 2025" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-link", children: "GDAP Link:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-link", type: "text", placeholder: "GDAP approval link" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-roles", children: "Requested Roles:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-roles", type: "text", placeholder: "e.g., Service Support Administrator" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "RBAC Configuration", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbac-groups", children: "Security Groups to Configure:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "rbac-groups", type: "text", placeholder: "e.g., IT Admins, Finance Team, HR" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Permission Level:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacAzure", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacAzure", children: "Azure RBAC" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacM365", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacM365", children: "Microsoft 365 RBAC" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-group", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeRbacScript", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeRbacScript", children: "Include PowerShell Script" })] }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CollapsibleSection, { title: "Conditional Access", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CollapsibleSection, { title: "Additional Notes", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4 })] }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "sender-name", children: "Your Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "sender-name", type: "text", placeholder: "Your full name" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "sender-title", children: "Your Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "sender-title", type: "text", placeholder: "Your job title" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "sender-company", children: "Your Company:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "sender-company", type: "text", placeholder: "Your company name" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, children: "Preview Email" }) })] })] }))] }));
+                                            : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "GDAP Delegation", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeGdap", checked: includeGdap, onChange: (e) => setIncludeGdap(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeGdap", children: "Include GDAP Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-deadline", children: "Implementation Deadline:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-deadline", type: "text", placeholder: "e.g., June 30, 2025" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-link", children: "GDAP Link:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-link", type: "text", placeholder: "GDAP approval link" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-roles", children: "Requested Roles:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-roles", type: "text", placeholder: "e.g., Service Support Administrator" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "RBAC Configuration", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeRbac", checked: includeRbac, onChange: (e) => setIncludeRbac(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeRbac", children: "Include RBAC Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbac-groups", children: "Security Groups to Configure:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "rbac-groups", type: "text", placeholder: "e.g., IT Admins, Finance Team, HR" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Permission Level:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacAzure", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacAzure", children: "Azure RBAC" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "rbacM365", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "rbacM365", children: "Microsoft 365 RBAC" })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-group", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeRbacScript", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeRbacScript", children: "Include PowerShell Script" })] }) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "Conditional Access", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeConditionalAccess", checked: includeConditionalAccess, onChange: (e) => setIncludeConditionalAccess(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeConditionalAccess", children: "Include Conditional Access Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "Additional Notes", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeNotes", checked: includeNotes, onChange: (e) => setIncludeNotes(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeNotes", children: "Include Additional Notes Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4, value: additionalNotes, onChange: (e) => setAdditionalNotes(e.target.value) })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending. Agent details are configured in Extension Settings." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, disabled: !agentSettings, children: agentSettings ? 'Preview Email' : 'Loading Settings...' }) })] })] }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -30127,6 +30306,9 @@ const ContactsForm = ({ contacts, selectedTier, onChange }) => {
     const handleContactChange = (index, field, value) => {
         const updatedContacts = [...contacts];
         updatedContacts[index] = Object.assign(Object.assign({}, updatedContacts[index]), { [field]: value });
+        // --- DEBUGGING START ---
+        console.log(`ContactsForm: Updating index ${index}, field ${field} to "${value}". New contacts array:`, JSON.stringify(updatedContacts));
+        // --- DEBUGGING END ---
         onChange(updatedContacts);
     };
     const addContact = () => {
@@ -30285,9 +30467,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/features/emailBuilder/utils/emailBuilder.ts");
-/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/features/emailBuilder/utils/clipboardUtils.ts");
-/* harmony import */ var _OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./OutlookInstructions */ "./src/features/emailBuilder/components/OutlookInstructions.tsx");
+/* harmony import */ var _utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/templateGenerator */ "./src/features/emailBuilder/utils/templateGenerator.ts");
+/* harmony import */ var _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/emailBuilder */ "./src/features/emailBuilder/utils/emailBuilder.ts");
+/* harmony import */ var _utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/clipboardUtils */ "./src/features/emailBuilder/utils/clipboardUtils.ts");
+/* harmony import */ var _OutlookInstructions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./OutlookInstructions */ "./src/features/emailBuilder/components/OutlookInstructions.tsx");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -30300,32 +30483,38 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 // src/features/emailBuilder/components/EmailPreview.tsx
 
+// Import generateTemplate directly, bypassing emailBuilder for HTML
+
+ // Keep for buildEmailBody (plain text)
 
 
-
-const EmailPreview = ({ emailData, onBackToEdit }) => {
+const EmailPreview = ({ emailData, customerInfo, // Receive customerInfo
+agentName, agentTitle, companyName, agentEmail, flags, // Destructure flags
+additionalNotes, // Destructure notes
+onBackToEdit }) => {
     const [htmlContent, setHtmlContent] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-    const [plainText, setPlainText] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [plainText, setPlainText] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''); // Keep plain text generation for now
     const [viewMode, setViewMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('html');
     const [copySuccess, setCopySuccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
     const [showInstructions, setShowInstructions] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     // Use the language from emailData, defaulting to English
     const language = (emailData.language || 'en');
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        // Generate email content with the selected language
-        // Use the enhanced HTML method if available, otherwise use standard
-        const html = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEnhancedEmailHTML
-            ? _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEnhancedEmailHTML(emailData)
-            : _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailHTML(emailData);
-        const text = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].buildEmailBody(emailData);
+        // Generate HTML using the imported generateTemplate
+        const html = (0,_utils_templateGenerator__WEBPACK_IMPORTED_MODULE_2__.generateTemplate)(customerInfo, agentName, agentTitle, companyName, agentEmail, flags, // Pass flags to generateTemplate
+        additionalNotes // Pass notes to generateTemplate
+        );
+        // Keep using emailBuilder for plain text for now
+        const text = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_3__["default"].buildEmailBody(emailData);
         setHtmlContent(html);
         setPlainText(text);
-    }, [emailData]);
+        // Depend on all data used for generation
+    }, [customerInfo, agentName, agentTitle, companyName, agentEmail, flags, additionalNotes, emailData]);
     const handleCopyToClipboard = (contentType) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             if (contentType === 'html') {
                 // Copy with HTML formatting preserved
-                yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText);
+                yield (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_4__.copyFormattedContent)(htmlContent, plainText);
                 // Show instructions when copying HTML (first time only)
                 const hasSeenInstructions = localStorage.getItem('hasSeenCopyInstructions');
                 if (!hasSeenInstructions) {
@@ -30360,7 +30549,7 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
     };
     const handleOpenInOutlook = () => {
         // First copy the HTML content to clipboard with enhanced formatting preserved
-        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText).then(() => {
+        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_4__.copyFormattedContent)(htmlContent, plainText).then(() => {
             // Create a mailto URL
             const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
             // Open the default email client
@@ -30387,7 +30576,7 @@ const EmailPreview = ({ emailData, onBackToEdit }) => {
                 return 'English';
         }
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_5__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
                                         (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
@@ -32223,6 +32412,306 @@ foreach ($subscription in $subscriptions) {
 
 /***/ }),
 
+/***/ "./src/features/emailBuilder/utils/templateGenerator.ts":
+/*!**************************************************************!*\
+  !*** ./src/features/emailBuilder/utils/templateGenerator.ts ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   generateTemplate: () => (/* binding */ generateTemplate)
+/* harmony export */ });
+/* harmony import */ var _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
+// src/features/emailBuilder/utils/templateGenerator.ts
+ // Updated import path
+// --- Constants ---
+// Constants for RBAC Script
+const HELP_DESK_AGENTS_OBJECT_ID = "b6770181-d9f5-4818-b5b1-ea51cd9f66e5";
+const ADMIN_AGENTS_OBJECT_ID = "9a838974-22d3-415b-8136-c790e285afeb";
+const SUPPORT_REQUEST_CONTRIBUTOR_ROLE = "Support Request Contributor";
+const OWNER_ROLE = "Owner";
+const RBAC_POWERSHELL_SCRIPT_TEMPLATE = `
+# Connect to Azure with your tenant ID
+Connect-AzAccount -Tenant "{TENANT_ID}"
+
+# Get all available subscriptions
+$subscriptions = Get-AzSubscription
+
+# Loop through each subscription
+foreach ($subscription in $subscriptions) {
+    # Set the current context to this subscription
+    Set-AzContext -SubscriptionId $subscription.Id
+
+    # Add the ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role to Foreign Principal HelpDeskAgents
+    New-AzRoleAssignment -ObjectID "${HELP_DESK_AGENTS_OBJECT_ID}" -RoleDefinitionName "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
+
+    # Test if the ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role is assigned
+    $supportRole = Get-AzRoleAssignment -ObjectId "${HELP_DESK_AGENTS_OBJECT_ID}" | Where-Object { $_.RoleDefinitionName -eq "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" }
+
+    if ($supportRole) {
+        Write-Host "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role is assigned to Foreign Principal HelpDeskAgents."
+
+        # Test if the ${OWNER_ROLE} role for the Foreign Principal AdminAgents exists
+        $ownerRole = Get-AzRoleAssignment -ObjectId "${ADMIN_AGENTS_OBJECT_ID}" | Where-Object { $_.RoleDefinitionName -eq "${OWNER_ROLE}" }
+
+        if ($ownerRole) {
+            # If the ${OWNER_ROLE} role exists, remove it
+            Remove-AzRoleAssignment -ObjectID "${ADMIN_AGENTS_OBJECT_ID}" -RoleDefinitionName "${OWNER_ROLE}"
+        } else {
+            Write-Host "${OWNER_ROLE} role for Foreign Principal AdminAgents does not exist."
+        }
+    } else {
+        Write-Host "Error: Could not assign ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role for Foreign Principal HelpDeskAgents!"
+    }
+}`;
+// --- Helper Functions for Email Formatting ---
+const _formatScriptBlock = (scriptContent) => {
+    const cleanedScript = scriptContent.trim()
+        .replace(/\t/g, '    ')
+        .replace(/^\s*\n/gm, '');
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0;">
+      <tr>
+        <td style="padding: 0;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px;">
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;">
+                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #555; font-weight: 600;">PowerShell Script</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 15px; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.45; color: #333; white-space: pre-wrap; word-break: break-all;">
+${cleanedScript}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>`;
+};
+const _createContactsTable = (contacts) => {
+    let tableRows = '';
+    contacts.forEach((contact, index) => {
+        const bgColor = index % 2 === 0 ? '#f9f9f9' : 'white';
+        tableRows += `
+      <tr style="background-color: ${bgColor};">
+        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.name || ''}</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.email || ''}</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.phone || ''}</td>
+      </tr>`;
+    });
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0;">
+      <tr style="background-color: #f0f0f0;">
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Name</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Email</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Phone</th>
+      </tr>
+      ${tableRows}
+    </table>`;
+};
+const _formatDate = (date) => {
+    if (date instanceof Date && !isNaN(date.getTime())) {
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+    return '[DATE TO BE CONFIRMED]';
+};
+// --- Email Section Generators ---
+const _generateHeader = (tier) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
+    <tr>
+      <td style="padding: 0;">
+        <h2 style="color: ${tier.color}; border-bottom: 1px solid ${tier.color}; padding-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; margin: 0 0 15px 0;">Microsoft Support Onboarding - ${tier.name}</h2>
+      </td>
+    </tr>
+  </table>`;
+const _generateGreeting = (info) => `
+  <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Dear ${info.contactName},</p>`;
+const _generateMeetingProposal = (info, tier) => {
+    const formattedDate = _formatDate(info.proposedDate);
+    return `
+    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong style="font-weight: 600;">${tier.name}</strong> plan.</p>
+    <p style="margin: 0 0 20px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">I propose we meet on <strong style="font-weight: 600;">${formattedDate}</strong> to discuss the following onboarding steps:</p>`;
+};
+const _generateTierDetailsSection = (tier) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+    <tr>
+      <td style="padding: 0;">
+        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">1. Support Tier Selection</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">You have selected the <strong style="font-weight: 600;">${tier.name}</strong> plan which includes:</p>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 10px 0 15px 0;">
+          <tr>
+            <td style="padding: 0 0 0 20px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Support Hours: ${tier.supportHours}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Authorized Contacts: ${tier.authorizedContacts}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Tenants: ${tier.tenants}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Support Requests: ${tier.supportRequestsIncluded}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Critical Situation Support: ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">Yes</span>' : '<span style="color: #d83b01; font-weight: 600;">No</span>'}</td></tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>`;
+const _generateContactsSection = (info, tier) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+    <tr>
+      <td style="padding: 0;">
+        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">2. Authorized Customer Contacts</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Please confirm the following list of contacts authorized to open support requests:</p>
+        ${_createContactsTable(info.authorizedContacts)}
+      </td>
+    </tr>
+  </table>`;
+const _generateTenantSection = (info, tier) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+    <tr>
+      <td style="padding: 0;">
+        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">3. Tenant Microsoft ID Definition</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Your Microsoft Tenant ID: <strong style="font-weight: 600;">${info.tenantId || '<span style="color: #d83b01; font-style: italic;">[PLEASE PROVIDE]</span>'}</strong></p>
+      </td>
+    </tr>
+  </table>`;
+const _generateGdapSection = (tier) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+    <tr>
+      <td style="padding: 0;">
+        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">4. GDAP Link Acceptance</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
+      </td>
+    </tr>
+  </table>`;
+const _generateRbacSection = (info, tier) => {
+    const tenantIdPlaceholder = info.tenantId || 'YOUR_TENANT_ID';
+    const script = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
+    return `
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+      <tr>
+        <td style="padding: 0;">
+          <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">5. RBAC Role Establishment</h3>
+          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
+          ${_formatScriptBlock(script)}
+        </td>
+      </tr>
+    </table>`;
+};
+const _generateServiceProviderSection = (tier) => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+    <tr>
+      <td style="padding: 0;">
+        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">6. Service Provider Acceptance</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Finally, please add Microsoft Support as a service provider in your conditional access policy to ensure seamless integration with your security protocols.</p>
+      </td>
+    </tr>
+  </table>`;
+// Updated to accept agent details including email
+const _generateClosing = (agentName, agentTitle, companyName, agentEmail) => {
+    const nameLine = agentName || 'Microsoft Support Team'; // Default if not provided
+    const titleLine = agentTitle ? `<br>${agentTitle}` : '';
+    const companyLine = companyName ? `<br>${companyName}` : '';
+    // Use provided agent email or fallback
+    const email = agentEmail || (agentName ? `${agentName.toLowerCase().replace(' ', '.')}@${(companyName === null || companyName === void 0 ? void 0 : companyName.toLowerCase()) || 'microsoft.com'}` : 'support@microsoft.com');
+    const mailtoLink = `mailto:${email}`;
+    return `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 30px;">
+    <tr>
+      <td style="padding: 0;">
+        <p style="margin: 0 0 10px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Looking forward to our meeting and to supporting your organization.</p>
+        <p style="margin: 20px 0 5px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">
+          Best regards,<br>
+          ${nameLine}
+          ${titleLine}
+          ${companyLine}
+          <br><a href="${mailtoLink}" style="color: #0078D4; text-decoration: none;">${email}</a>
+        </p>
+      </td>
+    </tr>
+  </table>`;
+};
+// --- Add new section generator for Additional Notes ---
+const _generateAdditionalNotesSection = (notes, tier) => {
+    // Process line breaks
+    const formattedNotes = notes.replace(/\n/g, '<br>');
+    return `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
+    <tr>
+      <td style="padding: 0;">
+        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">Additional Notes</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+          ${formattedNotes}
+        </p>
+      </td>
+    </tr>
+  </table>`;
+};
+const _generateFooter = () => `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 30px; border-top: 1px solid #ddd;">
+    <tr>
+      <td style="padding: 10px 0 0 0;">
+        <p style="margin: 0; font-size: 12px; color: #666; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">This is an automated message generated by the Microsoft Onboarding Template Generator.</p>
+      </td>
+    </tr>
+  </table>`;
+// Updated signature to accept agent details and flags
+const generateTemplate = (info, agentName, agentTitle, companyName, agentEmail, flags, // Add flags parameter
+additionalNotes // Add notes parameter
+) => {
+    // Ensure selectedTier is valid, default if not
+    const validTierKey = info.selectedTier in _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers ? info.selectedTier : Object.keys(_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers)[0];
+    const tier = _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers[validTierKey];
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Outlook specific styles -->
+  <!--[if mso]>
+  <style type="text/css">
+    body, table, td, th, div, p, h1, h2, h3, h4, h5, h6 {font-family: 'Segoe UI', Arial, sans-serif !important;}
+    table {border-collapse: collapse;}
+    .mso-button { padding: 12px 30px; background-color: ${tier.color}; color: white; text-decoration: none; font-weight: bold; display: inline-block; }
+  </style>
+  <![endif]-->
+</head>
+<body>
+  <div style="max-width: 700px; margin: 0 auto; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; color: #333;">
+    ${_generateHeader(tier)}
+    ${_generateGreeting(info)}
+    ${_generateMeetingProposal(info, tier)}
+    ${_generateTierDetailsSection(tier)}
+    ${_generateContactsSection(info, tier)}
+    ${_generateTenantSection(info, tier)}
+    ${ /* Conditionally render sections based on flags */''}
+    ${(flags === null || flags === void 0 ? void 0 : flags.includeGdap) ? _generateGdapSection(tier) : ''}
+    ${(flags === null || flags === void 0 ? void 0 : flags.includeRbac) ? _generateRbacSection(info, tier) : ''}
+    ${(flags === null || flags === void 0 ? void 0 : flags.includeConditionalAccess) ? _generateServiceProviderSection(tier) : ''}
+    ${ /* Conditionally render notes */''}
+    ${(flags === null || flags === void 0 ? void 0 : flags.includeNotes) && additionalNotes ? _generateAdditionalNotesSection(additionalNotes, tier) : ''}
+    ${_generateClosing(agentName, agentTitle, companyName, agentEmail)}
+    ${_generateFooter()}
+  </div>
+</body>
+</html>`;
+};
+// Exporting the main function if needed elsewhere, otherwise internal helpers are sufficient
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+    generateTemplate
+});
+
+
+/***/ }),
+
 /***/ "./src/features/emailBuilder/utils/translationService.ts":
 /*!***************************************************************!*\
   !*** ./src/features/emailBuilder/utils/translationService.ts ***!
@@ -32297,12 +32786,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
 /* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
 /* harmony import */ var _common_components_App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../common/components/App */ "./src/features/common/components/App.tsx");
+/* harmony import */ var _settings_components_SettingsPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../settings/components/SettingsPage */ "./src/features/settings/components/SettingsPage.tsx");
 
 // src/features/homepage/components/Homepage.tsx
 
 
 
 
+ // Import the new component
 // Icon components
 const OnboardingIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#0078D4", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M30 10H10C8.9 10 8 10.9 8 12V28C8 29.1 8.9 30 10 30H30C31.1 30 32 29.1 32 28V12C32 10.9 31.1 10 30 10ZM30 28H10V12H30V28Z", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M15 22H25V24H15V22ZM15 18H25V20H15V18ZM15 14H25V16H15V14Z", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "30", cy: "10", r: "4", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M30 8V12M28 10H32", stroke: "white", strokeWidth: "1.5" })] }));
 const ComplianceIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#107C10", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 8L8 14V20C8 26.6274 13.3726 32 20 32C26.6274 32 32 26.6274 32 20V14L20 8Z", stroke: "#107C10", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M17.25 20.25L19.25 22.25L23.25 18.25", stroke: "#107C10", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 15V16M16 19H15M25 19H24M17 16L16 15M23 16L24 15", stroke: "#107C10", strokeLinecap: "round", strokeLinejoin: "round" })] }));
@@ -32343,8 +32834,8 @@ const Homepage = () => {
             name: 'Extension Settings',
             description: 'Configure extension preferences and defaults.',
             icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingsIcon, {}),
-            component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
-            enabled: false
+            component: _settings_components_SettingsPage__WEBPACK_IMPORTED_MODULE_5__["default"], // Use the actual component
+            enabled: true // Enable the feature
         }
     ];
     // Return to homepage
@@ -32385,6 +32876,148 @@ __webpack_require__.r(__webpack_exports__);
  */
 // Export main component
 
+
+
+/***/ }),
+
+/***/ "./src/features/settings/components/SettingsPage.css":
+/*!***********************************************************!*\
+  !*** ./src/features/settings/components/SettingsPage.css ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_SettingsPage_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!./SettingsPage.css */ "./node_modules/css-loader/dist/cjs.js!./src/features/settings/components/SettingsPage.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_SettingsPage_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_SettingsPage_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_SettingsPage_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_SettingsPage_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/features/settings/components/SettingsPage.tsx":
+/*!***********************************************************!*\
+  !*** ./src/features/settings/components/SettingsPage.tsx ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/storage */ "./src/services/storage/index.ts");
+/* harmony import */ var _SettingsPage_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SettingsPage.css */ "./src/features/settings/components/SettingsPage.css");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+ // We'll create this CSS file later for styling
+const SettingsPage = () => {
+    const [agentName, setAgentName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [agentTitle, setAgentTitle] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [companyName, setCompanyName] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [agentEmail, setAgentEmail] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''); // Add state for email
+    const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    const [isSaving, setIsSaving] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [saveStatus, setSaveStatus] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('idle');
+    // Load settings on component mount
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        setIsLoading(true);
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.get('agentSettings')
+            .then(settings => {
+            if (settings) {
+                setAgentName(settings.agentName || '');
+                setAgentTitle(settings.agentTitle || '');
+                setCompanyName(settings.companyName || '');
+                setAgentEmail(settings.agentEmail || ''); // Load email
+            }
+        })
+            .catch(error => {
+            console.error("Error loading settings:", error);
+            // Optionally set an error state to show in the UI
+        })
+            .finally(() => {
+            setIsLoading(false);
+        });
+    }, []);
+    // Save settings handler
+    const handleSave = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => __awaiter(void 0, void 0, void 0, function* () {
+        setIsSaving(true);
+        setSaveStatus('idle');
+        const settingsToSave = {
+            agentName,
+            agentTitle,
+            companyName,
+            agentEmail, // Include email in saved data
+        };
+        try {
+            yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('agentSettings', settingsToSave);
+            setSaveStatus('success');
+            // Hide success message after a delay
+            setTimeout(() => setSaveStatus('idle'), 3000);
+        }
+        catch (error) {
+            console.error("Error saving settings:", error);
+            setSaveStatus('error');
+        }
+        finally {
+            setIsSaving(false);
+        }
+    }), [agentName, agentTitle, companyName, agentEmail]); // Add email to dependency array
+    if (isLoading) {
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "settings-loading", children: "Loading settings..." });
+    }
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "settings-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Agent Configuration" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure the details used in the email signature." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "settings-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentName", children: "Agent Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "agentName", value: agentName, onChange: (e) => setAgentName(e.target.value), placeholder: "e.g., Jane Doe" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentTitle", children: "Agent Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "agentTitle", value: agentTitle, onChange: (e) => setAgentTitle(e.target.value), placeholder: "e.g., Support Engineer" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "companyName", children: "Company Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "companyName", value: companyName, onChange: (e) => setCompanyName(e.target.value), placeholder: "e.g., Microsoft" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentEmail", children: "Agent Email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "agentEmail", value: agentEmail, onChange: (e) => setAgentEmail(e.target.value), placeholder: "e.g., jane.doe@microsoft.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleSave, disabled: isSaving, children: isSaving ? 'Saving...' : 'Save Settings' }), saveStatus === 'success' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "save-status success", children: "Settings saved!" }), saveStatus === 'error' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "save-status error", children: "Error saving settings." })] })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SettingsPage);
 
 
 /***/ }),

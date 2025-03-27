@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAppState } from '../../../contexts/AppStateContext';
 import App from '../../common/components/App';
+import SettingsPage from '../../settings/components/SettingsPage'; // Import the new component
 
 // Icon components
 const OnboardingIcon = () => (
@@ -89,8 +90,8 @@ const Homepage: React.FC = () => {
       name: 'Extension Settings',
       description: 'Configure extension preferences and defaults.',
       icon: <SettingsIcon />,
-      component: () => <div className="coming-soon">Coming Soon</div>,
-      enabled: false
+      component: SettingsPage, // Use the actual component
+      enabled: true // Enable the feature
     }
   ];
 
