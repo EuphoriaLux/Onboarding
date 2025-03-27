@@ -304,24 +304,10 @@ if ($subscriptions.Count -eq 0) {
 <body style="${bodyStyle}">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} background-color: #ffffff;"><tr><td> <!-- Email Wrapper Table -->
     <div style="${containerStyle}">
-        <!-- Email Header -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-bottom: 30px; border-bottom: 1px solid #eee;">
-            <tr>
-                <td style="padding: 0 0 20px 0;">
-                    <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333; font-family: 'Segoe UI', Arial, sans-serif;">
-                        <span style="font-weight: bold; color: #0078D4;">${formData.senderCompany.toUpperCase()}</span>
-                        <span style="color: #333;">| ${tier.name} ${this.translate('supportPlanTitle', language, { tier: '' }).trim()}</span>
-                    </h1>
-                </td>
-            </tr>
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">To:</strong> ${formData.to}</td></tr>
-            ${formData.cc ? `<tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Cc:</strong> ${formData.cc}</td></tr>` : ''}
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Subject:</strong> ${subject}</td></tr>
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Date:</strong> ${formData.currentDate}</td></tr>
-        </table>
-
+        <!-- Email Header Removed -->
+        
         <!-- Email Body -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-top: 20px;"> 
             <tr>
                 <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
                     <p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>

@@ -54840,7 +54840,7 @@ const App = () => {
                 // Pass conditional flags and notes to EmailPreview -> generateTemplate
                 // Removed includeGdap from flags
                 // Removed includeRbac from flags
-                flags: { includeConditionalAccess, includeNotes }, additionalNotes: includeNotes ? additionalNotes : undefined, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: state.customerInfo.proposedDate instanceof Date && !isNaN(state.customerInfo.proposedDate.getTime())
+                flags: { includeConditionalAccess, includeNotes }, additionalNotes: includeNotes ? additionalNotes : undefined, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "proposed-date", children: "Proposed Meeting Date" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "proposed-date", type: "date", value: state.customerInfo.proposedDate instanceof Date && !isNaN(state.customerInfo.proposedDate.getTime())
                                             ? state.customerInfo.proposedDate.toISOString().split('T')[0]
                                             : '', onChange: (e) => handleDateChange(e.target.value), required: true })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "Conditional Access", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeConditionalAccess", checked: includeConditionalAccess, onChange: (e) => setIncludeConditionalAccess(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeConditionalAccess", children: "Include Conditional Access Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "Additional Notes", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeNotes", checked: includeNotes, onChange: (e) => setIncludeNotes(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeNotes", children: "Include Additional Notes Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4, value: additionalNotes, onChange: (e) => setAdditionalNotes(e.target.value) })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending. Agent details are configured in Extension Settings." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, disabled: !agentSettings, children: agentSettings ? 'Preview Email' : 'Loading Settings...' }) })] })] }))] }));
 };
@@ -55130,18 +55130,38 @@ onBackToEdit }) => {
         document.body.removeChild(element);
     };
     const handleOpenInOutlook = () => {
-        // First copy the HTML content to clipboard with enhanced formatting preserved
-        (0,_utils_clipboardUtils__WEBPACK_IMPORTED_MODULE_3__.copyFormattedContent)(htmlContent, plainText).then(() => {
-            // Create a mailto URL
-            const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
-            // Open the default email client
-            window.open(mailtoUrl);
-            // Show improved guidance message
-            alert('Your default email client should open.\n\nThe formatted email content has been copied to your clipboard with improved styling for Outlook compatibility.\n\nPress Ctrl+V (or Cmd+V on Mac) to paste the content into the email body.');
-        }).catch((err) => {
-            console.error('Failed to copy before opening email client', err);
-            alert('There was an issue copying the email content. Please try copying it manually before opening your email client.');
-        });
+        // Don't copy to clipboard automatically when opening mail client
+        // Process recipients for mailto link (replace semicolons with commas, trim whitespace)
+        const formatRecipients = (emails) => {
+            if (!emails)
+                return '';
+            return emails
+                .split(/[,;]/) // Split by comma or semicolon
+                .map(email => email.trim()) // Trim whitespace
+                .filter(email => email) // Remove empty entries
+                .join(','); // Join with commas
+        };
+        const toRecipients = formatRecipients(emailData.to);
+        const ccRecipients = formatRecipients(emailData.cc);
+        // Create a mailto URL using encodeURIComponent for subject
+        let mailtoUrl = `mailto:${encodeURIComponent(toRecipients)}`;
+        const queryParams = [];
+        if (emailData.subject) {
+            // Encode subject specifically to handle spaces as %20
+            queryParams.push(`subject=${encodeURIComponent(emailData.subject)}`);
+        }
+        if (ccRecipients) {
+            // Encode CC recipients
+            queryParams.push(`cc=${encodeURIComponent(ccRecipients)}`);
+        }
+        if (queryParams.length > 0) {
+            mailtoUrl += `?${queryParams.join('&')}`;
+        }
+        // Open the default email client
+        window.open(mailtoUrl);
+        // Show guidance message (clipboard copy removed)
+        alert('Your default email client should open.\n\nPlease copy the email content manually (using the "Copy HTML" button) and paste it into the email body (Ctrl+V or Cmd+V).');
+        // Removed .catch related to clipboard copy failure
     };
     // Hide instructions modal
     const closeInstructions = () => {
@@ -55462,80 +55482,80 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /**
- * French translations for the email template
+ * German translations for the email template
  */
 const translations = {
     // Email general
-    'subject': 'Intégration du Plan de Support {tier} pour {company} - Configuration Administrative Microsoft 365',
-    'greeting': 'Cher/Chère {name},',
-    'intro1': 'Merci d\'avoir choisi {company} comme partenaire d\'administration Microsoft 365. Nous sommes ravis de commencer le processus d\'intégration pour {clientCompany}.',
-    'intro2': 'Vous trouverez ci-dessous les étapes importantes pour compléter votre processus d\'intégration. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer votre Plan de Support {tier} et les configurations d\'accès nécessaires.',
-    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.',
-    'regards': 'Cordialement,',
-    'footer': 'Ceci est un message généré automatiquement par le Générateur de Modèles d\'Intégration Microsoft.',
+    'subject': '{tier} Support-Plan Onboarding für {company} - Microsoft 365 Administrationseinrichtung',
+    'greeting': 'Sehr geehrte/r {name},',
+    'intro1': 'Vielen Dank, dass Sie {company} als Ihren Microsoft 365 Administrationspartner gewählt haben. Wir freuen uns, den Onboarding-Prozess für {clientCompany} zu beginnen.',
+    'intro2': 'Nachfolgend finden Sie die wichtigen Schritte zum Abschluss Ihres Onboarding-Prozesses. Bitte überprüfen Sie jeden Abschnitt sorgfältig und befolgen Sie die Anweisungen, um Ihren {tier} Support-Plan und die erforderlichen Zugriffskonfigurationen einzurichten.',
+    'closing': 'Bitte antworten Sie auf diese E-Mail, um den Empfang zu bestätigen und uns mitzuteilen, ob Sie Fragen oder Bedenken haben.',
+    'regards': 'Mit freundlichen Grüßen,',
+    'footer': 'Dies ist eine automatisch generierte Nachricht vom Microsoft Onboarding Template Generator.',
     // Section titles
-    'supportPlanTitle': 'DÉTAILS DU PLAN DE SUPPORT {tier}',
-    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS',
-    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT',
-    'gdapTitle': 'ACTION REQUISE : DÉLÉGATION GDAP',
-    'rbacTitle': 'ACTION REQUISE : CONFIGURATION RBAC',
-    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL',
-    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION',
-    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES',
+    'supportPlanTitle': '{tier} SUPPORT-PLAN DETAILS',
+    'authorizedContactsTitle': 'AKTION ERFORDERLICH: AUTORISIERTE KONTAKTE',
+    'tenantTitle': 'AKTION ERFORDERLICH: TENANT-INFORMATIONEN',
+    'gdapTitle': 'AKTION ERFORDERLICH: GDAP-DELEGIERUNG',
+    'rbacTitle': 'AKTION ERFORDERLICH: RBAC-KONFIGURATION',
+    'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF',
+    'meetingTitle': 'GEPLANT: ONBOARDING-MEETING',
+    'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN',
     // Support plan section
-    'supportPlanIntro': 'Le Plan de Support {tier} offre {supportType} avec les fonctionnalités suivantes :',
-    'supportType.bronze': 'une disponibilité de support de base pour les cas non urgents, sans couverture des situations critiques',
-    'supportType.other': 'un support complet avec couverture des situations critiques',
-    'supportTypeLabel': 'Type de support :',
-    'supportHoursLabel': 'Heures de support :',
-    'severityLevelsLabel': 'Niveaux de gravité :',
-    'contactsLabel': 'Contacts autorisés :',
-    'tenantsLabel': 'Tenants :',
-    'requestsLabel': 'Demandes de support :',
-    'criticalLabel': 'Support pour situations critiques :',
-    'yes': 'Oui',
-    'no': 'Non',
+    'supportPlanIntro': 'Der {tier} Support-Plan bietet {supportType} mit folgenden Funktionen:',
+    'supportType.bronze': 'grundlegende Support-Verfügbarkeit für nicht dringende Fälle, ohne Abdeckung kritischer Situationen',
+    'supportType.other': 'umfassenden Support mit Abdeckung kritischer Situationen',
+    'supportTypeLabel': 'Support-Typ:',
+    'supportHoursLabel': 'Support-Zeiten:',
+    'severityLevelsLabel': 'Schweregrade:',
+    'contactsLabel': 'Autorisierte Kontakte:',
+    'tenantsLabel': 'Tenants:',
+    'requestsLabel': 'Support-Anfragen:',
+    'criticalLabel': 'Support für kritische Situationen:',
+    'yes': 'Ja',
+    'no': 'Nein',
     // Contacts section
-    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft 365.',
-    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.',
-    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :',
-    'contactsNote': 'Remarque : Votre plan {tier} inclut {count} contacts autorisés. Des contacts supplémentaires peuvent être gérés via notre portail client après la configuration initiale.',
+    'contactsIntro': 'Basierend auf Ihrem {tier} Support-Plan können Sie bis zu {count} autorisierte Kontakte für Ihre Organisation benennen. Diese Kontakte sind berechtigt, Support-Anfragen einzureichen und administrative Änderungen an Ihrer Microsoft 365-Umgebung zu genehmigen.',
+    'contactsRolesIntro': 'Wir empfehlen, Personen für die folgenden Rollen zu benennen: {roles}.',
+    'contactsInstruction': 'Bitte vervollständigen Sie die folgende Tabelle mit den erforderlichen Informationen für jeden Kontakt:',
+    'contactsNote': 'Hinweis: Ihr {tier}-Plan beinhaltet {count} autorisierte Kontakte. Zusätzliche Kontakte können nach der Ersteinrichtung über unser Kundenportal verwaltet werden.',
     // Table headers
-    'numberHeader': 'N°',
-    'firstNameHeader': 'Prénom',
-    'lastNameHeader': 'Nom',
-    'officePhoneHeader': 'Téléphone bureau',
-    'mobilePhoneHeader': 'Téléphone mobile',
-    'emailHeader': 'Adresse e-mail',
-    'jobTitleHeader': 'Fonction',
+    'numberHeader': 'Nr.',
+    'firstNameHeader': 'Vorname',
+    'lastNameHeader': 'Nachname',
+    'officePhoneHeader': 'Bürotelefon',
+    'mobilePhoneHeader': 'Mobiltelefon',
+    'emailHeader': 'E-Mail-Adresse',
+    'jobTitleHeader': 'Position',
     // Meeting section
-    'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
-    'meetingDate': 'Date : {date}',
-    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.',
+    'meetingIntro': 'Wir haben ein Onboarding-Meeting angesetzt, um diese Punkte im Detail zu besprechen und Ihre Fragen zu beantworten:',
+    'meetingDate': 'Datum: {date}',
+    'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.',
     // GDAP section
-    'gdapIntro': 'Microsoft exige désormais que les partenaires utilisent GDAP pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}.',
-    'gdapRoles': 'Nous demanderons le rôle "{roles}".',
-    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité.',
-    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :',
-    'gdapLink': 'Lien d\'approbation GDAP',
+    'gdapIntro': 'Microsoft verlangt nun von Partnern die Verwendung von GDAP für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren.',
+    'gdapRoles': 'Wir werden die Rolle "{roles}" anfordern.',
+    'gdapPermission': 'Diese Berechtigung ermöglicht es uns, die in unserer Vereinbarung beschriebenen Support-Leistungen zu erbringen und gleichzeitig die Best Practices für Sicherheit einzuhalten.',
+    'gdapInstruction': 'Bitte besuchen Sie den folgenden Link, um die GDAP-Beziehung zu genehmigen:',
+    'gdapLink': 'GDAP-Genehmigungslink',
     // RBAC section
-    'rbacIntro': 'Nous configurerons {groups} pour garantir que les utilisateurs disposent du niveau d\'accès approprié à votre environnement en fonction de leurs rôles professionnels.',
-    'rbacPermissionBoth': 'Cela inclut des autorisations d\'accès pour Azure et Microsoft 365.',
-    'rbacPermissionAzure': 'Cela inclut des autorisations d\'accès aux ressources Azure.',
-    'rbacPermission365': 'Cela inclut des autorisations d\'accès aux services Microsoft 365.',
-    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :',
-    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell',
-    'rbacStep1Source': 'Source :',
-    'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
-    'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
-    'rbacScriptHeader': 'Script PowerShell (Copier et coller dans la console PowerShell)',
-    'rbacScreenshot': 'Veuillez nous envoyer une capture d\'écran du résultat du script ci-dessus ou nous indiquer si vous préférez planifier une réunion Teams pour effectuer cette configuration ensemble.',
+    'rbacIntro': 'Wir werden {groups} konfigurieren, um sicherzustellen, dass Benutzer basierend auf ihren Jobfunktionen die entsprechende Zugriffsebene auf Ihre Umgebung haben.',
+    'rbacPermissionBoth': 'Dies umfasst Zugriffsberechtigungen für Azure und Microsoft 365.',
+    'rbacPermissionAzure': 'Dies umfasst Zugriffsberechtigungen für Azure-Ressourcen.',
+    'rbacPermission365': 'Dies umfasst Zugriffsberechtigungen für Microsoft 365-Dienste.',
+    'rbacInstruction': 'Bitte führen Sie die folgenden Schritte aus, um RBAC-Berechtigungen zu konfigurieren:',
+    'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren',
+    'rbacStep1Source': 'Quelle:',
+    'rbacStep2': 'SCHRITT 2: Den Tenant aktualisieren und das folgende Skript ausführen',
+    'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein',
+    'rbacScriptHeader': 'PowerShell-Skript (In PowerShell-Konsole kopieren und einfügen)',
+    'rbacScreenshot': 'Bitte senden Sie uns einen Screenshot des Ergebnisses des obigen Skripts oder teilen Sie uns mit, ob Sie lieber ein Teams-Meeting vereinbaren möchten, um diese Konfiguration gemeinsam durchzuführen.',
     // Conditional Access section
-    'conditionalAccessIntro': 'Nous recommandons la mise en œuvre des politiques de sécurité suivantes pour votre environnement :',
-    'mfaPolicy': 'Exigences d\'authentification multifacteur (MFA) pour tous les utilisateurs',
-    'locationPolicy': 'Restrictions d\'accès basées sur la localisation',
-    'devicePolicy': 'Politiques de conformité des appareils pour garantir que seuls les appareils sécurisés peuvent accéder à vos données',
-    'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes'
+    'conditionalAccessIntro': 'Wir empfehlen die Implementierung der folgenden Sicherheitsrichtlinien für Ihre Umgebung:',
+    'mfaPolicy': 'Anforderungen für Multi-Faktor-Authentifizierung (MFA) für alle Benutzer',
+    'locationPolicy': 'Standortbasierte Zugriffsbeschränkungen',
+    'devicePolicy': 'Gerätekonformitätsrichtlinien, um sicherzustellen, dass nur sichere Geräte auf Ihre Daten zugreifen können',
+    'signInPolicy': 'Risikobasierte Anmelderichtlinien zur Verhinderung verdächtiger Anmeldeversuche'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
 
@@ -56502,24 +56522,10 @@ if ($subscriptions.Count -eq 0) {
 <body style="${bodyStyle}">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} background-color: #ffffff;"><tr><td> <!-- Email Wrapper Table -->
     <div style="${containerStyle}">
-        <!-- Email Header -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-bottom: 30px; border-bottom: 1px solid #eee;">
-            <tr>
-                <td style="padding: 0 0 20px 0;">
-                    <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333; font-family: 'Segoe UI', Arial, sans-serif;">
-                        <span style="font-weight: bold; color: #0078D4;">${formData.senderCompany.toUpperCase()}</span>
-                        <span style="color: #333;">| ${tier.name} ${this.translate('supportPlanTitle', language, { tier: '' }).trim()}</span>
-                    </h1>
-                </td>
-            </tr>
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">To:</strong> ${formData.to}</td></tr>
-            ${formData.cc ? `<tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Cc:</strong> ${formData.cc}</td></tr>` : ''}
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Subject:</strong> ${subject}</td></tr>
-            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="${strongStyle}">Date:</strong> ${formData.currentDate}</td></tr>
-        </table>
-
+        <!-- Email Header Removed -->
+        
         <!-- Email Body -->
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-top: 20px;"> 
             <tr>
                 <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
                     <p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>

@@ -274,6 +274,7 @@ const App: React.FC = () => {
                 placeholder="recipient@example.com"
                 required
               />
+              <small className="form-text">Use semicolons (;) to separate multiple addresses.</small>
             </div>
 
             <div className="form-group">
@@ -285,6 +286,7 @@ const App: React.FC = () => {
                 onChange={(e) => handleEmailRecipientsChange('cc', e.target.value)}
                 placeholder="cc@example.com"
               />
+              <small className="form-text">Use semicolons (;) to separate multiple addresses.</small>
             </div>
 
             {/* Removed manual subject input field */}

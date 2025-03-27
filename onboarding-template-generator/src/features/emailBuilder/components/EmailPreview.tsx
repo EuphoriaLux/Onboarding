@@ -99,21 +99,43 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
     document.body.removeChild(element);
   };
 
-  const handleOpenInOutlook = () => {
-    // First copy the HTML content to clipboard with enhanced formatting preserved
-    copyFormattedContent(htmlContent, plainText).then(() => {
-      // Create a mailto URL
-      const mailtoUrl = `mailto:${encodeURIComponent(emailData.to)}?subject=${encodeURIComponent(emailData.subject || '')}`;
-      
-      // Open the default email client
+   const handleOpenInOutlook = () => {
+     // Don't copy to clipboard automatically when opening mail client
+     // Process recipients for mailto link (replace semicolons with commas, trim whitespace)
+     const formatRecipients = (emails: string | undefined): string => {
+         if (!emails) return '';
+         return emails
+           .split(/[,;]/) // Split by comma or semicolon
+           .map(email => email.trim()) // Trim whitespace
+           .filter(email => email) // Remove empty entries
+           .join(','); // Join with commas
+       };
+       
+       const toRecipients = formatRecipients(emailData.to);
+       const ccRecipients = formatRecipients(emailData.cc);
+       
+       // Create a mailto URL using encodeURIComponent for subject
+       let mailtoUrl = `mailto:${encodeURIComponent(toRecipients)}`;
+       const queryParams = [];
+       if (emailData.subject) {
+         // Encode subject specifically to handle spaces as %20
+         queryParams.push(`subject=${encodeURIComponent(emailData.subject)}`);
+       }
+       if (ccRecipients) {
+         // Encode CC recipients
+         queryParams.push(`cc=${encodeURIComponent(ccRecipients)}`);
+       }
+       
+       if (queryParams.length > 0) {
+         mailtoUrl += `?${queryParams.join('&')}`;
+       }
+       
+       // Open the default email client
       window.open(mailtoUrl);
-      
-      // Show improved guidance message
-      alert('Your default email client should open.\n\nThe formatted email content has been copied to your clipboard with improved styling for Outlook compatibility.\n\nPress Ctrl+V (or Cmd+V on Mac) to paste the content into the email body.');
-    }).catch((err) => {
-      console.error('Failed to copy before opening email client', err);
-      alert('There was an issue copying the email content. Please try copying it manually before opening your email client.');
-    });
+       
+       // Show guidance message (clipboard copy removed)
+       alert('Your default email client should open.\n\nPlease copy the email content manually (using the "Copy HTML" button) and paste it into the email body (Ctrl+V or Cmd+V).');
+     // Removed .catch related to clipboard copy failure
   };
 
   // Hide instructions modal
