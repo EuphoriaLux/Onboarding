@@ -56339,7 +56339,7 @@ const emailBuilder = {
                 const rbacScript = `# Connect to the correct tenant using the Microsoft domain
 Connect-AzAccount -Tenant "${tenant.microsoftTenantDomain}" # Using tenant-specific MS Domain
 
-Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}" # Removed ID display
+Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}"
 
 $subscriptions = Get-AzSubscription
 if ($subscriptions.Count -eq 0) {
@@ -56595,7 +56595,7 @@ if ($subscriptions.Count -eq 0) {
                     const rbacScript = `# Connect to the correct tenant using the Microsoft domain
 Connect-AzAccount -Tenant "${tenant.microsoftTenantDomain}" # Using tenant-specific MS Domain
 
-Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}" # Removed ID display
+Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}"
 
 $subscriptions = Get-AzSubscription
 if ($subscriptions.Count -eq 0) {
