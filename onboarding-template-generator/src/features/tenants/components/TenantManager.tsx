@@ -30,7 +30,7 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
   // Add a new tenant, initializing new flags
   const addTenant = () => {
     if (tenants.length < tier.tenants) {
-      // Initialize tenantDomain, msDomain, deadline, hasAzure, includeRbacScript
+      // Initialize tenantDomain, msDomain, deadline, hasAzure
       onChange([...tenants, { 
         id: '', 
         companyName: '', 
@@ -38,7 +38,7 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
         microsoftTenantDomain: '', // Initialize MS Domain
         implementationDeadline: null, 
         hasAzure: false, // Default to false
-        includeRbacScript: false, // Default to false
+        // Removed includeRbacScript initialization
         gdapLink: '' 
       }]);
     }
@@ -119,19 +119,18 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               </small>
             </div>
             
-            {/* Add Microsoft Tenant Domain Input */}
+            {/* Moved GDAP Link Input Up */}
             <div className="form-group">
-              <label htmlFor={`ms-tenant-domain-${index}`}>Microsoft Tenant Domain</label>
+              <label htmlFor={`gdap-link-${index}`}>Tenant-Specific GDAP Link (Optional)</label>
               <input
-                id={`ms-tenant-domain-${index}`}
-                type="text"
-                value={tenant.microsoftTenantDomain}
-                onChange={(e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value)}
-                placeholder="yourcompany.onmicrosoft.com"
-                required 
+                id={`gdap-link-${index}`}
+                type="url"
+                value={tenant.gdapLink || ''}
+                onChange={(e) => handleTenantChange(index, 'gdapLink', e.target.value)}
+                placeholder="https://partner.microsoft.com/..."
               />
               <small className="form-text">
-                The `.onmicrosoft.com` domain, needed for the RBAC script.
+                If provided, this link will be used for this tenant. Otherwise, a default link will be used.
               </small>
             </div>
 
@@ -155,7 +154,23 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               </small>
             </div>
 
-            {/* Add Has Azure Checkbox */}
+            {/* Moved Microsoft Tenant Domain Input Down */}
+            <div className="form-group">
+              <label htmlFor={`ms-tenant-domain-${index}`}>Microsoft Tenant Domain</label>
+              <input
+                id={`ms-tenant-domain-${index}`}
+                type="text"
+                value={tenant.microsoftTenantDomain}
+                onChange={(e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value)}
+                placeholder="yourcompany.onmicrosoft.com"
+                required 
+              />
+              <small className="form-text">
+                The `.onmicrosoft.com` domain, needed for the RBAC script.
+              </small>
+            </div>
+
+            {/* Has Azure Checkbox */}
             <div className="form-group checkbox-container inline-label">
               <input
                 type="checkbox"
@@ -167,34 +182,7 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               <small className="form-text">Check if Azure RBAC configuration is needed for this tenant.</small>
             </div>
 
-            {/* Add Include RBAC Script Checkbox (conditionally shown) */}
-            {tenant.hasAzure && (
-              <div className="form-group checkbox-container inline-label nested-checkbox">
-                <input
-                  type="checkbox"
-                  id={`include-rbac-script-${index}`}
-                  checked={tenant.includeRbacScript}
-                  onChange={(e) => handleTenantChange(index, 'includeRbacScript', e.target.checked)}
-                />
-                <label htmlFor={`include-rbac-script-${index}`}>Include RBAC Script?</label>
-                <small className="form-text">Include the PowerShell script for this tenant in the email.</small>
-              </div>
-            )}
-            
-            {/* GDAP Link Input */}
-            <div className="form-group">
-              <label htmlFor={`gdap-link-${index}`}>Tenant-Specific GDAP Link (Optional)</label>
-              <input
-                id={`gdap-link-${index}`}
-                type="url"
-                value={tenant.gdapLink || ''}
-                onChange={(e) => handleTenantChange(index, 'gdapLink', e.target.value)}
-                placeholder="https://partner.microsoft.com/..."
-              />
-              <small className="form-text">
-                If provided, this link will be used for this tenant. Otherwise, a default link will be used.
-              </small>
-            </div>
+            {/* Removed Include RBAC Script Checkbox */}
           </div>
           
           <div className="info-box">

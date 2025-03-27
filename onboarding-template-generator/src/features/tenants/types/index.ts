@@ -13,7 +13,7 @@ export interface TenantInfo {
     microsoftTenantDomain: string; // Added MS domain (.onmicrosoft.com)
     implementationDeadline: Date | null; // Added implementation deadline
     hasAzure: boolean; // Added flag for Azure relevance
-    includeRbacScript: boolean; // Added flag for including RBAC script
+    // Removed includeRbacScript flag
     gdapLink?: string; // Optional GDAP link specific to this tenant
   }
   
@@ -36,7 +36,7 @@ export interface TenantInfo {
     microsoftTenantDomain: string; // Added MS domain (.onmicrosoft.com)
     implementationDeadline: Date | null; // Added implementation deadline
     hasAzure: boolean; // Added flag for Azure relevance
-    includeRbacScript: boolean; // Added flag for including RBAC script
-    // Update onChange to handle Date and boolean types
+    // Removed includeRbacScript flag
+    // Update onChange to handle Date and boolean types (keeping boolean for hasAzure)
     onChange: (field: keyof TenantInfo, value: string | Date | boolean | null) => void; 
   }

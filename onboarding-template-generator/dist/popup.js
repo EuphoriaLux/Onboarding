@@ -29549,8 +29549,8 @@ const defaultState = {
                 tenantDomain: '',
                 microsoftTenantDomain: '', // Added MS Domain default
                 implementationDeadline: null,
-                hasAzure: false,
-                includeRbacScript: false
+                hasAzure: false
+                // Removed includeRbacScript default
             }],
     },
     emailData: null,
@@ -29595,9 +29595,7 @@ const AppStateProvider = ({ children }) => {
                                 if (typeof processedTenant.hasAzure === 'undefined') {
                                     processedTenant.hasAzure = false;
                                 }
-                                if (typeof processedTenant.includeRbacScript === 'undefined') {
-                                    processedTenant.includeRbacScript = false;
-                                }
+                                // Removed includeRbacScript check
                                 // Ensure other required fields have defaults if somehow missing (optional)
                                 processedTenant.id = (_a = processedTenant.id) !== null && _a !== void 0 ? _a : '';
                                 processedTenant.companyName = (_b = processedTenant.companyName) !== null && _b !== void 0 ? _b : '';

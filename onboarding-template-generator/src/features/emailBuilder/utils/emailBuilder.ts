@@ -124,7 +124,8 @@ const emailBuilder = {
       gdapSection += this.translate('gdapInstruction', language) + '\n';
       gdapSection += tenantGdapLink + '\n\n';
       if (tenant.implementationDeadline) {
-        gdapSection += `*${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
+        // Use hardcoded label for clarity
+        gdapSection += `*Implementation Deadline: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
       }
 
       // RBAC Section (Per Tenant, if hasAzure is true)
@@ -134,21 +135,21 @@ const emailBuilder = {
         rbacSection += this.translate('rbacIntro', language, { groups: 'relevant security groups' }) + ' ';
         rbacSection += this.translate('rbacPermissionAzure', language) + '\n\n';
 
-        if (tenant.includeRbacScript) {
-          rbacSection += this.translate('rbacInstruction', language) + '\n\n';
-          rbacSection += `1. ${this.translate('rbacStep1', language)}\n`;
-          rbacSection += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
-          rbacSection += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
-          rbacSection += `   or update it:\n\n`;
-          rbacSection += `   Update-Module Az.Resources -Force\n\n`;
-          rbacSection += `2. ${this.translate('rbacStep2', language)}\n`;
-          rbacSection += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
+        // Script included if hasAzure is true
+        rbacSection += this.translate('rbacInstruction', language) + '\n\n';
+        rbacSection += `1. ${this.translate('rbacStep1', language)}\n`;
+        rbacSection += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
+        rbacSection += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
+        rbacSection += `   or update it:\n\n`;
+        rbacSection += `   Update-Module Az.Resources -Force\n\n`;
+        rbacSection += `2. ${this.translate('rbacStep2', language)}\n`;
+        rbacSection += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
 
-          // Use tenant.microsoftTenantDomain for -Tenant parameter
-          const rbacScript = `# Connect to the correct tenant using the Microsoft domain
+        // Use tenant.microsoftTenantDomain for -Tenant parameter
+        const rbacScript = `# Connect to the correct tenant using the Microsoft domain
 Connect-AzAccount -Tenant "${tenant.microsoftTenantDomain}" # Using tenant-specific MS Domain
 
-Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}" # Removed ID display
+Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}"
 
 $subscriptions = Get-AzSubscription
 if ($subscriptions.Count -eq 0) {
@@ -185,9 +186,8 @@ if ($subscriptions.Count -eq 0) {
         Write-Host "---"
     }
 }`;
-          rbacSection += rbacScript + '\n\n';
-          rbacSection += this.translate('rbacScreenshot', language) + '\n\n';
-        }
+        rbacSection += rbacScript + '\n\n';
+        rbacSection += this.translate('rbacScreenshot', language) + '\n\n';
       }
 
       // Add sections to body if they have content, separated by divider
@@ -198,7 +198,7 @@ if ($subscriptions.Count -eq 0) {
           }
           if (rbacSection.trim()) {
               // Add extra newline if both sections are present
-              if (gdapSection.trim()) { body += '\n'; } 
+              if (gdapSection.trim()) { body += '\n'; }
               body += rbacSection;
           }
           body += "---\n"; // Separator after tenant block
@@ -375,11 +375,12 @@ if ($subscriptions.Count -eq 0) {
             gdapHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>
                          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; text-align: center;">
                          <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">${this.translate('gdapInstruction', language)}</p>
-                         <a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
-            if (tenant.implementationDeadline) {
-                gdapHtml += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`;
-            }
-            gdapHtml += `</td></tr></table>`;
+                          <a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
+             if (tenant.implementationDeadline) {
+                 // Use hardcoded label for clarity
+                 gdapHtml += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">Implementation Deadline:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`;
+             }
+             gdapHtml += `</td></tr></table>`;
             // Wrap GDAP in its grey block
             htmlContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tr><td style="${tenantBlockCellStyle}">${gdapHtml}</td></tr></table>`;
 
@@ -391,18 +392,18 @@ if ($subscriptions.Count -eq 0) {
                 rbacHtml += createSectionHeader(rbacSectionTitle, tierColor);
                 rbacHtml += `<p style="${pStyle}">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`;
 
-                if (tenant.includeRbacScript) {
-                    rbacHtml += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
-                    rbacHtml += createStepIndicator(1, this.translate('rbacStep1', language));
-                    rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
-                    rbacHtml += `<div style="margin-left: 48px;">${formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`;
-                    rbacHtml += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
-                    rbacHtml += `<div style="margin-left: 48px;">${formatScriptBlock('Update-Module Az.Resources -Force', language)}</div>`;
-                    rbacHtml += createStepIndicator(2, this.translate('rbacStep2', language));
-                    rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
+                // Script included if hasAzure is true
+                rbacHtml += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
+                rbacHtml += createStepIndicator(1, this.translate('rbacStep1', language));
+                rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
+                rbacHtml += `<div style="margin-left: 48px;">${formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`;
+                rbacHtml += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
+                rbacHtml += `<div style="margin-left: 48px;">${formatScriptBlock('Update-Module Az.Resources -Force', language)}</div>`;
+                rbacHtml += createStepIndicator(2, this.translate('rbacStep2', language));
+                rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
 
-                    // Use tenant.microsoftTenantDomain for -Tenant parameter
-                    const rbacScript = `# Connect to the correct tenant using the Microsoft domain
+                // Use tenant.microsoftTenantDomain for -Tenant parameter
+                const rbacScript = `# Connect to the correct tenant using the Microsoft domain
 Connect-AzAccount -Tenant "${tenant.microsoftTenantDomain}" # Using tenant-specific MS Domain
 
 Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}"
@@ -442,9 +443,8 @@ if ($subscriptions.Count -eq 0) {
         Write-Host "---"
     }
 }`;
-                    rbacHtml += `<div style="margin-left: 48px;">${formatScriptBlock(rbacScript, language)}</div>`;
-                    rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
-                }
+                rbacHtml += `<div style="margin-left: 48px;">${formatScriptBlock(rbacScript, language)}</div>`;
+                rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
                  // Wrap RBAC in its grey block
                 htmlContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tr><td style="${tenantBlockCellStyle}">${rbacHtml}</td></tr></table>`;
             }
