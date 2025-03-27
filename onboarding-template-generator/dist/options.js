@@ -54440,6 +54440,7 @@ const defaultState = {
                 id: '',
                 companyName: '',
                 tenantDomain: '',
+                microsoftTenantDomain: '', // Added MS Domain default
                 implementationDeadline: null,
                 hasAzure: false,
                 includeRbacScript: false
@@ -54473,7 +54474,7 @@ const AppStateProvider = ({ children }) => {
                         // Also parse implementationDeadline and ensure boolean flags within tenants
                         if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
                             customerInfo.tenants = customerInfo.tenants.map((tenant) => {
-                                var _a, _b, _c;
+                                var _a, _b, _c, _d;
                                 let processedTenant = Object.assign({}, tenant);
                                 // Parse deadline
                                 if (processedTenant.implementationDeadline) {
@@ -54494,6 +54495,7 @@ const AppStateProvider = ({ children }) => {
                                 processedTenant.id = (_a = processedTenant.id) !== null && _a !== void 0 ? _a : '';
                                 processedTenant.companyName = (_b = processedTenant.companyName) !== null && _b !== void 0 ? _b : '';
                                 processedTenant.tenantDomain = (_c = processedTenant.tenantDomain) !== null && _c !== void 0 ? _c : '';
+                                processedTenant.microsoftTenantDomain = (_d = processedTenant.microsoftTenantDomain) !== null && _d !== void 0 ? _d : ''; // Ensure MS Domain default on load
                                 return processedTenant; // Cast back to TenantInfo
                             });
                         }
@@ -56307,64 +56309,93 @@ const emailBuilder = {
         // --- Tenant Specific Sections ---
         tenants.forEach((tenant, index) => {
             const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
+            let gdapSection = '';
+            let rbacSection = '';
             // GDAP Link & Deadline Section (Per Tenant)
             const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
             const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
-            body += `\n---\n**${gdapSectionTitle}**\n\n`; // Added separator
-            body += this.translate('gdapPermission', language) + '\n\n';
-            body += this.translate('gdapInstruction', language) + '\n';
-            body += tenantGdapLink + '\n\n';
+            gdapSection += `**${gdapSectionTitle}**\n\n`;
+            gdapSection += this.translate('gdapPermission', language) + '\n\n';
+            gdapSection += this.translate('gdapInstruction', language) + '\n';
+            gdapSection += tenantGdapLink + '\n\n';
             if (tenant.implementationDeadline) {
-                body += `*${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
+                gdapSection += `*${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
             }
             // RBAC Section (Per Tenant, if hasAzure is true)
             if (tenant.hasAzure) {
                 const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
-                body += `**${rbacSectionTitle}**\n\n`;
-                body += this.translate('rbacIntro', language, { groups: 'relevant security groups' }) + ' ';
-                body += this.translate('rbacPermissionAzure', language) + '\n\n';
+                rbacSection += `**${rbacSectionTitle}**\n\n`;
+                rbacSection += this.translate('rbacIntro', language, { groups: 'relevant security groups' }) + ' ';
+                rbacSection += this.translate('rbacPermissionAzure', language) + '\n\n';
                 if (tenant.includeRbacScript) {
-                    body += this.translate('rbacInstruction', language) + '\n\n';
-                    body += `1. ${this.translate('rbacStep1', language)}\n`;
-                    body += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
-                    body += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
-                    body += `   or update it:\n\n`;
-                    body += `   Update-Module Az.Resources -Force\n\n`;
-                    body += `2. ${this.translate('rbacStep2', language)}\n`;
-                    body += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
-                    const rbacScript = `# Connect to the correct tenant
-Connect-AzAccount -TenantID ${tenant.id} # Using tenant-specific ID
+                    rbacSection += this.translate('rbacInstruction', language) + '\n\n';
+                    rbacSection += `1. ${this.translate('rbacStep1', language)}\n`;
+                    rbacSection += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
+                    rbacSection += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
+                    rbacSection += `   or update it:\n\n`;
+                    rbacSection += `   Update-Module Az.Resources -Force\n\n`;
+                    rbacSection += `2. ${this.translate('rbacStep2', language)}\n`;
+                    rbacSection += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
+                    // Use tenant.microsoftTenantDomain for -Tenant parameter
+                    const rbacScript = `# Connect to the correct tenant using the Microsoft domain
+Connect-AzAccount -Tenant "${tenant.microsoftTenantDomain}" # Using tenant-specific MS Domain
 
-# Define the domain if needed elsewhere in script (Example placeholder)
-# $tenantDomain = "${tenant.tenantDomain}"
+Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}" # Removed ID display
 
 $subscriptions = Get-AzSubscription
-foreach ($subscription in $subscriptions) {
-    Set-AzContext -SubscriptionId $subscription.Id
-    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
-    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
-    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
-    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" }
-    if ($supportRole) {
-        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'."
-        # Test if the Owner role for the Foreign Principal AdminAgents exists:
-        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" }
-        if ($ownerRole) {
-            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
-            Write-Host "Removing Owner role for Foreign Principal AdminAgents from subscription '$($subscription.Name)'..."
-            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner" -ErrorAction SilentlyContinue
+if ($subscriptions.Count -eq 0) {
+    Write-Warning "No subscriptions found for tenant ${tenant.microsoftTenantDomain}. Skipping RBAC assignments."
+} else {
+    foreach ($subscription in $subscriptions) {
+        Write-Host "Processing Subscription: $($subscription.Name) ($($subscription.Id))"
+        Set-AzContext -SubscriptionId $subscription.Id -ErrorAction SilentlyContinue
+        if (!$?) { Write-Warning "Could not set context for subscription $($subscription.Id). Skipping."; continue }
+
+        # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+        Write-Host "Assigning 'Support Request Contributor' role..."
+        New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -Scope "/subscriptions/$($subscription.Id)" -ErrorAction SilentlyContinue 
+        
+        # Test if the Support Request Contributor role is assigned
+        $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -Scope "/subscriptions/$($subscription.Id)" | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+        if ($supportRole) {
+            Write-Host "Successfully assigned 'Support Request Contributor' role." 
+            
+            # Test if the Owner role for the Foreign Principal AdminAgents exists:
+            Write-Host "Checking for 'Owner' role for AdminAgents..."
+            $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb -Scope "/subscriptions/$($subscription.Id)" | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+            if ($ownerRole) {
+                # If the Owner role exists, remove it:
+                Write-Host "Removing 'Owner' role for AdminAgents..."
+                Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner" -Scope "/subscriptions/$($subscription.Id)" -ErrorAction SilentlyContinue -Force
+                if ($?) { Write-Host "Successfully removed 'Owner' role." } else { Write-Warning "Failed to remove 'Owner' role." }
+            } else {
+                Write-Host "'Owner' role for AdminAgents does not exist."
+            }
         } else {
-            Write-Host "Owner role for Foreign Principal AdminAgents does not exist in subscription '$($subscription.Name)'."
+            Write-Warning "Error: Could not assign 'Support Request Contributor' role!"
         }
-    } else {
-        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents in subscription '$($subscription.Name)'!"
+        Write-Host "---"
     }
 }`;
-                    body += rbacScript + '\n\n';
-                    body += this.translate('rbacScreenshot', language) + '\n\n';
+                    rbacSection += rbacScript + '\n\n';
+                    rbacSection += this.translate('rbacScreenshot', language) + '\n\n';
                 }
             }
-            body += "---\n"; // Added separator
+            // Add sections to body if they have content, separated by divider
+            if (gdapSection.trim() || rbacSection.trim()) {
+                body += `\n---\n`; // Separator before tenant block
+                if (gdapSection.trim()) {
+                    body += gdapSection;
+                }
+                if (rbacSection.trim()) {
+                    // Add extra newline if both sections are present
+                    if (gdapSection.trim()) {
+                        body += '\n';
+                    }
+                    body += rbacSection;
+                }
+                body += "---\n"; // Separator after tenant block
+            }
         });
         // --- End Tenant Specific Sections ---
         // Conditional Access Section (Remains Global for now)
@@ -56445,6 +56476,8 @@ foreach ($subscription in $subscriptions) {
         const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;`;
         const deadlineHighlightStyle = `margin: 15px 0 0 0; text-align: center; font-size: 14px; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;`; // Yellow background
         const deadlineStrongStyle = `font-weight: 600; color: #333;`; // Changed deadline text color for better contrast on yellow
+        const tenantBlockStyle = `background-color: #f8f8f8; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;`; // Style for tenant blocks
+        const tenantBlockCellStyle = `padding: 20px;`;
         let htmlContent = `<!DOCTYPE html>
 <html>
 <head>
@@ -56510,11 +56543,11 @@ foreach ($subscription in $subscriptions) {
         // Authorized Contacts Section
         if (formData.authorizedContacts.checked) {
             const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
-            htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(contactsSectionTitle, tierColor); // Assuming createSectionHeader uses tables/inline styles
+            htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(contactsSectionTitle, tierColor);
             htmlContent += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>
                        <p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>
                        <p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>
-                       ${(0,_components__WEBPACK_IMPORTED_MODULE_2__.createContactsTable)(tier.authorizedContacts, language)}`; // Assuming this component is Outlook-friendly
+                       ${(0,_components__WEBPACK_IMPORTED_MODULE_2__.createContactsTable)(tier.authorizedContacts, language)}`;
         }
         // Meeting Section
         if (formData.meetingDate) {
@@ -56525,72 +56558,87 @@ foreach ($subscription in $subscriptions) {
                        <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('meetingAttendees', language)}</p>`;
         }
         // --- Tenant Specific Sections ---
-        // Wrap tenant sections in a container table row for background color
         if (tenants.length > 0) {
-            htmlContent += `<tr><td style="padding-top: 15px;"><!-- Tenant Sections Start -->`; // Add padding above tenant sections
+            htmlContent += `<tr><td style="padding-top: 15px;"><!-- Tenant Sections Start -->`;
             tenants.forEach((tenant, index) => {
                 const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
-                const tenantBgColor = '#f8f8f8'; // Light grey background
-                htmlContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-bottom: 20px; background-color: ${tenantBgColor}; border: 1px solid #ddd; border-radius: 4px;"><tr><td style="padding: 20px;">`; // Table for grey background
-                // GDAP Link & Deadline Section (Per Tenant)
+                // --- GDAP Section Block ---
+                let gdapHtml = '';
                 const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
                 const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
-                htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(gdapSectionTitle, tierColor); // Use existing header component
-                htmlContent += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>
-                            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; text-align: center;">
-                            <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">${this.translate('gdapInstruction', language)}</p>
-                            <a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
+                gdapHtml += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(gdapSectionTitle, tierColor);
+                gdapHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>
+                         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; text-align: center;">
+                         <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">${this.translate('gdapInstruction', language)}</p>
+                         <a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
                 if (tenant.implementationDeadline) {
-                    htmlContent += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`; // Use span for inline-block highlight
+                    gdapHtml += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`;
                 }
-                htmlContent += `</td></tr></table>`;
-                // RBAC Section (Per Tenant, if hasAzure is true)
+                gdapHtml += `</td></tr></table>`;
+                // Wrap GDAP in its grey block
+                htmlContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tr><td style="${tenantBlockCellStyle}">${gdapHtml}</td></tr></table>`;
+                // --- RBAC Section Block (if applicable) ---
                 if (tenant.hasAzure) {
+                    let rbacHtml = '';
                     const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
-                    htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(rbacSectionTitle, tierColor);
-                    htmlContent += `<p style="${pStyle}">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`;
+                    rbacHtml += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createSectionHeader)(rbacSectionTitle, tierColor);
+                    rbacHtml += `<p style="${pStyle}">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`;
                     if (tenant.includeRbacScript) {
-                        htmlContent += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
-                        htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createStepIndicator)(1, this.translate('rbacStep1', language)); // Assuming this uses tables/inline styles
-                        htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
-                        htmlContent += `<div style="margin-left: 48px;">${(0,_components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock)('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`; // Assuming this uses tables/inline styles
-                        htmlContent += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
-                        htmlContent += `<div style="margin-left: 48px;">${(0,_components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock)('Update-Module Az.Resources -Force', language)}</div>`;
-                        htmlContent += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createStepIndicator)(2, this.translate('rbacStep2', language));
-                        htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
-                        const rbacScript = `# Connect to the correct tenant
-Connect-AzAccount -TenantID ${tenant.id} # Using tenant-specific ID
+                        rbacHtml += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
+                        rbacHtml += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createStepIndicator)(1, this.translate('rbacStep1', language));
+                        rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
+                        rbacHtml += `<div style="margin-left: 48px;">${(0,_components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock)('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`;
+                        rbacHtml += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
+                        rbacHtml += `<div style="margin-left: 48px;">${(0,_components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock)('Update-Module Az.Resources -Force', language)}</div>`;
+                        rbacHtml += (0,_components__WEBPACK_IMPORTED_MODULE_2__.createStepIndicator)(2, this.translate('rbacStep2', language));
+                        rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
+                        // Use tenant.microsoftTenantDomain for -Tenant parameter
+                        const rbacScript = `# Connect to the correct tenant using the Microsoft domain
+Connect-AzAccount -Tenant "${tenant.microsoftTenantDomain}" # Using tenant-specific MS Domain
 
-# Define the domain if needed elsewhere in script (Example placeholder)
-# $tenantDomain = "${tenant.tenantDomain}"
+Write-Host "Operating on Tenant: ${tenant.microsoftTenantDomain}"
 
 $subscriptions = Get-AzSubscription
-foreach ($subscription in $subscriptions) {
-    Set-AzContext -SubscriptionId $subscription.Id
-    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
-    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
-    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
-    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" }
-    if ($supportRole) {
-        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'."
-        # Test if the Owner role for the Foreign Principal AdminAgents exists:
-        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" }
-        if ($ownerRole) {
-            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
-            Write-Host "Removing Owner role for Foreign Principal AdminAgents from subscription '$($subscription.Name)'..."
-            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner" -ErrorAction SilentlyContinue
+if ($subscriptions.Count -eq 0) {
+    Write-Warning "No subscriptions found for tenant ${tenant.microsoftTenantDomain}. Skipping RBAC assignments."
+} else {
+    foreach ($subscription in $subscriptions) {
+        Write-Host "Processing Subscription: $($subscription.Name) ($($subscription.Id))"
+        Set-AzContext -SubscriptionId $subscription.Id -ErrorAction SilentlyContinue
+        if (!$?) { Write-Warning "Could not set context for subscription $($subscription.Id). Skipping."; continue }
+
+        # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+        Write-Host "Assigning 'Support Request Contributor' role..."
+        New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -Scope "/subscriptions/$($subscription.Id)" -ErrorAction SilentlyContinue 
+        
+        # Test if the Support Request Contributor role is assigned
+        $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -Scope "/subscriptions/$($subscription.Id)" | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+        if ($supportRole) {
+            Write-Host "Successfully assigned 'Support Request Contributor' role." 
+            
+            # Test if the Owner role for the Foreign Principal AdminAgents exists:
+            Write-Host "Checking for 'Owner' role for AdminAgents..."
+            $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb -Scope "/subscriptions/$($subscription.Id)" | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+            if ($ownerRole) {
+                # If the Owner role exists, remove it:
+                Write-Host "Removing 'Owner' role for AdminAgents..."
+                Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner" -Scope "/subscriptions/$($subscription.Id)" -ErrorAction SilentlyContinue -Force
+                if ($?) { Write-Host "Successfully removed 'Owner' role." } else { Write-Warning "Failed to remove 'Owner' role." }
+            } else {
+                Write-Host "'Owner' role for AdminAgents does not exist."
+            }
         } else {
-            Write-Host "Owner role for Foreign Principal AdminAgents does not exist in subscription '$($subscription.Name)'."
+            Write-Warning "Error: Could not assign 'Support Request Contributor' role!"
         }
-    } else {
-        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents in subscription '$($subscription.Name)'!"
+        Write-Host "---"
     }
 }`;
-                        htmlContent += `<div style="margin-left: 48px;">${(0,_components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock)(rbacScript, language)}</div>`;
-                        htmlContent += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
+                        rbacHtml += `<div style="margin-left: 48px;">${(0,_components__WEBPACK_IMPORTED_MODULE_2__.formatScriptBlock)(rbacScript, language)}</div>`;
+                        rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
                     }
+                    // Wrap RBAC in its grey block
+                    htmlContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tr><td style="${tenantBlockCellStyle}">${rbacHtml}</td></tr></table>`;
                 }
-                htmlContent += `</td></tr></table>`; // End grey background table for tenant
             });
             htmlContent += `</td></tr><!-- Tenant Sections End -->`;
         }
@@ -57340,11 +57388,12 @@ const TenantManager = ({ tenants, selectedTier, onChange }) => {
     // Add a new tenant, initializing new flags
     const addTenant = () => {
         if (tenants.length < tier.tenants) {
-            // Initialize tenantDomain, deadline, hasAzure, includeRbacScript
+            // Initialize tenantDomain, msDomain, deadline, hasAzure, includeRbacScript
             onChange([...tenants, {
                     id: '',
                     companyName: '',
                     tenantDomain: '',
+                    microsoftTenantDomain: '', // Initialize MS Domain
                     implementationDeadline: null,
                     hasAzure: false, // Default to false
                     includeRbacScript: false, // Default to false
@@ -57358,7 +57407,7 @@ const TenantManager = ({ tenants, selectedTier, onChange }) => {
         updatedTenants.splice(index, 1);
         onChange(updatedTenants);
     };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-domain-${index}`, children: "Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-domain-${index}`, type: "text", value: tenant.tenantDomain, onChange: (e) => handleTenantChange(index, 'tenantDomain', e.target.value), placeholder: "contoso.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The primary domain name (e.g., contoso.onmicrosoft.com)." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("hr", { className: "tenant-divider" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `implementation-deadline-${index}`, children: "Implementation Deadline" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"], { id: `implementation-deadline-${index}`, selected: tenant.implementationDeadline, onChange: (date) => handleTenantChange(index, 'implementationDeadline', date), dateFormat: "yyyy-MM-dd", placeholderText: "YYYY-MM-DD", className: "form-control" // Add form-control class if needed for styling
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-domain-${index}`, children: "Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-domain-${index}`, type: "text", value: tenant.tenantDomain, onChange: (e) => handleTenantChange(index, 'tenantDomain', e.target.value), placeholder: "contoso.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The primary domain name (e.g., contoso.onmicrosoft.com)." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `ms-tenant-domain-${index}`, children: "Microsoft Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `ms-tenant-domain-${index}`, type: "text", value: tenant.microsoftTenantDomain, onChange: (e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value), placeholder: "yourcompany.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The `.onmicrosoft.com` domain, needed for the RBAC script." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("hr", { className: "tenant-divider" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `implementation-deadline-${index}`, children: "Implementation Deadline" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"], { id: `implementation-deadline-${index}`, selected: tenant.implementationDeadline, onChange: (date) => handleTenantChange(index, 'implementationDeadline', date), dateFormat: "yyyy-MM-dd", placeholderText: "YYYY-MM-DD", className: "form-control" // Add form-control class if needed for styling
                                         , isClearable // Allow clearing the date
                                         : true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Optional: Target date for implementation tasks." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `has-azure-${index}`, checked: tenant.hasAzure, onChange: (e) => handleTenantChange(index, 'hasAzure', e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `has-azure-${index}`, children: "Azure RBAC Relevant?" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Check if Azure RBAC configuration is needed for this tenant." })] }), tenant.hasAzure && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label nested-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `include-rbac-script-${index}`, checked: tenant.includeRbacScript, onChange: (e) => handleTenantChange(index, 'includeRbacScript', e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `include-rbac-script-${index}`, children: "Include RBAC Script?" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Include the PowerShell script for this tenant in the email." })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `gdap-link-${index}`, children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `gdap-link-${index}`, type: "url", value: tenant.gdapLink || '', onChange: (e) => handleTenantChange(index, 'gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }, index))), tenants.length < tier.tenants && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addTenant, children: "Add Tenant" }))] }));
 };

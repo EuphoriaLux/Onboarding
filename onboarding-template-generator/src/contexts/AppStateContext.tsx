@@ -50,6 +50,7 @@ const defaultState: AppState = {
       id: '', 
       companyName: '', 
       tenantDomain: '', 
+      microsoftTenantDomain: '', // Added MS Domain default
       implementationDeadline: null, 
       hasAzure: false, 
       includeRbacScript: false 
@@ -110,6 +111,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
                 processedTenant.id = processedTenant.id ?? '';
                 processedTenant.companyName = processedTenant.companyName ?? '';
                 processedTenant.tenantDomain = processedTenant.tenantDomain ?? '';
+                processedTenant.microsoftTenantDomain = processedTenant.microsoftTenantDomain ?? ''; // Ensure MS Domain default on load
 
 
                 return processedTenant as TenantInfo; // Cast back to TenantInfo

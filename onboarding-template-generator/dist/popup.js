@@ -29547,6 +29547,7 @@ const defaultState = {
                 id: '',
                 companyName: '',
                 tenantDomain: '',
+                microsoftTenantDomain: '', // Added MS Domain default
                 implementationDeadline: null,
                 hasAzure: false,
                 includeRbacScript: false
@@ -29580,7 +29581,7 @@ const AppStateProvider = ({ children }) => {
                         // Also parse implementationDeadline and ensure boolean flags within tenants
                         if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
                             customerInfo.tenants = customerInfo.tenants.map((tenant) => {
-                                var _a, _b, _c;
+                                var _a, _b, _c, _d;
                                 let processedTenant = Object.assign({}, tenant);
                                 // Parse deadline
                                 if (processedTenant.implementationDeadline) {
@@ -29601,6 +29602,7 @@ const AppStateProvider = ({ children }) => {
                                 processedTenant.id = (_a = processedTenant.id) !== null && _a !== void 0 ? _a : '';
                                 processedTenant.companyName = (_b = processedTenant.companyName) !== null && _b !== void 0 ? _b : '';
                                 processedTenant.tenantDomain = (_c = processedTenant.tenantDomain) !== null && _c !== void 0 ? _c : '';
+                                processedTenant.microsoftTenantDomain = (_d = processedTenant.microsoftTenantDomain) !== null && _d !== void 0 ? _d : ''; // Ensure MS Domain default on load
                                 return processedTenant; // Cast back to TenantInfo
                             });
                         }

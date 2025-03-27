@@ -30,11 +30,12 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
   // Add a new tenant, initializing new flags
   const addTenant = () => {
     if (tenants.length < tier.tenants) {
-      // Initialize tenantDomain, deadline, hasAzure, includeRbacScript
+      // Initialize tenantDomain, msDomain, deadline, hasAzure, includeRbacScript
       onChange([...tenants, { 
         id: '', 
         companyName: '', 
         tenantDomain: '', 
+        microsoftTenantDomain: '', // Initialize MS Domain
         implementationDeadline: null, 
         hasAzure: false, // Default to false
         includeRbacScript: false, // Default to false
@@ -115,6 +116,22 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               />
               <small className="form-text">
                 Format: 00000000-0000-0000-0000-000000000000
+              </small>
+            </div>
+            
+            {/* Add Microsoft Tenant Domain Input */}
+            <div className="form-group">
+              <label htmlFor={`ms-tenant-domain-${index}`}>Microsoft Tenant Domain</label>
+              <input
+                id={`ms-tenant-domain-${index}`}
+                type="text"
+                value={tenant.microsoftTenantDomain}
+                onChange={(e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value)}
+                placeholder="yourcompany.onmicrosoft.com"
+                required 
+              />
+              <small className="form-text">
+                The `.onmicrosoft.com` domain, needed for the RBAC script.
               </small>
             </div>
 
