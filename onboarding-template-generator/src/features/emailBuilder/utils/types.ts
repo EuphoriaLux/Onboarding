@@ -13,12 +13,7 @@ export interface EmailFormData {
   to: string;
   cc?: string;
   subject?: string;
-  gdap: {
-    checked: boolean;
-    deadline: string;
-    roles: string;
-    link: string;
-  };
+  // gdap property removed
   rbac: {
     checked: boolean;
     groups: string;

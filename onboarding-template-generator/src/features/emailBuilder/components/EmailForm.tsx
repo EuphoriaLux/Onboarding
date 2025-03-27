@@ -12,10 +12,10 @@ interface EmailFormProps {
   language?: Language; // Make language optional
 }
 
-const EmailForm: React.FC<EmailFormProps> = ({ 
-  customerInfo, 
-  onSaveEmailData, 
-  onPreviewEmail, 
+const EmailForm: React.FC<EmailFormProps> = ({
+  customerInfo,
+  onSaveEmailData,
+  onPreviewEmail,
   language = 'en' // Default to English if not provided
 }) => {
   const [emailData, setEmailData] = useState<EmailFormData>(
@@ -49,13 +49,13 @@ const EmailForm: React.FC<EmailFormProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Include language in the form data
     const dataWithLanguage = {
       ...emailData,
       language
     };
-    
+
     onSaveEmailData(dataWithLanguage);
     onPreviewEmail(dataWithLanguage);
   };
@@ -92,7 +92,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
         Customize this email template to send to your client as part of the onboarding process.
         <span className="language-indicator"> Current language: <strong>{languageDisplay()}</strong></span>
       </p>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="section">
           <h3>Email Recipients</h3>
@@ -107,7 +107,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="cc">Cc:</label>
             <input
@@ -118,7 +118,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               placeholder="cc@example.com"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="subject">Subject:</label>
             <input
@@ -130,57 +130,23 @@ const EmailForm: React.FC<EmailFormProps> = ({
             />
           </div>
         </div>
-        
+
         {/* Rest of the component remains the same */}
         {/* ... */}
-        
+
         <div className="section">
           <h3>Onboarding Components</h3>
           <p>Select the components to include in your onboarding email:</p>
-          
+
+          {/* Ensure no GDAP code remains here */}
+
           <div className="checkbox-group">
             <div className="checkbox-container">
-              <input 
-                type="checkbox" 
-                id="gdap" 
-                checked={emailData.gdap.checked}
-                onChange={() => handleCheckboxToggle('gdap', 'checked')} 
-              />
-              <label htmlFor="gdap">GDAP (Granular Delegation of Administrative Privileges)</label>
-            </div>
-            {emailData.gdap.checked && (
-              <div className="nested-options">
-                <div className="form-group">
-                  <label htmlFor="gdapDeadline">Implementation Deadline:</label>
-                  <input
-                    type="text"
-                    id="gdapDeadline"
-                    value={emailData.gdap.deadline}
-                    onChange={(e) => handleNestedChange('gdap', 'deadline', e.target.value)}
-                    placeholder="e.g., June 30, 2025"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="gdapLink">GDAP Link:</label>
-                  <input
-                    type="text"
-                    id="gdapLink"
-                    value={emailData.gdap.link}
-                    onChange={(e) => handleNestedChange('gdap', 'link', e.target.value)}
-                    placeholder="GDAP approval link"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-          
-          <div className="checkbox-group">
-            <div className="checkbox-container">
-              <input 
-                type="checkbox" 
-                id="rbac" 
+              <input
+                type="checkbox"
+                id="rbac"
                 checked={emailData.rbac.checked}
-                onChange={() => handleCheckboxToggle('rbac', 'checked')} 
+                onChange={() => handleCheckboxToggle('rbac', 'checked')}
               />
               <label htmlFor="rbac">RBAC (Role-Based Access Control)</label>
             </div>
@@ -200,20 +166,20 @@ const EmailForm: React.FC<EmailFormProps> = ({
                   <label>Permission Level:</label>
                   <div className="inline-checks">
                     <div className="checkbox-container">
-                      <input 
-                        type="checkbox" 
-                        id="rbacAzure" 
+                      <input
+                        type="checkbox"
+                        id="rbacAzure"
                         checked={emailData.rbac.azure}
-                        onChange={() => handleCheckboxToggle('rbac', 'azure')} 
+                        onChange={() => handleCheckboxToggle('rbac', 'azure')}
                       />
                       <label htmlFor="rbacAzure">Azure RBAC</label>
                     </div>
                     <div className="checkbox-container">
-                      <input 
-                        type="checkbox" 
-                        id="rbacM365" 
+                      <input
+                        type="checkbox"
+                        id="rbacM365"
                         checked={emailData.rbac.m365}
-                        onChange={() => handleCheckboxToggle('rbac', 'm365')} 
+                        onChange={() => handleCheckboxToggle('rbac', 'm365')}
                       />
                       <label htmlFor="rbacM365">Microsoft 365 RBAC</label>
                     </div>
@@ -221,11 +187,11 @@ const EmailForm: React.FC<EmailFormProps> = ({
                 </div>
                 <div className="form-group">
                   <div className="checkbox-container">
-                    <input 
-                      type="checkbox" 
-                      id="includeRbacScript" 
+                    <input
+                      type="checkbox"
+                      id="includeRbacScript"
                       checked={emailData.rbac.includeScript}
-                      onChange={() => handleCheckboxToggle('rbac', 'includeScript')} 
+                      onChange={() => handleCheckboxToggle('rbac', 'includeScript')}
                     />
                     <label htmlFor="includeRbacScript">Include PowerShell Script</label>
                   </div>
@@ -233,14 +199,14 @@ const EmailForm: React.FC<EmailFormProps> = ({
               </div>
             )}
           </div>
-          
+
           <div className="checkbox-group">
             <div className="checkbox-container">
-              <input 
-                type="checkbox" 
-                id="conditionalAccess" 
+              <input
+                type="checkbox"
+                id="conditionalAccess"
                 checked={emailData.conditionalAccess.checked}
-                onChange={() => handleCheckboxToggle('conditionalAccess', 'checked')} 
+                onChange={() => handleCheckboxToggle('conditionalAccess', 'checked')}
               />
               <label htmlFor="conditionalAccess">Conditional Access</label>
             </div>
@@ -250,38 +216,38 @@ const EmailForm: React.FC<EmailFormProps> = ({
                   <label>Policies to Implement:</label>
                   <div className="inline-checks">
                     <div className="checkbox-container">
-                      <input 
-                        type="checkbox" 
-                        id="caMfa" 
+                      <input
+                        type="checkbox"
+                        id="caMfa"
                         checked={emailData.conditionalAccess.mfa}
-                        onChange={() => handleCheckboxToggle('conditionalAccess', 'mfa')} 
+                        onChange={() => handleCheckboxToggle('conditionalAccess', 'mfa')}
                       />
                       <label htmlFor="caMfa">MFA Requirements</label>
                     </div>
                     <div className="checkbox-container">
-                      <input 
-                        type="checkbox" 
-                        id="caLocation" 
+                      <input
+                        type="checkbox"
+                        id="caLocation"
                         checked={emailData.conditionalAccess.location}
-                        onChange={() => handleCheckboxToggle('conditionalAccess', 'location')} 
+                        onChange={() => handleCheckboxToggle('conditionalAccess', 'location')}
                       />
                       <label htmlFor="caLocation">Location-Based Access</label>
                     </div>
                     <div className="checkbox-container">
-                      <input 
-                        type="checkbox" 
-                        id="caDevice" 
+                      <input
+                        type="checkbox"
+                        id="caDevice"
                         checked={emailData.conditionalAccess.device}
-                        onChange={() => handleCheckboxToggle('conditionalAccess', 'device')} 
+                        onChange={() => handleCheckboxToggle('conditionalAccess', 'device')}
                       />
                       <label htmlFor="caDevice">Device Compliance</label>
                     </div>
                     <div className="checkbox-container">
-                      <input 
-                        type="checkbox" 
-                        id="caSignIn" 
+                      <input
+                        type="checkbox"
+                        id="caSignIn"
                         checked={emailData.conditionalAccess.signIn}
-                        onChange={() => handleCheckboxToggle('conditionalAccess', 'signIn')} 
+                        onChange={() => handleCheckboxToggle('conditionalAccess', 'signIn')}
                       />
                       <label htmlFor="caSignIn">Sign-in Risk Policies</label>
                     </div>
@@ -290,14 +256,14 @@ const EmailForm: React.FC<EmailFormProps> = ({
               </div>
             )}
           </div>
-          
+
           <div className="checkbox-group">
             <div className="checkbox-container">
-              <input 
-                type="checkbox" 
-                id="authorizedContacts" 
+              <input
+                type="checkbox"
+                id="authorizedContacts"
                 checked={emailData.authorizedContacts.checked}
-                onChange={() => handleCheckboxToggle('authorizedContacts', 'checked')} 
+                onChange={() => handleCheckboxToggle('authorizedContacts', 'checked')}
               />
               <label htmlFor="authorizedContacts">Authorized Contacts Table</label>
             </div>
@@ -317,7 +283,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
             )}
           </div>
         </div>
-        
+
         <div className="section">
           <h3>Additional Information</h3>
           <div className="form-group">
@@ -330,7 +296,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               placeholder="e.g., March 20, 2025 at 2:00 PM EST"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="additionalNotes">Additional Notes or Instructions:</label>
             <textarea
@@ -342,7 +308,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
             ></textarea>
           </div>
         </div>
-        
+
         <div className="section">
           <h3>Sender Information</h3>
           <div className="form-group">
@@ -356,7 +322,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="senderTitle">Your Title:</label>
             <input
@@ -367,7 +333,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               placeholder="Your job title"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="senderCompany">Your Company:</label>
             <input
@@ -379,7 +345,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
               required
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="senderContact">Your Contact Info:</label>
             <input
@@ -391,7 +357,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
             />
           </div>
         </div>
-        
+
         <div className="form-actions">
           <button type="submit" className="btn-preview">Preview Email</button>
         </div>

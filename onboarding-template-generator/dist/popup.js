@@ -29532,8 +29532,8 @@ const defaultState = {
         proposedDate: new Date(),
         authorizedContacts: [{ name: '', email: '', phone: '' }],
         selectedTier: 'silver',
-        // Initialize default tenant with tenantDomain
-        tenants: [{ id: '', companyName: '', tenantDomain: '' }],
+        // Initialize default tenant with tenantDomain and implementationDeadline
+        tenants: [{ id: '', companyName: '', tenantDomain: '', implementationDeadline: null }],
     },
     emailData: null,
     language: 'en'
@@ -29559,6 +29559,22 @@ const AppStateProvider = ({ children }) => {
                             else {
                                 customerInfo.proposedDate = new Date();
                             }
+                        }
+                        // Also parse implementationDeadline within tenants
+                        if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
+                            customerInfo.tenants = customerInfo.tenants.map((tenant) => {
+                                if (tenant.implementationDeadline) {
+                                    const parsedDeadline = new Date(tenant.implementationDeadline);
+                                    if (!isNaN(parsedDeadline.getTime())) {
+                                        return Object.assign(Object.assign({}, tenant), { implementationDeadline: parsedDeadline });
+                                    }
+                                    else {
+                                        // If parsing fails, set back to null or keep original if it wasn't a string
+                                        return Object.assign(Object.assign({}, tenant), { implementationDeadline: null });
+                                    }
+                                }
+                                return tenant; // Return tenant as is if no deadline or already null
+                            });
                         }
                         newState.customerInfo = Object.assign(Object.assign({}, defaultState.customerInfo), customerInfo);
                     }

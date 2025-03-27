@@ -1,9 +1,9 @@
 // src/components/TenantManager.tsx
 import React from 'react';
+import DatePicker from 'react-datepicker'; // Import DatePicker
+import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
 import { supportTiers } from '../data/supportTiers';
 import { TenantInfo } from '../types'; // Import updated TenantInfo type
-
-// Remove local TenantInfo definition
 
 interface TenantManagerProps {
   tenants: TenantInfo[]; // Use imported TenantInfo
@@ -14,22 +14,24 @@ interface TenantManagerProps {
 const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange }) => {
   const tier = supportTiers[selectedTier];
   
-  // Handle tenant field changes, including gdapLink
-  const handleTenantChange = (index: number, field: keyof TenantInfo, value: string) => {
+  // Handle tenant field changes, including Date for deadline
+  const handleTenantChange = (index: number, field: keyof TenantInfo, value: string | Date | null) => {
     const updatedTenants = tenants.map((tenant, i) => {
       if (i === index) {
-        return { ...tenant, [field]: value };
+        // Handle potential null value for DatePicker when cleared
+        const newValue = field === 'implementationDeadline' && value === null ? null : value;
+        return { ...tenant, [field]: newValue };
       }
       return tenant;
     });
     onChange(updatedTenants);
   };
 
-  // Add a new tenant, initializing tenantDomain and gdapLink
+  // Add a new tenant, initializing implementationDeadline to null
   const addTenant = () => {
     if (tenants.length < tier.tenants) {
-      // Initialize tenantDomain as empty string
-      onChange([...tenants, { id: '', companyName: '', tenantDomain: '', gdapLink: '' }]);
+      // Initialize tenantDomain and implementationDeadline
+      onChange([...tenants, { id: '', companyName: '', tenantDomain: '', implementationDeadline: null, gdapLink: '' }]);
     }
   };
 
@@ -89,6 +91,23 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               />
               <small className="form-text">
                 The primary domain name (e.g., contoso.onmicrosoft.com).
+              </small>
+            </div>
+
+            {/* Add Implementation Deadline Date Picker */}
+            <div className="form-group">
+              <label htmlFor={`implementation-deadline-${index}`}>Implementation Deadline</label>
+              <DatePicker
+                id={`implementation-deadline-${index}`}
+                selected={tenant.implementationDeadline}
+                onChange={(date: Date | null) => handleTenantChange(index, 'implementationDeadline', date)}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="YYYY-MM-DD"
+                className="form-control" // Add form-control class if needed for styling
+                isClearable // Allow clearing the date
+              />
+              <small className="form-text">
+                Optional: Target date for implementation tasks.
               </small>
             </div>
             

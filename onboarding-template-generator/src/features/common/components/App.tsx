@@ -70,7 +70,7 @@ const App: React.FC = () => {
     subject: ''
   });
   // State for conditional sections
-  const [includeGdap, setIncludeGdap] = useState(true);
+  // Removed includeGdap state
   const [includeRbac, setIncludeRbac] = useState(true);
   const [includeConditionalAccess, setIncludeConditionalAccess] = useState(true);
   const [includeNotes, setIncludeNotes] = useState(true); // Assuming notes are optional too
@@ -181,13 +181,7 @@ const App: React.FC = () => {
       ...customerInfo, // Use the customerInfo object we already got
       // Include emailContacts required by EmailFormData type
       emailContacts: state.customerInfo.authorizedContacts,
-      // Pass conditional flags based on state
-      gdap: {
-        checked: includeGdap, // Use state variable
-        deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(), // Keep defaults for now
-        roles: "Service Support Administrator",
-        link: tenantSpecificGdapLink // Use the determined link
-      },
+      // Removed gdap property construction
       rbac: {
         checked: includeRbac, // Use state variable
         groups: 'appropriate security groups', // Keep defaults for now - TODO: Read from form input
@@ -261,7 +255,8 @@ const App: React.FC = () => {
           companyName={agentSettings?.companyName} // Agent's company
           agentEmail={agentSettings?.agentEmail}
           // Pass conditional flags and notes to EmailPreview -> generateTemplate
-          flags={{ includeGdap, includeRbac, includeConditionalAccess, includeNotes }}
+          // Removed includeGdap from flags
+          flags={{ includeRbac, includeConditionalAccess, includeNotes }}
           additionalNotes={includeNotes ? additionalNotes : undefined}
           onBackToEdit={handleBackToEdit}
         />
@@ -378,25 +373,7 @@ const App: React.FC = () => {
               Configure the detailed sections to include in your onboarding email
             </p>
 
-            <CollapsibleSection title="GDAP Delegation">
-               <div className="form-group checkbox-container inline-label">
-                 <input type="checkbox" id="includeGdap" checked={includeGdap} onChange={(e) => setIncludeGdap(e.target.checked)} />
-                 <label htmlFor="includeGdap">Include GDAP Section</label>
-               </div>
-              {/* Inputs for GDAP - Assuming these are handled elsewhere or hardcoded for now */}
-              <div className="form-group">
-                <label htmlFor="gdap-deadline">Implementation Deadline:</label>
-                <input id="gdap-deadline" type="text" placeholder="e.g., June 30, 2025" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="gdap-link">GDAP Link:</label>
-                <input id="gdap-link" type="text" placeholder="GDAP approval link" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="gdap-roles">Requested Roles:</label>
-                <input id="gdap-roles" type="text" placeholder="e.g., Service Support Administrator" />
-              </div>
-            </CollapsibleSection>
+            {/* Removed GDAP CollapsibleSection */}
 
             <CollapsibleSection title="RBAC Configuration">
                <div className="form-group checkbox-container inline-label">

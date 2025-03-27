@@ -126,29 +126,25 @@ const emailBuilder = {
       body += this.translate('meetingAttendees', language) + '\n\n';
     }
     
-    // GDAP Section - Iterate through tenants
-    if (formData.gdap.checked && tenants.length > 0) {
+    // GDAP Link & Deadline Section - Iterate through tenants if any exist
+    if (tenants.length > 0) {
       tenants.forEach((tenant, index) => {
         const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-        // Always use tenantDomain in the title
+        // Use tenantDomain in the title
         const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
 
         body += `**${sectionTitle}**\n\n`;
-        body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
-        body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
-        body += this.translate('gdapPermission', language) + '\n\n';
+        // Removed intro/roles lines
+        body += this.translate('gdapPermission', language) + '\n\n'; // Keep permission info if needed? Or remove? Assuming keep for now.
         body += this.translate('gdapInstruction', language) + '\n';
         body += tenantGdapLink + '\n\n';
+        // Add Implementation Deadline display for text
+        if (tenant.implementationDeadline) {
+          // Assuming a translation key 'implementationDeadlineLabel' exists
+          body += `*${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
+        }
       });
-    } else if (formData.gdap.checked) {
-        // Fallback if no tenants array provided but GDAP checked (shouldn't happen with App.tsx changes)
-        body += `**${this.translate('gdapTitle', language)}**\n\n`;
-        body += this.translate('gdapIntro', language, { deadline: formData.gdap.deadline }) + '\n';
-        body += this.translate('gdapRoles', language, { roles: formData.gdap.roles }) + '\n';
-        body += this.translate('gdapPermission', language) + '\n\n';
-        body += this.translate('gdapInstruction', language) + '\n';
-        body += formData.gdap.link + '\n\n'; // Use link from formData as fallback
-    }
+    } // Removed the 'else if (formData.gdap.checked)' block
     
     // RBAC Section
     if (formData.rbac.checked) {
@@ -485,21 +481,16 @@ const emailBuilder = {
                     </p>`;
     }
     
-    // GDAP Section - Iterate through tenants
-    if (formData.gdap.checked && tenants.length > 0) {
+    // GDAP Link & Deadline Section - Iterate through tenants if any exist
+    if (tenants.length > 0) {
       tenants.forEach((tenant, index) => {
         const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-        // Always use tenantDomain in the title
+        // Use tenantDomain in the title
         const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
 
         htmlContent += createSectionHeader(sectionTitle, tierColor);
 
         htmlContent += `
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
-                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600;">${formData.gdap.roles}</strong>` })}
-                    </p>
-                    
                     <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
                       ${this.translate('gdapPermission', language)}
                     </p>
@@ -514,38 +505,20 @@ const emailBuilder = {
                                   <a href="${tenantGdapLink}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
                                     ${this.translate('gdapLink', language)}
                                   </a>
-                                </p>
+                                </p>`;
+        // Add Implementation Deadline display for HTML, highlighted below the button
+        if (tenant.implementationDeadline) {
+          htmlContent += `
+                                <p style="margin: 15px 0 0 0; text-align: center; font-size: 14px; color: #d83b01; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;">
+                                  <strong style="font-weight: 600;">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}
+                                </p>`;
+        }
+        htmlContent += `
                             </td>
                         </tr>
                     </table>`;
       });
-    } else if (formData.gdap.checked) {
-        // Fallback if no tenants array provided but GDAP checked
-        const gdapSectionTitle = this.translate('gdapTitle', language);
-        htmlContent += createSectionHeader(gdapSectionTitle, tierColor);
-        htmlContent += `
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('gdapIntro', language, { deadline: `<strong style="font-weight: 600;">${formData.gdap.deadline}</strong>` })}
-                      ${this.translate('gdapRoles', language, { roles: `<strong style="font-weight: 600;">${formData.gdap.roles}</strong>` })}
-                    </p>
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('gdapPermission', language)}
-                    </p>
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
-                        <tr>
-                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                                <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">
-                                ${this.translate('gdapInstruction', language)}
-                                </p>
-                                <p style="margin: 0; text-align: center;">
-                                  <a href="${formData.gdap.link}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
-                                    ${this.translate('gdapLink', language)}
-                                  </a>
-                                </p>
-                            </td>
-                        </tr>
-                    </table>`;
-    }
+    } // Removed the 'else if (formData.gdap.checked)' block
     
     // RBAC Section
     if (formData.rbac.checked) {
@@ -835,8 +808,7 @@ foreach ($subscription in $subscriptions) {
     
     // Handle date calculation safely
     const today = new Date();
-    const futureDate = new Date();
-    futureDate.setDate(today.getDate() + 30);
+    // Removed futureDate calculation as it was only used for GDAP deadline
     
     // Format today's date
     const currentDate = today.toLocaleDateString();
@@ -861,12 +833,7 @@ foreach ($subscription in $subscriptions) {
         tier: tier.name,
         company: info.companyName
       }),
-      gdap: {
-        checked: true,
-        deadline: futureDate.toLocaleDateString(),
-        roles: "Service Support Administrator",
-        link: "https://partner.microsoft.com/dashboard/commerce/granularadmin"
-      },
+      // Removed gdap property
       rbac: {
         checked: true,
         groups: 'appropriate security groups',
