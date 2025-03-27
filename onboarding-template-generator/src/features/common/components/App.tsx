@@ -71,7 +71,7 @@ const App: React.FC = () => {
   });
   // State for conditional sections
   // Removed includeGdap state
-  const [includeRbac, setIncludeRbac] = useState(true);
+  // Removed includeRbac state
   const [includeConditionalAccess, setIncludeConditionalAccess] = useState(true);
   const [includeNotes, setIncludeNotes] = useState(true); // Assuming notes are optional too
   const [additionalNotes, setAdditionalNotes] = useState('');
@@ -182,14 +182,7 @@ const App: React.FC = () => {
       // Include emailContacts required by EmailFormData type
       emailContacts: state.customerInfo.authorizedContacts,
       // Removed gdap property construction
-      rbac: {
-        checked: includeRbac, // Use state variable
-        groups: 'appropriate security groups', // Keep defaults for now - TODO: Read from form input
-        tenantId: state.customerInfo.tenants[0]?.id || '[your-tenant-id]',
-        azure: true, // Keep defaults for now
-        m365: true,
-        includeScript: true // Keep defaults for now
-      },
+      // Removed rbac property construction
       conditionalAccess: {
         checked: includeConditionalAccess, // Use state variable
         mfa: true, // Keep defaults for now
@@ -256,7 +249,8 @@ const App: React.FC = () => {
           agentEmail={agentSettings?.agentEmail}
           // Pass conditional flags and notes to EmailPreview -> generateTemplate
           // Removed includeGdap from flags
-          flags={{ includeRbac, includeConditionalAccess, includeNotes }}
+          // Removed includeRbac from flags
+          flags={{ includeConditionalAccess, includeNotes }}
           additionalNotes={includeNotes ? additionalNotes : undefined}
           onBackToEdit={handleBackToEdit}
         />
@@ -375,27 +369,7 @@ const App: React.FC = () => {
 
             {/* Removed GDAP CollapsibleSection */}
 
-            <CollapsibleSection title="RBAC Configuration">
-               <div className="form-group checkbox-container inline-label">
-                 <input type="checkbox" id="includeRbac" checked={includeRbac} onChange={(e) => setIncludeRbac(e.target.checked)} />
-                 <label htmlFor="includeRbac">Include RBAC Section</label>
-               </div>
-              {/* Inputs for RBAC */}
-               <div className="form-group">
-                <label htmlFor="rbac-groups">Security Groups to Configure:</label>
-                <input id="rbac-groups" type="text" placeholder="e.g., IT Admins, Finance Team, HR" />
-              </div>
-              <div className="form-group">
-                <label>Permission Level:</label>
-                <div className="inline-checks">
-                  <div className="checkbox-container"><input type="checkbox" id="rbacAzure" defaultChecked={true} /><label htmlFor="rbacAzure">Azure RBAC</label></div>
-                  <div className="checkbox-container"><input type="checkbox" id="rbacM365" defaultChecked={true} /><label htmlFor="rbacM365">Microsoft 365 RBAC</label></div>
-                </div>
-              </div>
-              <div className="form-group">
-                <div className="checkbox-container"><input type="checkbox" id="includeRbacScript" defaultChecked={true} /><label htmlFor="includeRbacScript">Include PowerShell Script</label></div>
-              </div>
-            </CollapsibleSection>
+            {/* Removed RBAC CollapsibleSection */}
 
             <CollapsibleSection title="Conditional Access">
                <div className="form-group checkbox-container inline-label">

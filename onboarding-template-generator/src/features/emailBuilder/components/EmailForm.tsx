@@ -36,7 +36,8 @@ const EmailForm: React.FC<EmailFormProps> = ({
 
   const handleNestedChange = (section: string, field: string, value: any) => {
     setEmailData((prev: EmailFormData) => { // Fix implicit any
-      const currentSection = prev[section as keyof EmailFormData] as Record<string, any>;
+      // Ensure section exists before trying to access it
+      const currentSection = prev[section as keyof EmailFormData] as Record<string, any> || {};
       return {
         ...prev,
         [section]: {
@@ -62,7 +63,8 @@ const EmailForm: React.FC<EmailFormProps> = ({
 
   const handleCheckboxToggle = (section: string, field: string) => {
     setEmailData((prev: EmailFormData) => { // Fix implicit any
-      const currentSection = prev[section as keyof EmailFormData] as Record<string, any>;
+      // Ensure section exists before trying to access it
+      const currentSection = prev[section as keyof EmailFormData] as Record<string, any> || {};
       return {
         ...prev,
         [section]: {
@@ -138,67 +140,8 @@ const EmailForm: React.FC<EmailFormProps> = ({
           <h3>Onboarding Components</h3>
           <p>Select the components to include in your onboarding email:</p>
 
-          {/* Ensure no GDAP code remains here */}
-
-          <div className="checkbox-group">
-            <div className="checkbox-container">
-              <input
-                type="checkbox"
-                id="rbac"
-                checked={emailData.rbac.checked}
-                onChange={() => handleCheckboxToggle('rbac', 'checked')}
-              />
-              <label htmlFor="rbac">RBAC (Role-Based Access Control)</label>
-            </div>
-            {emailData.rbac.checked && (
-              <div className="nested-options">
-                <div className="form-group">
-                  <label htmlFor="rbacGroups">Security Groups to Configure:</label>
-                  <input
-                    type="text"
-                    id="rbacGroups"
-                    value={emailData.rbac.groups}
-                    onChange={(e) => handleNestedChange('rbac', 'groups', e.target.value)}
-                    placeholder="e.g., IT Admins, Finance Team, HR"
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Permission Level:</label>
-                  <div className="inline-checks">
-                    <div className="checkbox-container">
-                      <input
-                        type="checkbox"
-                        id="rbacAzure"
-                        checked={emailData.rbac.azure}
-                        onChange={() => handleCheckboxToggle('rbac', 'azure')}
-                      />
-                      <label htmlFor="rbacAzure">Azure RBAC</label>
-                    </div>
-                    <div className="checkbox-container">
-                      <input
-                        type="checkbox"
-                        id="rbacM365"
-                        checked={emailData.rbac.m365}
-                        onChange={() => handleCheckboxToggle('rbac', 'm365')}
-                      />
-                      <label htmlFor="rbacM365">Microsoft 365 RBAC</label>
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <div className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      id="includeRbacScript"
-                      checked={emailData.rbac.includeScript}
-                      onChange={() => handleCheckboxToggle('rbac', 'includeScript')}
-                    />
-                    <label htmlFor="includeRbacScript">Include PowerShell Script</label>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          {/* GDAP Section Removed */}
+          {/* RBAC Section Removed */}
 
           <div className="checkbox-group">
             <div className="checkbox-container">

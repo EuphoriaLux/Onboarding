@@ -30,51 +30,44 @@ const emailBuilder = {
     createInstructionBox,
     createStepIndicator
   },
-  
+
   /**
    * Convenience method to access translations
    */
   translate: getTranslation,
-  
+
   /**
    * Build the plain text version of the email body
-   * 
+   *
    * @param formData - The form data from the UI
    * @param tenants - Array of tenant information
    * @returns Plain text email content
    */
-  buildEmailBody: function(formData: EmailFormData, tenants: TenantInfo[] = []): string { // Add tenants param
-    // Get the selected tier and language
+  buildEmailBody: function(formData: EmailFormData, tenants: TenantInfo[] = []): string {
     const tier = supportTiers[formData.selectedTier];
     const language = (formData.language || 'en') as Language;
-    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin"; // Define default link
-    
-    // Start with greeting
+    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
+
     let body = this.translate('greeting', language, { name: formData.contactName }) + '\n\n';
-    
-    // Introduction
-    body += this.translate('intro1', language, { 
+
+    body += this.translate('intro1', language, {
       company: formData.senderCompany,
       clientCompany: formData.companyName
     }) + '\n\n';
-    
-    body += this.translate('intro2', language, { 
+
+    body += this.translate('intro2', language, {
       tier: tier.name
     }) + '\n\n';
-    
+
     // Support Plan Section
     body += `**${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}**\n\n`;
-    
-    const supportType = formData.selectedTier === 'bronze' 
+    const supportType = formData.selectedTier === 'bronze'
       ? this.translate('supportType.bronze', language)
       : this.translate('supportType.other', language);
-    
-    body += this.translate('supportPlanIntro', language, { 
+    body += this.translate('supportPlanIntro', language, {
       tier: tier.name,
       supportType: supportType
     }) + '\n\n';
-    
-    // Support plan details
     body += `• ${this.translate('supportTypeLabel', language)} ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}\n`;
     body += `• ${this.translate('supportHoursLabel', language)} ${tier.supportHours}\n`;
     body += `• ${this.translate('severityLevelsLabel', language)} ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}\n`;
@@ -82,132 +75,116 @@ const emailBuilder = {
     body += `• ${this.translate('tenantsLabel', language)} ${tier.tenants}\n`;
     body += `• ${this.translate('requestsLabel', language)} ${tier.supportRequestsIncluded}\n`;
     body += `• ${this.translate('criticalLabel', language)} ${tier.criticalSituation ? this.translate('yes', language) : this.translate('no', language)}\n\n`;
-    
+
     // Authorized Contacts Section
     if (formData.authorizedContacts.checked) {
       body += `**${this.translate('authorizedContactsTitle', language)}**\n\n`;
-      
-      body += this.translate('contactsIntro', language, { 
+      body += this.translate('contactsIntro', language, {
         tier: tier.name,
         count: tier.authorizedContacts
       }) + '\n\n';
-      
-      body += this.translate('contactsRolesIntro', language, { 
+      body += this.translate('contactsRolesIntro', language, {
         roles: formData.authorizedContacts.roles
       }) + '\n\n';
-      
       body += this.translate('contactsInstruction', language) + '\n\n';
-      
-      // Simple text table for authorized contacts
       body += `#  | ${this.translate('firstNameHeader', language)} | ${this.translate('lastNameHeader', language)} | ${this.translate('officePhoneHeader', language)} | ${this.translate('mobilePhoneHeader', language)} | ${this.translate('emailHeader', language)} | ${this.translate('jobTitleHeader', language)}\n`;
       body += `---|--------------------|------------------|----------------------|----------------------|------------------|------------------\n`;
-      
-      // Add empty rows
       const rows = Math.min(tier.authorizedContacts, 10);
       for (let i = 1; i <= rows; i++) {
         body += `${i}  |                    |                  |                      |                      |                  |                  \n`;
       }
       body += '\n';
-      
       if (tier.authorizedContacts > 10) {
-        body += this.translate('contactsNote', language, { 
+        body += this.translate('contactsNote', language, {
           tier: tier.name,
           count: tier.authorizedContacts
         }) + '\n\n';
       }
     }
-    
+
     // Meeting Section
     if (formData.meetingDate) {
       body += `**${this.translate('meetingTitle', language)}**\n\n`;
-      
       body += this.translate('meetingIntro', language) + '\n\n';
       body += this.translate('meetingDate', language, { date: formData.meetingDate }) + '\n';
       body += this.translate('meetingAttendees', language) + '\n\n';
     }
-    
-    // GDAP Link & Deadline Section - Iterate through tenants if any exist
-    if (tenants.length > 0) {
-      tenants.forEach((tenant, index) => {
-        const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-        // Use tenantDomain in the title
-        const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
 
-        body += `**${sectionTitle}**\n\n`;
-        // Removed intro/roles lines
-        body += this.translate('gdapPermission', language) + '\n\n'; // Keep permission info if needed? Or remove? Assuming keep for now.
-        body += this.translate('gdapInstruction', language) + '\n';
-        body += tenantGdapLink + '\n\n';
-        // Add Implementation Deadline display for text
-        if (tenant.implementationDeadline) {
-          // Assuming a translation key 'implementationDeadlineLabel' exists
-          body += `*${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
+    // --- Tenant Specific Sections ---
+    tenants.forEach((tenant, index) => {
+      const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
+
+      // GDAP Link & Deadline Section (Per Tenant)
+      const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+      const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
+      body += `**${gdapSectionTitle}**\n\n`;
+      body += this.translate('gdapPermission', language) + '\n\n';
+      body += this.translate('gdapInstruction', language) + '\n';
+      body += tenantGdapLink + '\n\n';
+      if (tenant.implementationDeadline) {
+        body += `*${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}: ${tenant.implementationDeadline.toLocaleDateString()}*\n\n`;
+      }
+
+      // RBAC Section (Per Tenant, if hasAzure is true)
+      if (tenant.hasAzure) {
+        const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
+        body += `**${rbacSectionTitle}**\n\n`;
+        // Assuming rbacIntro and permissions are still relevant conceptually, but might need adjustment
+        // For now, keeping a generic intro. TODO: Revisit if specific group/permission text is needed per tenant.
+        body += this.translate('rbacIntro', language, { groups: 'relevant security groups' }) + ' ';
+        body += this.translate('rbacPermissionAzure', language) + '\n\n'; // Assuming Azure permission if hasAzure is true
+
+        if (tenant.includeRbacScript) {
+          body += this.translate('rbacInstruction', language) + '\n\n';
+          body += `1. ${this.translate('rbacStep1', language)}\n`;
+          body += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
+          body += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
+          body += `   or update it:\n\n`;
+          body += `   Update-Module Az.Resources -Force\n\n`;
+          body += `2. ${this.translate('rbacStep2', language)}\n`;
+          body += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
+
+          // Use tenant.id in the script
+          const rbacScript = `# Connect to the correct tenant
+Connect-AzAccount -TenantID ${tenant.id} # Using tenant-specific ID
+
+# Define the domain if needed elsewhere in script (Example placeholder)
+# $tenantDomain = "${tenant.tenantDomain}" 
+
+$subscriptions = Get-AzSubscription
+foreach ($subscription in $subscriptions) {
+    Set-AzContext -SubscriptionId $subscription.Id 
+    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue 
+    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
+    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
+    if ($supportRole) {
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'." 
+        # Test if the Owner role for the Foreign Principal AdminAgents exists:
+        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
+        if ($ownerRole) {
+            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
+            Write-Host "Removing Owner role for Foreign Principal AdminAgents from subscription '$($subscription.Name)'..."
+            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner" -ErrorAction SilentlyContinue
+        } else {
+            Write-Host "Owner role for Foreign Principal AdminAgents does not exist in subscription '$($subscription.Name)'."
         }
-      });
-    } // Removed the 'else if (formData.gdap.checked)' block
-    
-    // RBAC Section
-    if (formData.rbac.checked) {
-      body += `**${this.translate('rbacTitle', language)}**\n\n`;
-      
-      body += this.translate('rbacIntro', language, { groups: formData.rbac.groups }) + ' ';
-      
-      if (formData.rbac.azure && formData.rbac.m365) {
-        body += this.translate('rbacPermissionBoth', language);
-      } else if (formData.rbac.azure) {
-        body += this.translate('rbacPermissionAzure', language);
-      } else if (formData.rbac.m365) {
-        body += this.translate('rbacPermission365', language);
-      }
-      
-      body += '\n\n';
-      
-      if (formData.rbac.includeScript) {
-        body += this.translate('rbacInstruction', language) + '\n\n';
-        
-        body += `1. ${this.translate('rbacStep1', language)}\n`;
-        body += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
-        body += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
-        body += `   or update it:\n\n`;
-        body += `   Update-Module Az.Resources -Force\n\n`;
-        
-        body += `2. ${this.translate('rbacStep2', language)}\n`;
-        body += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
-        
-        body += `# Connect to the correct tenant\n`;
-        body += `Connect-AzAccount -TenantID ${formData.rbac.tenantId}\n\n`;
-        body += `$subscriptions = Get-AzSubscription\n`;
-        body += `foreach ($subscription in $subscriptions) {\n`;
-        body += `    Set-AzContext -SubscriptionId $subscription.Id \n`;
-        body += `    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:\n`;
-        body += `    New-AzRoleAssignment -ObjectID b6770181-d9f5-4818-b5b1-ea51cd9f66e5 -RoleDefinitionName "Support Request Contributor" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue \n`;
-        body += `    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:\n`;
-        body += `    $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } \n`;
-        body += `    if ($supportRole) {\n`;
-        body += `        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents." \n`;
-        body += `        # Test if the Owner role for the Foreign Principal AdminAgents exists:\n`;
-        body += `        $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } \n`;
-        body += `        if ($ownerRole) {\n`;
-        body += `            # If the Owner role for Foreign Principal AdminAgents exists, remove it:\n`;
-        body += `            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner"\n`;
-        body += `        } else {\n`;
-        body += `            Write-Host "Owner role for Foreign Principal AdminAgents does not exist."\n`;
-        body += `        }\n`;
-        body += `    } else {\n`;
-        body += `        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"\n`;
-        body += `    }\n`;
-        body += `}\n\n`;
-        
-        body += this.translate('rbacScreenshot', language) + '\n\n';
-      }
+    } else {
+        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents in subscription '$($subscription.Name)'!"
     }
-    
-    // Conditional Access Section
+}`;
+          body += rbacScript + '\n\n';
+          body += this.translate('rbacScreenshot', language) + '\n\n';
+        }
+      }
+    });
+    // --- End Tenant Specific Sections ---
+
+    // Conditional Access Section (Remains Global for now)
+    // TODO: Determine if this should also become tenant-specific
     if (formData.conditionalAccess.checked) {
       body += `**${this.translate('conditionalAccessTitle', language)}**\n\n`;
-      
       body += this.translate('conditionalAccessIntro', language) + '\n\n';
-      
       if (formData.conditionalAccess.mfa) {
         body += `• ${this.translate('mfaPolicy', language)}\n`;
       }
@@ -220,44 +197,40 @@ const emailBuilder = {
       if (formData.conditionalAccess.signIn) {
         body += `• ${this.translate('signInPolicy', language)}\n`;
       }
-      
       body += '\n';
     }
-    
+
     // Additional Notes Section
     if (formData.additionalNotes) {
       body += `**${this.translate('additionalInfoTitle', language)}**\n\n`;
       body += `${formData.additionalNotes}\n\n`;
     }
-    
+
     // Closing
     body += this.translate('closing', language) + '\n\n';
     body += this.translate('regards', language) + '\n\n';
     body += `${formData.senderName}\n`;
     body += `${formData.senderTitle}\n`;
     body += `${formData.senderCompany}\n`;
-    
     if (formData.senderContact) {
       body += `${formData.senderContact}\n`;
     }
-    
+
     return body;
   },
-  
+
   /**
    * Build HTML version of the email with improved clarity and instructions
-   * 
+   *
    * @param formData - The form data from the UI
    * @param tenants - Array of tenant information
    * @returns HTML formatted email content
    */
-  buildEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = []): string { // Add tenants param
-    // Get the selected tier and language
+  buildEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = []): string {
     const tier = supportTiers[formData.selectedTier];
     const language = (formData.language || 'en') as Language;
-    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin"; // Define default link
-    
-    // Get tier color
+    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
+
     let tierColor = '';
     switch(formData.selectedTier) {
       case 'bronze': tierColor = '#cd7f32'; break;
@@ -266,13 +239,11 @@ const emailBuilder = {
       case 'platinum': tierColor = '#E5E4E2'; break;
     }
 
-    // Generate subject if not provided
     const subject = formData.subject || this.translate('subject', language, {
       tier: tier.name,
       company: formData.companyName
     });
-    
-    // Build the full HTML email
+
     let htmlContent = `<!DOCTYPE html>
 <html>
 <head>
@@ -302,288 +273,97 @@ const emailBuilder = {
             <tr>
                 <td style="padding: 0 0 20px 0;">
                     <h1 style="margin: 0; padding: 0; font-size: 24px; font-weight: 700; color: #333; font-family: 'Segoe UI', Arial, sans-serif;">
-                        <span style="font-weight: bold; color: #0078D4;">${formData.senderCompany.toUpperCase()}</span> 
+                        <span style="font-weight: bold; color: #0078D4;">${formData.senderCompany.toUpperCase()}</span>
                         <span style="color: #333;">| ${tier.name} ${this.translate('supportPlanTitle', language, { tier: '' }).trim()}</span>
                     </h1>
                 </td>
             </tr>
-            <tr>
-                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
-                    <strong style="font-weight: 600;">To:</strong> ${formData.to}
-                </td>
-            </tr>
-            ${formData.cc ? `
-            <tr>
-                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
-                    <strong style="font-weight: 600;">Cc:</strong> ${formData.cc}
-                </td>
-            </tr>` : ''}
-            <tr>
-                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
-                    <strong style="font-weight: 600;">Subject:</strong> ${subject}
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
-                    <strong style="font-weight: 600;">Date:</strong> ${formData.currentDate}
-                </td>
-            </tr>
+            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">To:</strong> ${formData.to}</td></tr>
+            ${formData.cc ? `<tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">Cc:</strong> ${formData.cc}</td></tr>` : ''}
+            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">Subject:</strong> ${subject}</td></tr>
+            <tr><td style="padding: 0 0 5px 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;"><strong style="font-weight: 600;">Date:</strong> ${formData.currentDate}</td></tr>
         </table>
-        
+
         <!-- Email Body -->
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
             <tr>
                 <td style="padding: 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px;">
-                    <!-- Greeting -->
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('greeting', language, { name: formData.contactName })}
-                    </p>
-                    
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('intro1', language, { 
-                        company: formData.senderCompany,
-                        clientCompany: formData.companyName
-                      })}
-                    </p>
-                    
-                    <p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('intro2', language, { tier: tier.name })}
-                    </p>`;
-    
-    // Support Plan Section with tier-specific styling
-    htmlContent += `
-                    <!-- Support Plan Section -->
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 5px; background-color: ${tierColor}; border-radius: 4px;">
-                        <tr>
-                            <td style="padding: 14px 18px; text-align: center; font-family: 'Segoe UI', Arial, sans-serif;">
-                                <h2 style="margin: 0; padding: 0; color: white; font-size: 18px; font-weight: 600;">
-                                  ${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}
-                                </h2>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <p style="margin: 25px 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('supportPlanIntro', language, { 
-                        tier: tier.name,
-                        supportType: formData.selectedTier === 'bronze' 
-                          ? this.translate('supportType.bronze', language)
-                          : this.translate('supportType.other', language)
-                      })}
-                    </p>
-                    
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px;">
-                        <tr>
-                            <td style="padding: 18px 20px;">
-                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('supportTypeLabel', language)}</strong> 
-                                            ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('supportHoursLabel', language)}</strong> 
-                                            ${tier.supportHours}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('severityLevelsLabel', language)}</strong> 
-                                            ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('contactsLabel', language)}</strong> 
-                                            ${tier.authorizedContacts}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('tenantsLabel', language)}</strong> 
-                                            ${tier.tenants}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('requestsLabel', language)}</strong> 
-                                            ${tier.supportRequestsIncluded}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;">
-                                            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span>
-                                            <strong style="font-weight: 600; color: #333;">${this.translate('criticalLabel', language)}</strong> 
-                                            ${tier.criticalSituation 
-                                                ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' 
-                                                : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>`;
-    
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('greeting', language, { name: formData.contactName })}</p>
+                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('intro1', language, { company: formData.senderCompany, clientCompany: formData.companyName })}</p>
+                    <p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('intro2', language, { tier: tier.name })}</p>`;
+
+    // Support Plan Section
+    htmlContent += `<!-- Support Plan Section -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 5px; background-color: ${tierColor}; border-radius: 4px;"><tr><td style="padding: 14px 18px; text-align: center; font-family: 'Segoe UI', Arial, sans-serif;"><h2 style="margin: 0; padding: 0; color: white; font-size: 18px; font-weight: 600;">${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}</h2></td></tr></table>
+                    <p style="margin: 25px 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('supportPlanIntro', language, { tier: tier.name, supportType: formData.selectedTier === 'bronze' ? this.translate('supportType.bronze', language) : this.translate('supportType.other', language) })}</p>
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 18px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('supportTypeLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</td></tr>
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('supportHoursLabel', language)}</strong> ${tier.supportHours}</td></tr>
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('severityLevelsLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</td></tr>
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('contactsLabel', language)}</strong> ${tier.authorizedContacts}</td></tr>
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('tenantsLabel', language)}</strong> ${tier.tenants}</td></tr>
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('requestsLabel', language)}</strong> ${tier.supportRequestsIncluded}</td></tr>
+                    <tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6;"><span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${tierColor}; margin-right: 10px;"></span><strong style="font-weight: 600; color: #333;">${this.translate('criticalLabel', language)}</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</td></tr>
+                    </table></td></tr></table>`;
+
     // Authorized Contacts Section
     if (formData.authorizedContacts.checked) {
         const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
         htmlContent += createSectionHeader(contactsSectionTitle, tierColor);
-        
-        htmlContent += `
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('contactsIntro', language, { 
-                        tier: tier.name,
-                        count: tier.authorizedContacts
-                      })}
-                    </p>
-                    
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('contactsRolesIntro', language, { 
-                        roles: `<strong style="font-weight: 600;">${formData.authorizedContacts.roles}</strong>`
-                      })}
-                    </p>
-                    
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('contactsInstruction', language)}
-                    </p>
-                    
-                    ${createContactsTable(tier.authorizedContacts, language)}`;
+        htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>
+                       <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('contactsRolesIntro', language, { roles: `<strong style="font-weight: 600;">${formData.authorizedContacts.roles}</strong>` })}</p>
+                       <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('contactsInstruction', language)}</p>
+                       ${createContactsTable(tier.authorizedContacts, language)}`;
     }
-    
+
     // Meeting Section
     if (formData.meetingDate) {
         const meetingSectionTitle = this.translate('meetingTitle', language);
         htmlContent += createSectionHeader(meetingSectionTitle, tierColor);
-        
-        htmlContent += `
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('meetingIntro', language)}
-                    </p>
-                    
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
-                        <tr>
-                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                                <strong style="font-weight: 600; color: #333;">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4;">${formData.meetingDate}</span>` })}</strong>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('meetingAttendees', language)}
-                    </p>`;
+        htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('meetingIntro', language)}</p>
+                       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;"><strong style="font-weight: 600; color: #333;">${this.translate('meetingDate', language, { date: `<span style="color: #0078D4;">${formData.meetingDate}</span>` })}</strong></td></tr></table>
+                       <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('meetingAttendees', language)}</p>`;
     }
-    
-    // GDAP Link & Deadline Section - Iterate through tenants if any exist
-    if (tenants.length > 0) {
-      tenants.forEach((tenant, index) => {
-        const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-        // Use tenantDomain in the title
-        const sectionTitle = `${this.translate('gdapTitle', language)} - ${tenant.tenantDomain || `Tenant ${index + 1}`}`;
 
-        htmlContent += createSectionHeader(sectionTitle, tierColor);
+    // --- Tenant Specific Sections ---
+    tenants.forEach((tenant, index) => {
+      const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
 
-        htmlContent += `
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('gdapPermission', language)}
-                    </p>
-                    
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
-                        <tr>
-                            <td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                                <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">
-                                ${this.translate('gdapInstruction', language)}
-                                </p>
-                                <p style="margin: 0; text-align: center;">
-                                  <a href="${tenantGdapLink}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">
-                                    ${this.translate('gdapLink', language)}
-                                  </a>
-                                </p>`;
-        // Add Implementation Deadline display for HTML, highlighted below the button
-        if (tenant.implementationDeadline) {
-          htmlContent += `
-                                <p style="margin: 15px 0 0 0; text-align: center; font-size: 14px; color: #d83b01; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;">
-                                  <strong style="font-weight: 600;">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}
-                                </p>`;
-        }
-        htmlContent += `
-                            </td>
-                        </tr>
-                    </table>`;
-      });
-    } // Removed the 'else if (formData.gdap.checked)' block
-    
-    // RBAC Section
-    if (formData.rbac.checked) {
-        const rbacSectionTitle = this.translate('rbacTitle', language);
+      // GDAP Link & Deadline Section (Per Tenant)
+      const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
+      const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
+      htmlContent += createSectionHeader(gdapSectionTitle, tierColor);
+      htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('gdapPermission', language)}</p>
+                      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+                      <p style="margin: 0 0 10px 0; font-weight: 600; color: #333;">${this.translate('gdapInstruction', language)}</p>
+                      <p style="margin: 0; text-align: center;"><a href="${tenantGdapLink}" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0078D4; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;">${this.translate('gdapLink', language)}</a></p>`;
+      if (tenant.implementationDeadline) {
+        htmlContent += `<p style="margin: 15px 0 0 0; text-align: center; font-size: 14px; color: #d83b01; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;"><strong style="font-weight: 600;">${this.translate('implementationDeadlineLabel', language, { defaultValue: 'Implementation Deadline' })}:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</p>`;
+      }
+      htmlContent += `</td></tr></table>`;
+
+      // RBAC Section (Per Tenant, if hasAzure is true)
+      if (tenant.hasAzure) {
+        const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
         htmlContent += createSectionHeader(rbacSectionTitle, tierColor);
-        
-        let permissionText = '';
-        if (formData.rbac.azure && formData.rbac.m365) {
-            permissionText = this.translate('rbacPermissionBoth', language);
-        } else if (formData.rbac.azure) {
-            permissionText = this.translate('rbacPermissionAzure', language);
-        } else if (formData.rbac.m365) {
-            permissionText = this.translate('rbacPermission365', language);
-        }
-        
-        htmlContent += `
-                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('rbacIntro', language, { groups: `<strong style="font-weight: 600;">${formData.rbac.groups}</strong>` })}
-                      ${permissionText}
-                    </p>`;
-        
-        if (formData.rbac.includeScript) {
-            htmlContent += `
-                    <p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">
-                      ${this.translate('rbacInstruction', language)}
-                    </p>`;
-            
-            // Step 1 - Install Azure PowerShell
-            htmlContent += createStepIndicator(1, this.translate('rbacStep1', language));
-            
-            htmlContent += `
-                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('rbacStep1Source', language)} 
-                      <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">
-                        https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0
-                      </a>
-                    </p>`;
-            
-            // Install script
-            htmlContent += `<div style="margin-left: 48px;">
-                      ${formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}
-                    </div>`;
-            
-            htmlContent += `
-                    <p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      or update it:
-                    </p>`;
-            
-            // Update script
-            htmlContent += `<div style="margin-left: 48px;">
-                      ${formatScriptBlock('Update-Module Az.Resources -Force', language)}
-                    </div>`;
-            
-            // Step 2 - Run the script
-            htmlContent += createStepIndicator(2, this.translate('rbacStep2', language));
-            
-            htmlContent += `
-                    <p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('rbacStep2Instruction', language)}
-                    </p>`;
-            
-            // The main RBAC script
-            htmlContent += `<div style="margin-left: 48px;">
-                      ${formatScriptBlock(`# Connect to the correct tenant
-Connect-AzAccount -TenantID ${formData.rbac.tenantId}
+        htmlContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`; // Simplified intro
+
+        if (tenant.includeRbacScript) {
+          htmlContent += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: #333;">${this.translate('rbacInstruction', language)}</p>`;
+          htmlContent += createStepIndicator(1, this.translate('rbacStep1', language));
+          htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: #0078D4; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
+          htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock('Install-Module -Name Az -Repository PSGallery -Force', language)}</div>`;
+          htmlContent += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">or update it:</p>`;
+          htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock('Update-Module Az.Resources -Force', language)}</div>`;
+          htmlContent += createStepIndicator(2, this.translate('rbacStep2', language));
+          htmlContent += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('rbacStep2Instruction', language)}</p>`;
+
+          // Use tenant.id in the script
+          const rbacScript = `# Connect to the correct tenant
+Connect-AzAccount -TenantID ${tenant.id} # Using tenant-specific ID
+
+# Define the domain if needed elsewhere in script (Example placeholder)
+# $tenantDomain = "${tenant.tenantDomain}" 
 
 $subscriptions = Get-AzSubscription
 foreach ($subscription in $subscriptions) {
@@ -593,142 +373,59 @@ foreach ($subscription in $subscriptions) {
     # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
     $supportRole = Get-AzRoleAssignment -ObjectId b6770181-d9f5-4818-b5b1-ea51cd9f66e5 | Where-Object { $_.RoleDefinitionName -eq "Support Request Contributor" } 
     if ($supportRole) {
-        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents." 
+        Write-Host "Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents for subscription '$($subscription.Name)'." 
         # Test if the Owner role for the Foreign Principal AdminAgents exists:
         $ownerRole = Get-AzRoleAssignment -ObjectId 9a838974-22d3-415b-8136-c790e285afeb | Where-Object { $_.RoleDefinitionName -eq "Owner" } 
         if ($ownerRole) {
             # If the Owner role for Foreign Principal AdminAgents exists, remove it:
-            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner"
+            Write-Host "Removing Owner role for Foreign Principal AdminAgents from subscription '$($subscription.Name)'..."
+            Remove-AzRoleAssignment -ObjectID 9a838974-22d3-415b-8136-c790e285afeb -RoleDefinitionName "Owner" -ErrorAction SilentlyContinue
         } else {
-            Write-Host "Owner role for Foreign Principal AdminAgents does not exist."
+            Write-Host "Owner role for Foreign Principal AdminAgents does not exist in subscription '$($subscription.Name)'."
         }
     } else {
-        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents!"
+        Write-Host "Error: Could not assign Support Request Contributor role for Foreign Principal HelpDeskAgents in subscription '$($subscription.Name)'!"
     }
-}`, language)}
-                    </div>`;
-            
-            htmlContent += `
-                    <p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">
-                      ${this.translate('rbacScreenshot', language)}
-                    </p>`;
+}`;
+          htmlContent += `<div style="margin-left: 48px;">${formatScriptBlock(rbacScript, language)}</div>`;
+          htmlContent += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: #333;">${this.translate('rbacScreenshot', language)}</p>`;
         }
-    }
-    
-    // Conditional Access Section
+      }
+    });
+    // --- End Tenant Specific Sections ---
+
+    // Conditional Access Section (Remains Global)
     if (formData.conditionalAccess.checked) {
         const caSectionTitle = this.translate('conditionalAccessTitle', language);
         htmlContent += createSectionHeader(caSectionTitle, tierColor);
-        
-        htmlContent += `
-                    <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('conditionalAccessIntro', language)}
-                    </p>
-                    
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0 0 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;">
-                        <tr>
-                            <td style="padding: 16px 20px;">
-                                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">`;
-        
-        if (formData.conditionalAccess.mfa) {
-            htmlContent += `
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
-                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
-                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('mfaPolicy', language)}</span>
-                                        </td>
-                                    </tr>`;
-        }
-        
-        if (formData.conditionalAccess.location) {
-            htmlContent += `
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
-                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
-                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('locationPolicy', language)}</span>
-                                        </td>
-                                    </tr>`;
-        }
-        
-        if (formData.conditionalAccess.device) {
-            htmlContent += `
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
-                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
-                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('devicePolicy', language)}</span>
-                                        </td>
-                                    </tr>`;
-        }
-        
-        if (formData.conditionalAccess.signIn) {
-            htmlContent += `
-                                    <tr>
-                                        <td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;">
-                                            <span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span>
-                                            <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('signInPolicy', language)}</span>
-                                        </td>
-                                    </tr>`;
-        }
-        
-        htmlContent += `
-                                </table>
-                            </td>
-                        </tr>
-                    </table>`;
+        htmlContent += `<p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('conditionalAccessIntro', language)}</p>
+                       <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 0 0 20px 0; background-color: #f8f8f8; border: 1px solid #eee; border-radius: 4px;"><tr><td style="padding: 16px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">`;
+        if (formData.conditionalAccess.mfa) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('mfaPolicy', language)}</span></td></tr>`; }
+        if (formData.conditionalAccess.location) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('locationPolicy', language)}</span></td></tr>`; }
+        if (formData.conditionalAccess.device) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('devicePolicy', language)}</span></td></tr>`; }
+        if (formData.conditionalAccess.signIn) { htmlContent += `<tr><td style="padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; display: flex; align-items: flex-start;"><span style="display: inline-block; min-width: 8px; height: 8px; border-radius: 50%; background-color: #0078D4; margin-right: 10px; margin-top: 7px;"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('signInPolicy', language)}</span></td></tr>`; }
+        htmlContent += `</table></td></tr></table>`;
     }
-    
+
     // Additional Notes Section
     if (formData.additionalNotes) {
         const additionalInfoTitle = this.translate('additionalInfoTitle', language);
         htmlContent += createSectionHeader(additionalInfoTitle, tierColor);
-        
-        // Process line breaks in the notes to preserve formatting
         const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
-        
-        htmlContent += `
-                    <p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${formattedNotes}
-                    </p>`;
+        htmlContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${formattedNotes}</p>`;
     }
-    
+
     // Closing and Footer
-    htmlContent += `
-                    <p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                      ${this.translate('closing', language)}
-                    </p>
-                    
-                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px;">
-                        <tr>
-                            <td style="padding: 0;">
-                                <p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                                    ${this.translate('regards', language)}
-                                </p>
-                                <p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
-                                    <strong style="font-weight: 600;">${formData.senderName}</strong><br>
-                                    ${formData.senderTitle}<br>
-                                    ${formData.senderCompany}<br>
-                                    ${formData.senderContact || ''}
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
+    htmlContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('closing', language)}</p>
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px;"><tr><td style="padding: 0;"><p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">${this.translate('regards', language)}</p><p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;"><strong style="font-weight: 600;">${formData.senderName}</strong><br>${formData.senderTitle}<br>${formData.senderCompany}<br>${formData.senderContact || ''}</p></td></tr></table>
                 </td>
             </tr>
         </table>
-        
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px; border-top: 1px solid #eee;">
-            <tr>
-                <td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;">
-                    <p style="margin: 0; line-height: 1.5;">
-                        ${this.translate('footer', language)}
-                    </p>
-                </td>
-            </tr>
-        </table>
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 40px; border-top: 1px solid #eee;"><tr><td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #666; text-align: center;"><p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p></td></tr></table>
     </div>
 </body>
 </html>`;
-    
+
     return htmlContent;
   },
 
@@ -736,9 +433,10 @@ foreach ($subscription in $subscriptions) {
    * Get HTML formatted text description for the selected support plan
    */
   getSupportPlanTextHTML: function(planType: string, language: Language = 'en'): string {
-    const supportPlanIntro = this.translate('supportPlanIntro', language, { 
+    // ... (Implementation remains the same) ...
+    const supportPlanIntro = this.translate('supportPlanIntro', language, {
       tier: supportTiers[planType].name,
-      supportType: planType === 'bronze' 
+      supportType: planType === 'bronze'
         ? this.translate('supportType.bronze', language)
         : this.translate('supportType.other', language)
     });
@@ -756,7 +454,7 @@ foreach ($subscription in $subscriptions) {
   <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Pay As You Go support requests</li>
 </ul>`;
           break;
-          
+
       case 'silver':
         bulletItems = `
 <ul style="padding-left: 20px; margin: 0 0 15px 0;">
@@ -768,7 +466,7 @@ foreach ($subscription in $subscriptions) {
   <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">12 Support Requests Included per trailing 12-month period</li>
 </ul>`;
           break;
-          
+
       case 'gold':
         bulletItems = `
 <ul style="padding-left: 20px; margin: 0 0 15px 0;">
@@ -780,7 +478,7 @@ foreach ($subscription in $subscriptions) {
   <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">36 Support Requests Included per trailing 12-month period</li>
 </ul>`;
           break;
-          
+
       case 'platinum':
         bulletItems = `
 <ul style="padding-left: 20px; margin: 0 0 15px 0;">
@@ -792,39 +490,35 @@ foreach ($subscription in $subscriptions) {
   <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Support Requests Included per trailing 12-month period</li>
 </ul>`;
           break;
-          
+
       default:
         bulletItems = '';
     }
-    
+
     return `${supportPlanIntro}<br><br>${bulletItems}`;
   },
-  
+
   /**
    * Process form data into a structured email object
    */
   processCustomerInfoToEmailData: function(info: CustomerInfo, language: string = 'en'): EmailFormData {
     const tier = supportTiers[info.selectedTier];
-    
-    // Handle date calculation safely
+
     const today = new Date();
-    // Removed futureDate calculation as it was only used for GDAP deadline
-    
-    // Format today's date
     const currentDate = today.toLocaleDateString();
-    
-    // Format meeting date if it exists
+
     let meetingDateStr;
     if (info.proposedDate instanceof Date && !isNaN(info.proposedDate.getTime())) {
       meetingDateStr = info.proposedDate.toLocaleDateString();
     }
-    
-    const formData: EmailFormData = {
+
+    // Construct the base formData without GDAP and RBAC
+    const formData: Omit<EmailFormData, 'rbac'> = { // Use Omit to reflect removed properties
       companyName: info.companyName,
       contactName: info.contactName,
       contactEmail: info.contactEmail,
       proposedDate: info.proposedDate,
-      tenantId: info.tenantId,
+      tenantId: info.tenantId, // This might be less relevant now if RBAC is per-tenant
       selectedTier: info.selectedTier,
       emailContacts: info.authorizedContacts,
       to: info.contactEmail || '',
@@ -834,22 +528,15 @@ foreach ($subscription in $subscriptions) {
         company: info.companyName
       }),
       // Removed gdap property
-      rbac: {
-        checked: true,
-        groups: 'appropriate security groups',
-        tenantId: info.tenantId || '[your-tenant-id]',
-        azure: true,
-        m365: true,
-        includeScript: true
-      },
-      conditionalAccess: {
+      // Removed rbac property
+      conditionalAccess: { // Keep conditional access as global for now
         checked: true,
         mfa: true,
         location: true,
         device: true,
         signIn: true
       },
-      authorizedContacts: {
+      authorizedContacts: { // Keep authorized contacts as global for now
         checked: true,
         roles: 'Technical and Administrative contacts'
       },
@@ -862,19 +549,15 @@ foreach ($subscription in $subscriptions) {
       currentDate: currentDate,
       language: language
     };
-    
-    return formData;
+
+    // Cast back to EmailFormData if necessary, although it's now missing properties
+    // It might be better to adjust the EmailFormData type further if RBAC is truly gone
+    return formData as EmailFormData;
   },
-  
+
   // The enhanced email version - needs to accept tenants too
   buildEnhancedEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = []): string {
-    // Implementation similar to buildEmailHTML but with improved styling for better copying
-    // Using createImprovedSectionHeader, createImprovedContactsTable, and formatImprovedScriptBlock
-    
-    // For brevity, not including the full implementation here
-    // This would be similar to the original implementation but using the improved components
-    // AND including the tenant iteration logic for GDAP
-    
+    // ... (Implementation remains the same) ...
     return this.buildEmailHTML(formData, tenants); // Temporarily return standard HTML version
   }
 };

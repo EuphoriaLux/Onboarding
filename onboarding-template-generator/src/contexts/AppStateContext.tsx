@@ -45,8 +45,15 @@ const defaultState: AppState = {
     proposedDate: new Date(),
     authorizedContacts: [{ name: '', email: '', phone: '' }],
     selectedTier: 'silver',
-    // Initialize default tenant with tenantDomain and implementationDeadline
-    tenants: [{ id: '', companyName: '', tenantDomain: '', implementationDeadline: null }], 
+    // Initialize default tenant with all flags
+    tenants: [{ 
+      id: '', 
+      companyName: '', 
+      tenantDomain: '', 
+      implementationDeadline: null, 
+      hasAzure: false, 
+      includeRbacScript: false 
+    }], 
   },
   emailData: null,
   language: 'en'
@@ -78,19 +85,34 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
               }
             }
 
-            // Also parse implementationDeadline within tenants
+            // Also parse implementationDeadline and ensure boolean flags within tenants
             if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
-              customerInfo.tenants = customerInfo.tenants.map((tenant: TenantInfo) => {
-                if (tenant.implementationDeadline) {
-                  const parsedDeadline = new Date(tenant.implementationDeadline);
-                  if (!isNaN(parsedDeadline.getTime())) {
-                    return { ...tenant, implementationDeadline: parsedDeadline };
-                  } else {
-                    // If parsing fails, set back to null or keep original if it wasn't a string
-                    return { ...tenant, implementationDeadline: null }; 
-                  }
+              customerInfo.tenants = customerInfo.tenants.map((tenant: any) => { // Use 'any' temporarily for processing
+                let processedTenant = { ...tenant };
+
+                // Parse deadline
+                if (processedTenant.implementationDeadline) {
+                  const parsedDeadline = new Date(processedTenant.implementationDeadline);
+                  processedTenant.implementationDeadline = !isNaN(parsedDeadline.getTime()) ? parsedDeadline : null;
+                } else {
+                  processedTenant.implementationDeadline = null; // Ensure null if missing/falsy
                 }
-                return tenant; // Return tenant as is if no deadline or already null
+
+                // Ensure boolean flags exist, default to false if undefined
+                if (typeof processedTenant.hasAzure === 'undefined') {
+                  processedTenant.hasAzure = false;
+                }
+                 if (typeof processedTenant.includeRbacScript === 'undefined') {
+                  processedTenant.includeRbacScript = false;
+                }
+
+                // Ensure other required fields have defaults if somehow missing (optional)
+                processedTenant.id = processedTenant.id ?? '';
+                processedTenant.companyName = processedTenant.companyName ?? '';
+                processedTenant.tenantDomain = processedTenant.tenantDomain ?? '';
+
+
+                return processedTenant as TenantInfo; // Cast back to TenantInfo
               });
             }
             

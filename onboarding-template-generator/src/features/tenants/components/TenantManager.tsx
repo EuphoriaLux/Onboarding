@@ -14,8 +14,8 @@ interface TenantManagerProps {
 const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange }) => {
   const tier = supportTiers[selectedTier];
   
-  // Handle tenant field changes, including Date for deadline
-  const handleTenantChange = (index: number, field: keyof TenantInfo, value: string | Date | null) => {
+  // Handle tenant field changes, including Date and boolean types
+  const handleTenantChange = (index: number, field: keyof TenantInfo, value: string | Date | boolean | null) => {
     const updatedTenants = tenants.map((tenant, i) => {
       if (i === index) {
         // Handle potential null value for DatePicker when cleared
@@ -27,11 +27,19 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
     onChange(updatedTenants);
   };
 
-  // Add a new tenant, initializing implementationDeadline to null
+  // Add a new tenant, initializing new flags
   const addTenant = () => {
     if (tenants.length < tier.tenants) {
-      // Initialize tenantDomain and implementationDeadline
-      onChange([...tenants, { id: '', companyName: '', tenantDomain: '', implementationDeadline: null, gdapLink: '' }]);
+      // Initialize tenantDomain, deadline, hasAzure, includeRbacScript
+      onChange([...tenants, { 
+        id: '', 
+        companyName: '', 
+        tenantDomain: '', 
+        implementationDeadline: null, 
+        hasAzure: false, // Default to false
+        includeRbacScript: false, // Default to false
+        gdapLink: '' 
+      }]);
     }
   };
 
@@ -110,6 +118,32 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
                 Optional: Target date for implementation tasks.
               </small>
             </div>
+
+            {/* Add Has Azure Checkbox */}
+            <div className="form-group checkbox-container inline-label">
+              <input
+                type="checkbox"
+                id={`has-azure-${index}`}
+                checked={tenant.hasAzure}
+                onChange={(e) => handleTenantChange(index, 'hasAzure', e.target.checked)}
+              />
+              <label htmlFor={`has-azure-${index}`}>Azure RBAC Relevant?</label>
+              <small className="form-text">Check if Azure RBAC configuration is needed for this tenant.</small>
+            </div>
+
+            {/* Add Include RBAC Script Checkbox (conditionally shown) */}
+            {tenant.hasAzure && (
+              <div className="form-group checkbox-container inline-label nested-checkbox">
+                <input
+                  type="checkbox"
+                  id={`include-rbac-script-${index}`}
+                  checked={tenant.includeRbacScript}
+                  onChange={(e) => handleTenantChange(index, 'includeRbacScript', e.target.checked)}
+                />
+                <label htmlFor={`include-rbac-script-${index}`}>Include RBAC Script?</label>
+                <small className="form-text">Include the PowerShell script for this tenant in the email.</small>
+              </div>
+            )}
             
             <div className="form-group">
               <label htmlFor={`tenant-id-${index}`}>Microsoft Tenant ID</label>

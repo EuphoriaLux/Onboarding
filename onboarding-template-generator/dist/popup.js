@@ -29532,8 +29532,15 @@ const defaultState = {
         proposedDate: new Date(),
         authorizedContacts: [{ name: '', email: '', phone: '' }],
         selectedTier: 'silver',
-        // Initialize default tenant with tenantDomain and implementationDeadline
-        tenants: [{ id: '', companyName: '', tenantDomain: '', implementationDeadline: null }],
+        // Initialize default tenant with all flags
+        tenants: [{
+                id: '',
+                companyName: '',
+                tenantDomain: '',
+                implementationDeadline: null,
+                hasAzure: false,
+                includeRbacScript: false
+            }],
     },
     emailData: null,
     language: 'en'
@@ -29560,20 +29567,31 @@ const AppStateProvider = ({ children }) => {
                                 customerInfo.proposedDate = new Date();
                             }
                         }
-                        // Also parse implementationDeadline within tenants
+                        // Also parse implementationDeadline and ensure boolean flags within tenants
                         if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
                             customerInfo.tenants = customerInfo.tenants.map((tenant) => {
-                                if (tenant.implementationDeadline) {
-                                    const parsedDeadline = new Date(tenant.implementationDeadline);
-                                    if (!isNaN(parsedDeadline.getTime())) {
-                                        return Object.assign(Object.assign({}, tenant), { implementationDeadline: parsedDeadline });
-                                    }
-                                    else {
-                                        // If parsing fails, set back to null or keep original if it wasn't a string
-                                        return Object.assign(Object.assign({}, tenant), { implementationDeadline: null });
-                                    }
+                                var _a, _b, _c;
+                                let processedTenant = Object.assign({}, tenant);
+                                // Parse deadline
+                                if (processedTenant.implementationDeadline) {
+                                    const parsedDeadline = new Date(processedTenant.implementationDeadline);
+                                    processedTenant.implementationDeadline = !isNaN(parsedDeadline.getTime()) ? parsedDeadline : null;
                                 }
-                                return tenant; // Return tenant as is if no deadline or already null
+                                else {
+                                    processedTenant.implementationDeadline = null; // Ensure null if missing/falsy
+                                }
+                                // Ensure boolean flags exist, default to false if undefined
+                                if (typeof processedTenant.hasAzure === 'undefined') {
+                                    processedTenant.hasAzure = false;
+                                }
+                                if (typeof processedTenant.includeRbacScript === 'undefined') {
+                                    processedTenant.includeRbacScript = false;
+                                }
+                                // Ensure other required fields have defaults if somehow missing (optional)
+                                processedTenant.id = (_a = processedTenant.id) !== null && _a !== void 0 ? _a : '';
+                                processedTenant.companyName = (_b = processedTenant.companyName) !== null && _b !== void 0 ? _b : '';
+                                processedTenant.tenantDomain = (_c = processedTenant.tenantDomain) !== null && _c !== void 0 ? _c : '';
+                                return processedTenant; // Cast back to TenantInfo
                             });
                         }
                         newState.customerInfo = Object.assign(Object.assign({}, defaultState.customerInfo), customerInfo);

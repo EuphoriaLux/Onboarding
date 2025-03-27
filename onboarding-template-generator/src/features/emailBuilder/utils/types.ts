@@ -14,14 +14,7 @@ export interface EmailFormData {
   cc?: string;
   subject?: string;
   // gdap property removed
-  rbac: {
-    checked: boolean;
-    groups: string;
-    tenantId: string;
-    azure: boolean;
-    m365: boolean;
-    includeScript: boolean;
-  };
+  // rbac property removed
   conditionalAccess: {
     checked: boolean;
     mfa: boolean;
