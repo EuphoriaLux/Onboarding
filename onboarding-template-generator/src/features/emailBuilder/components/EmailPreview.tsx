@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { EmailFormData, Language, CustomerInfo } from '../utils/types';
 import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
+import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 // Remove generateTemplate import, use emailBuilder for HTML
 import emailBuilder from '../utils/emailBuilder';
 import { copyFormattedContent } from '../utils/clipboardUtils';
@@ -22,6 +23,7 @@ interface EmailPreviewProps {
     includeNotes?: boolean;
   };
   additionalNotes?: string; // Add notes prop
+  themeSettings: ThemeSettings | null; // Add theme settings prop
   onBackToEdit: () => void;
 }
 
@@ -35,6 +37,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
   agentEmail,
   flags, // Destructure flags
   additionalNotes, // Destructure notes
+  themeSettings, // Destructure theme settings
   onBackToEdit
 }) => {
   const [htmlContent, setHtmlContent] = useState('');
@@ -47,16 +50,17 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
   const language = (emailData.language || 'en') as Language;
 
   useEffect(() => {
-    // Generate HTML using emailBuilder.buildEmailHTML, passing tenants
-    const html = emailBuilder.buildEmailHTML(emailData, tenants);
+    // Generate HTML and Plain Text using emailBuilder.buildEmailHTML
+    const { html, plainText: generatedPlainText } = emailBuilder.buildEmailHTML(emailData, tenants, themeSettings);
 
-    // Generate plain text using emailBuilder.buildEmailBody, passing tenants
+    // Generate plain text using emailBuilder.buildEmailBody, passing tenants (This might be redundant now)
     const text = emailBuilder.buildEmailBody(emailData, tenants);
 
     setHtmlContent(html);
-    setPlainText(text);
-    // Depend on emailData and tenants
-  }, [emailData, tenants]);
+    // Use the plain text generated alongside the HTML
+    setPlainText(generatedPlainText);
+    // Depend on emailData, tenants, and themeSettings
+  }, [emailData, tenants, themeSettings]);
 
   const handleCopyToClipboard = async (contentType: 'html' | 'text') => {
     try {

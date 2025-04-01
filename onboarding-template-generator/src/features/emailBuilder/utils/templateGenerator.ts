@@ -2,6 +2,7 @@
 import { supportTiers } from '../../supportTiers/data/supportTiers'; // Updated import path
 import { CustomerInfo } from './types';
 import { SupportTier } from '../../supportTiers/types'; // Corrected import path for SupportTier
+import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 
 // --- Constants ---
 
@@ -48,23 +49,27 @@ foreach ($subscription in $subscriptions) {
 
 // --- Helper Functions for Email Formatting ---
 
-const _formatScriptBlock = (scriptContent: string): string => {
+const _formatScriptBlock = (scriptContent: string, theme: ThemeSettings): string => {
   const cleanedScript = scriptContent.trim()
     .replace(/\t/g, '    ')
     .replace(/^\s*\n/gm, '');
+  const scriptBgColor = theme.backgroundColor ? `${theme.backgroundColor}0D` : '#f5f5f5'; // Lighter theme bg or fallback grey
+  const scriptHeaderBgColor = theme.backgroundColor ? `${theme.backgroundColor}1A` : '#f0f0f0'; // Lightened theme bg or fallback grey
+  const scriptTextColor = theme.textColor || '#333'; // Fallback text color
+  const scriptHeaderTextColor = theme.textColor || '#555'; // Fallback text color
 
   return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0;">
       <tr>
         <td style="padding: 0;">
-          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px;">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: ${scriptBgColor}; border: 1px solid #ddd; border-radius: 4px;">
             <tr>
-              <td style="padding: 12px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;">
-                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #555; font-weight: 600;">PowerShell Script</span>
+              <td style="padding: 12px; border-bottom: 1px solid #ddd; background-color: ${scriptHeaderBgColor};">
+                <span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: ${scriptHeaderTextColor}; font-weight: 600;">PowerShell Script</span>
               </td>
             </tr>
             <tr>
-              <td style="padding: 15px; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.45; color: #333; white-space: pre-wrap; word-break: break-all;">
+              <td style="padding: 15px; font-family: Consolas, Monaco, 'Courier New', monospace; font-size: 13px; line-height: 1.45; color: ${scriptTextColor}; white-space: pre-wrap; word-break: break-all;">
 ${cleanedScript}
               </td>
             </tr>
@@ -74,24 +79,29 @@ ${cleanedScript}
     </table>`;
 };
 
-const _createContactsTable = (contacts: Array<{name: string, email: string, phone: string}>): string => {
+const _createContactsTable = (contacts: Array<{name: string, email: string, phone: string}>, theme: ThemeSettings): string => {
   let tableRows = '';
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  const headerBgColor = theme.backgroundColor ? `${theme.backgroundColor}1A` : '#f0f0f0'; // Lightened theme bg or fallback grey
+  const rowBgColor1 = theme.backgroundColor || '#FFFFFF'; // Theme background or white
+  const rowBgColor2 = theme.backgroundColor ? `${theme.backgroundColor}0D` : '#f9f9f9'; // Lighter theme bg or light grey
+
   contacts.forEach((contact, index) => {
-    const bgColor = index % 2 === 0 ? '#f9f9f9' : 'white';
+    const bgColor = index % 2 === 0 ? rowBgColor2 : rowBgColor1;
     tableRows += `
       <tr style="background-color: ${bgColor};">
-        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.name || ''}</td>
-        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.email || ''}</td>
-        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif;">${contact.phone || ''}</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">${contact.name || ''}</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">${contact.email || ''}</td>
+        <td style="border: 1px solid #ddd; padding: 8px; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">${contact.phone || ''}</td>
       </tr>`;
   });
 
   return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 15px 0;">
-      <tr style="background-color: #f0f0f0;">
-        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Name</th>
-        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Email</th>
-        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif;">Phone</th>
+      <tr style="background-color: ${headerBgColor};">
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Name</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Email</th>
+        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Phone</th>
       </tr>
       ${tableRows}
     </table>`;
@@ -111,40 +121,54 @@ const _formatDate = (date: Date | null | undefined): string => {
 
 // --- Email Section Generators ---
 
-const _generateHeader = (tier: SupportTier): string => `
+const _generateHeader = (tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 20px;">
     <tr>
       <td style="padding: 0;">
-        <h2 style="color: ${tier.color}; border-bottom: 1px solid ${tier.color}; padding-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; margin: 0 0 15px 0;">Microsoft Support Onboarding - ${tier.name}</h2>
+        <h2 style="color: ${headerColor}; border-bottom: 1px solid ${headerColor}; padding-bottom: 10px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 24px; margin: 0 0 15px 0;">Microsoft Support Onboarding - ${tier.name}</h2>
       </td>
     </tr>
   </table>`;
-
-const _generateGreeting = (info: CustomerInfo): string => `
-  <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Dear ${info.contactName},</p>`;
-
-const _generateMeetingProposal = (info: CustomerInfo, tier: SupportTier): string => {
-  const formattedDate = _formatDate(info.proposedDate);
-  return `
-    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong style="font-weight: 600;">${tier.name}</strong> plan.</p>
-    <p style="margin: 0 0 20px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">I propose we meet on <strong style="font-weight: 600;">${formattedDate}</strong> to discuss the following onboarding steps:</p>`;
 };
 
-const _generateTierDetailsSection = (tier: SupportTier): string => `
+const _generateGreeting = (info: CustomerInfo, theme: ThemeSettings): string => {
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  return `
+  <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Dear ${info.contactName},</p>`;
+};
+
+const _generateMeetingProposal = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
+  const formattedDate = _formatDate(info.proposedDate);
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  return `
+    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong style="font-weight: 600;">${tier.name}</strong> plan.</p>
+    <p style="margin: 0 0 20px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">I propose we meet on <strong style="font-weight: 600;">${formattedDate}</strong> to discuss the following onboarding steps:</p>`;
+};
+
+const _generateTierDetailsSection = (tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  const listTextColor = theme.textColor || '#333'; // Can be same or different
+  const successColor = '#107c10'; // Keep standard success/error colors for clarity? Or use theme?
+  const errorColor = '#d83b01';
+
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">1. Support Tier Selection</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">You have selected the <strong style="font-weight: 600;">${tier.name}</strong> plan which includes:</p>
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">1. Support Tier Selection</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">You have selected the <strong style="font-weight: 600;">${tier.name}</strong> plan which includes:</p>
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: 10px 0 15px 0;">
           <tr>
             <td style="padding: 0 0 0 20px;">
               <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Support Hours: ${tier.supportHours}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Authorized Contacts: ${tier.authorizedContacts}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Tenants: ${tier.tenants}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Support Requests: ${tier.supportRequestsIncluded}</td></tr>
-                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif;">• Critical Situation Support: ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">Yes</span>' : '<span style="color: #d83b01; font-weight: 600;">No</span>'}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif; color: ${listTextColor};">• Support Hours: ${tier.supportHours}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif; color: ${listTextColor};">• Authorized Contacts: ${tier.authorizedContacts}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif; color: ${listTextColor};">• Tenants: ${tier.tenants}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif; color: ${listTextColor};">• Support Requests: ${tier.supportRequestsIncluded}</td></tr>
+                <tr><td style="padding: 5px 0; font-family: 'Segoe UI', Arial, sans-serif; color: ${listTextColor};">• Critical Situation Support: ${tier.criticalSituation ? `<span style="color: ${successColor}; font-weight: 600;">Yes</span>` : `<span style="color: ${errorColor}; font-weight: 600;">No</span>`}</td></tr>
               </table>
             </td>
           </tr>
@@ -152,65 +176,85 @@ const _generateTierDetailsSection = (tier: SupportTier): string => `
       </td>
     </tr>
   </table>`;
+};
 
-const _generateContactsSection = (info: CustomerInfo, tier: SupportTier): string => `
+const _generateContactsSection = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">2. Authorized Customer Contacts</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Please confirm the following list of contacts authorized to open support requests:</p>
-        ${_createContactsTable(info.authorizedContacts)}
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">2. Authorized Customer Contacts</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Please confirm the following list of contacts authorized to open support requests:</p>
+        ${_createContactsTable(info.authorizedContacts, theme)}
       </td>
     </tr>
   </table>`;
+};
 
-const _generateTenantSection = (info: CustomerInfo, tier: SupportTier): string => `
+const _generateTenantSection = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  const errorColor = '#d83b01'; // Keep standard error color?
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">3. Tenant Microsoft ID Definition</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Your Microsoft Tenant ID: <strong style="font-weight: 600;">${info.tenantId || '<span style="color: #d83b01; font-style: italic;">[PLEASE PROVIDE]</span>'}</strong></p>
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">3. Tenant Microsoft ID Definition</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Your Microsoft Tenant ID: <strong style="font-weight: 600;">${info.tenantId || `<span style="color: ${errorColor}; font-style: italic;">[PLEASE PROVIDE]</span>`}</strong></p>
       </td>
     </tr>
   </table>`;
+};
 
-const _generateGdapSection = (tier: SupportTier): string => `
+const _generateGdapSection = (tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">4. GDAP Link Acceptance</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">4. GDAP Link Acceptance</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
       </td>
     </tr>
   </table>`;
+};
 
-const _generateRbacSection = (info: CustomerInfo, tier: SupportTier): string => {
+const _generateRbacSection = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  const textColor = theme.textColor || '#333'; // Fallback text color
   const tenantIdPlaceholder = info.tenantId || 'YOUR_TENANT_ID';
   const script = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
   return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
       <tr>
         <td style="padding: 0;">
-          <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">5. RBAC Role Establishment</h3>
-          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
-          ${_formatScriptBlock(script)}
+          <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">5. RBAC Role Establishment</h3>
+          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
+          ${_formatScriptBlock(script, theme)}
         </td>
       </tr>
     </table>`;
 };
 
-const _generateServiceProviderSection = (tier: SupportTier): string => `
+const _generateServiceProviderSection = (tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">6. Service Provider Acceptance</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Finally, please add Microsoft Support as a service provider in your conditional access policy to ensure seamless integration with your security protocols.</p>
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">6. Service Provider Acceptance</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Finally, please add Microsoft Support as a service provider in your conditional access policy to ensure seamless integration with your security protocols.</p>
       </td>
     </tr>
   </table>`;
+};
 
-// Updated to accept agent details including email
-const _generateClosing = (agentName?: string, agentTitle?: string, companyName?: string, agentEmail?: string): string => {
+// Updated to accept agent details including email and theme
+const _generateClosing = (agentName: string | undefined, agentTitle: string | undefined, companyName: string | undefined, agentEmail: string | undefined, theme: ThemeSettings): string => {
   const nameLine = agentName || 'Microsoft Support Team'; // Default if not provided
   const titleLine = agentTitle ? `<br>${agentTitle}` : '';
   const companyLine = companyName ? `<br>${companyName}` : '';
@@ -218,17 +262,20 @@ const _generateClosing = (agentName?: string, agentTitle?: string, companyName?:
   const email = agentEmail || (agentName ? `${agentName.toLowerCase().replace(' ', '.')}@${companyName?.toLowerCase() || 'microsoft.com'}` : 'support@microsoft.com');
   const mailtoLink = `mailto:${email}`;
 
+  const textColor = theme.textColor || '#333'; // Fallback text color
+  const primaryColor = theme.primaryColor || '#0078D4'; // Fallback link color
+
   return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 30px;">
     <tr>
       <td style="padding: 0;">
-        <p style="margin: 0 0 10px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">Looking forward to our meeting and to supporting your organization.</p>
-        <p style="margin: 20px 0 5px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">
+        <p style="margin: 0 0 10px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Looking forward to our meeting and to supporting your organization.</p>
+        <p style="margin: 20px 0 5px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">
           Best regards,<br>
           ${nameLine}
           ${titleLine}
           ${companyLine}
-          <br><a href="${mailtoLink}" style="color: #0078D4; text-decoration: none;">${email}</a>
+          <br><a href="${mailtoLink}" style="color: ${primaryColor}; text-decoration: none;">${email}</a>
         </p>
       </td>
     </tr>
@@ -236,15 +283,17 @@ const _generateClosing = (agentName?: string, agentTitle?: string, companyName?:
 };
 
 // --- Add new section generator for Additional Notes ---
-const _generateAdditionalNotesSection = (notes: string, tier: SupportTier): string => {
+const _generateAdditionalNotesSection = (notes: string, tier: SupportTier, theme: ThemeSettings): string => {
     // Process line breaks
     const formattedNotes = notes.replace(/\n/g, '<br>');
+    const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
+    const textColor = theme.textColor || '#333'; // Fallback text color
     return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${tier.color}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">Additional Notes</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px;">
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">Additional Notes</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">
           ${formattedNotes}
         </p>
       </td>
@@ -252,14 +301,17 @@ const _generateAdditionalNotesSection = (notes: string, tier: SupportTier): stri
   </table>`;
 };
 
-const _generateFooter = (): string => `
+const _generateFooter = (theme: ThemeSettings): string => {
+  const footerTextColor = theme.textColor ? `${theme.textColor}B3` : '#666'; // Lighter text color or fallback grey
+  return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-top: 30px; border-top: 1px solid #ddd;">
     <tr>
       <td style="padding: 10px 0 0 0;">
-        <p style="margin: 0; font-size: 12px; color: #666; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">This is an automated message generated by the Microsoft Onboarding Template Generator.</p>
+        <p style="margin: 0; font-size: 12px; color: ${footerTextColor}; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif;">This is an automated message generated by the Microsoft Onboarding Template Generator.</p>
       </td>
     </tr>
   </table>`;
+};
 
 // --- Main Template Generation Function ---
 
@@ -271,7 +323,15 @@ interface TemplateFlags {
   includeNotes?: boolean;
 }
 
-// Updated signature to accept agent details and flags
+// Default theme settings to use if none are provided
+const DEFAULT_THEME_SETTINGS: ThemeSettings = {
+  primaryColor: '#0078d4',
+  textColor: '#323130',
+  backgroundColor: '#ffffff', // Default to white for email body
+};
+
+
+// Updated signature to accept agent details, flags, notes, and theme
 export const generateTemplate = (
   info: CustomerInfo,
   agentName?: string,
@@ -279,11 +339,17 @@ export const generateTemplate = (
   companyName?: string,
   agentEmail?: string,
   flags?: TemplateFlags, // Add flags parameter
-  additionalNotes?: string // Add notes parameter
+  additionalNotes?: string, // Add notes parameter
+  theme: ThemeSettings = DEFAULT_THEME_SETTINGS // Add theme parameter with default
 ): string => {
   // Ensure selectedTier is valid, default if not
   const validTierKey = info.selectedTier in supportTiers ? info.selectedTier : Object.keys(supportTiers)[0];
   const tier = supportTiers[validTierKey];
+  const effectiveTheme = { ...DEFAULT_THEME_SETTINGS, ...theme }; // Merge provided theme with defaults
+
+  // Use theme colors for main body styles
+  const bodyBgColor = effectiveTheme.backgroundColor;
+  const bodyTextColor = effectiveTheme.textColor;
 
   return `
 <!DOCTYPE html>
@@ -297,32 +363,31 @@ export const generateTemplate = (
   <style type="text/css">
     body, table, td, th, div, p, h1, h2, h3, h4, h5, h6 {font-family: 'Segoe UI', Arial, sans-serif !important;}
     table {border-collapse: collapse;}
-    .mso-button { padding: 12px 30px; background-color: ${tier.color}; color: white; text-decoration: none; font-weight: bold; display: inline-block; }
+    .mso-button { padding: 12px 30px; background-color: ${effectiveTheme.primaryColor}; color: white; text-decoration: none; font-weight: bold; display: inline-block; } /* Use theme primary */
   </style>
   <![endif]-->
 </head>
-<body>
-  <div style="max-width: 700px; margin: 0 auto; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; color: #333;">
-    ${_generateHeader(tier)}
-    ${_generateGreeting(info)}
-    ${_generateMeetingProposal(info, tier)}
-    ${_generateTierDetailsSection(tier)}
-    ${_generateContactsSection(info, tier)}
-    ${_generateTenantSection(info, tier)}
+<body style="background-color: ${bodyBgColor};"> {/* Apply theme background to body */}
+  <div style="max-width: 700px; margin: 0 auto; padding: 20px; font-family: 'Segoe UI', Arial, sans-serif; color: ${bodyTextColor}; background-color: ${bodyBgColor};"> {/* Apply theme colors to main container */}
+    ${_generateHeader(tier, effectiveTheme)}
+    ${_generateGreeting(info, effectiveTheme)}
+    ${_generateMeetingProposal(info, tier, effectiveTheme)}
+    ${_generateTierDetailsSection(tier, effectiveTheme)}
+    ${_generateContactsSection(info, tier, effectiveTheme)}
+    ${_generateTenantSection(info, tier, effectiveTheme)}
     ${/* Conditionally render sections based on flags */''}
-    ${flags?.includeGdap ? _generateGdapSection(tier) : ''}
-    ${flags?.includeRbac ? _generateRbacSection(info, tier) : ''}
-    ${flags?.includeConditionalAccess ? _generateServiceProviderSection(tier) : ''}
+    ${flags?.includeGdap ? _generateGdapSection(tier, effectiveTheme) : ''}
+    ${flags?.includeRbac ? _generateRbacSection(info, tier, effectiveTheme) : ''}
+    ${flags?.includeConditionalAccess ? _generateServiceProviderSection(tier, effectiveTheme) : ''}
     ${/* Conditionally render notes */''}
-    ${flags?.includeNotes && additionalNotes ? _generateAdditionalNotesSection(additionalNotes, tier) : ''}
-    ${_generateClosing(agentName, agentTitle, companyName, agentEmail)}
-    ${_generateFooter()}
+    ${flags?.includeNotes && additionalNotes ? _generateAdditionalNotesSection(additionalNotes, tier, effectiveTheme) : ''}
+    ${_generateClosing(agentName, agentTitle, companyName, agentEmail, effectiveTheme)}
+    ${_generateFooter(effectiveTheme)}
   </div>
 </body>
 </html>`;
-};
+}; // Ensure this closing brace is present
 
-// Exporting the main function if needed elsewhere, otherwise internal helpers are sufficient
-export default {
-  generateTemplate
-};
+// Correct export is handled by the 'export const generateTemplate = ...' line above
+// Remove duplicate export statement:
+// export { generateTemplate };

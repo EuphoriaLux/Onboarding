@@ -11,8 +11,8 @@
  */
 export const copyFormattedContent = async (html: string, plainText: string): Promise<void> => {
     try {
-      // First try the rich text copy with enhanced formatting
-      await copyRichTextToClipboard(html);
+      // First try the rich text copy with enhanced formatting, passing plainText as fallback
+      await copyRichTextToClipboard(html, plainText);
     } catch (err) {
       console.error('Rich text copy failed, falling back to plain text', err);
       // Fall back to plain text copy
@@ -34,12 +34,47 @@ export const copyFormattedContent = async (html: string, plainText: string): Pro
    * Uses a contentEditable div to preserve HTML formatting
    * 
    * @param html - HTML content to copy
+   * @param plainText - Plain text version for clipboard fallback
    * @returns Promise resolving when copy is complete
    */
-  export const copyRichTextToClipboard = (html: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
+  export const copyRichTextToClipboard = async (html: string, plainText: string): Promise<void> => {
+    // Use navigator.clipboard.write for modern browsers
+    if (navigator.clipboard && navigator.clipboard.write) {
       try {
-        // Create a temporary container
+        // Preprocess HTML for better compatibility
+        const enhancedHtml = preprocessHtml(html);
+
+        // Generate plain text from the enhanced HTML using innerText
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = enhancedHtml;
+        // Remove comments before getting innerText
+        tempDiv.querySelectorAll('comment').forEach(comment => comment.remove());
+        // Use the original plainText directly to preserve formatting, especially for code blocks
+        const generatedPlainText = plainText; 
+
+        const htmlBlob = new Blob([enhancedHtml], { type: 'text/html' });
+        const textBlob = new Blob([generatedPlainText], { type: 'text/plain' });
+
+        const clipboardItem = new ClipboardItem({
+          'text/html': htmlBlob,
+          'text/plain': textBlob,
+        });
+
+        await navigator.clipboard.write([clipboardItem]);
+        // Resolve the promise if write is successful
+        return Promise.resolve();
+      } catch (err) {
+        console.error('navigator.clipboard.write failed:', err);
+        // Reject the promise to trigger fallback in copyFormattedContent
+        return Promise.reject(err);
+      }
+    } else {
+      // Fallback for older browsers using the contentEditable div method
+      // Note: This fallback might still have the original formatting issues for plain text.
+      console.warn('navigator.clipboard.write not available, using fallback copy method.');
+      return new Promise((resolve, reject) => {
+        try {
+          // Create a temporary container
         const container = document.createElement('div');
         
         // Set contentEditable to make it selectable
@@ -75,10 +110,16 @@ export const copyFormattedContent = async (html: string, plainText: string): Pro
         if (successful) {
           resolve();
         } else {
-          reject(new Error('Unable to copy HTML to clipboard'));
+            reject(new Error('Unable to copy HTML to clipboard using fallback method'));
+          }
+        } catch (err) {
+          reject(err);
         }
-      } catch (err) {
-        reject(err);
+      });
+    }
+  };
+
+  /**
       }
     });
   };

@@ -1,3 +1,4 @@
+
 // src/types/index.ts
 /**
  * Global type definitions used across features
@@ -30,4 +31,13 @@ export interface AppConfig {
     tenantManager: boolean;
     multiLanguage: boolean;
   };
+}
+
+/**
+ * Theme customization settings
+ */
+export interface ThemeSettings {
+  primaryColor: string;
+  textColor: string;
+  backgroundColor: string;
 }

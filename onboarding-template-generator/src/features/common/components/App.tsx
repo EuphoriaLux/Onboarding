@@ -8,6 +8,7 @@ import LanguageSelector from './LanguageSelector';
 import { useAppState } from '../../../contexts/AppStateContext';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { StorageService } from '../../../services/storage'; // Import StorageService
+import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 import { supportTiers } from '../../supportTiers/data/supportTiers'; // Import supportTiers
 import '../../../styles/App.css';
 
@@ -64,6 +65,7 @@ const App: React.FC = () => {
   const [showEmailPreview, setShowEmailPreview] = useState(false);
   const [localEmailData, setLocalEmailData] = useState<any>(null); // Consider using a more specific type
   const [agentSettings, setAgentSettings] = useState<AgentSettings | null>(null); // State for agent settings
+  const [themeSettings, setThemeSettings] = useState<ThemeSettings | null>(null); // State for theme settings
   const [emailRecipients, setEmailRecipients] = useState({
     to: state.customerInfo.contactEmail || '',
     cc: '',
@@ -77,22 +79,24 @@ const App: React.FC = () => {
   const [additionalNotes, setAdditionalNotes] = useState('');
 
 
-  // Fetch agent settings on mount
+  // Fetch agent and theme settings on mount
   useEffect(() => {
-    StorageService.get<AgentSettings>('agentSettings')
-      .then(settings => {
-        if (settings) {
-          setAgentSettings(settings);
-        } else {
-          // Set default settings if none are found in storage
-          setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
-        }
-      })
-      .catch(error => {
-        console.error("Error loading agent settings in App:", error);
-        // Set default settings on error as well
-        setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
-      });
+    Promise.all([
+      StorageService.get<AgentSettings>('agentSettings'),
+      StorageService.get<ThemeSettings>('themeSettings')
+    ])
+    .then(([agentData, themeData]) => {
+      // Set agent settings or defaults
+      setAgentSettings(agentData || { agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+      // Set theme settings or null (defaults handled in generateTemplate)
+      setThemeSettings(themeData || null);
+    })
+    .catch(error => {
+      console.error("Error loading settings in App:", error);
+      // Set default settings on error
+      setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+      setThemeSettings(null); // Use null to signify defaults should be used
+    });
   }, []); // Empty dependency array ensures this runs only once on mount
 
 
@@ -252,6 +256,7 @@ const App: React.FC = () => {
           // Removed includeRbac from flags
           flags={{ includeConditionalAccess, includeNotes }}
           additionalNotes={includeNotes ? additionalNotes : undefined}
+          themeSettings={themeSettings} // Pass loaded theme settings
           onBackToEdit={handleBackToEdit}
         />
       ) : (
