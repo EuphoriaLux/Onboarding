@@ -3,17 +3,23 @@ import { StorageService } from '../../../services/storage';
 import './SettingsPage.css'; // We'll create this CSS file later for styling
 
 interface AgentSettings {
-  agentName: string;
+  agentName: string; // Corresponds to agentFirstName + agentLastName
   agentTitle: string;
   companyName: string;
-  agentEmail: string; // Add agentEmail
+  agentEmail: string;
+  onCallRecipients: string; // Comma-separated emails
+  vacationRecipients: string; // Comma-separated emails
+  supportRecipients: string; // Comma-separated emails
 }
 
 const SettingsPage: React.FC = () => {
   const [agentName, setAgentName] = useState('');
   const [agentTitle, setAgentTitle] = useState('');
   const [companyName, setCompanyName] = useState('');
-  const [agentEmail, setAgentEmail] = useState(''); // Add state for email
+  const [agentEmail, setAgentEmail] = useState('');
+  const [onCallRecipients, setOnCallRecipients] = useState('');
+  const [vacationRecipients, setVacationRecipients] = useState('');
+  const [supportRecipients, setSupportRecipients] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -27,7 +33,11 @@ const SettingsPage: React.FC = () => {
           setAgentName(settings.agentName || '');
           setAgentTitle(settings.agentTitle || '');
           setCompanyName(settings.companyName || '');
-          setAgentEmail(settings.agentEmail || ''); // Load email
+          setAgentEmail(settings.agentEmail || '');
+          // Load recipient emails
+          setOnCallRecipients(settings.onCallRecipients || '');
+          setVacationRecipients(settings.vacationRecipients || '');
+          setSupportRecipients(settings.supportRecipients || '');
         }
       })
       .catch(error => {
@@ -47,7 +57,11 @@ const SettingsPage: React.FC = () => {
       agentName,
       agentTitle,
       companyName,
-      agentEmail, // Include email in saved data
+      agentEmail,
+      // Include recipient emails in saved data
+      onCallRecipients,
+      vacationRecipients,
+      supportRecipients,
     };
     try {
       await StorageService.set('agentSettings', settingsToSave);
@@ -60,7 +74,15 @@ const SettingsPage: React.FC = () => {
     } finally {
       setIsSaving(false);
     }
-  }, [agentName, agentTitle, companyName, agentEmail]); // Add email to dependency array
+  }, [
+    agentName,
+    agentTitle,
+    companyName,
+    agentEmail,
+    onCallRecipients,
+    vacationRecipients,
+    supportRecipients,
+  ]); // Add recipients to dependency array
 
   if (isLoading) {
     return <div className="settings-loading">Loading settings...</div>;
@@ -116,9 +138,46 @@ const SettingsPage: React.FC = () => {
           />
         </div>
 
+        {/* --- Recipient Settings --- */}
+        <h3 className="settings-subtitle">ICS Recipient Emails</h3>
+        <p>Configure the default recipients for generated .ics files (comma-separated).</p>
+
+        <div className="form-group">
+          <label htmlFor="onCallRecipients">On-Call Duty Recipients:</label>
+          <textarea
+            id="onCallRecipients"
+            value={onCallRecipients}
+            onChange={(e) => setOnCallRecipients(e.target.value)}
+            placeholder="e.g., team1@example.com, manager@example.com"
+            rows={3}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="vacationRecipients">Vacation Request Recipients:</label>
+          <textarea
+            id="vacationRecipients"
+            value={vacationRecipients}
+            onChange={(e) => setVacationRecipients(e.target.value)}
+            placeholder="e.g., hr@example.com, team-calendar@example.com"
+            rows={3}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="supportRecipients">Support Request Recipients:</label>
+          <textarea
+            id="supportRecipients"
+            value={supportRecipients}
+            onChange={(e) => setSupportRecipients(e.target.value)}
+            placeholder="e.g., support-leads@example.com"
+            rows={3}
+          />
+        </div>
+
         <div className="form-actions">
           <button onClick={handleSave} disabled={isSaving}>
-            {isSaving ? 'Saving...' : 'Save Settings'}
+            {isSaving ? 'Saving...' : 'Save All Settings'}
           </button>
           {saveStatus === 'success' && <span className="save-status success">Settings saved!</span>}
           {saveStatus === 'error' && <span className="save-status error">Error saving settings.</span>}

@@ -1228,3 +1228,78 @@ input[disabled] {
   font-weight: 600;
   min-width: 180px;
 }
+
+
+/* ========== Styles Integrated from to_integrate/styles.css ========== */
+
+/* Textarea specific styles (if different from default input) */
+textarea {
+  min-height: 80px; /* From to_integrate */
+  resize: vertical;
+}
+
+/* Note style for helper text below inputs */
+.note {
+  font-size: 12px; /* Adjusted from 0.9em */
+  color: var(--text-light); /* Use variable */
+  display: block;
+  margin-top: -10px; /* Pull closer to input */
+  margin-bottom: 10px;
+  /* Assuming labels have consistent width or form groups handle alignment */
+}
+
+/* Container for ICS Generator Forms */
+.ics-form-container {
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 20px; /* Space between forms if multiple are shown */
+  box-shadow: var(--box-shadow);
+}
+
+.ics-form-container h3 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.ics-form-container p {
+  color: var(--text-light);
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* Grouping for inline date/time inputs/selects */
+.datetime-group {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between elements */
+}
+
+.datetime-group input[type="date"],
+.datetime-group select {
+  width: auto; /* Allow natural width */
+  flex-grow: 1; /* Allow stretching if needed */
+}
+
+/* Error message styling */
+.error-message {
+  color: var(--warning-color); /* Use warning color variable */
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  padding: 8px 12px;
+  background-color: rgba(216, 59, 1, 0.05); /* Light background for warning */
+  border: 1px solid rgba(216, 59, 1, 0.2);
+  border-radius: 4px;
+}
+
+/* Ensure settings subtitle has some space */
+.settings-subtitle {
+  margin-top: 24px;
+  margin-bottom: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}

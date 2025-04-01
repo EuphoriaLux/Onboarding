@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAppState } from '../../../contexts/AppStateContext';
 import App from '../../common/components/App';
-import SettingsPage from '../../settings/components/SettingsPage'; // Import the new component
+import SettingsPage from '../../settings/components/SettingsPage';
+// Import the new ICS form components
+import OnCallDutyForm from '../../icsGenerator/components/OnCallDutyForm';
+import VacationRequestForm from '../../icsGenerator/components/VacationRequestForm';
+import SupportRequestForm from '../../icsGenerator/components/SupportRequestForm';
 
 // Icon components
 const OnboardingIcon = () => (
@@ -43,6 +47,18 @@ const SettingsIcon = () => (
     <path d="M32 21.3299V18.6699C32 18.1876 31.6693 17.7742 31.2 17.6839L28.6745 17.1838C28.4805 16.6984 28.238 16.235 27.9525 15.8026L29.0395 13.4359C29.2489 13.0171 29.1663 12.5086 28.8264 12.1687L26.8311 10.1734C26.4912 9.8335 25.9827 9.75091 25.5639 9.96028L23.1972 11.0473C22.7648 10.7618 22.3013 10.5193 21.8159 10.3253L21.3159 7.79992C21.2255 7.33063 20.8122 7 20.3299 7H17.6699C17.1876 7 16.7742 7.33063 16.6839 7.79992L16.1838 10.3253C15.6984 10.5193 15.235 10.7618 14.8026 11.0473L12.4359 9.96028C12.0171 9.75091 11.5086 9.8335 11.1687 10.1734L9.17346 12.1687C8.83356 12.5086 8.75096 13.0171 8.96034 13.4359L10.0473 15.8026C9.76183 16.235 9.51933 16.6984 9.32532 17.1838L6.79991 17.6839C6.33061 17.7742 5.99998 18.1876 5.99998 18.6699V21.3299C5.99998 21.8122 6.33061 22.2255 6.79991 22.3159L9.32532 22.816C9.51933 23.3013 9.76183 23.7648 10.0473 24.1972L8.96034 26.5639C8.75096 26.9827 8.83356 27.4912 9.17346 27.8311L11.1687 29.8264C11.5086 30.1663 12.0171 30.2489 12.4359 30.0395L14.8026 28.9525C15.235 29.238 15.6984 29.4805 16.1838 29.6745L16.6839 32.1999C16.7742 32.6692 17.1876 32.9998 17.6699 32.9998H20.3299C20.8122 32.9998 21.2255 32.6692 21.3159 32.1999L21.8159 29.6745C22.3013 29.4805 22.7648 29.238 23.1972 28.9525L25.5639 30.0395C25.9827 30.2489 26.4912 30.1663 26.8311 29.8264L28.8264 27.8311C29.1663 27.4912 29.2489 26.9827 29.0395 26.5639L27.9525 24.1972C28.238 23.7648 28.4805 23.3013 28.6745 22.816L31.2 22.3159C31.6693 22.2255 32 21.8122 32 21.3299Z" stroke="#605E5C" strokeWidth="2" fill="none"/>
   </svg>
 );
+
+// Placeholder Icons for new features (Simple Calendar Icons)
+const CalendarIcon = ({ color = "#757575" }) => ( // Default gray color
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="40" rx="8" fill={color} fillOpacity="0.1"/>
+    <path d="M29 12H11C9.89543 12 9 12.8954 9 14V30C9 31.1046 9.89543 32 11 32H29C30.1046 32 31 31.1046 31 30V14C31 12.8954 30.1046 12 29 12Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M26 8V12M14 8V12M9 18H31" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    {/* Optional: Add a small detail like a plus or checkmark */}
+    {/* <path d="M20 23V29M17 26H23" stroke={color} strokeWidth="1.5" strokeLinecap="round"/> */}
+  </svg>
+);
+
 
 // Feature type definition
 interface Feature {
@@ -91,9 +107,44 @@ const Homepage: React.FC = () => {
       description: 'Configure extension preferences and defaults.',
       icon: <SettingsIcon />,
       component: SettingsPage, // Use the actual component
-      enabled: true // Enable the feature
-    }
+      enabled: true
+    },
+    // Add new ICS Generator Features
+    {
+      id: 'onCallDuty',
+      name: 'On-Call Duty ICS Generator',
+      description: 'Create an .ics file for on-call duty periods.',
+      icon: <CalendarIcon color="#E81123" />, // Red color for On-Call
+      component: OnCallDutyForm,
+      enabled: true
+    },
+    {
+      id: 'vacationRequest',
+      name: 'Vacation Request ICS Generator',
+      description: 'Generate an .ics file for vacation requests.',
+      icon: <CalendarIcon color="#0078D4" />, // Blue color for Vacation
+      component: VacationRequestForm,
+      enabled: true
+    },
+    {
+      id: 'supportRequest',
+      name: 'Support Request ICS Generator',
+      description: 'Generate an .ics file for support request entries.',
+      icon: <CalendarIcon color="#107C10" />, // Green color for Support
+      component: SupportRequestForm,
+      enabled: true
+    },
   ];
+
+  // Sort features alphabetically by name, keeping Settings last
+  const sortedFeatures = features
+    .filter(f => f.id !== 'settings')
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const settingsFeature = features.find(f => f.id === 'settings');
+  if (settingsFeature) {
+    sortedFeatures.push(settingsFeature);
+  }
+
 
   // Return to homepage
   const handleBackToHome = () => {
@@ -128,8 +179,9 @@ const Homepage: React.FC = () => {
       </div>
       
       <div className="features-grid">
-        {features.map((feature) => (
-          <div 
+        {/* Use sortedFeatures */}
+        {sortedFeatures.map((feature) => (
+          <div
             key={feature.id}
             className={`feature-card ${!feature.enabled ? 'disabled' : ''}`}
             onClick={() => feature.enabled && setActiveFeature(feature.id)}
