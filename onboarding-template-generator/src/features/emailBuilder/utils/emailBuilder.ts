@@ -235,7 +235,7 @@ const emailBuilder = {
 
     // Define styles as strings for email compatibility
     const bodyStyle = `margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: ${bgColor};`;
-    const containerStyle = `max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor};`;
+    const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Added width: 100% and box-sizing
     const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
     const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: ${bgColor};`;
     const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: ${bgColor};`;

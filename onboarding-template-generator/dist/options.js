@@ -72860,7 +72860,7 @@ onBackToEdit }) => {
         }
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
-                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "preview-body", children: viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText })) })] })] }));
+                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-body", style: { width: '100%' }, children: [" ", viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText }))] })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
 
@@ -73507,60 +73507,104 @@ const copyRichTextToClipboard = (html, plainText) => __awaiter(void 0, void 0, v
 };
 
 /**
- * Preprocesses HTML before copying to improve compatibility with email clients
+ * Preprocesses HTML before copying to improve compatibility with email clients,
+ * using DOM manipulation for robustness.
  *
  * @param html - Raw HTML to process
  * @returns Enhanced HTML for better email client compatibility
  */
 const preprocessHtml = (html) => {
-    // 1. Add Office/Outlook specific metadata
-    const metaBlock = `
-      <!--[if gte mso 9]>
-      <xml>
-        <o:OfficeDocumentSettings>
-          <o:AllowPNG/>
-          <o:PixelsPerInch>96</o:PixelsPerInch>
-        </o:OfficeDocumentSettings>
-      </xml>
-      <![endif]-->
-      <style type="text/css">
-        /* Outlook-specific styles */
-        table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
-        td, th { padding: 12px !important; }
-        .mso-line-height-rule: exactly !important;
-        body, div, p, table, td, th, span { background-color: #FFFFFF !important; }
-        body { margin: 0 !important; padding: 0 !important; }
-        
-        /* Force white background */
-        body, .email-body { background-color: #FFFFFF !important; }
-        
-        /* Improved spacing */
-        p { margin-bottom: 16px !important; line-height: 1.6 !important; }
-        h1, h2, h3 { margin-top: 24px !important; margin-bottom: 16px !important; }
-        .section-space { margin-top: 30px !important; margin-bottom: 30px !important; }
-        td { padding: 12px !important; }
-      </style>
-    `;
-    // 2. Process the HTML to enhance it
-    // Fix background color issues by adding explicit background-color to elements
-    let processedHtml = html
-        .replace(/<body/g, '<body bgcolor="#FFFFFF" style="background-color: #FFFFFF !important; margin: 0; padding: 0;"')
-        .replace(/<div style="/g, '<div style="background-color: #FFFFFF !important; ')
-        .replace(/<table/g, '<table bgcolor="#FFFFFF" cellspacing="0" cellpadding="12" border="0"')
-        .replace(/<td style="/g, '<td style="background-color: #FFFFFF !important; padding: 12px !important; ')
-        .replace(/<th style="/g, '<th style="background-color: #FFFFFF !important; padding: 12px !important; ')
-        .replace(/<p style="/g, '<p style="margin-bottom: 16px !important; line-height: 1.6 !important; ')
-        .replace(/<span style="/g, '<span style="background-color: transparent !important; ');
-    // 3. Add meta block after the <head> tag
-    processedHtml = processedHtml.replace(/<head>/, '<head>' + metaBlock);
-    // 4. Fix spacing issues by adding more consistent spacing
-    processedHtml = processedHtml
-        .replace(/<div class="section/g, '<div class="section-space section')
-        .replace(/margin: 0 0 15px 0/g, 'margin: 0 0 20px 0')
-        .replace(/margin-bottom: 20px/g, 'margin-bottom: 30px')
-        .replace(/padding: 16px/g, 'padding: 20px')
-        .replace(/line-height: 1.5/g, 'line-height: 1.6');
-    return processedHtml;
+    try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        // Ensure head exists
+        let head = doc.head;
+        if (!head) {
+            head = doc.createElement('head');
+            doc.documentElement.insertBefore(head, doc.body);
+        }
+        // 1. Add Office/Outlook specific metadata and base styles to head
+        const metaAndStyleContent = `
+        <!--[if gte mso 9]>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+        <![endif]-->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+          /* Base Styles for Email Compatibility */
+          body { margin: 0 !important; padding: 0 !important; background-color: #FFFFFF; }
+          table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
+          td, th { padding: 8px; /* Default padding, can be overridden */ }
+          p { margin: 0 0 1em 0; line-height: 1.5; } /* Basic paragraph spacing */
+          img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+          a img { border: none; }
+          /* Add other necessary base styles or resets */
+        </style>
+      `;
+        // Use a temporary element to parse the meta/style string
+        const temp = doc.createElement('div');
+        temp.innerHTML = metaAndStyleContent;
+        // Append nodes from temp to head to avoid innerHTML issues on <head>
+        Array.from(temp.childNodes).forEach(node => {
+            head.appendChild(node.cloneNode(true));
+        });
+        // 2. Apply necessary attributes/styles directly to elements
+        if (doc.body) {
+            doc.body.style.margin = '0';
+            doc.body.style.padding = '0';
+            doc.body.style.backgroundColor = '#FFFFFF'; // Ensure white background
+            doc.body.setAttribute('bgcolor', '#FFFFFF');
+        }
+        doc.querySelectorAll('table').forEach((table) => {
+            table.setAttribute('cellspacing', '0');
+            table.setAttribute('cellpadding', '0'); // Often set to 0, rely on td/th padding
+            table.setAttribute('border', '0');
+            table.style.borderCollapse = 'collapse';
+            // Cast style to any for MSO specific properties
+            table.style.msoTableLspace = '0pt';
+            table.style.msoTableRspace = '0pt';
+            // Avoid forcing background color here unless absolutely necessary
+        });
+        doc.querySelectorAll('td, th').forEach((cellNode) => {
+            // Assert type to HTMLElement to access style
+            const cell = cellNode;
+            if (!cell.style.padding) { // Apply default padding if not set
+                cell.style.padding = '8px';
+            }
+            // Avoid forcing background color here
+        });
+        doc.querySelectorAll('p').forEach((pNode) => {
+            // Assert type to HTMLElement to access style
+            const p = pNode;
+            // Ensure basic margin and line-height if not already styled extensively
+            if (!p.style.margin && !p.style.marginBottom) {
+                p.style.margin = '0 0 1em 0';
+            }
+            if (!p.style.lineHeight) {
+                p.style.lineHeight = '1.5';
+            }
+        });
+        // Add more specific DOM manipulations as needed based on testing in Outlook/email clients
+        // 3. Serialize the document back to string
+        const serializer = new XMLSerializer();
+        // Serialize the whole documentElement to include doctype, html, head, body
+        let processedHtml = serializer.serializeToString(doc);
+        // Ensure DOCTYPE is present if missing (serializer might omit it)
+        if (!processedHtml.toLowerCase().startsWith('<!doctype')) {
+            processedHtml = '<!DOCTYPE html>\n' + processedHtml;
+        }
+        return processedHtml;
+    }
+    catch (error) {
+        console.error("Error preprocessing HTML with DOMParser:", error);
+        // Fallback to original HTML if parsing/processing fails
+        return html;
+    }
 };
 
 
@@ -73793,7 +73837,7 @@ const emailBuilder = {
         });
         // Define styles as strings for email compatibility
         const bodyStyle = `margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: ${bgColor};`;
-        const containerStyle = `max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor};`;
+        const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Added width: 100% and box-sizing
         const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
         const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: ${bgColor};`;
         const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: ${bgColor};`;

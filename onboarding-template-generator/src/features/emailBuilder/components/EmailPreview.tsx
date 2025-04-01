@@ -210,11 +210,11 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
           <div className="preview-date">
             <strong>Date:</strong> {emailData.currentDate}
           </div>
-        </div>
-        
-        <div className="preview-body">
-          {viewMode === 'html' ? (
-            <iframe 
+      </div>
+
+      <div className="preview-body" style={{ width: '100%' }}> {/* Added width style */}
+        {viewMode === 'html' ? (
+          <iframe
               srcDoc={htmlContent}
               title="Email Preview"
               style={{ width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' }}

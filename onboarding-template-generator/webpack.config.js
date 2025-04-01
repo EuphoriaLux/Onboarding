@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // Import the plugin
 const fs = require('fs');
 
 // Check if assets directory exists
@@ -16,11 +17,15 @@ if (assetsExist) {
   copyPatterns.push({ from: 'src/assets', to: 'assets' });
 }
 
-module.exports = {
-  mode: 'development',
-  devtool: 'cheap-module-source-map',
-  entry: {
-    popup: './src/popup.tsx',
+// Export a function to access mode
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production';
+
+  return {
+    mode: isProduction ? 'production' : 'development',
+    devtool: isProduction ? 'source-map' : 'cheap-module-source-map', // Use source-map for prod, cheap-module-source-map for dev
+    entry: {
+      popup: './src/popup.tsx',
     options: './src/options.tsx',
     background: './src/background.ts'
   },
@@ -47,7 +52,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [
+          isProduction ? MiniCssExtractPlugin.loader : 'style-loader', // Use MiniCssExtractPlugin in production
+          'css-loader'
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -68,6 +76,11 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: copyPatterns
-    })
+    }),
+    // Add MiniCssExtractPlugin only in production
+    ...(isProduction ? [new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css', // Use contenthash for cache busting
+      chunkFilename: '[id].[contenthash].css',
+    })] : [])
   ]
-};
+}};
