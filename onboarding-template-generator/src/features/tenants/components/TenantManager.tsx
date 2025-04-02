@@ -1,8 +1,8 @@
 // src/components/TenantManager.tsx
-import React from 'react';
+import React, { useEffect } from 'react'; // Import useEffect
 import DatePicker from 'react-datepicker'; // Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
-import { supportTiers } from '../data/supportTiers';
+import { supportTiers } from '../../supportTiers/constants'; // Corrected import path
 import { TenantInfo } from '../types'; // Import updated TenantInfo type
 
 interface TenantManagerProps {
@@ -13,7 +13,20 @@ interface TenantManagerProps {
 
 const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange }) => {
   const tier = supportTiers[selectedTier];
-  
+
+  // Effect to adjust tenants when tier changes
+  useEffect(() => {
+    const currentTier = supportTiers[selectedTier];
+    const tenantLimit = currentTier.tenants;
+    if (tenants.length > tenantLimit) {
+      // If current tenants exceed the new limit, truncate the array
+      const updatedTenants = tenants.slice(0, tenantLimit);
+      onChange(updatedTenants);
+    }
+    // Dependencies: run when selectedTier changes or the onChange function reference changes
+    // It's generally safe to include tenants array too, though it might cause extra runs if not memoized upstream
+  }, [selectedTier, tenants, onChange]);
+
   // Handle tenant field changes, including Date and boolean types
   const handleTenantChange = (index: number, field: keyof TenantInfo, value: string | Date | boolean | null) => {
     const updatedTenants = tenants.map((tenant, i) => {

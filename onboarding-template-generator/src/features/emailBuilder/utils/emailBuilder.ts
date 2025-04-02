@@ -20,7 +20,7 @@ const ADMIN_AGENTS_OBJECT_ID = "9a838974-22d3-415b-8136-c790e285afeb";
 const SUPPORT_REQUEST_CONTRIBUTOR_ROLE = "Support Request Contributor";
 const OWNER_ROLE = "Owner";
 const GDAP_ROLE = "Service Support Administrator"; // Specific role needed
-const DEFAULT_GDAP_LINK = "https://admin.microsoft.com/Adminportal/Home?ref=/GDAP"; // Default GDAP link
+// const DEFAULT_GDAP_LINK = "https://admin.microsoft.com/Adminportal/Home?ref=/GDAP"; // Removed Default GDAP link
 
 // RBAC Script Template
 const RBAC_POWERSHELL_SCRIPT_TEMPLATE = `
@@ -85,6 +85,23 @@ const emailBuilder = {
     body += `\t${this.translate('contactsLabel', language)}: ${tier.authorizedContacts}\n`;
     body += `\t${this.translate('requestsLabel', language)}: ${tier.supportRequestsIncluded}\n\n`;
 
+    // Tenant Information Section (Plain Text) - Moved Up
+    body += `**${this.translate('tenantInfoTitle', language)}**\n\n`;
+    if (tenants.length > 0) {
+        body += this.translate('tenantInfoIntro', language) + '\n\n'; // Added intro text
+        tenants.forEach((tenant, index) => {
+            body += `Tenant ${index + 1}: ${tenant.companyName}\n`;
+            body += `  Domain: ${tenant.tenantDomain || 'N/A'}\n`;
+            body += `  MS Domain: ${tenant.microsoftTenantDomain || 'N/A'}\n`;
+            body += `  Tenant ID: ${tenant.id || 'N/A'}\n`;
+            const deadline = tenant.implementationDeadline ? tenant.implementationDeadline.toLocaleDateString() : 'N/A';
+            body += `  Deadline: ${deadline}\n`;
+            body += `  Azure RBAC Relevant: ${tenant.hasAzure ? this.translate('yes', language) : this.translate('no', language)}\n\n`;
+        });
+    } else {
+        body += this.translate('noTenantInfo', language) + '\n\n';
+    }
+
     // Authorized Contacts Section
     if (formData.authorizedContacts.checked) {
       body += `**${this.translate('authorizedContactsTitle', language)}**\n\n`;
@@ -112,21 +129,36 @@ const emailBuilder = {
       body += this.translate('meetingAttendees', language) + '\n\n';
     }
 
-    // GDAP Section (Apply once if tenants exist)
+    // GDAP Section (Plain Text - Adjusted for multiple tenants, removed default link)
     if (tenants.length > 0) {
-        const tenantGdapLink = tenants[0]?.gdapLink || DEFAULT_GDAP_LINK;
-        const deadline = tenants[0]?.implementationDeadline ? tenants[0].implementationDeadline.toLocaleDateString() : '4/26/2025';
+        const specificLinks = tenants.filter(t => t.gdapLink && t.gdapLink.trim() !== '');
+        const deadline = tenants[0]?.implementationDeadline ? tenants[0].implementationDeadline.toLocaleDateString() : 'N/A'; // Use first tenant's deadline or N/A for general text
         body += `**${this.translate('gdapTitle', language)}**\n\n`;
         body += this.translate('gdapIntro', language, { deadline: deadline, roles: GDAP_ROLE }) + '\n\n';
         body += this.translate('gdapPermission', language) + '\n\n';
-        body += this.translate('gdapInstruction', language) + '\n';
-        body += tenantGdapLink + '\n\n';
+        body += this.translate('gdapInstruction', language) + '\n'; // General instruction to approve
+        if (specificLinks.length > 0) {
+            body += this.translate('gdapSpecificLinkInfo', language) + '\n'; // "Use the specific links provided below:"
+            specificLinks.forEach(tenant => {
+                body += `  ${tenant.companyName}: ${tenant.gdapLink}\n`;
+            });
+            if (specificLinks.length < tenants.length) {
+                 // If some tenants have links but not all
+                 body += this.translate('gdapDefaultLinkInfo', language) + '\n\n'; // "For other tenants, the link will be sent separately."
+            } else {
+                 body += '\n'; // Add newline if all have specific links
+            }
+        } else {
+            // If no tenants have specific links
+            body += this.translate('gdapLinksSentSeparately', language) + '\n\n'; // New translation key: "The necessary GDAP approval link(s) will be sent in a separate communication."
+        }
     }
 
-    // RBAC Section (Apply once if any tenant has Azure)
-    if (tenants.some(t => t.hasAzure)) {
+    // RBAC Section (Plain Text - Generates script per relevant tenant)
+    const relevantRbacTenants = tenants.filter(t => t.hasAzure);
+    if (relevantRbacTenants.length > 0) {
         body += `**${this.translate('rbacTitle', language)}**\n\n`;
-        body += this.translate('rbacInstruction', language) + '\n\n';
+        // Step 1: Install/Update Module (Common instruction)
         body += `1\t${this.translate('rbacStep1', language)}\n\n`;
         body += `Source: https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n`;
         body += `${this.translate('rbacScriptHeader', language)}\n`;
@@ -134,12 +166,19 @@ const emailBuilder = {
         body += `or update it:\n`;
         body += `${this.translate('rbacScriptHeader', language)}\n`;
         body += `Update-Module Az.Resources -Force\n\n`;
+
+        // Step 2: Run script per tenant
         body += `2\t${this.translate('rbacStep2', language)}\n\n`;
-        body += `${this.translate('rbacStep2Instruction', language)}\n`;
-        const tenantIdPlaceholder = tenants.length > 1 ? '[your-tenant-id]' : (tenants[0]?.microsoftTenantDomain || '[your-tenant-id]');
-        const rawRbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
-        body += `${this.translate('rbacScriptHeader', language)}\n`;
-        body += rawRbacScript + '\n\n';
+        body += this.translate('rbacStep2InstructionMultiTenant', language) + '\n\n'; // Updated instruction: "Run the appropriate script below..."
+
+        relevantRbacTenants.forEach(tenant => {
+            const tenantDomain = tenant.microsoftTenantDomain || '[MS_TENANT_DOMAIN_MISSING]'; // Use MS Domain or placeholder
+            const scriptForTenant = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantDomain);
+            body += `--- Script for Tenant: ${tenant.companyName} (Domain: ${tenantDomain}) ---\n`; // Show domain in header
+            body += `${this.translate('rbacScriptHeader', language)}\n`;
+            body += scriptForTenant + '\n\n';
+        });
+
         body += this.translate('rbacScreenshot', language) + '\n\n';
     }
 
@@ -233,6 +272,29 @@ const emailBuilder = {
     htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
     htmlBodyContent += `</ul></div>`;
 
+    // Tenant Information Section (HTML) - Moved Up
+    htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+    const tenantSectionTitle = this.translate('tenantInfoTitle', language);
+    htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: tenantSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+    if (tenants.length > 0) {
+        htmlBodyContent += `<p style="${pStyle}">${this.translate('tenantInfoIntro', language)}</p>`; // Added intro text
+        tenants.forEach((tenant, index) => {
+            const deadline = tenant.implementationDeadline ? tenant.implementationDeadline.toLocaleDateString() : 'N/A';
+            const azureStatus = tenant.hasAzure ? this.translate('yes', language) : this.translate('no', language);
+            const azureColor = tenant.hasAzure ? '#107c10' : '#d83b01';
+            htmlBodyContent += `<div style="background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; margin-bottom: 15px; padding: 15px 20px;">`;
+            htmlBodyContent += `<strong style="font-weight: 600; color: ${primaryAccentColor}; font-size: 16px; display: block; margin-bottom: 10px;">Tenant ${index + 1}: ${tenant.companyName}</strong>`;
+            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Domain:</strong> ${tenant.tenantDomain || 'N/A'}</p>`;
+            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">MS Domain:</strong> ${tenant.microsoftTenantDomain || 'N/A'}</p>`;
+            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Tenant ID:</strong> ${tenant.id || 'N/A'}</p>`;
+            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Deadline:</strong> ${deadline}</p>`;
+            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Azure RBAC Relevant:</strong> <span style="color: ${azureColor}; font-weight: 600;">${azureStatus}</span></p>`;
+            htmlBodyContent += `</div>`;
+        });
+    } else {
+        htmlBodyContent += `<p style="${pStyle}">${this.translate('noTenantInfo', language)}</p>`;
+    }
+
     // Authorized Contacts Section
     if (formData.authorizedContacts.checked) {
          htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
@@ -248,7 +310,7 @@ const emailBuilder = {
          }));
     }
 
-    // Meeting Section
+    // Meeting Section (HTML - No changes needed)
     if (formData.meetingDate) {
         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
         const meetingSectionTitle = this.translate('meetingTitle', language);
@@ -260,30 +322,46 @@ const emailBuilder = {
         htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`;
     }
 
-    // GDAP Section (Apply once if tenants exist)
+    // GDAP Section (HTML - Adjusted for multiple tenants, removed default link)
     if (tenants.length > 0) {
         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
         let gdapHtml = '';
-        const tenantGdapLink = tenants[0]?.gdapLink || DEFAULT_GDAP_LINK;
-        const deadline = tenants[0]?.implementationDeadline ? tenants[0].implementationDeadline.toLocaleDateString() : '4/26/2025';
+        const specificLinks = tenants.filter(t => t.gdapLink && t.gdapLink.trim() !== '');
+        const deadline = tenants[0]?.implementationDeadline ? tenants[0].implementationDeadline.toLocaleDateString() : 'N/A'; // Use first tenant's deadline or N/A
         const gdapSectionTitle = this.translate('gdapTitle', language);
+
         gdapHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: gdapSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
         gdapHtml += `<p style="${pStyle}">${this.translate('gdapIntro', language, { deadline: deadline, roles: GDAP_ROLE })}</p>`;
         gdapHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>`;
-        gdapHtml += `<div style="text-align: center; margin: 20px 0;">`;
-        gdapHtml += `<p style="margin: 0 0 10px 0; font-weight: 600; color: ${textColor};">${this.translate('gdapInstruction', language)}</p>`;
-        gdapHtml += `<a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
-        gdapHtml += `</div>`;
+        gdapHtml += `<p style="margin: 15px 0 10px 0; font-weight: 600; color: ${textColor};">${this.translate('gdapInstruction', language)}</p>`; // General instruction
+
+        if (specificLinks.length > 0) {
+            gdapHtml += `<p style="${pStyle}">${this.translate('gdapSpecificLinkInfo', language)}</p>`; // "Use the specific links provided below:"
+            gdapHtml += `<ul style="padding-left: 20px; margin: 10px 0 15px 0;">`;
+            specificLinks.forEach(tenant => {
+                 gdapHtml += `<li style="${listItemStyle}"><strong style="${strongStyle}">${tenant.companyName}:</strong> <a href="${tenant.gdapLink}" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">${tenant.gdapLink}</a></li>`;
+            });
+            gdapHtml += `</ul>`;
+            if (specificLinks.length < tenants.length) {
+                 // If some tenants have links but not all
+                 gdapHtml += `<p style="${pStyle}">${this.translate('gdapDefaultLinkInfo', language)}</p>`; // "For other tenants, the link will be sent separately."
+            }
+        } else {
+            // If no tenants have specific links
+            gdapHtml += `<p style="${pStyle}">${this.translate('gdapLinksSentSeparately', language)}</p>`; // New translation key: "The necessary GDAP approval link(s) will be sent in a separate communication."
+        }
         htmlBodyContent += `<div style="${tenantBlockStyle}">${gdapHtml}</div>`;
     }
 
-    // RBAC Section (Apply once if any tenant has Azure)
-    if (tenants.some(t => t.hasAzure)) {
+    // RBAC Section (HTML - Generates script per relevant tenant)
+    const relevantRbacTenants = tenants.filter(t => t.hasAzure);
+    if (relevantRbacTenants.length > 0) {
+         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
          let rbacHtml = '';
          const rbacSectionTitle = this.translate('rbacTitle', language);
          rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: rbacSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-         rbacHtml += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: ${textColor};">${this.translate('rbacInstruction', language)}</p>`;
-         // Step 1
+
+         // Step 1: Install/Update Module (Common instruction)
          rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 1, title: this.translate('rbacStep1', language), theme: effectiveTheme }));
          rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
          rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
@@ -291,13 +369,20 @@ const emailBuilder = {
          rbacHtml += `<p style="margin: 15px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">or update it:</p>`;
          rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
          rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Update-Module Az.Resources -Force', theme: effectiveTheme }))}</div>`;
-         // Step 2
+
+         // Step 2: Run script per tenant
          rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 2, title: this.translate('rbacStep2', language), theme: effectiveTheme }));
-         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2Instruction', language)}</p>`;
-         const tenantIdPlaceholder = tenants.length > 1 ? '[your-tenant-id]' : (tenants[0]?.microsoftTenantDomain || '[your-tenant-id]');
-         const rbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
-         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
-         rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: rbacScript, theme: effectiveTheme }))}</div>`;
+         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2InstructionMultiTenant', language)}</p>`; // Instruction updated via translations
+
+         relevantRbacTenants.forEach(tenant => {
+            const tenantDomain = tenant.microsoftTenantDomain || '[MS_TENANT_DOMAIN_MISSING]'; // Use MS Domain or placeholder
+            const scriptForTenant = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantDomain);
+            // Add a sub-header for each script block showing the domain
+            rbacHtml += `<h4 style="margin: 20px 0 5px 48px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; font-weight: 600;">Script for Tenant: ${tenant.companyName} (Domain: ${tenantDomain})</h4>`;
+            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+            rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: scriptForTenant, theme: effectiveTheme }))}</div>`;
+         });
+
          rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
          htmlBodyContent += `<div style="${tenantBlockStyle}">${rbacHtml}</div>`;
     }
@@ -412,9 +497,13 @@ const emailBuilder = {
       contactName: info.contactName,
       contactEmail: info.contactEmail,
       proposedDate: info.proposedDate,
-      tenantId: info.tenantId,
+      // tenantId: info.tenantId, // Removed - tenants are now in CustomerInfo.tenants
       selectedTier: info.selectedTier,
       emailContacts: info.authorizedContacts,
+      // Note: EmailFormData still expects a single tenantId. This function might need
+      // further refactoring depending on how it's used, or EmailFormData needs updating.
+      // For now, providing the first tenant's ID or an empty string if no tenants.
+      tenantId: info.tenants && info.tenants.length > 0 ? info.tenants[0].id : '',
       to: info.contactEmail || '',
       cc: '',
       subject: this.translate('subject', language as Language, {

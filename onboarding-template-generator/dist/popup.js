@@ -30013,7 +30013,17 @@ const translations = {
     'mfaPolicy': 'Multi-Factor Authentication (MFA) requirements for all users',
     'locationPolicy': 'Location-based access restrictions',
     'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
-    'signInPolicy': 'Sign-in risk-based policies to prevent suspicious login attempts'
+    'signInPolicy': 'Sign-in risk-based policies to prevent suspicious login attempts',
+    // Added for multi-tenant support
+    'tenantInfoTitle': 'TENANT INFORMATION',
+    'tenantInfoIntro': 'Please review the details for the tenant(s) included in this onboarding:',
+    'noTenantInfo': '[NO TENANT INFORMATION PROVIDED]',
+    'gdapSpecificLinkInfo': 'For tenants where a specific GDAP link was provided, please use that link. The links are listed below:',
+    'gdapDefaultLinkInfo': 'For other tenants without a specific link listed, the necessary GDAP approval link will be sent separately.', // Updated text
+    'rbacInstructionMultiTenant': 'For tenants where Azure RBAC configuration is relevant (indicated in the Tenant Information section), please complete the following steps.', // Simplified instruction
+    'rbacRelevantTenantsList': 'Relevant Tenants requiring RBAC configuration:', // Kept as is, list is still relevant
+    'rbacStep2InstructionMultiTenant': 'Run the appropriate pre-filled PowerShell script provided below for each relevant tenant listed in the Tenant Information section.', // Updated instruction reflecting pre-filled scripts
+    'gdapLinksSentSeparately': 'The necessary GDAP approval link(s) will be sent in a separate communication.'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
 

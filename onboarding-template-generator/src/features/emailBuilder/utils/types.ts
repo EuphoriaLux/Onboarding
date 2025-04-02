@@ -1,4 +1,6 @@
 // src/features/emailBuilder/utils/types.ts
+import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
+
 /**
  * Email form data interface defining the structure for email templates
  */
@@ -44,7 +46,8 @@ export interface CustomerInfo {
   contactName: string;
   contactEmail: string;
   proposedDate: Date;
-  tenantId: string;
+  // tenantId: string; // Removed single tenant ID
+  tenants: TenantInfo[]; // Added array of tenants
   authorizedContacts: Array<{name: string, email: string, phone: string}>;
   selectedTier: string;
 }

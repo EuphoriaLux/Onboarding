@@ -2,6 +2,7 @@
 import { supportTiers } from '../../supportTiers/data/supportTiers'; // Updated import path
 import { CustomerInfo } from './types';
 import { SupportTier } from '../../supportTiers/types'; // Corrected import path for SupportTier
+import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
 import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 
 // --- Constants ---
@@ -119,6 +120,26 @@ const _formatDate = (date: Date | null | undefined): string => {
   return '[DATE TO BE CONFIRMED]';
 };
 
+// Helper to format tenant details for the email
+const _formatTenantDetails = (tenant: TenantInfo, theme: ThemeSettings): string => {
+  const textColor = theme.textColor || '#333';
+  const formattedDeadline = _formatDate(tenant.implementationDeadline);
+  const azureStatus = tenant.hasAzure ? 'Yes' : 'No';
+  const detailStyle = `font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor}; font-size: 14px; line-height: 1.6; margin: 5px 0;`;
+
+  return `
+    <div style="margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 4px; background-color: #f9f9f9;">
+      <strong style="font-weight: 600; color: ${theme.primaryColor || '#0078D4'};">Company: ${tenant.companyName}</strong><br>
+      <span style="${detailStyle}">Tenant Domain: ${tenant.tenantDomain || 'N/A'}</span><br>
+      <span style="${detailStyle}">MS Domain: ${tenant.microsoftTenantDomain || 'N/A'}</span><br>
+      <span style="${detailStyle}">Tenant ID: ${tenant.id || 'N/A'}</span><br>
+      <span style="${detailStyle}">Implementation Deadline: ${formattedDeadline}</span><br>
+      <span style="${detailStyle}">Azure RBAC Relevant: ${azureStatus}</span>
+    </div>
+  `;
+};
+
+
 // --- Email Section Generators ---
 
 const _generateHeader = (tier: SupportTier, theme: ThemeSettings): string => {
@@ -193,46 +214,82 @@ const _generateContactsSection = (info: CustomerInfo, tier: SupportTier, theme: 
   </table>`;
 };
 
-const _generateTenantSection = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
-  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
-  const textColor = theme.textColor || '#333'; // Fallback text color
-  const errorColor = '#d83b01'; // Keep standard error color?
+// Updated to accept tenants array
+const _generateTenantSection = (tenants: TenantInfo[], tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color;
+  const textColor = theme.textColor || '#333';
+  let tenantDetailsHtml = '';
+
+  if (tenants && tenants.length > 0) {
+    tenants.forEach((tenant, index) => {
+      tenantDetailsHtml += _formatTenantDetails(tenant, theme);
+    });
+  } else {
+    tenantDetailsHtml = `<p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: #d83b01; font-style: italic;">[NO TENANT INFORMATION PROVIDED]</p>`;
+  }
+
   return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
-        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">3. Tenant Microsoft ID Definition</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Your Microsoft Tenant ID: <strong style="font-weight: 600;">${info.tenantId || `<span style="color: ${errorColor}; font-style: italic;">[PLEASE PROVIDE]</span>`}</strong></p>
+        <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">3. Tenant Information</h3>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Please review the details for the tenant(s) included in this onboarding:</p>
+        ${tenantDetailsHtml}
       </td>
     </tr>
   </table>`;
 };
 
-const _generateGdapSection = (tier: SupportTier, theme: ThemeSettings): string => {
-  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
-  const textColor = theme.textColor || '#333'; // Fallback text color
+// Updated to accept tenants array and adjust text
+const _generateGdapSection = (tenants: TenantInfo[], tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color;
+  const textColor = theme.textColor || '#333';
+  const hasSpecificLinks = tenants && tenants.some(t => t.gdapLink && t.gdapLink.trim() !== '');
+
+  let gdapText = `Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address(es). This step is required to enable our support team to access your environment when needed.`;
+  if (hasSpecificLinks) {
+    gdapText += ` For tenants where a specific GDAP link was provided during setup, that specific link will be used. Otherwise, a default link will be sent.`;
+  }
+
   return `
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
     <tr>
       <td style="padding: 0;">
         <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">4. GDAP Link Acceptance</h3>
-        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Please accept the GDAP (Granular Delegated Admin Privileges) link that will be sent to your admin email address. This step is required to enable our support team to access your environment when needed.</p>
+        <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">${gdapText}</p>
       </td>
     </tr>
   </table>`;
 };
 
-const _generateRbacSection = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
-  const headerColor = theme.primaryColor || tier.color; // Use theme primary or tier color
-  const textColor = theme.textColor || '#333'; // Fallback text color
-  const tenantIdPlaceholder = info.tenantId || 'YOUR_TENANT_ID';
-  const script = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
+// Updated to accept tenants array and adjust text
+const _generateRbacSection = (tenants: TenantInfo[], tier: SupportTier, theme: ThemeSettings): string => {
+  const headerColor = theme.primaryColor || tier.color;
+  const textColor = theme.textColor || '#333';
+  // Script template remains the same, using {TENANT_ID} as placeholder
+  const script = RBAC_POWERSHELL_SCRIPT_TEMPLATE;
+  const relevantTenants = tenants ? tenants.filter(t => t.hasAzure) : [];
+
+  // Only include section if relevant tenants exist
+  if (relevantTenants.length === 0) {
+    return ''; // Return empty string if no tenants require RBAC
+  }
+
+  const tenantList = relevantTenants.map(t => `<li>${t.companyName} (${t.id || 'ID missing'})</li>`).join('');
+
   return `
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin-bottom: 25px;">
       <tr>
         <td style="padding: 0;">
-          <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">5. RBAC Role Establishment</h3>
-          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">We will provide a script to establish the necessary RBAC (Role-Based Access Control) roles for your support plan. Please execute the following PowerShell script in your environment:</p>
+          <h3 style="color: ${headerColor}; font-family: 'Segoe UI', Arial, sans-serif; font-size: 18px; margin: 0 0 15px 0; font-weight: 600;">5. RBAC Role Establishment (Azure)</h3>
+          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">
+            For tenants where Azure RBAC configuration is relevant, please execute the following PowerShell script in your environment.
+            <strong style="font-weight: 600;">You will need to run this script for each relevant tenant listed below, replacing <code>{TENANT_ID}</code> in the script with the specific Tenant ID each time.</strong>
+          </p>
+          <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Relevant Tenants:</p>
+          <ul style="margin: 0 0 15px 20px; padding: 0; list-style-type: disc; color: ${textColor}; font-family: 'Segoe UI', Arial, sans-serif;">
+            ${tenantList}
+          </ul>
           ${_formatScriptBlock(script, theme)}
         </td>
       </tr>
@@ -374,10 +431,11 @@ export const generateTemplate = (
     ${_generateMeetingProposal(info, tier, effectiveTheme)}
     ${_generateTierDetailsSection(tier, effectiveTheme)}
     ${_generateContactsSection(info, tier, effectiveTheme)}
-    ${_generateTenantSection(info, tier, effectiveTheme)}
+    ${_generateTenantSection(info.tenants, tier, effectiveTheme)} {/* Pass tenants array */}
     ${/* Conditionally render sections based on flags */''}
-    ${flags?.includeGdap ? _generateGdapSection(tier, effectiveTheme) : ''}
-    ${flags?.includeRbac ? _generateRbacSection(info, tier, effectiveTheme) : ''}
+    ${flags?.includeGdap ? _generateGdapSection(info.tenants, tier, effectiveTheme) : ''} {/* Pass tenants array */}
+    ${/* RBAC section is now conditionally rendered inside _generateRbacSection based on hasAzure flag */''}
+    ${flags?.includeRbac ? _generateRbacSection(info.tenants, tier, effectiveTheme) : ''} {/* Pass tenants array */}
     ${flags?.includeConditionalAccess ? _generateServiceProviderSection(tier, effectiveTheme) : ''}
     ${/* Conditionally render notes */''}
     ${flags?.includeNotes && additionalNotes ? _generateAdditionalNotesSection(additionalNotes, tier, effectiveTheme) : ''}
