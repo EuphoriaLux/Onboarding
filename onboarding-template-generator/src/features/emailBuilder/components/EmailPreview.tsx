@@ -45,7 +45,8 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
   const [viewMode, setViewMode] = useState<'html' | 'text'>('html');
   const [copySuccess, setCopySuccess] = useState('');
   const [showInstructions, setShowInstructions] = useState(false);
-  
+  const [emlStatus, setEmlStatus] = useState(''); // State for EML generation feedback
+
   // Use the language from emailData, defaulting to English
   const language = (emailData.language || 'en') as Language;
 
@@ -101,6 +102,34 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+  };
+
+  const handleGenerateEml = () => {
+    try {
+      const emlContent = emailBuilder.generateEmlContent(emailData, htmlContent, plainText);
+      const blob = new Blob([emlContent], { type: 'message/rfc822' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+
+      // Generate filename
+      const filenameBase = emailData.companyName
+        ? `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding`
+        : 'Onboarding_Email';
+      link.download = `${filenameBase}_Outlook_Draft_${language}.eml`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url); // Clean up the object URL
+
+      setEmlStatus('.eml file generated. Open it in Outlook to view the draft.');
+      setTimeout(() => setEmlStatus(''), 5000); // Clear message after 5 seconds
+    } catch (error) {
+      console.error('Failed to generate .eml file:', error);
+      setEmlStatus('Error generating .eml file. Please check console.');
+      setTimeout(() => setEmlStatus(''), 5000);
+    }
   };
 
    const handleOpenInOutlook = () => {
@@ -191,11 +220,13 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
             }
           </button>
           <button onClick={handleDownloadHTML}>Download HTML</button>
+          <button onClick={handleGenerateEml}>Generate Outlook Draft (.eml)</button> {/* New Button */}
           <button onClick={handleOpenInOutlook}>Open in Email Client</button>
           <button onClick={onBackToEdit}>Back to Edit</button>
         </div>
         
         {copySuccess && <div className="copy-success">{copySuccess}</div>}
+        {emlStatus && <div className="eml-status">{emlStatus}</div>} {/* EML Status Message */}
       </div>
       
       <div className="preview-content">

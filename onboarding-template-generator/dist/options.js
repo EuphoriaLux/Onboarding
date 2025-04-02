@@ -72775,6 +72775,7 @@ onBackToEdit }) => {
     const [viewMode, setViewMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('html');
     const [copySuccess, setCopySuccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
     const [showInstructions, setShowInstructions] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [emlStatus, setEmlStatus] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''); // State for EML generation feedback
     // Use the language from emailData, defaulting to English
     const language = (emailData.language || 'en');
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
@@ -72823,6 +72824,31 @@ onBackToEdit }) => {
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);
+    };
+    const handleGenerateEml = () => {
+        try {
+            const emlContent = _utils_emailBuilder__WEBPACK_IMPORTED_MODULE_2__["default"].generateEmlContent(emailData, htmlContent, plainText);
+            const blob = new Blob([emlContent], { type: 'message/rfc822' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            // Generate filename
+            const filenameBase = emailData.companyName
+                ? `${emailData.companyName.replace(/\s+/g, '_')}_Onboarding`
+                : 'Onboarding_Email';
+            link.download = `${filenameBase}_Outlook_Draft_${language}.eml`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url); // Clean up the object URL
+            setEmlStatus('.eml file generated. Open it in Outlook to view the draft.');
+            setTimeout(() => setEmlStatus(''), 5000); // Clear message after 5 seconds
+        }
+        catch (error) {
+            console.error('Failed to generate .eml file:', error);
+            setEmlStatus('Error generating .eml file. Please check console.');
+            setTimeout(() => setEmlStatus(''), 5000);
+        }
     };
     const handleOpenInOutlook = () => {
         // Don't copy to clipboard automatically when opening mail client
@@ -72874,7 +72900,7 @@ onBackToEdit }) => {
         }
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
-                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-body", style: { width: '100%', overflowX: 'hidden' }, children: [" ", viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF', overflow: 'auto' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText }))] })] })] }));
+                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleGenerateEml, children: "Generate Outlook Draft (.eml)" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess }), emlStatus && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "eml-status", children: emlStatus }), " "] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-body", style: { width: '100%', overflowX: 'hidden' }, children: [" ", viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF', overflow: 'auto' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText }))] })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
 
@@ -74285,6 +74311,69 @@ const emailBuilder = {
     buildEnhancedEmailHTML: function (formData, tenants = [], theme = null) {
         const { html } = this.buildEmailHTML(formData, tenants, theme);
         return html;
+    },
+    /**
+     * Generates the content for an .eml file.
+     * @param formData The email form data.
+     * @param htmlContent The pre-generated HTML content for the email body.
+     * @param plainTextContent The pre-generated plain text content for the email body.
+     * @returns A string containing the full .eml file content.
+     */
+    generateEmlContent: function (formData, htmlContent, plainTextContent) {
+        const boundary = `----=_Part_${Math.random().toString(36).substring(2)}`;
+        // Helper to format recipients (comma-separated, trim whitespace)
+        const formatRecipients = (emails) => {
+            if (!emails)
+                return '';
+            return emails
+                .split(/[,;]/) // Split by comma or semicolon
+                .map(email => email.trim()) // Trim whitespace
+                .filter(email => email) // Remove empty entries
+                .join(', '); // Join with comma and space
+        };
+        const toRecipients = formatRecipients(formData.to);
+        const ccRecipients = formatRecipients(formData.cc);
+        const subject = formData.subject || '';
+        const fromAddress = formData.senderContact ? `${formData.senderName} <${formData.senderContact}>` : formData.senderName; // Format From address if email is available
+        // Base64 encode the HTML content
+        // Use btoa for browser environments. Ensure UTF-8 handling.
+        const base64Html = btoa(unescape(encodeURIComponent(htmlContent)));
+        // Construct the EML content
+        let emlContent = `MIME-Version: 1.0\r\n`;
+        emlContent += `Date: ${new Date().toUTCString()}\r\n`; // Use standard Date format
+        emlContent += `Subject: =?utf-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=\r\n`; // Encode subject for UTF-8
+        if (fromAddress) {
+            emlContent += `From: ${fromAddress}\r\n`;
+        }
+        if (toRecipients) {
+            emlContent += `To: ${toRecipients}\r\n`;
+        }
+        if (ccRecipients) {
+            emlContent += `Cc: ${ccRecipients}\r\n`;
+        }
+        emlContent += `X-Unsent: 1\r\n`; // Add header to indicate it's a draft
+        emlContent += `Content-Type: multipart/alternative; boundary="${boundary}"\r\n`;
+        emlContent += `\r\n`; // Header/Body separator
+        // Plain text part
+        emlContent += `--${boundary}\r\n`;
+        emlContent += `Content-Type: text/plain; charset=utf-8\r\n`;
+        emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`; // Or 7bit if simple enough
+        emlContent += `\r\n`;
+        // Basic quoted-printable encoding (replace '=' with '=3D', handle long lines if necessary)
+        // For simplicity, we'll just include the text. Full QP encoding is complex.
+        emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`;
+        emlContent += `\r\n`;
+        // HTML part
+        emlContent += `--${boundary}\r\n`;
+        emlContent += `Content-Type: text/html; charset=utf-8\r\n`;
+        emlContent += `Content-Transfer-Encoding: base64\r\n`;
+        emlContent += `\r\n`;
+        // Add base64 content in chunks if needed, but usually fine for emails
+        emlContent += `${base64Html}\r\n`;
+        emlContent += `\r\n`;
+        // End boundary
+        emlContent += `--${boundary}--\r\n`;
+        return emlContent;
     }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (emailBuilder);

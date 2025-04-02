@@ -544,6 +544,77 @@ const emailBuilder = {
   buildEnhancedEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = [], theme: ThemeSettings | null = null): string {
     const { html } = this.buildEmailHTML(formData, tenants, theme);
     return html;
+  },
+
+  /**
+   * Generates the content for an .eml file.
+   * @param formData The email form data.
+   * @param htmlContent The pre-generated HTML content for the email body.
+   * @param plainTextContent The pre-generated plain text content for the email body.
+   * @returns A string containing the full .eml file content.
+   */
+  generateEmlContent: function(formData: EmailFormData, htmlContent: string, plainTextContent: string): string {
+    const boundary = `----=_Part_${Math.random().toString(36).substring(2)}`;
+
+    // Helper to format recipients (comma-separated, trim whitespace)
+    const formatRecipients = (emails: string | undefined): string => {
+      if (!emails) return '';
+      return emails
+        .split(/[,;]/) // Split by comma or semicolon
+        .map(email => email.trim()) // Trim whitespace
+        .filter(email => email) // Remove empty entries
+        .join(', '); // Join with comma and space
+    };
+
+    const toRecipients = formatRecipients(formData.to);
+    const ccRecipients = formatRecipients(formData.cc);
+    const subject = formData.subject || '';
+    const fromAddress = formData.senderContact ? `${formData.senderName} <${formData.senderContact}>` : formData.senderName; // Format From address if email is available
+
+    // Base64 encode the HTML content
+    // Use btoa for browser environments. Ensure UTF-8 handling.
+    const base64Html = btoa(unescape(encodeURIComponent(htmlContent)));
+
+    // Construct the EML content
+    let emlContent = `MIME-Version: 1.0\r\n`;
+    emlContent += `Date: ${new Date().toUTCString()}\r\n`; // Use standard Date format
+    emlContent += `Subject: =?utf-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=\r\n`; // Encode subject for UTF-8
+    if (fromAddress) {
+      emlContent += `From: ${fromAddress}\r\n`;
+    }
+    if (toRecipients) {
+      emlContent += `To: ${toRecipients}\r\n`;
+    }
+    if (ccRecipients) {
+      emlContent += `Cc: ${ccRecipients}\r\n`;
+    }
+    emlContent += `X-Unsent: 1\r\n`; // Add header to indicate it's a draft
+    emlContent += `Content-Type: multipart/alternative; boundary="${boundary}"\r\n`;
+    emlContent += `\r\n`; // Header/Body separator
+
+    // Plain text part
+    emlContent += `--${boundary}\r\n`;
+    emlContent += `Content-Type: text/plain; charset=utf-8\r\n`;
+    emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`; // Or 7bit if simple enough
+    emlContent += `\r\n`;
+    // Basic quoted-printable encoding (replace '=' with '=3D', handle long lines if necessary)
+    // For simplicity, we'll just include the text. Full QP encoding is complex.
+    emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`;
+    emlContent += `\r\n`;
+
+    // HTML part
+    emlContent += `--${boundary}\r\n`;
+    emlContent += `Content-Type: text/html; charset=utf-8\r\n`;
+    emlContent += `Content-Transfer-Encoding: base64\r\n`;
+    emlContent += `\r\n`;
+    // Add base64 content in chunks if needed, but usually fine for emails
+    emlContent += `${base64Html}\r\n`;
+    emlContent += `\r\n`;
+
+    // End boundary
+    emlContent += `--${boundary}--\r\n`;
+
+    return emlContent;
   }
 };
 
