@@ -18,6 +18,7 @@ export interface SupportTier {
     supportRequestsIncluded: string | number;
     products: string[];
     severityLevels: string;
+    supportProvider: string; // Added field for the entity providing support
   }
   
   /**

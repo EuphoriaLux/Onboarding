@@ -16,7 +16,8 @@ export const supportTiers: Record<string, SupportTier> = {
     authorizedContacts: 2,
     supportRequestsIncluded: "Pay As You Go",
     products: ["Microsoft Azure", "Microsoft 365"],
-    severityLevels: "Level B or C"
+    severityLevels: "Level B or C",
+    supportProvider: "Microsoft Premier Support"
   },
   silver: {
     name: "Silver Support",
@@ -29,7 +30,8 @@ export const supportTiers: Record<string, SupportTier> = {
     authorizedContacts: 6,
     supportRequestsIncluded: 12,
     products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-    severityLevels: "Level A, B or C"
+    severityLevels: "Level A, B or C",
+    supportProvider: "Microsoft Premier Support"
   },
   gold: {
     name: "Gold Support",
@@ -42,7 +44,8 @@ export const supportTiers: Record<string, SupportTier> = {
     authorizedContacts: 12,
     supportRequestsIncluded: 36,
     products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-    severityLevels: "Level A, B or C"
+    severityLevels: "Level A, B or C",
+    supportProvider: "Microsoft Premier Support"
   },
   platinum: {
     name: "Platinum Support",
@@ -55,6 +58,7 @@ export const supportTiers: Record<string, SupportTier> = {
     authorizedContacts: 100,
     supportRequestsIncluded: 100,
     products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-    severityLevels: "Level A, B or C"
+    severityLevels: "Level A, B or C",
+    supportProvider: "Microsoft Premier Support"
   }
 };

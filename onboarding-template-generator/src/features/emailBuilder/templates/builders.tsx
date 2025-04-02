@@ -12,10 +12,19 @@ interface SectionHeaderProps {
   theme: ThemeSettings;
 }
 
+// Updated ContactsTableProps to reflect the new structure (though data source might still be simpler)
 interface ContactsTableProps {
-  contacts: Array<{ name: string; email: string; phone: string }>;
+  // contacts: Array<{ name: string; email: string; phone: string }>; // Old structure
+  contacts: Array<{ // Assuming the data passed might still be simpler, adjust if needed
+    firstName?: string;
+    lastName?: string;
+    officePhone?: string;
+    mobilePhone?: string;
+    email?: string;
+    jobTitle?: string;
+  }>;
   theme: ThemeSettings;
-  tierContactLimit: number; // Add the tier contact limit prop
+  tierContactLimit: number;
 }
 
 interface ScriptBlockProps {
@@ -69,7 +78,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({ title, color, them
   );
 };
 
-export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, tierContactLimit }) => { // Add tierContactLimit to props destructuring
+export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, tierContactLimit }) => {
   const textColor = theme.textColor || '#333';
   // Ensure white background for table elements
   const headerBgColor = '#FFFFFF'; // Force white header
@@ -79,26 +88,37 @@ export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, t
   const tableBgColor = '#FFFFFF'; // Force white table background
 
   const tableStyle: React.CSSProperties = { borderCollapse: 'collapse', backgroundColor: tableBgColor, margin: '15px 0', width: '100%' }; // Ensure width 100%
-  const thStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: headerBgColor }; // White BG
-  const tdStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: 'transparent' }; // Transparent cell BG (row BG will handle it)
+  const thStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: headerBgColor, fontWeight: 600 }; // White BG, added font weight
+  const tdStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: 'transparent', height: '24px' }; // Transparent cell BG, added fixed height
+  const thNumStyle: React.CSSProperties = { ...thStyle, width: '30px', textAlign: 'center' }; // Style for the # column
+  const tdNumStyle: React.CSSProperties = { ...tdStyle, width: '30px', textAlign: 'center' }; // Style for the # column
 
   return (
     <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableStyle}>
       <thead>
         <tr style={{ backgroundColor: headerBgColor }}>
-          <th style={thStyle}>Name</th>
-          <th style={thStyle}>Email</th>
-          <th style={thStyle}>Phone</th>
+          <th style={thNumStyle}>#</th>
+          <th style={thStyle}>First Name</th>
+          <th style={thStyle}>Last Name</th>
+          <th style={thStyle}>Office Phone</th>
+          <th style={thStyle}>Mobile Phone</th>
+          <th style={thStyle}>Email Address</th>
+          <th style={thStyle}>Job Title</th>
         </tr>
       </thead>
       <tbody>
+        {/* Render actual contacts if provided (assuming simple structure for now) */}
         {contacts.map((contact, index) => {
-          const bgColor = index % 2 === 0 ? rowBgColor2 : rowBgColor1;
+          const bgColor = rowBgColor1; // Use consistent white background
           return (
-            <tr key={index} style={{ backgroundColor: bgColor }}>
-              <td style={tdStyle}>{contact.name || ''}</td>
+            <tr key={`contact-${index}`} style={{ backgroundColor: bgColor }}>
+              <td style={tdNumStyle}>{index + 1}</td>
+              <td style={tdStyle}>{contact.firstName || ''}</td>
+              <td style={tdStyle}>{contact.lastName || ''}</td>
+              <td style={tdStyle}>{contact.officePhone || ''}</td>
+              <td style={tdStyle}>{contact.mobilePhone || ''}</td>
               <td style={tdStyle}>{contact.email || ''}</td>
-              <td style={tdStyle}>{contact.phone || ''}</td>
+              <td style={tdStyle}>{contact.jobTitle || ''}</td>
             </tr>
           );
         })}
@@ -109,6 +129,10 @@ export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, t
           const placeholderCellStyle: React.CSSProperties = { ...tdStyle, backgroundColor: 'transparent', color: '#aaa' }; // Transparent cell BG, grey text
           return (
             <tr key={`placeholder-${index}`} style={{ backgroundColor: bgColor }}>
+              <td style={{ ...tdNumStyle, color: '#aaa' }}>{actualIndex + 1}</td>
+              <td style={placeholderCellStyle}>&nbsp;</td>
+              <td style={placeholderCellStyle}>&nbsp;</td>
+              <td style={placeholderCellStyle}>&nbsp;</td>
               <td style={placeholderCellStyle}>&nbsp;</td>
               <td style={placeholderCellStyle}>&nbsp;</td>
               <td style={placeholderCellStyle}>&nbsp;</td>

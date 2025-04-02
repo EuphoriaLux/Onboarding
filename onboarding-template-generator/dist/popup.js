@@ -29857,40 +29857,41 @@ __webpack_require__.r(__webpack_exports__);
  */
 const translations = {
     // Email general
-    'subject': '{tier} Support-Plan Onboarding für {company} - Microsoft 365 Administrationseinrichtung',
-    'greeting': 'Sehr geehrte/r {name},',
-    'intro1': 'Vielen Dank, dass Sie {company} als Ihren Microsoft 365 Administrationspartner gewählt haben. Wir freuen uns, den Onboarding-Prozess für {clientCompany} zu beginnen.',
-    'intro2': 'Nachfolgend finden Sie die wichtigen Schritte zum Abschluss Ihres Onboarding-Prozesses. Bitte überprüfen Sie jeden Abschnitt sorgfältig und befolgen Sie die Anweisungen, um Ihren {tier} Support-Plan und die erforderlichen Zugriffskonfigurationen einzurichten.',
-    'closing': 'Bitte antworten Sie auf diese E-Mail, um den Empfang zu bestätigen und uns mitzuteilen, ob Sie Fragen oder Bedenken haben.',
-    'regards': 'Mit freundlichen Grüßen,',
-    'footer': 'Dies ist eine automatisch generierte Nachricht vom Microsoft Onboarding Template Generator.',
+    'subject': '{clientCompany} - Microsoft - Support Services - {tier} Support-Plan - Onboarding', // Updated Subject
+    'greeting': 'Hallo {name},', // Updated Greeting
+    'intro1': 'Vielen Dank, dass Sie sich für {company} Microsoft Support Services entschieden haben.', // Updated Intro 1
+    'intro2': 'Bitte finden Sie unten die Schritte des Onboarding-Prozesses für den {tier} Support-Plan. Bitte überprüfen Sie jeden Abschnitt sorgfältig und befolgen Sie die Anweisungen, um die Zugriffskonfigurationen einzurichten.', // Updated Intro 2
+    'closing': 'Bitte antworten Sie auf diese E-Mail, um den Empfang zu bestätigen und uns mitzuteilen, ob Sie Fragen oder Bedenken haben.', // Kept closing
+    'regards': 'Mit freundlichen Grüßen,', // Kept regards
+    'footer': 'SCHNEIDER IT MANAGEMENT | support@schneider.im', // Updated Footer
     // Section titles
-    'supportPlanTitle': '{tier} SUPPORT-PLAN DETAILS',
-    'authorizedContactsTitle': 'AKTION ERFORDERLICH: AUTORISIERTE KONTAKTE',
-    'tenantTitle': 'AKTION ERFORDERLICH: TENANT-INFORMATIONEN',
-    'gdapTitle': 'AKTION ERFORDERLICH: GDAP-DELEGIERUNG',
-    'rbacTitle': 'AKTION ERFORDERLICH: RBAC-KONFIGURATION',
-    'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF',
-    'meetingTitle': 'GEPLANT: ONBOARDING-MEETING',
-    'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN',
+    'supportPlanTitle': '{tier} Support-Plan', // Updated Support Plan Title
+    'authorizedContactsTitle': 'AKTION ERFORDERLICH: AUTORISIERTE KONTAKTE', // Kept Contacts Title
+    'tenantTitle': 'AKTION ERFORDERLICH: TENANT-INFORMATIONEN', // Kept Tenant Title
+    'gdapTitle': 'AKTION ERFORDERLICH: Granular Delegated Admin Privileges (GDAP)', // Updated GDAP Title
+    'rbacTitle': 'AKTION ERFORDERLICH: Role-Based Access Control (RBAC)', // Updated RBAC Title
+    'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF', // Kept Conditional Access Title
+    'meetingTitle': 'GEPLANT: ONBOARDING-MEETING', // Kept Meeting Title
+    'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN', // Kept Additional Info Title
     // Support plan section
-    'supportPlanIntro': 'Der {tier} Support-Plan bietet {supportType} mit folgenden Funktionen:',
-    'supportType.bronze': 'grundlegende Support-Verfügbarkeit für nicht dringende Fälle, ohne Abdeckung kritischer Situationen',
-    'supportType.other': 'umfassenden Support mit Abdeckung kritischer Situationen',
-    'supportTypeLabel': 'Support-Typ:',
-    'supportHoursLabel': 'Support-Zeiten:',
-    'severityLevelsLabel': 'Schweregrade:',
-    'contactsLabel': 'Autorisierte Kontakte:',
-    'tenantsLabel': 'Tenants:',
-    'requestsLabel': 'Support-Anfragen:',
-    'criticalLabel': 'Support für kritische Situationen:',
-    'yes': 'Ja',
-    'no': 'Nein',
+    'supportPlanIntro': 'Der {tier} Support-Plan bietet umfassenden Support mit folgenden Merkmalen:', // Updated Support Plan Intro
+    // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
+    'supportProviderLabel': 'Support bereitgestellt von', // Added
+    'productsCoveredLabel': 'Abgedeckte Produkte', // Added
+    'supportHoursLabel': 'Support-Zeiten', // Kept (text only)
+    'severityLevelsLabel': 'Microsoft Schweregrade', // Updated Severity Label
+    'criticalLabel': 'Critical Situation (Crit Sit) Management', // Updated Critical Label
+    'supportRequestSubmissionLabel': 'Einreichung von Support-Anfragen', // Added
+    'contactsLabel': 'Autorisierte Kundenkontakte', // Updated Contacts Label
+    'tenantsLabel': 'Mandanten', // Updated Tenants Label Text
+    'requestsLabel': 'Enthaltene Support-Anfragen pro letzten 12 Monate', // Updated Requests Label
+    'yes': 'Ja', // Kept
+    'no': 'Nein', // Kept
     // Contacts section
-    'contactsIntro': 'Basierend auf Ihrem {tier} Support-Plan können Sie bis zu {count} autorisierte Kontakte für Ihre Organisation benennen. Diese Kontakte sind berechtigt, Support-Anfragen einzureichen und administrative Änderungen an Ihrer Microsoft 365-Umgebung zu genehmigen.',
-    'contactsRolesIntro': 'Wir empfehlen, Personen für die folgenden Rollen zu benennen: {roles}.',
-    'contactsInstruction': 'Bitte vervollständigen Sie die folgende Tabelle mit den erforderlichen Informationen für jeden Kontakt:',
-    'contactsNote': 'Hinweis: Ihr {tier}-Plan beinhaltet {count} autorisierte Kontakte. Zusätzliche Kontakte können nach der Ersteinrichtung über unser Kundenportal verwaltet werden.',
+    'contactsIntro': 'Basierend auf Ihrem {tier} Support-Plan können Sie bis zu {count} autorisierte Kontakte für Ihre Organisation benennen. Diese Kontakte sind berechtigt, Support-Anfragen einzureichen und administrative Änderungen an Ihrer Microsoft-Umgebung zu genehmigen.', // Updated Contacts Intro
+    'contactsRolesIntro': 'Wir empfehlen, Personen für die folgenden Rollen zu benennen: {roles}.', // Kept Contacts Roles Intro
+    'contactsInstruction': 'Bitte vervollständigen Sie die folgende Tabelle mit den erforderlichen Informationen für jeden Kontakt:', // Kept Contacts Instruction
+    // Removed 'contactsNote'
     // Table headers
     'numberHeader': 'Nr.',
     'firstNameHeader': 'Vorname',
@@ -29901,21 +29902,18 @@ const translations = {
     'jobTitleHeader': 'Position',
     // Meeting section
     'meetingIntro': 'Wir haben ein Onboarding-Meeting angesetzt, um diese Punkte im Detail zu besprechen und Ihre Fragen zu beantworten:',
-    'meetingDate': 'Datum: {date}',
-    'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.',
+    'meetingDate': 'Datum: {date}', // Kept
+    'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.', // Kept
     // GDAP section
-    'gdapIntro': 'Microsoft verlangt nun von Partnern die Verwendung von GDAP für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren.',
-    'gdapRoles': 'Wir werden die Rolle "{roles}" anfordern.',
-    'gdapPermission': 'Diese Berechtigung ermöglicht es uns, die in unserer Vereinbarung beschriebenen Support-Leistungen zu erbringen und gleichzeitig die Best Practices für Sicherheit einzuhalten.',
-    'gdapInstruction': 'Bitte besuchen Sie den folgenden Link, um die GDAP-Beziehung zu genehmigen:',
-    'gdapLink': 'GDAP-Genehmigungslink',
+    'gdapIntro': 'Microsoft empfiehlt die Verwendung von Granular Delegated Admin Privileges (GDAP) für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren. Wir benötigen die Rolle "{roles}".', // Updated GDAP Intro, incorporated roles
+    // Removed 'gdapRoles'
+    'gdapPermission': 'Diese Berechtigung ermöglicht es uns, die in unserer Vereinbarung beschriebenen Support-Leistungen zu erbringen und gleichzeitig die Best Practices für Sicherheit basierend auf dem Prinzip der geringsten Rechte (POLP) einzuhalten.', // Updated GDAP Permission text
+    'gdapInstruction': 'Bitte besuchen Sie den folgenden Link, um die GDAP-Beziehung zu genehmigen:', // Kept GDAP Instruction
+    'gdapLink': 'GDAP-Genehmigungslink', // Kept GDAP Link text
     // RBAC section
-    'rbacIntro': 'Wir werden {groups} konfigurieren, um sicherzustellen, dass Benutzer basierend auf ihren Jobfunktionen die entsprechende Zugriffsebene auf Ihre Umgebung haben.',
-    'rbacPermissionBoth': 'Dies umfasst Zugriffsberechtigungen für Azure und Microsoft 365.',
-    'rbacPermissionAzure': 'Dies umfasst Zugriffsberechtigungen für Azure-Ressourcen.',
-    'rbacPermission365': 'Dies umfasst Zugriffsberechtigungen für Microsoft 365-Dienste.',
-    'rbacInstruction': 'Bitte führen Sie die folgenden Schritte aus, um RBAC-Berechtigungen zu konfigurieren:',
-    'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren',
+    // Removed 'rbacIntro', 'rbacPermissionBoth', 'rbacPermissionAzure', 'rbacPermission365'
+    'rbacInstruction': 'Bitte führen Sie die folgenden Schritte aus, um RBAC-Berechtigungen zu konfigurieren:', // Kept RBAC Instruction
+    'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren', // Kept Step 1 Title
     'rbacStep1Source': 'Quelle:',
     'rbacStep2': 'SCHRITT 2: Den Tenant aktualisieren und das folgende Skript ausführen',
     'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein',
@@ -29948,72 +29946,70 @@ __webpack_require__.r(__webpack_exports__);
  */
 const translations = {
     // Email general
-    'subject': '{tier} Support Plan Onboarding for {company} - Microsoft 365 Administration Setup',
-    'greeting': 'Dear {name},',
-    'intro1': 'Thank you for choosing {company} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for {clientCompany}.',
-    'intro2': 'Below are the important steps to complete your onboarding process. Please review each section carefully and follow the instructions to set up your {tier} Support Plan and the necessary access configurations.',
-    'closing': 'Please reply to this email to confirm receipt and let us know if you have any questions or concerns.',
-    'regards': 'Best regards,',
-    'footer': 'This is an automated message generated by the Microsoft Onboarding Template Generator.',
+    'subject': '{clientCompany} - Microsoft - Support Services - {tier} Support Plan - Onboarding', // Updated Subject
+    'greeting': 'Hello {name},', // Updated Greeting
+    'intro1': 'Thank you for choosing {company} Microsoft Support Services.', // Updated Intro 1
+    'intro2': 'Please find below the steps of the onboarding process of the {tier} Support Plan. Please review each section carefully and follow the instructions to set up the access configurations.', // Updated Intro 2
+    'closing': 'Please reply to this email to confirm receipt and let us know if you have any questions or concerns.', // Kept closing
+    'regards': 'Best regards,', // Kept regards
+    'footer': 'SCHNEIDER IT MANAGEMENT | support@schneider.im', // Updated Footer
     // Section titles
-    'supportPlanTitle': '{tier} SUPPORT PLAN DETAILS',
-    'authorizedContactsTitle': 'ACTION REQUIRED: AUTHORIZED CONTACTS',
-    'tenantTitle': 'ACTION REQUIRED: TENANT INFORMATION',
-    'gdapTitle': 'ACTION REQUIRED: GDAP DELEGATION',
-    'rbacTitle': 'ACTION REQUIRED: RBAC CONFIGURATION',
-    'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES',
-    'meetingTitle': 'SCHEDULED: ONBOARDING MEETING',
-    'additionalInfoTitle': 'ADDITIONAL INFORMATION',
+    'supportPlanTitle': '{tier} Support Plan', // Updated Support Plan Title
+    'authorizedContactsTitle': 'ACTION REQUIRED: AUTHORIZED CONTACTS', // Kept Contacts Title
+    'tenantTitle': 'ACTION REQUIRED: TENANT INFORMATION', // Kept Tenant Title (though not used in new template)
+    'gdapTitle': 'ACTION REQUIRED: Granular Delegated Admin Privileges (GDAP)', // Updated GDAP Title
+    'rbacTitle': 'ACTION REQUIRED: Role-Based Access Control (RBAC)', // Updated RBAC Title
+    'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES', // Kept Conditional Access Title
+    'meetingTitle': 'SCHEDULED: ONBOARDING MEETING', // Kept Meeting Title (though not used in new template)
+    'additionalInfoTitle': 'ADDITIONAL INFORMATION', // Kept Additional Info Title (though not used in new template)
     // Support plan section
-    'supportPlanIntro': 'The {tier} Support Plan provides {supportType} with the following features:',
-    'supportType.bronze': 'basic support availability for non-urgent cases, with no Critical Situation coverage',
-    'supportType.other': 'comprehensive support with Critical Situation coverage',
-    'supportTypeLabel': 'Support Type:',
-    'supportHoursLabel': 'Support Hours:',
-    'severityLevelsLabel': 'Severity Levels:',
-    'contactsLabel': 'Authorized Contacts:',
-    'tenantsLabel': 'Tenants:',
-    'requestsLabel': 'Support Requests:',
-    'criticalLabel': 'Critical Situation Support:',
-    'yes': 'Yes',
-    'no': 'No',
+    'supportPlanIntro': 'The {tier} Support Plan provides comprehensive support with the following features:', // Updated Support Plan Intro
+    // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
+    'supportProviderLabel': 'Support provided by', // Added
+    'productsCoveredLabel': 'Products covered', // Added
+    'supportHoursLabel': 'Support Hours', // Kept (text only)
+    'severityLevelsLabel': 'Microsoft Severity Levels', // Updated Severity Label
+    'criticalLabel': 'Critical Situation (Crit Sit) Management', // Updated Critical Label
+    'supportRequestSubmissionLabel': 'Support Request Submission', // Added
+    'contactsLabel': 'Authorized Customer Contacts', // Updated Contacts Label
+    'tenantsLabel': 'Tenants', // Kept (text only)
+    'requestsLabel': 'Support Requests Included per trailing 12-month period', // Updated Requests Label
+    'yes': 'Yes', // Kept
+    'no': 'No', // Kept
     // Contacts section
-    'contactsIntro': 'Based on your {tier} Support Plan, you can designate up to {count} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.',
-    'contactsRolesIntro': 'We recommend designating individuals for the following roles: {roles}.',
-    'contactsInstruction': 'Please complete the following table with the required information for each contact:',
-    'contactsNote': 'Note: Your {tier} plan includes {count} authorized contacts. Additional contacts can be managed through our customer portal after initial setup.',
+    'contactsIntro': 'Based on your {tier} Support Plan, you can designate up to {count} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft environment.', // Updated Contacts Intro
+    'contactsRolesIntro': 'We recommend designating individuals for the following roles: {roles}.', // Kept Contacts Roles Intro
+    'contactsInstruction': 'Please complete the following table with the required information for each contact:', // Kept Contacts Instruction
+    // Removed 'contactsNote'
     // Table headers
-    'numberHeader': '#',
+    'numberHeader': '#', // Kept
     'firstNameHeader': 'First Name',
-    'lastNameHeader': 'Last Name',
-    'officePhoneHeader': 'Office Phone',
-    'mobilePhoneHeader': 'Mobile Phone',
-    'emailHeader': 'Email Address',
-    'jobTitleHeader': 'Job Title',
-    // Meeting section
+    'lastNameHeader': 'Last Name', // Kept
+    'officePhoneHeader': 'Office Phone', // Kept
+    'mobilePhoneHeader': 'Mobile Phone', // Kept
+    'emailHeader': 'Email Address', // Kept
+    'jobTitleHeader': 'Job Title', // Kept
+    // Meeting section (Kept for potential future use, though not in new template)
     'meetingIntro': 'We have scheduled an onboarding meeting to discuss these items in detail and answer any questions you may have:',
     'meetingDate': 'Date: {date}',
     'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
     // GDAP section
-    'gdapIntro': 'Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by {deadline}.',
-    'gdapRoles': 'We will request the "{roles}" role.',
-    'gdapPermission': 'This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.',
-    'gdapInstruction': 'Please visit the following link to approve the GDAP relationship:',
-    'gdapLink': 'GDAP Approval Link',
+    'gdapIntro': 'Microsoft recommends to use Granular Delegated Admin Privileges (GDAP) for secure administrative access. We need to implement this by {deadline}. We require the "{roles}" role.', // Updated GDAP Intro, incorporated roles
+    // Removed 'gdapRoles'
+    'gdapPermission': 'This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices based on the Principle Of Least Privilege (POLP).', // Updated GDAP Permission text
+    'gdapInstruction': 'Please visit the following link to approve the GDAP relationship:', // Kept GDAP Instruction
+    'gdapLink': 'GDAP Approval Link', // Kept GDAP Link text
     // RBAC section
-    'rbacIntro': 'We will configure {groups} to ensure users have the appropriate level of access to your environment based on their job functions.',
-    'rbacPermissionBoth': 'This includes both Azure and Microsoft 365 access permissions.',
-    'rbacPermissionAzure': 'This includes Azure resources access permissions.',
-    'rbacPermission365': 'This includes Microsoft 365 service access permissions.',
-    'rbacInstruction': 'Please complete the following steps to configure RBAC permissions:',
-    'rbacStep1': 'STEP 1: Install Azure PowerShell',
-    'rbacStep1Source': 'Source:',
-    'rbacStep2': 'STEP 2: Update the tenant and run the following script',
-    'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console',
-    'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)',
-    'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.',
+    // Removed 'rbacIntro', 'rbacPermissionBoth', 'rbacPermissionAzure', 'rbacPermission365'
+    'rbacInstruction': 'Please complete the following steps to configure RBAC permissions:', // Kept RBAC Instruction
+    'rbacStep1': 'STEP 1: Install Azure PowerShell', // Kept Step 1 Title
+    'rbacStep1Source': 'Source:', // Kept Step 1 Source Label
+    'rbacStep2': 'STEP 2: Update the tenant and run the following script', // Kept Step 2 Title
+    'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console', // Kept Step 2 Instruction
+    'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)', // Kept Script Header
+    'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.', // Kept Screenshot text
     // Conditional Access section
-    'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:',
+    'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:', // Kept CA Intro
     'mfaPolicy': 'Multi-Factor Authentication (MFA) requirements for all users',
     'locationPolicy': 'Location-based access restrictions',
     'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
@@ -30039,40 +30035,41 @@ __webpack_require__.r(__webpack_exports__);
  */
 const translations = {
     // Email general
-    'subject': 'Intégration du Plan de Support {tier} pour {company} - Configuration Administrative Microsoft 365',
-    'greeting': 'Cher/Chère {name},',
-    'intro1': 'Merci d\'avoir choisi {company} comme partenaire d\'administration Microsoft 365. Nous sommes ravis de commencer le processus d\'intégration pour {clientCompany}.',
-    'intro2': 'Vous trouverez ci-dessous les étapes importantes pour compléter votre processus d\'intégration. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer votre Plan de Support {tier} et les configurations d\'accès nécessaires.',
-    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.',
-    'regards': 'Cordialement,',
-    'footer': 'Ceci est un message généré automatiquement par le Générateur de Modèles d\'Intégration Microsoft.',
+    'subject': '{clientCompany} - Microsoft - Support Services - Plan de Support {tier} - Intégration', // Updated Subject
+    'greeting': 'Bonjour {name},', // Updated Greeting
+    'intro1': 'Merci d\'avoir choisi les Services de Support Microsoft de {company}.', // Updated Intro 1
+    'intro2': 'Veuillez trouver ci-dessous les étapes du processus d\'intégration du Plan de Support {tier}. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer les accès.', // Updated Intro 2
+    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.', // Kept closing
+    'regards': 'Cordialement,', // Kept regards
+    'footer': 'SCHNEIDER IT MANAGEMENT | support@schneider.im', // Updated Footer
     // Section titles
-    'supportPlanTitle': 'DÉTAILS DU PLAN DE SUPPORT {tier}',
-    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS',
-    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT',
-    'gdapTitle': 'ACTION REQUISE : DÉLÉGATION GDAP',
-    'rbacTitle': 'ACTION REQUISE : CONFIGURATION RBAC',
-    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL',
-    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION',
-    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES',
+    'supportPlanTitle': 'Plan de Support {tier}', // Updated Support Plan Title
+    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS', // Kept Contacts Title
+    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT', // Kept Tenant Title
+    'gdapTitle': 'ACTION REQUISE : Privilèges d\'Administrateur Délégué Granulaire (GDAP)', // Updated GDAP Title
+    'rbacTitle': 'ACTION REQUISE : Contrôle d\'Accès Basé sur les Rôles (RBAC)', // Updated RBAC Title
+    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL', // Kept Conditional Access Title
+    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION', // Kept Meeting Title
+    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES', // Kept Additional Info Title
     // Support plan section
-    'supportPlanIntro': 'Le Plan de Support {tier} offre {supportType} avec les fonctionnalités suivantes :',
-    'supportType.bronze': 'une disponibilité de support de base pour les cas non urgents, sans couverture des situations critiques',
-    'supportType.other': 'un support complet avec couverture des situations critiques',
-    'supportTypeLabel': 'Type de support :',
-    'supportHoursLabel': 'Heures de support :',
-    'severityLevelsLabel': 'Niveaux de gravité :',
-    'contactsLabel': 'Contacts autorisés :',
-    'tenantsLabel': 'Tenants :',
-    'requestsLabel': 'Demandes de support :',
-    'criticalLabel': 'Support pour situations critiques :',
-    'yes': 'Oui',
-    'no': 'Non',
+    'supportPlanIntro': 'Le Plan de Support {tier} fournit un support complet avec les caractéristiques suivantes :', // Updated Support Plan Intro
+    // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
+    'supportProviderLabel': 'Support fourni par', // Added
+    'productsCoveredLabel': 'Produits couverts', // Added
+    'supportHoursLabel': 'Heures de support', // Kept (text only)
+    'severityLevelsLabel': 'Niveaux de gravité Microsoft', // Updated Severity Label
+    'criticalLabel': 'Gestion des Situations Critiques (Crit Sit)', // Updated Critical Label
+    'supportRequestSubmissionLabel': 'Soumission des demandes de support', // Added
+    'contactsLabel': 'Contacts clients autorisés', // Updated Contacts Label
+    'tenantsLabel': 'Tenants', // Kept (text only)
+    'requestsLabel': 'Demandes de support incluses par période de 12 mois glissants', // Updated Requests Label
+    'yes': 'Oui', // Kept
+    'no': 'Non', // Kept
     // Contacts section
-    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft 365.',
-    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.',
-    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :',
-    'contactsNote': 'Remarque : Votre plan {tier} inclut {count} contacts autorisés. Des contacts supplémentaires peuvent être gérés via notre portail client après la configuration initiale.',
+    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft.', // Updated Contacts Intro
+    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.', // Kept Contacts Roles Intro
+    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :', // Kept Contacts Instruction
+    // Removed 'contactsNote'
     // Table headers
     'numberHeader': 'N°',
     'firstNameHeader': 'Prénom',
@@ -30083,21 +30080,18 @@ const translations = {
     'jobTitleHeader': 'Fonction',
     // Meeting section
     'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
-    'meetingDate': 'Date : {date}',
-    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.',
+    'meetingDate': 'Date : {date}', // Kept
+    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.', // Kept
     // GDAP section
-    'gdapIntro': 'Microsoft exige désormais que les partenaires utilisent GDAP pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}.',
-    'gdapRoles': 'Nous demanderons le rôle "{roles}".',
-    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité.',
-    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :',
-    'gdapLink': 'Lien d\'approbation GDAP',
+    'gdapIntro': 'Microsoft recommande d\'utiliser les Privilèges d\'Administrateur Délégué Granulaire (GDAP) pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}. Nous demandons le rôle "{roles}".', // Updated GDAP Intro, incorporated roles
+    // Removed 'gdapRoles'
+    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité basées sur le Principe du Moindre Privilège (POLP).', // Updated GDAP Permission text
+    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :', // Kept GDAP Instruction
+    'gdapLink': 'Lien d\'approbation GDAP', // Kept GDAP Link text
     // RBAC section
-    'rbacIntro': 'Nous configurerons {groups} pour garantir que les utilisateurs disposent du niveau d\'accès approprié à votre environnement en fonction de leurs rôles professionnels.',
-    'rbacPermissionBoth': 'Cela inclut des autorisations d\'accès pour Azure et Microsoft 365.',
-    'rbacPermissionAzure': 'Cela inclut des autorisations d\'accès aux ressources Azure.',
-    'rbacPermission365': 'Cela inclut des autorisations d\'accès aux services Microsoft 365.',
-    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :',
-    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell',
+    // Removed 'rbacIntro', 'rbacPermissionBoth', 'rbacPermissionAzure', 'rbacPermission365'
+    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :', // Kept RBAC Instruction
+    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell', // Kept Step 1 Title
     'rbacStep1Source': 'Source :',
     'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
     'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
@@ -30169,7 +30163,8 @@ const supportTiers = {
         authorizedContacts: 2,
         supportRequestsIncluded: "Pay As You Go",
         products: ["Microsoft Azure", "Microsoft 365"],
-        severityLevels: "Level B or C"
+        severityLevels: "Level B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     },
     silver: {
         name: "Silver Support",
@@ -30182,7 +30177,8 @@ const supportTiers = {
         authorizedContacts: 6,
         supportRequestsIncluded: 12,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     },
     gold: {
         name: "Gold Support",
@@ -30195,7 +30191,8 @@ const supportTiers = {
         authorizedContacts: 12,
         supportRequestsIncluded: 36,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     },
     platinum: {
         name: "Platinum Support",
@@ -30208,7 +30205,8 @@ const supportTiers = {
         authorizedContacts: 100,
         supportRequestsIncluded: 100,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     }
 };
 

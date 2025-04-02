@@ -73031,16 +73031,18 @@ const ContactsTable = ({ contacts, theme, tierContactLimit }) => {
     const placeholderBgColor = '#FFFFFF'; // Force white placeholder rows
     const tableBgColor = '#FFFFFF'; // Force white table background
     const tableStyle = { borderCollapse: 'collapse', backgroundColor: tableBgColor, margin: '15px 0', width: '100%' }; // Ensure width 100%
-    const thStyle = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: headerBgColor }; // White BG
-    const tdStyle = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: 'transparent' }; // Transparent cell BG (row BG will handle it)
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: headerBgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Phone" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tbody", { children: [contacts.map((contact, index) => {
-                        const bgColor = index % 2 === 0 ? rowBgColor2 : rowBgColor1;
-                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.name || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.email || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.phone || '' })] }, index));
+    const thStyle = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: headerBgColor, fontWeight: 600 }; // White BG, added font weight
+    const tdStyle = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: 'transparent', height: '24px' }; // Transparent cell BG, added fixed height
+    const thNumStyle = Object.assign(Object.assign({}, thStyle), { width: '30px', textAlign: 'center' }); // Style for the # column
+    const tdNumStyle = Object.assign(Object.assign({}, tdStyle), { width: '30px', textAlign: 'center' }); // Style for the # column
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: headerBgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thNumStyle, children: "#" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "First Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Last Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Office Phone" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Mobile Phone" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Email Address" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Job Title" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tbody", { children: [contacts.map((contact, index) => {
+                        const bgColor = rowBgColor1; // Use consistent white background
+                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdNumStyle, children: index + 1 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.firstName || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.lastName || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.officePhone || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.mobilePhone || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.email || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.jobTitle || '' })] }, `contact-${index}`));
                     }), Array.from({ length: Math.max(0, tierContactLimit - contacts.length) }).map((_, index) => {
                         const actualIndex = contacts.length + index; // Calculate index considering existing contacts
                         const bgColor = rowBgColor1; // Use consistent white background
                         const placeholderCellStyle = Object.assign(Object.assign({}, tdStyle), { backgroundColor: 'transparent', color: '#aaa' }); // Transparent cell BG, grey text
-                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" })] }, `placeholder-${index}`));
+                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: Object.assign(Object.assign({}, tdNumStyle), { color: '#aaa' }), children: actualIndex + 1 }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" })] }, `placeholder-${index}`));
                     })] })] }));
 };
 const ScriptBlock = ({ scriptContent, theme }) => {
@@ -73185,40 +73187,41 @@ __webpack_require__.r(__webpack_exports__);
  */
 const translations = {
     // Email general
-    'subject': '{tier} Support-Plan Onboarding für {company} - Microsoft 365 Administrationseinrichtung',
-    'greeting': 'Sehr geehrte/r {name},',
-    'intro1': 'Vielen Dank, dass Sie {company} als Ihren Microsoft 365 Administrationspartner gewählt haben. Wir freuen uns, den Onboarding-Prozess für {clientCompany} zu beginnen.',
-    'intro2': 'Nachfolgend finden Sie die wichtigen Schritte zum Abschluss Ihres Onboarding-Prozesses. Bitte überprüfen Sie jeden Abschnitt sorgfältig und befolgen Sie die Anweisungen, um Ihren {tier} Support-Plan und die erforderlichen Zugriffskonfigurationen einzurichten.',
-    'closing': 'Bitte antworten Sie auf diese E-Mail, um den Empfang zu bestätigen und uns mitzuteilen, ob Sie Fragen oder Bedenken haben.',
-    'regards': 'Mit freundlichen Grüßen,',
-    'footer': 'Dies ist eine automatisch generierte Nachricht vom Microsoft Onboarding Template Generator.',
+    'subject': '{clientCompany} - Microsoft - Support Services - {tier} Support-Plan - Onboarding', // Updated Subject
+    'greeting': 'Hallo {name},', // Updated Greeting
+    'intro1': 'Vielen Dank, dass Sie sich für {company} Microsoft Support Services entschieden haben.', // Updated Intro 1
+    'intro2': 'Bitte finden Sie unten die Schritte des Onboarding-Prozesses für den {tier} Support-Plan. Bitte überprüfen Sie jeden Abschnitt sorgfältig und befolgen Sie die Anweisungen, um die Zugriffskonfigurationen einzurichten.', // Updated Intro 2
+    'closing': 'Bitte antworten Sie auf diese E-Mail, um den Empfang zu bestätigen und uns mitzuteilen, ob Sie Fragen oder Bedenken haben.', // Kept closing
+    'regards': 'Mit freundlichen Grüßen,', // Kept regards
+    'footer': 'SCHNEIDER IT MANAGEMENT | support@schneider.im', // Updated Footer
     // Section titles
-    'supportPlanTitle': '{tier} SUPPORT-PLAN DETAILS',
-    'authorizedContactsTitle': 'AKTION ERFORDERLICH: AUTORISIERTE KONTAKTE',
-    'tenantTitle': 'AKTION ERFORDERLICH: TENANT-INFORMATIONEN',
-    'gdapTitle': 'AKTION ERFORDERLICH: GDAP-DELEGIERUNG',
-    'rbacTitle': 'AKTION ERFORDERLICH: RBAC-KONFIGURATION',
-    'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF',
-    'meetingTitle': 'GEPLANT: ONBOARDING-MEETING',
-    'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN',
+    'supportPlanTitle': '{tier} Support-Plan', // Updated Support Plan Title
+    'authorizedContactsTitle': 'AKTION ERFORDERLICH: AUTORISIERTE KONTAKTE', // Kept Contacts Title
+    'tenantTitle': 'AKTION ERFORDERLICH: TENANT-INFORMATIONEN', // Kept Tenant Title
+    'gdapTitle': 'AKTION ERFORDERLICH: Granular Delegated Admin Privileges (GDAP)', // Updated GDAP Title
+    'rbacTitle': 'AKTION ERFORDERLICH: Role-Based Access Control (RBAC)', // Updated RBAC Title
+    'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF', // Kept Conditional Access Title
+    'meetingTitle': 'GEPLANT: ONBOARDING-MEETING', // Kept Meeting Title
+    'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN', // Kept Additional Info Title
     // Support plan section
-    'supportPlanIntro': 'Der {tier} Support-Plan bietet {supportType} mit folgenden Funktionen:',
-    'supportType.bronze': 'grundlegende Support-Verfügbarkeit für nicht dringende Fälle, ohne Abdeckung kritischer Situationen',
-    'supportType.other': 'umfassenden Support mit Abdeckung kritischer Situationen',
-    'supportTypeLabel': 'Support-Typ:',
-    'supportHoursLabel': 'Support-Zeiten:',
-    'severityLevelsLabel': 'Schweregrade:',
-    'contactsLabel': 'Autorisierte Kontakte:',
-    'tenantsLabel': 'Tenants:',
-    'requestsLabel': 'Support-Anfragen:',
-    'criticalLabel': 'Support für kritische Situationen:',
-    'yes': 'Ja',
-    'no': 'Nein',
+    'supportPlanIntro': 'Der {tier} Support-Plan bietet umfassenden Support mit folgenden Merkmalen:', // Updated Support Plan Intro
+    // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
+    'supportProviderLabel': 'Support bereitgestellt von', // Added
+    'productsCoveredLabel': 'Abgedeckte Produkte', // Added
+    'supportHoursLabel': 'Support-Zeiten', // Kept (text only)
+    'severityLevelsLabel': 'Microsoft Schweregrade', // Updated Severity Label
+    'criticalLabel': 'Critical Situation (Crit Sit) Management', // Updated Critical Label
+    'supportRequestSubmissionLabel': 'Einreichung von Support-Anfragen', // Added
+    'contactsLabel': 'Autorisierte Kundenkontakte', // Updated Contacts Label
+    'tenantsLabel': 'Mandanten', // Updated Tenants Label Text
+    'requestsLabel': 'Enthaltene Support-Anfragen pro letzten 12 Monate', // Updated Requests Label
+    'yes': 'Ja', // Kept
+    'no': 'Nein', // Kept
     // Contacts section
-    'contactsIntro': 'Basierend auf Ihrem {tier} Support-Plan können Sie bis zu {count} autorisierte Kontakte für Ihre Organisation benennen. Diese Kontakte sind berechtigt, Support-Anfragen einzureichen und administrative Änderungen an Ihrer Microsoft 365-Umgebung zu genehmigen.',
-    'contactsRolesIntro': 'Wir empfehlen, Personen für die folgenden Rollen zu benennen: {roles}.',
-    'contactsInstruction': 'Bitte vervollständigen Sie die folgende Tabelle mit den erforderlichen Informationen für jeden Kontakt:',
-    'contactsNote': 'Hinweis: Ihr {tier}-Plan beinhaltet {count} autorisierte Kontakte. Zusätzliche Kontakte können nach der Ersteinrichtung über unser Kundenportal verwaltet werden.',
+    'contactsIntro': 'Basierend auf Ihrem {tier} Support-Plan können Sie bis zu {count} autorisierte Kontakte für Ihre Organisation benennen. Diese Kontakte sind berechtigt, Support-Anfragen einzureichen und administrative Änderungen an Ihrer Microsoft-Umgebung zu genehmigen.', // Updated Contacts Intro
+    'contactsRolesIntro': 'Wir empfehlen, Personen für die folgenden Rollen zu benennen: {roles}.', // Kept Contacts Roles Intro
+    'contactsInstruction': 'Bitte vervollständigen Sie die folgende Tabelle mit den erforderlichen Informationen für jeden Kontakt:', // Kept Contacts Instruction
+    // Removed 'contactsNote'
     // Table headers
     'numberHeader': 'Nr.',
     'firstNameHeader': 'Vorname',
@@ -73229,21 +73232,18 @@ const translations = {
     'jobTitleHeader': 'Position',
     // Meeting section
     'meetingIntro': 'Wir haben ein Onboarding-Meeting angesetzt, um diese Punkte im Detail zu besprechen und Ihre Fragen zu beantworten:',
-    'meetingDate': 'Datum: {date}',
-    'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.',
+    'meetingDate': 'Datum: {date}', // Kept
+    'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.', // Kept
     // GDAP section
-    'gdapIntro': 'Microsoft verlangt nun von Partnern die Verwendung von GDAP für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren.',
-    'gdapRoles': 'Wir werden die Rolle "{roles}" anfordern.',
-    'gdapPermission': 'Diese Berechtigung ermöglicht es uns, die in unserer Vereinbarung beschriebenen Support-Leistungen zu erbringen und gleichzeitig die Best Practices für Sicherheit einzuhalten.',
-    'gdapInstruction': 'Bitte besuchen Sie den folgenden Link, um die GDAP-Beziehung zu genehmigen:',
-    'gdapLink': 'GDAP-Genehmigungslink',
+    'gdapIntro': 'Microsoft empfiehlt die Verwendung von Granular Delegated Admin Privileges (GDAP) für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren. Wir benötigen die Rolle "{roles}".', // Updated GDAP Intro, incorporated roles
+    // Removed 'gdapRoles'
+    'gdapPermission': 'Diese Berechtigung ermöglicht es uns, die in unserer Vereinbarung beschriebenen Support-Leistungen zu erbringen und gleichzeitig die Best Practices für Sicherheit basierend auf dem Prinzip der geringsten Rechte (POLP) einzuhalten.', // Updated GDAP Permission text
+    'gdapInstruction': 'Bitte besuchen Sie den folgenden Link, um die GDAP-Beziehung zu genehmigen:', // Kept GDAP Instruction
+    'gdapLink': 'GDAP-Genehmigungslink', // Kept GDAP Link text
     // RBAC section
-    'rbacIntro': 'Wir werden {groups} konfigurieren, um sicherzustellen, dass Benutzer basierend auf ihren Jobfunktionen die entsprechende Zugriffsebene auf Ihre Umgebung haben.',
-    'rbacPermissionBoth': 'Dies umfasst Zugriffsberechtigungen für Azure und Microsoft 365.',
-    'rbacPermissionAzure': 'Dies umfasst Zugriffsberechtigungen für Azure-Ressourcen.',
-    'rbacPermission365': 'Dies umfasst Zugriffsberechtigungen für Microsoft 365-Dienste.',
-    'rbacInstruction': 'Bitte führen Sie die folgenden Schritte aus, um RBAC-Berechtigungen zu konfigurieren:',
-    'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren',
+    // Removed 'rbacIntro', 'rbacPermissionBoth', 'rbacPermissionAzure', 'rbacPermission365'
+    'rbacInstruction': 'Bitte führen Sie die folgenden Schritte aus, um RBAC-Berechtigungen zu konfigurieren:', // Kept RBAC Instruction
+    'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren', // Kept Step 1 Title
     'rbacStep1Source': 'Quelle:',
     'rbacStep2': 'SCHRITT 2: Den Tenant aktualisieren und das folgende Skript ausführen',
     'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein',
@@ -73276,72 +73276,70 @@ __webpack_require__.r(__webpack_exports__);
  */
 const translations = {
     // Email general
-    'subject': '{tier} Support Plan Onboarding for {company} - Microsoft 365 Administration Setup',
-    'greeting': 'Dear {name},',
-    'intro1': 'Thank you for choosing {company} as your Microsoft 365 administration partner. We are excited to begin the onboarding process for {clientCompany}.',
-    'intro2': 'Below are the important steps to complete your onboarding process. Please review each section carefully and follow the instructions to set up your {tier} Support Plan and the necessary access configurations.',
-    'closing': 'Please reply to this email to confirm receipt and let us know if you have any questions or concerns.',
-    'regards': 'Best regards,',
-    'footer': 'This is an automated message generated by the Microsoft Onboarding Template Generator.',
+    'subject': '{clientCompany} - Microsoft - Support Services - {tier} Support Plan - Onboarding', // Updated Subject
+    'greeting': 'Hello {name},', // Updated Greeting
+    'intro1': 'Thank you for choosing {company} Microsoft Support Services.', // Updated Intro 1
+    'intro2': 'Please find below the steps of the onboarding process of the {tier} Support Plan. Please review each section carefully and follow the instructions to set up the access configurations.', // Updated Intro 2
+    'closing': 'Please reply to this email to confirm receipt and let us know if you have any questions or concerns.', // Kept closing
+    'regards': 'Best regards,', // Kept regards
+    'footer': 'SCHNEIDER IT MANAGEMENT | support@schneider.im', // Updated Footer
     // Section titles
-    'supportPlanTitle': '{tier} SUPPORT PLAN DETAILS',
-    'authorizedContactsTitle': 'ACTION REQUIRED: AUTHORIZED CONTACTS',
-    'tenantTitle': 'ACTION REQUIRED: TENANT INFORMATION',
-    'gdapTitle': 'ACTION REQUIRED: GDAP DELEGATION',
-    'rbacTitle': 'ACTION REQUIRED: RBAC CONFIGURATION',
-    'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES',
-    'meetingTitle': 'SCHEDULED: ONBOARDING MEETING',
-    'additionalInfoTitle': 'ADDITIONAL INFORMATION',
+    'supportPlanTitle': '{tier} Support Plan', // Updated Support Plan Title
+    'authorizedContactsTitle': 'ACTION REQUIRED: AUTHORIZED CONTACTS', // Kept Contacts Title
+    'tenantTitle': 'ACTION REQUIRED: TENANT INFORMATION', // Kept Tenant Title (though not used in new template)
+    'gdapTitle': 'ACTION REQUIRED: Granular Delegated Admin Privileges (GDAP)', // Updated GDAP Title
+    'rbacTitle': 'ACTION REQUIRED: Role-Based Access Control (RBAC)', // Updated RBAC Title
+    'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES', // Kept Conditional Access Title
+    'meetingTitle': 'SCHEDULED: ONBOARDING MEETING', // Kept Meeting Title (though not used in new template)
+    'additionalInfoTitle': 'ADDITIONAL INFORMATION', // Kept Additional Info Title (though not used in new template)
     // Support plan section
-    'supportPlanIntro': 'The {tier} Support Plan provides {supportType} with the following features:',
-    'supportType.bronze': 'basic support availability for non-urgent cases, with no Critical Situation coverage',
-    'supportType.other': 'comprehensive support with Critical Situation coverage',
-    'supportTypeLabel': 'Support Type:',
-    'supportHoursLabel': 'Support Hours:',
-    'severityLevelsLabel': 'Severity Levels:',
-    'contactsLabel': 'Authorized Contacts:',
-    'tenantsLabel': 'Tenants:',
-    'requestsLabel': 'Support Requests:',
-    'criticalLabel': 'Critical Situation Support:',
-    'yes': 'Yes',
-    'no': 'No',
+    'supportPlanIntro': 'The {tier} Support Plan provides comprehensive support with the following features:', // Updated Support Plan Intro
+    // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
+    'supportProviderLabel': 'Support provided by', // Added
+    'productsCoveredLabel': 'Products covered', // Added
+    'supportHoursLabel': 'Support Hours', // Kept (text only)
+    'severityLevelsLabel': 'Microsoft Severity Levels', // Updated Severity Label
+    'criticalLabel': 'Critical Situation (Crit Sit) Management', // Updated Critical Label
+    'supportRequestSubmissionLabel': 'Support Request Submission', // Added
+    'contactsLabel': 'Authorized Customer Contacts', // Updated Contacts Label
+    'tenantsLabel': 'Tenants', // Kept (text only)
+    'requestsLabel': 'Support Requests Included per trailing 12-month period', // Updated Requests Label
+    'yes': 'Yes', // Kept
+    'no': 'No', // Kept
     // Contacts section
-    'contactsIntro': 'Based on your {tier} Support Plan, you can designate up to {count} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft 365 environment.',
-    'contactsRolesIntro': 'We recommend designating individuals for the following roles: {roles}.',
-    'contactsInstruction': 'Please complete the following table with the required information for each contact:',
-    'contactsNote': 'Note: Your {tier} plan includes {count} authorized contacts. Additional contacts can be managed through our customer portal after initial setup.',
+    'contactsIntro': 'Based on your {tier} Support Plan, you can designate up to {count} authorized contacts for your organization. These contacts will be authorized to submit support requests and approve administrative changes to your Microsoft environment.', // Updated Contacts Intro
+    'contactsRolesIntro': 'We recommend designating individuals for the following roles: {roles}.', // Kept Contacts Roles Intro
+    'contactsInstruction': 'Please complete the following table with the required information for each contact:', // Kept Contacts Instruction
+    // Removed 'contactsNote'
     // Table headers
-    'numberHeader': '#',
+    'numberHeader': '#', // Kept
     'firstNameHeader': 'First Name',
-    'lastNameHeader': 'Last Name',
-    'officePhoneHeader': 'Office Phone',
-    'mobilePhoneHeader': 'Mobile Phone',
-    'emailHeader': 'Email Address',
-    'jobTitleHeader': 'Job Title',
-    // Meeting section
+    'lastNameHeader': 'Last Name', // Kept
+    'officePhoneHeader': 'Office Phone', // Kept
+    'mobilePhoneHeader': 'Mobile Phone', // Kept
+    'emailHeader': 'Email Address', // Kept
+    'jobTitleHeader': 'Job Title', // Kept
+    // Meeting section (Kept for potential future use, though not in new template)
     'meetingIntro': 'We have scheduled an onboarding meeting to discuss these items in detail and answer any questions you may have:',
     'meetingDate': 'Date: {date}',
     'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
     // GDAP section
-    'gdapIntro': 'Microsoft now requires partners to use GDAP for secure administrative access. We need to implement this by {deadline}.',
-    'gdapRoles': 'We will request the "{roles}" role.',
-    'gdapPermission': 'This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices.',
-    'gdapInstruction': 'Please visit the following link to approve the GDAP relationship:',
-    'gdapLink': 'GDAP Approval Link',
+    'gdapIntro': 'Microsoft recommends to use Granular Delegated Admin Privileges (GDAP) for secure administrative access. We need to implement this by {deadline}. We require the "{roles}" role.', // Updated GDAP Intro, incorporated roles
+    // Removed 'gdapRoles'
+    'gdapPermission': 'This permission will allow us to provide the support services outlined in our agreement while maintaining security best practices based on the Principle Of Least Privilege (POLP).', // Updated GDAP Permission text
+    'gdapInstruction': 'Please visit the following link to approve the GDAP relationship:', // Kept GDAP Instruction
+    'gdapLink': 'GDAP Approval Link', // Kept GDAP Link text
     // RBAC section
-    'rbacIntro': 'We will configure {groups} to ensure users have the appropriate level of access to your environment based on their job functions.',
-    'rbacPermissionBoth': 'This includes both Azure and Microsoft 365 access permissions.',
-    'rbacPermissionAzure': 'This includes Azure resources access permissions.',
-    'rbacPermission365': 'This includes Microsoft 365 service access permissions.',
-    'rbacInstruction': 'Please complete the following steps to configure RBAC permissions:',
-    'rbacStep1': 'STEP 1: Install Azure PowerShell',
-    'rbacStep1Source': 'Source:',
-    'rbacStep2': 'STEP 2: Update the tenant and run the following script',
-    'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console',
-    'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)',
-    'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.',
+    // Removed 'rbacIntro', 'rbacPermissionBoth', 'rbacPermissionAzure', 'rbacPermission365'
+    'rbacInstruction': 'Please complete the following steps to configure RBAC permissions:', // Kept RBAC Instruction
+    'rbacStep1': 'STEP 1: Install Azure PowerShell', // Kept Step 1 Title
+    'rbacStep1Source': 'Source:', // Kept Step 1 Source Label
+    'rbacStep2': 'STEP 2: Update the tenant and run the following script', // Kept Step 2 Title
+    'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console', // Kept Step 2 Instruction
+    'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)', // Kept Script Header
+    'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.', // Kept Screenshot text
     // Conditional Access section
-    'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:',
+    'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:', // Kept CA Intro
     'mfaPolicy': 'Multi-Factor Authentication (MFA) requirements for all users',
     'locationPolicy': 'Location-based access restrictions',
     'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
@@ -73367,40 +73365,41 @@ __webpack_require__.r(__webpack_exports__);
  */
 const translations = {
     // Email general
-    'subject': 'Intégration du Plan de Support {tier} pour {company} - Configuration Administrative Microsoft 365',
-    'greeting': 'Cher/Chère {name},',
-    'intro1': 'Merci d\'avoir choisi {company} comme partenaire d\'administration Microsoft 365. Nous sommes ravis de commencer le processus d\'intégration pour {clientCompany}.',
-    'intro2': 'Vous trouverez ci-dessous les étapes importantes pour compléter votre processus d\'intégration. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer votre Plan de Support {tier} et les configurations d\'accès nécessaires.',
-    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.',
-    'regards': 'Cordialement,',
-    'footer': 'Ceci est un message généré automatiquement par le Générateur de Modèles d\'Intégration Microsoft.',
+    'subject': '{clientCompany} - Microsoft - Support Services - Plan de Support {tier} - Intégration', // Updated Subject
+    'greeting': 'Bonjour {name},', // Updated Greeting
+    'intro1': 'Merci d\'avoir choisi les Services de Support Microsoft de {company}.', // Updated Intro 1
+    'intro2': 'Veuillez trouver ci-dessous les étapes du processus d\'intégration du Plan de Support {tier}. Veuillez examiner attentivement chaque section et suivre les instructions pour configurer les accès.', // Updated Intro 2
+    'closing': 'Veuillez répondre à cet e-mail pour confirmer sa réception et nous faire part de vos questions ou préoccupations.', // Kept closing
+    'regards': 'Cordialement,', // Kept regards
+    'footer': 'SCHNEIDER IT MANAGEMENT | support@schneider.im', // Updated Footer
     // Section titles
-    'supportPlanTitle': 'DÉTAILS DU PLAN DE SUPPORT {tier}',
-    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS',
-    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT',
-    'gdapTitle': 'ACTION REQUISE : DÉLÉGATION GDAP',
-    'rbacTitle': 'ACTION REQUISE : CONFIGURATION RBAC',
-    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL',
-    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION',
-    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES',
+    'supportPlanTitle': 'Plan de Support {tier}', // Updated Support Plan Title
+    'authorizedContactsTitle': 'ACTION REQUISE : CONTACTS AUTORISÉS', // Kept Contacts Title
+    'tenantTitle': 'ACTION REQUISE : INFORMATIONS DU TENANT', // Kept Tenant Title
+    'gdapTitle': 'ACTION REQUISE : Privilèges d\'Administrateur Délégué Granulaire (GDAP)', // Updated GDAP Title
+    'rbacTitle': 'ACTION REQUISE : Contrôle d\'Accès Basé sur les Rôles (RBAC)', // Updated RBAC Title
+    'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL', // Kept Conditional Access Title
+    'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION', // Kept Meeting Title
+    'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES', // Kept Additional Info Title
     // Support plan section
-    'supportPlanIntro': 'Le Plan de Support {tier} offre {supportType} avec les fonctionnalités suivantes :',
-    'supportType.bronze': 'une disponibilité de support de base pour les cas non urgents, sans couverture des situations critiques',
-    'supportType.other': 'un support complet avec couverture des situations critiques',
-    'supportTypeLabel': 'Type de support :',
-    'supportHoursLabel': 'Heures de support :',
-    'severityLevelsLabel': 'Niveaux de gravité :',
-    'contactsLabel': 'Contacts autorisés :',
-    'tenantsLabel': 'Tenants :',
-    'requestsLabel': 'Demandes de support :',
-    'criticalLabel': 'Support pour situations critiques :',
-    'yes': 'Oui',
-    'no': 'Non',
+    'supportPlanIntro': 'Le Plan de Support {tier} fournit un support complet avec les caractéristiques suivantes :', // Updated Support Plan Intro
+    // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
+    'supportProviderLabel': 'Support fourni par', // Added
+    'productsCoveredLabel': 'Produits couverts', // Added
+    'supportHoursLabel': 'Heures de support', // Kept (text only)
+    'severityLevelsLabel': 'Niveaux de gravité Microsoft', // Updated Severity Label
+    'criticalLabel': 'Gestion des Situations Critiques (Crit Sit)', // Updated Critical Label
+    'supportRequestSubmissionLabel': 'Soumission des demandes de support', // Added
+    'contactsLabel': 'Contacts clients autorisés', // Updated Contacts Label
+    'tenantsLabel': 'Tenants', // Kept (text only)
+    'requestsLabel': 'Demandes de support incluses par période de 12 mois glissants', // Updated Requests Label
+    'yes': 'Oui', // Kept
+    'no': 'Non', // Kept
     // Contacts section
-    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft 365.',
-    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.',
-    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :',
-    'contactsNote': 'Remarque : Votre plan {tier} inclut {count} contacts autorisés. Des contacts supplémentaires peuvent être gérés via notre portail client après la configuration initiale.',
+    'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft.', // Updated Contacts Intro
+    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.', // Kept Contacts Roles Intro
+    'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :', // Kept Contacts Instruction
+    // Removed 'contactsNote'
     // Table headers
     'numberHeader': 'N°',
     'firstNameHeader': 'Prénom',
@@ -73411,21 +73410,18 @@ const translations = {
     'jobTitleHeader': 'Fonction',
     // Meeting section
     'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
-    'meetingDate': 'Date : {date}',
-    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.',
+    'meetingDate': 'Date : {date}', // Kept
+    'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.', // Kept
     // GDAP section
-    'gdapIntro': 'Microsoft exige désormais que les partenaires utilisent GDAP pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}.',
-    'gdapRoles': 'Nous demanderons le rôle "{roles}".',
-    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité.',
-    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :',
-    'gdapLink': 'Lien d\'approbation GDAP',
+    'gdapIntro': 'Microsoft recommande d\'utiliser les Privilèges d\'Administrateur Délégué Granulaire (GDAP) pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}. Nous demandons le rôle "{roles}".', // Updated GDAP Intro, incorporated roles
+    // Removed 'gdapRoles'
+    'gdapPermission': 'Cette autorisation nous permettra de fournir les services de support décrits dans notre accord tout en maintenant les meilleures pratiques de sécurité basées sur le Principe du Moindre Privilège (POLP).', // Updated GDAP Permission text
+    'gdapInstruction': 'Veuillez visiter le lien suivant pour approuver la relation GDAP :', // Kept GDAP Instruction
+    'gdapLink': 'Lien d\'approbation GDAP', // Kept GDAP Link text
     // RBAC section
-    'rbacIntro': 'Nous configurerons {groups} pour garantir que les utilisateurs disposent du niveau d\'accès approprié à votre environnement en fonction de leurs rôles professionnels.',
-    'rbacPermissionBoth': 'Cela inclut des autorisations d\'accès pour Azure et Microsoft 365.',
-    'rbacPermissionAzure': 'Cela inclut des autorisations d\'accès aux ressources Azure.',
-    'rbacPermission365': 'Cela inclut des autorisations d\'accès aux services Microsoft 365.',
-    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :',
-    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell',
+    // Removed 'rbacIntro', 'rbacPermissionBoth', 'rbacPermissionAzure', 'rbacPermission365'
+    'rbacInstruction': 'Veuillez suivre les étapes suivantes pour configurer les autorisations RBAC :', // Kept RBAC Instruction
+    'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell', // Kept Step 1 Title
     'rbacStep1Source': 'Source :',
     'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
     'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
@@ -73813,75 +73809,65 @@ const HELP_DESK_AGENTS_OBJECT_ID = "b6770181-d9f5-4818-b5b1-ea51cd9f66e5";
 const ADMIN_AGENTS_OBJECT_ID = "9a838974-22d3-415b-8136-c790e285afeb";
 const SUPPORT_REQUEST_CONTRIBUTOR_ROLE = "Support Request Contributor";
 const OWNER_ROLE = "Owner";
-// RBAC Script Template remains the same
+const GDAP_ROLE = "Service Support Administrator"; // Specific role needed
+const DEFAULT_GDAP_LINK = "https://admin.microsoft.com/Adminportal/Home?ref=/GDAP"; // Default GDAP link
+// RBAC Script Template
 const RBAC_POWERSHELL_SCRIPT_TEMPLATE = `
-# Connect to Azure with your tenant ID
-Connect-AzAccount -Tenant "{TENANT_ID}"
-
-# Get all available subscriptions
+# Connect to the correct tenant
+Connect-AzAccount -TenantID {TENANT_ID}
 $subscriptions = Get-AzSubscription
-
-# Loop through each subscription
 foreach ($subscription in $subscriptions) {
-    # Set the current context to this subscription
     Set-AzContext -SubscriptionId $subscription.Id
-
-    # Add the ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role to Foreign Principal HelpDeskAgents
-    New-AzRoleAssignment -ObjectID "${HELP_DESK_AGENTS_OBJECT_ID}" -RoleDefinitionName "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
-
-    # Test if the ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role is assigned
-    $supportRole = Get-AzRoleAssignment -ObjectId "${HELP_DESK_AGENTS_OBJECT_ID}" | Where-Object { $_.RoleDefinitionName -eq "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" }
-
+    # Add the Support Request Contributor role to Foreign Principal HelpDeskAgents:
+    New-AzRoleAssignment -ObjectID ${HELP_DESK_AGENTS_OBJECT_ID} -RoleDefinitionName "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" -ObjectType "ForeignGroup" -ErrorAction SilentlyContinue
+    # Test if the Support Request Contributor role is assigned to Foreign Principal HelpDeskAgents:
+    $supportRole = Get-AzRoleAssignment -ObjectId ${HELP_DESK_AGENTS_OBJECT_ID} | Where-Object { $_.RoleDefinitionName -eq "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE}" }
     if ($supportRole) {
         Write-Host "${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role is assigned to Foreign Principal HelpDeskAgents."
-
-        # Test if the ${OWNER_ROLE} role for the Foreign Principal AdminAgents exists
-        $ownerRole = Get-AzRoleAssignment -ObjectId "${ADMIN_AGENTS_OBJECT_ID}" | Where-Object { $_.RoleDefinitionName -eq "${OWNER_ROLE}" }
-
+        # Test if the Owner role for the Foreign Principal AdminAgents exists:
+        $ownerRole = Get-AzRoleAssignment -ObjectId ${ADMIN_AGENTS_OBJECT_ID} | Where-Object { $_.RoleDefinitionName -eq "${OWNER_ROLE}" }
         if ($ownerRole) {
-            # If the ${OWNER_ROLE} role exists, remove it
-            Remove-AzRoleAssignment -ObjectID "${ADMIN_AGENTS_OBJECT_ID}" -RoleDefinitionName "${OWNER_ROLE}"
+            # If the Owner role for Foreign Principal AdminAgents exists, remove it:
+            Remove-AzRoleAssignment -ObjectID ${ADMIN_AGENTS_OBJECT_ID} -RoleDefinitionName "${OWNER_ROLE}"
         } else {
             Write-Host "${OWNER_ROLE} role for Foreign Principal AdminAgents does not exist."
         }
     } else {
         Write-Host "Error: Could not assign ${SUPPORT_REQUEST_CONTRIBUTOR_ROLE} role for Foreign Principal HelpDeskAgents!"
     }
-}`;
+}`; // Removed trailing }
 /**
  * Email Builder Module
  */
 const emailBuilder = {
     translate: _translationService__WEBPACK_IMPORTED_MODULE_3__.getTranslation,
-    // buildEmailBody remains the same as it generates plain text
+    /**
+     * Build Plain Text version of the email.
+     */
     buildEmailBody: function (formData, tenants = []) {
+        var _a, _b, _c;
         const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
-        const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
+        // Use 'let' for body as it will be modified
         let body = this.translate('greeting', language, { name: formData.contactName }) + '\n\n';
         body += this.translate('intro1', language, {
-            company: formData.senderCompany,
-            clientCompany: formData.companyName
+            company: formData.senderCompany, // SCHNEIDER IT MANAGEMENT
         }) + '\n\n';
         body += this.translate('intro2', language, {
             tier: tier.name
         }) + '\n\n';
         // Support Plan Section
-        body += `**${this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() })}**\n\n`;
-        const supportType = formData.selectedTier === 'bronze'
-            ? this.translate('supportType.bronze', language)
-            : this.translate('supportType.other', language);
-        body += this.translate('supportPlanIntro', language, {
-            tier: tier.name,
-            supportType: supportType
-        }) + '\n\n';
-        body += `• ${this.translate('supportTypeLabel', language)}: ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}\n`;
-        body += `• ${this.translate('supportHoursLabel', language)}: ${tier.supportHours}\n`;
-        body += `• ${this.translate('severityLevelsLabel', language)}: ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}\n`;
-        body += `• ${this.translate('contactsLabel', language)}: ${tier.authorizedContacts}\n`;
-        body += `• ${this.translate('tenantsLabel', language)}: ${tier.tenants}\n`;
-        body += `• ${this.translate('requestsLabel', language)}: ${tier.supportRequestsIncluded}\n`;
-        body += `• ${this.translate('criticalLabel', language)}: ${tier.criticalSituation ? this.translate('yes', language) : this.translate('no', language)}\n\n`;
+        body += `**${this.translate('supportPlanTitle', language, { tier: tier.name })}**\n\n`;
+        body += this.translate('supportPlanIntro', language, { tier: tier.name }) + '\n\n';
+        body += `\t${this.translate('supportProviderLabel', language)}: ${tier.supportProvider}\n`;
+        body += `\t${this.translate('productsCoveredLabel', language)}: ${tier.products.join(', ')}\n`;
+        body += `\t${this.translate('severityLevelsLabel', language)}: ${tier.severityLevels}\n`;
+        body += `\t${this.translate('criticalLabel', language)}: ${tier.criticalSituation ? this.translate('yes', language) : this.translate('no', language)}\n`;
+        body += `\t${this.translate('supportHoursLabel', language)}: ${tier.supportHours}\n`;
+        body += `\t${this.translate('supportRequestSubmissionLabel', language)}: ${tier.supportRequestSubmission}\n`;
+        body += `\t${this.translate('tenantsLabel', language)}: ${tier.tenants}\n`;
+        body += `\t${this.translate('contactsLabel', language)}: ${tier.authorizedContacts}\n`;
+        body += `\t${this.translate('requestsLabel', language)}: ${tier.supportRequestsIncluded}\n\n`;
         // Authorized Contacts Section
         if (formData.authorizedContacts.checked) {
             body += `**${this.translate('authorizedContactsTitle', language)}**\n\n`;
@@ -73893,72 +73879,50 @@ const emailBuilder = {
                 roles: formData.authorizedContacts.roles
             }) + '\n\n';
             body += this.translate('contactsInstruction', language) + '\n\n';
-            body += `#  | ${this.translate('firstNameHeader', language)} | ${this.translate('lastNameHeader', language)} | ${this.translate('officePhoneHeader', language)} | ${this.translate('mobilePhoneHeader', language)} | ${this.translate('emailHeader', language)} | ${this.translate('jobTitleHeader', language)}\n`;
-            body += `---|--------------------|------------------|----------------------|----------------------|------------------|------------------\n`;
-            const rows = Math.min(tier.authorizedContacts, 10);
-            for (let i = 1; i <= rows; i++) {
-                body += `${i}  |                    |                  |                      |                      |                  |                  \n`;
+            body += `#\t| ${this.translate('firstNameHeader', language)}\t| ${this.translate('lastNameHeader', language)}\t| ${this.translate('officePhoneHeader', language)}\t| ${this.translate('mobilePhoneHeader', language)}\t| ${this.translate('emailHeader', language)}\t| ${this.translate('jobTitleHeader', language)}\n`;
+            body += `---|------------|-----------|----------------|----------------|---------------|-----------\n`;
+            for (let i = 1; i <= tier.authorizedContacts; i++) {
+                body += `${i}\t|            |           |                |                |               |           \n`;
             }
             body += '\n';
-            if (tier.authorizedContacts > 10) {
-                body += this.translate('contactsNote', language, {
-                    tier: tier.name,
-                    count: tier.authorizedContacts
-                }) + '\n\n';
-            }
         }
-        // Meeting Section
+        // Meeting Section (Kept for potential future use)
         if (formData.meetingDate) {
             body += `**${this.translate('meetingTitle', language)}**\n\n`;
             body += this.translate('meetingIntro', language) + '\n\n';
             body += this.translate('meetingDate', language, { date: formData.meetingDate }) + '\n';
             body += this.translate('meetingAttendees', language) + '\n\n';
         }
-        // Tenant Specific Sections
-        tenants.forEach((tenant, index) => {
-            const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
-            let gdapSection = '';
-            let rbacSection = '';
-            // GDAP
-            const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-            gdapSection += `**${this.translate('gdapTitle', language)} - ${tenantIdentifier}**\n\n`;
-            gdapSection += this.translate('gdapPermission', language) + '\n\n';
-            gdapSection += this.translate('gdapInstruction', language) + '\n';
-            gdapSection += tenantGdapLink + '\n';
-            if (tenant.implementationDeadline) {
-                gdapSection += `*Implementation Deadline: ${tenant.implementationDeadline.toLocaleDateString()}*\n`;
-            }
-            gdapSection += '\n';
-            // RBAC
-            if (tenant.hasAzure) {
-                rbacSection += `**${this.translate('rbacTitle', language)} - ${tenantIdentifier}**\n\n`;
-                rbacSection += this.translate('rbacIntro', language, { groups: 'relevant security groups' }) + ' ';
-                rbacSection += this.translate('rbacPermissionAzure', language) + '\n\n';
-                rbacSection += this.translate('rbacInstruction', language) + '\n\n';
-                rbacSection += `1. ${this.translate('rbacStep1', language)}\n`;
-                rbacSection += `   ${this.translate('rbacStep1Source', language)} https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n\n`;
-                rbacSection += `   Install-Module -Name Az -Repository PSGallery -Force\n\n`;
-                rbacSection += `   or update it:\n\n`;
-                rbacSection += `   Update-Module Az.Resources -Force\n\n`;
-                rbacSection += `2. ${this.translate('rbacStep2', language)}\n`;
-                rbacSection += `   ${this.translate('rbacStep2Instruction', language)}\n\n`;
-                const rawRbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenant.microsoftTenantDomain || 'YOUR_TENANT_ID');
-                rbacSection += rawRbacScript + '\n\n';
-                rbacSection += this.translate('rbacScreenshot', language) + '\n\n';
-            }
-            if (gdapSection.trim() || rbacSection.trim()) {
-                body += `\n---\n`;
-                if (gdapSection.trim())
-                    body += gdapSection;
-                if (rbacSection.trim()) {
-                    if (gdapSection.trim())
-                        body += '\n';
-                    body += rbacSection;
-                }
-                body += "---\n";
-            }
-        });
-        // Conditional Access
+        // GDAP Section (Apply once if tenants exist)
+        if (tenants.length > 0) {
+            const tenantGdapLink = ((_a = tenants[0]) === null || _a === void 0 ? void 0 : _a.gdapLink) || DEFAULT_GDAP_LINK;
+            const deadline = ((_b = tenants[0]) === null || _b === void 0 ? void 0 : _b.implementationDeadline) ? tenants[0].implementationDeadline.toLocaleDateString() : '4/26/2025';
+            body += `**${this.translate('gdapTitle', language)}**\n\n`;
+            body += this.translate('gdapIntro', language, { deadline: deadline, roles: GDAP_ROLE }) + '\n\n';
+            body += this.translate('gdapPermission', language) + '\n\n';
+            body += this.translate('gdapInstruction', language) + '\n';
+            body += tenantGdapLink + '\n\n';
+        }
+        // RBAC Section (Apply once if any tenant has Azure)
+        if (tenants.some(t => t.hasAzure)) {
+            body += `**${this.translate('rbacTitle', language)}**\n\n`;
+            body += this.translate('rbacInstruction', language) + '\n\n';
+            body += `1\t${this.translate('rbacStep1', language)}\n\n`;
+            body += `Source: https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n`;
+            body += `${this.translate('rbacScriptHeader', language)}\n`;
+            body += `Install-Module -Name Az -Repository PSGallery -Force\n\n`;
+            body += `or update it:\n`;
+            body += `${this.translate('rbacScriptHeader', language)}\n`;
+            body += `Update-Module Az.Resources -Force\n\n`;
+            body += `2\t${this.translate('rbacStep2', language)}\n\n`;
+            body += `${this.translate('rbacStep2Instruction', language)}\n`;
+            const tenantIdPlaceholder = tenants.length > 1 ? '[your-tenant-id]' : (((_c = tenants[0]) === null || _c === void 0 ? void 0 : _c.microsoftTenantDomain) || '[your-tenant-id]');
+            const rawRbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
+            body += `${this.translate('rbacScriptHeader', language)}\n`;
+            body += rawRbacScript + '\n\n';
+            body += this.translate('rbacScreenshot', language) + '\n\n';
+        }
+        // Conditional Access Section
         if (formData.conditionalAccess.checked) {
             body += `**${this.translate('conditionalAccessTitle', language)}**\n\n`;
             body += this.translate('conditionalAccessIntro', language) + '\n\n';
@@ -73972,12 +73936,12 @@ const emailBuilder = {
                 body += `• ${this.translate('signInPolicy', language)}\n`;
             body += '\n';
         }
-        // Additional Notes
+        // Additional Notes Section
         if (formData.additionalNotes) {
             body += `**${this.translate('additionalInfoTitle', language)}**\n\n`;
             body += `${formData.additionalNotes}\n\n`;
         }
-        // Closing
+        // Closing Section
         body += this.translate('closing', language) + '\n\n';
         body += this.translate('regards', language) + '\n\n';
         body += `${formData.senderName}\n`;
@@ -73993,9 +73957,9 @@ const emailBuilder = {
      * Build HTML version of the email using JSX components rendered to string.
      */
     buildEmailHTML: function (formData, tenants = [], theme = null) {
+        var _a, _b, _c;
         const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
-        const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
         const effectiveTheme = {
             primaryColor: (theme === null || theme === void 0 ? void 0 : theme.primaryColor) || '#0078d4',
             textColor: (theme === null || theme === void 0 ? void 0 : theme.textColor) || '#333333',
@@ -74003,141 +73967,116 @@ const emailBuilder = {
         };
         const primaryAccentColor = effectiveTheme.primaryColor;
         const textColor = effectiveTheme.textColor;
-        const bgColor = effectiveTheme.backgroundColor;
-        const lightBgColor = bgColor === '#ffffff' ? '#f8f8f8' : `${bgColor}1A`;
+        // const bgColor = effectiveTheme.backgroundColor; // Unused directly
         const footerTextColor = textColor === '#333333' ? '#666666' : `${textColor}B3`;
         const subject = formData.subject || this.translate('subject', language, {
             tier: tier.name,
-            company: formData.companyName
+            clientCompany: formData.companyName
         });
-        // Define styles as strings for email compatibility
-        // Apply container styles directly to body for simpler structure
-        const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`; // Ensure white BG, add max-width etc.
-        // const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Style moved to body
-        const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`; // Ensure transparent BG
-        const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF; width: 100%; margin-bottom: 1em;`; // Ensure white BG, width, margin
-        // Remove unused table-based layout styles
-        // const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: #FFFFFF;`;
-        // const sectionBoxCellStyle = `padding: 18px 20px; color: ${textColor}; background-color: transparent;`;
-        const listItemStyle = `padding: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: transparent; list-style-position: outside; padding-left: 5px;`; // Use standard list styling, ensure transparent BG
-        const bulletStyle = `display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 8px; vertical-align: middle;`; // Slightly smaller bullet
+        // Define styles
+        const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`;
+        const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`;
+        const listItemStyle = `padding: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: transparent; list-style-position: outside; padding-left: 5px;`;
+        const bulletStyle = `display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 8px; vertical-align: middle;`;
         const strongStyle = `font-weight: 600; color: ${textColor};`;
-        // Updated linkButtonStyle for button appearance
         const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: ${primaryAccentColor}; color: #FFFFFF !important; text-decoration: none !important; font-weight: 600; border-radius: 4px; margin-top: 5px; border: none; cursor: pointer;`;
-        const deadlineHighlightStyle = `margin: 15px 0 0 0; text-align: center; font-size: 14px; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;`;
-        const deadlineStrongStyle = `font-weight: 600; color: #333;`;
-        // Ensure tenant block uses white background
-        const tenantBlockStyle = `background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;`;
-        const tenantBlockCellStyle = `padding: 20px; color: ${textColor}; background-color: transparent;`; // Ensure transparent BG
-        // Build plain text first (reuse existing logic)
+        const tenantBlockStyle = `background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;`;
+        // Build plain text first
         const plainTextContent = this.buildEmailBody(formData, tenants);
-        // Build HTML body content using components and string concatenation
+        // Build HTML body content
         let htmlBodyContent = '';
+        // Intro
         htmlBodyContent += `<p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>`;
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany, clientCompany: formData.companyName })}</p>`;
+        htmlBodyContent += `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany })}</p>`;
         htmlBodyContent += `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`;
-        // Support Plan Section - Use div and ul/li
-        htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() }), color: primaryAccentColor, theme: effectiveTheme }));
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('supportPlanIntro', language, { tier: tier.name, supportType: formData.selectedTier === 'bronze' ? this.translate('supportType.bronze', language) : this.translate('supportType.other', language) })}</p>`;
-        // Use a div with border and padding instead of table for the box
+        // Support Plan Section
+        htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: this.translate('supportPlanTitle', language, { tier: tier.name }), color: primaryAccentColor, theme: effectiveTheme }));
+        htmlBodyContent += `<p style="${pStyle}">${this.translate('supportPlanIntro', language, { tier: tier.name })}</p>`;
         htmlBodyContent += `<div style="border: 1px solid #eee; border-radius: 4px; padding: 18px 20px; margin: 15px 0 25px 0; background-color: #FFFFFF;">`;
-        htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`; // Reset ul styles
-        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportTypeLabel', language)}:</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</li>`;
-        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}:</strong> ${tier.supportHours}</li>`;
-        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}:</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</li>`;
-        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}:</strong> ${tier.authorizedContacts}</li>`;
-        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}:</strong> ${tier.tenants}</li>`;
-        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
+        htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportProviderLabel', language)}:</strong> ${tier.supportProvider}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('productsCoveredLabel', language)}:</strong> ${tier.products.join(', ')}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}:</strong> ${tier.severityLevels}</li>`;
         htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}:</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}:</strong> ${tier.supportHours}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportRequestSubmissionLabel', language)}:</strong> ${tier.supportRequestSubmission}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}:</strong> ${tier.tenants}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}:</strong> ${tier.authorizedContacts}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
         htmlBodyContent += `</ul></div>`;
-        // Authorized Contacts Section - Keep table for tabular data
+        // Authorized Contacts Section
         if (formData.authorizedContacts.checked) {
-            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
             const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: contactsSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
             htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>`;
             htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>`;
             htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>`;
-            // Pass the tier's contact limit to the ContactsTable component
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ContactsTable, {
                 contacts: formData.emailContacts,
                 theme: effectiveTheme,
-                tierContactLimit: tier.authorizedContacts // Pass the limit here
+                tierContactLimit: tier.authorizedContacts
             }));
         }
         // Meeting Section
         if (formData.meetingDate) {
-            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
             const meetingSectionTitle = this.translate('meetingTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: meetingSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
             htmlBodyContent += `<p style="${pStyle}">${this.translate('meetingIntro', language)}</p>`;
-            // Use a div for the meeting date box
             htmlBodyContent += `<div style="margin: 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">`;
             htmlBodyContent += `<strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: ${primaryAccentColor};">${formData.meetingDate}</span>` })}</strong>`;
             htmlBodyContent += `</div>`;
             htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`;
         }
-        // Tenant Specific Sections - Use divs for blocks
+        // GDAP Section (Apply once if tenants exist)
         if (tenants.length > 0) {
-            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR before tenant sections
-            htmlBodyContent += `<!-- Tenant Sections Start -->`;
-            tenants.forEach((tenant, index) => {
-                // Add HR between tenant blocks if more than one tenant
-                if (index > 0) {
-                    htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-                }
-                const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
-                let tenantHtml = '';
-                // Add Tenant Identifier Sub-heading
-                tenantHtml += `<h4 style="font-size: 16px; font-weight: 600; color: ${textColor}; margin: 0 0 15px 0; padding-bottom: 5px; border-bottom: 1px solid #eee;">Tenant: ${tenantIdentifier}</h4>`;
-                // GDAP Section
-                let gdapHtml = '';
-                const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
-                const gdapSectionTitle = `${this.translate('gdapTitle', language)} - ${tenantIdentifier}`;
-                gdapHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: gdapSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-                gdapHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>`;
-                gdapHtml += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0;"><tbody><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; text-align: center; color: ${textColor};">`;
-                gdapHtml += `<p style="margin: 0 0 10px 0; font-weight: 600; color: ${textColor};">${this.translate('gdapInstruction', language)}</p>`;
-                gdapHtml += `<a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
-                if (tenant.implementationDeadline) {
-                    gdapHtml += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">Implementation Deadline:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`;
-                }
-                gdapHtml += `</div>`; // Close the inner div for GDAP content
-                // Use div for the tenant block
-                tenantHtml += `<div style="background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;">${gdapHtml}</div>`;
-                // RBAC Section
-                if (tenant.hasAzure) {
-                    let rbacHtml = '';
-                    const rbacSectionTitle = `${this.translate('rbacTitle', language)} - ${tenantIdentifier}`;
-                    rbacHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: rbacSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-                    rbacHtml += `<p style="${pStyle}">${this.translate('rbacIntro', language, { groups: 'relevant security groups' })} ${this.translate('rbacPermissionAzure', language)}</p>`;
-                    rbacHtml += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: ${textColor};">${this.translate('rbacInstruction', language)}</p>`;
-                    rbacHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.StepIndicator, { number: 1, title: this.translate('rbacStep1', language), theme: effectiveTheme }));
-                    rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
-                    rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: 'Install-Module -Name Az -Repository PSGallery -Force', theme: effectiveTheme }))}</div>`;
-                    rbacHtml += `<p style="margin: 15px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">or update it:</p>`;
-                    rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: 'Update-Module Az.Resources -Force', theme: effectiveTheme }))}</div>`;
-                    rbacHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.StepIndicator, { number: 2, title: this.translate('rbacStep2', language), theme: effectiveTheme }));
-                    rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2Instruction', language)}</p>`;
-                    const rbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenant.microsoftTenantDomain || 'YOUR_TENANT_ID');
-                    rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: rbacScript, theme: effectiveTheme }))}</div>`;
-                    rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
-                    // Use div for the tenant block
-                    tenantHtml += `<div style="background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;">${rbacHtml}</div>`;
-                }
-                htmlBodyContent += tenantHtml;
-            });
-            htmlBodyContent += `<!-- Tenant Sections End -->`;
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+            let gdapHtml = '';
+            const tenantGdapLink = ((_a = tenants[0]) === null || _a === void 0 ? void 0 : _a.gdapLink) || DEFAULT_GDAP_LINK;
+            const deadline = ((_b = tenants[0]) === null || _b === void 0 ? void 0 : _b.implementationDeadline) ? tenants[0].implementationDeadline.toLocaleDateString() : '4/26/2025';
+            const gdapSectionTitle = this.translate('gdapTitle', language);
+            gdapHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: gdapSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+            gdapHtml += `<p style="${pStyle}">${this.translate('gdapIntro', language, { deadline: deadline, roles: GDAP_ROLE })}</p>`;
+            gdapHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>`;
+            gdapHtml += `<div style="text-align: center; margin: 20px 0;">`;
+            gdapHtml += `<p style="margin: 0 0 10px 0; font-weight: 600; color: ${textColor};">${this.translate('gdapInstruction', language)}</p>`;
+            gdapHtml += `<a href="${tenantGdapLink}" target="_blank" style="${linkButtonStyle}">${this.translate('gdapLink', language)}</a>`;
+            gdapHtml += `</div>`;
+            htmlBodyContent += `<div style="${tenantBlockStyle}">${gdapHtml}</div>`;
+        }
+        // RBAC Section (Apply once if any tenant has Azure)
+        if (tenants.some(t => t.hasAzure)) {
+            let rbacHtml = '';
+            const rbacSectionTitle = this.translate('rbacTitle', language);
+            rbacHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: rbacSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+            rbacHtml += `<p style="margin: 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 600; color: ${textColor};">${this.translate('rbacInstruction', language)}</p>`;
+            // Step 1
+            rbacHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.StepIndicator, { number: 1, title: this.translate('rbacStep1', language), theme: effectiveTheme }));
+            rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
+            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+            rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: 'Install-Module -Name Az -Repository PSGallery -Force', theme: effectiveTheme }))}</div>`;
+            rbacHtml += `<p style="margin: 15px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">or update it:</p>`;
+            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+            rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: 'Update-Module Az.Resources -Force', theme: effectiveTheme }))}</div>`;
+            // Step 2
+            rbacHtml += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.StepIndicator, { number: 2, title: this.translate('rbacStep2', language), theme: effectiveTheme }));
+            rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2Instruction', language)}</p>`;
+            const tenantIdPlaceholder = tenants.length > 1 ? '[your-tenant-id]' : (((_c = tenants[0]) === null || _c === void 0 ? void 0 : _c.microsoftTenantDomain) || '[your-tenant-id]');
+            const rbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantIdPlaceholder);
+            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+            rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: rbacScript, theme: effectiveTheme }))}</div>`;
+            rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
+            htmlBodyContent += `<div style="${tenantBlockStyle}">${rbacHtml}</div>`;
         }
         // Conditional Access Section
         if (formData.conditionalAccess.checked) {
-            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
             const caSectionTitle = this.translate('conditionalAccessTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: caSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
             htmlBodyContent += `<p style="${pStyle}">${this.translate('conditionalAccessIntro', language)}</p>`;
-            // Use div and ul/li for conditional access box
             htmlBodyContent += `<div style="margin: 0 0 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px;">`;
-            htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`; // Reset ul styles
+            htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`;
             if (formData.conditionalAccess.mfa) {
                 htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('mfaPolicy', language)}</li>`;
             }
@@ -74152,19 +74091,19 @@ const emailBuilder = {
             }
             htmlBodyContent += `</ul></div>`;
         }
-        // Additional Notes Section - Use div
+        // Additional Notes Section
         if (formData.additionalNotes) {
-            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
             const additionalInfoTitle = this.translate('additionalInfoTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: additionalInfoTitle, color: primaryAccentColor, theme: effectiveTheme }));
             const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
             htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`;
         }
-        // Closing and Footer - Use divs/paragraphs
+        // Closing and Footer
         htmlBodyContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`;
         htmlBodyContent += `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`;
-        htmlBodyContent += `<div style="line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`; // Margin added to div
-        htmlBodyContent += `<strong style="${strongStyle}">${formData.senderName}</strong><br>`;
+        htmlBodyContent += `<div style="line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`;
+        htmlBodyContent += `${formData.senderName}<br>`;
         htmlBodyContent += `${formData.senderTitle}<br>`;
         htmlBodyContent += `${formData.senderCompany}<br>`;
         htmlBodyContent += `<a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a>`;
@@ -74179,7 +74118,7 @@ const emailBuilder = {
     <title>${subject}</title>
     <!--[if mso]>
     <style type="text/css">
-      table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; } /* Added MSO specific table reset */
+      table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     </style>
     <xml>
       <o:OfficeDocumentSettings>
@@ -74189,15 +74128,13 @@ const emailBuilder = {
     </xml>
     <![endif]-->
     <style type="text/css">
-      /* Styles for Preview Iframe Overflow */
-      body { word-wrap: break-word; } /* Basic word wrap */
-      pre { white-space: pre-wrap !important; word-wrap: break-word !important; word-break: break-all !important; } /* Force wrap/break in pre */
-      table { table-layout: fixed; width: 100% !important; } /* Help tables respect width */
-      td, th { word-wrap: break-word; word-break: break-word; } /* Wrap in table cells */
+      body { word-wrap: break-word; }
+      pre { white-space: pre-wrap !important; word-wrap: break-word !important; word-break: break-all !important; }
+      table { table-layout: fixed; width: 100% !important; }
+      td, th { word-wrap: break-word; word-break: break-word; }
     </style>
 </head>
 <body style="${bodyStyle}">
-    <!-- Removed outer table wrapper -->
     <!-- Main content -->
     ${htmlBodyContent}
     <!-- Footer Div -->
@@ -74208,66 +74145,27 @@ const emailBuilder = {
 </html>`;
         return { html: finalHtml, plainText: plainTextContent };
     },
-    // getSupportPlanTextHTML remains the same
+    // getSupportPlanTextHTML - Updated to reflect new structure
+    // NOTE: This function might be unused or deprecated.
     getSupportPlanTextHTML: function (planType, language = 'en') {
-        const supportPlanIntro = this.translate('supportPlanIntro', language, {
-            tier: _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[planType].name,
-            supportType: planType === 'bronze'
-                ? this.translate('supportType.bronze', language)
-                : this.translate('supportType.other', language)
-        });
-        let bulletItems = '';
-        switch (planType) {
-            case 'bronze':
-                bulletItems = `
-<ul style="padding-left: 20px; margin: 0 0 15px 0;">
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Flexible Support</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">8×5 Support Hours</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level B or C Severity</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">2 Customer Contacts</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">1 Tenant</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Pay As You Go support requests</li>
-</ul>`;
-                break;
-            case 'silver':
-                bulletItems = `
-<ul style="padding-left: 20px; margin: 0 0 15px 0;">
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Premier Support</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">24×7×365 Support Hours</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level A, B or C Severity</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">6 Customer Contacts</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">2 Tenants</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">12 Support Requests Included per trailing 12-month period</li>
-</ul>`;
-                break;
-            case 'gold':
-                bulletItems = `
-<ul style="padding-left: 20px; margin: 0 0 15px 0;">
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Premier Support</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">24×7×365 Support Hours</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level A, B or C Severity</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">12 Customer Contacts</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">6 Tenants</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">36 Support Requests Included per trailing 12-month period</li>
-</ul>`;
-                break;
-            case 'platinum':
-                bulletItems = `
-<ul style="padding-left: 20px; margin: 0 0 15px 0;">
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Microsoft Premier Support</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">24×7×365 Support Hours</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">Level A, B or C Severity</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Customer Contacts</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Tenants</li>
-  <li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;">100 Support Requests Included per trailing 12-month period</li>
-</ul>`;
-                break;
-            default:
-                bulletItems = '';
-        }
+        const tierData = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[planType];
+        if (!tierData)
+            return '';
+        const supportPlanIntro = this.translate('supportPlanIntro', language, { tier: tierData.name });
+        let bulletItems = `<ul style="padding-left: 20px; margin: 0 0 15px 0;">`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('supportProviderLabel', language)}:</strong> ${tierData.supportProvider}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('productsCoveredLabel', language)}:</strong> ${tierData.products.join(', ')}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('severityLevelsLabel', language)}:</strong> ${tierData.severityLevels}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('criticalLabel', language)}:</strong> ${tierData.criticalSituation ? this.translate('yes', language) : this.translate('no', language)}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('supportHoursLabel', language)}:</strong> ${tierData.supportHours}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('supportRequestSubmissionLabel', language)}:</strong> ${tierData.supportRequestSubmission}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('tenantsLabel', language)}:</strong> ${tierData.tenants}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('contactsLabel', language)}:</strong> ${tierData.authorizedContacts}</li>`;
+        bulletItems += `<li style="margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif;"><strong style="font-weight: 600;">${this.translate('requestsLabel', language)}:</strong> ${tierData.supportRequestsIncluded}</li>`;
+        bulletItems += `</ul>`;
         return `${supportPlanIntro}<br><br>${bulletItems}`;
     },
-    // processCustomerInfoToEmailData remains the same
+    // processCustomerInfoToEmailData - Updated default subject and sender details
     processCustomerInfoToEmailData: function (info, language = 'en') {
         const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[info.selectedTier];
         const today = new Date();
@@ -74277,7 +74175,7 @@ const emailBuilder = {
             meetingDateStr = info.proposedDate.toLocaleDateString();
         }
         const formData = {
-            companyName: info.companyName,
+            companyName: info.companyName, // This is the client company
             contactName: info.contactName,
             contactEmail: info.contactEmail,
             proposedDate: info.proposedDate,
@@ -74288,60 +74186,54 @@ const emailBuilder = {
             cc: '',
             subject: this.translate('subject', language, {
                 tier: tier.name,
-                company: info.companyName
+                clientCompany: info.companyName
             }),
             conditionalAccess: {
                 checked: true, mfa: true, location: true, device: true, signIn: true
             },
             authorizedContacts: {
-                checked: true, roles: 'Technical and Administrative contacts'
+                checked: true, roles: 'Technical and Administrative contacts' // Default roles
             },
             meetingDate: meetingDateStr,
             additionalNotes: '',
-            senderName: 'Your Name',
+            senderName: 'Your Name', // Default sender details
             senderTitle: 'Support Specialist',
-            senderCompany: 'Microsoft Partner Support',
-            senderContact: 'support@microsoftpartner.com',
+            senderCompany: 'SCHNEIDER IT MANAGEMENT',
+            senderContact: 'support@schneider.im',
             currentDate: currentDate,
             language: language
         };
+        // Cast needed because Omit doesn't fully satisfy EmailFormData structure if rbac was optional
         return formData;
     },
-    // buildEnhancedEmailHTML remains the same
+    // buildEnhancedEmailHTML - No changes needed, relies on buildEmailHTML
     buildEnhancedEmailHTML: function (formData, tenants = [], theme = null) {
         const { html } = this.buildEmailHTML(formData, tenants, theme);
         return html;
     },
     /**
      * Generates the content for an .eml file.
-     * @param formData The email form data.
-     * @param htmlContent The pre-generated HTML content for the email body.
-     * @param plainTextContent The pre-generated plain text content for the email body.
-     * @returns A string containing the full .eml file content.
      */
     generateEmlContent: function (formData, htmlContent, plainTextContent) {
         const boundary = `----=_Part_${Math.random().toString(36).substring(2)}`;
-        // Helper to format recipients (comma-separated, trim whitespace)
         const formatRecipients = (emails) => {
             if (!emails)
                 return '';
             return emails
-                .split(/[,;]/) // Split by comma or semicolon
-                .map(email => email.trim()) // Trim whitespace
-                .filter(email => email) // Remove empty entries
-                .join(', '); // Join with comma and space
+                .split(/[,;]/)
+                .map(email => email.trim())
+                .filter(email => email)
+                .join(', ');
         };
         const toRecipients = formatRecipients(formData.to);
         const ccRecipients = formatRecipients(formData.cc);
         const subject = formData.subject || '';
-        const fromAddress = formData.senderContact ? `${formData.senderName} <${formData.senderContact}>` : formData.senderName; // Format From address if email is available
-        // Base64 encode the HTML content
+        const fromAddress = formData.senderContact ? `${formData.senderName} <${formData.senderContact}>` : formData.senderName;
         // Use btoa for browser environments. Ensure UTF-8 handling.
         const base64Html = btoa(unescape(encodeURIComponent(htmlContent)));
-        // Construct the EML content
         let emlContent = `MIME-Version: 1.0\r\n`;
-        emlContent += `Date: ${new Date().toUTCString()}\r\n`; // Use standard Date format
-        emlContent += `Subject: =?utf-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=\r\n`; // Encode subject for UTF-8
+        emlContent += `Date: ${new Date().toUTCString()}\r\n`;
+        emlContent += `Subject: =?utf-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=\r\n`;
         if (fromAddress) {
             emlContent += `From: ${fromAddress}\r\n`;
         }
@@ -74351,24 +74243,21 @@ const emailBuilder = {
         if (ccRecipients) {
             emlContent += `Cc: ${ccRecipients}\r\n`;
         }
-        emlContent += `X-Unsent: 1\r\n`; // Add header to indicate it's a draft
+        emlContent += `X-Unsent: 1\r\n`;
         emlContent += `Content-Type: multipart/alternative; boundary="${boundary}"\r\n`;
-        emlContent += `\r\n`; // Header/Body separator
+        emlContent += `\r\n`;
         // Plain text part
         emlContent += `--${boundary}\r\n`;
         emlContent += `Content-Type: text/plain; charset=utf-8\r\n`;
-        emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`; // Or 7bit if simple enough
+        emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`;
         emlContent += `\r\n`;
-        // Basic quoted-printable encoding (replace '=' with '=3D', handle long lines if necessary)
-        // For simplicity, we'll just include the text. Full QP encoding is complex.
-        emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`;
+        emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`; // Basic QP encoding
         emlContent += `\r\n`;
         // HTML part
         emlContent += `--${boundary}\r\n`;
         emlContent += `Content-Type: text/html; charset=utf-8\r\n`;
         emlContent += `Content-Transfer-Encoding: base64\r\n`;
         emlContent += `\r\n`;
-        // Add base64 content in chunks if needed, but usually fine for emails
         emlContent += `${base64Html}\r\n`;
         emlContent += `\r\n`;
         // End boundary
@@ -75097,7 +74986,8 @@ const supportTiers = {
         authorizedContacts: 2,
         supportRequestsIncluded: "Pay As You Go",
         products: ["Microsoft Azure", "Microsoft 365"],
-        severityLevels: "Level B or C"
+        severityLevels: "Level B or C",
+        supportProvider: "Microsoft Premier Support"
     },
     silver: {
         name: "Silver Support",
@@ -75110,7 +75000,8 @@ const supportTiers = {
         authorizedContacts: 6,
         supportRequestsIncluded: 12,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support"
     },
     gold: {
         name: "Gold Support",
@@ -75123,7 +75014,8 @@ const supportTiers = {
         authorizedContacts: 12,
         supportRequestsIncluded: 36,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support"
     },
     platinum: {
         name: "Platinum Support",
@@ -75136,7 +75028,8 @@ const supportTiers = {
         authorizedContacts: 100,
         supportRequestsIncluded: 100,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support"
     }
 };
 
@@ -75168,7 +75061,8 @@ const supportTiers = {
         authorizedContacts: 2,
         supportRequestsIncluded: "Pay As You Go",
         products: ["Microsoft Azure", "Microsoft 365"],
-        severityLevels: "Level B or C"
+        severityLevels: "Level B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     },
     silver: {
         name: "Silver Support",
@@ -75181,7 +75075,8 @@ const supportTiers = {
         authorizedContacts: 6,
         supportRequestsIncluded: 12,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     },
     gold: {
         name: "Gold Support",
@@ -75194,7 +75089,8 @@ const supportTiers = {
         authorizedContacts: 12,
         supportRequestsIncluded: 36,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     },
     platinum: {
         name: "Platinum Support",
@@ -75207,7 +75103,8 @@ const supportTiers = {
         authorizedContacts: 100,
         supportRequestsIncluded: 100,
         products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C"
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
     }
 };
 
