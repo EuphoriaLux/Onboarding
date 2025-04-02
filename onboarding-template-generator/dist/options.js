@@ -72065,6 +72065,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/storage */ "./src/services/storage/index.ts");
+/* harmony import */ var _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -72078,6 +72079,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 // src/contexts/AppStateContext.tsx
 
 
+ // Import supportTiers
 const defaultState = {
     customerInfo: {
         contactName: '',
@@ -72183,7 +72185,19 @@ const AppStateProvider = ({ children }) => {
         setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { tenants }) })));
     };
     const updateTier = (tier) => {
-        setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { selectedTier: tier }) })));
+        var _a;
+        // Get the contact limit for the new tier
+        const newTierLimit = (_a = _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__.supportTiers[tier]) === null || _a === void 0 ? void 0 : _a.authorizedContacts;
+        setState(prevState => {
+            let updatedContacts = prevState.customerInfo.authorizedContacts;
+            // Check if the limit is defined and if the current contacts exceed it
+            if (newTierLimit !== undefined && updatedContacts.length > newTierLimit) {
+                // Truncate the contacts array to the new limit
+                updatedContacts = updatedContacts.slice(0, newTierLimit);
+            }
+            return Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { selectedTier: tier, authorizedContacts: updatedContacts // Update contacts along with the tier
+                 }) });
+        });
     };
     const updateEmailData = (data) => {
         setState(prevState => (Object.assign(Object.assign({}, prevState), { emailData: data })));
@@ -72860,7 +72874,7 @@ onBackToEdit }) => {
         }
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "email-preview-container", children: [showInstructions && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_OutlookInstructions__WEBPACK_IMPORTED_MODULE_4__["default"], { onClose: closeInstructions }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["Email Preview ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "language-badge", children: languageDisplay() })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "view-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'html' ? 'active' : '', onClick: () => setViewMode('html'), children: "HTML View" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: viewMode === 'text' ? 'active' : '', onClick: () => setViewMode('text'), children: "Plain Text View" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "action-buttons", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { onClick: () => handleCopyToClipboard(viewMode), className: "tooltip", children: ["Copy ", viewMode === 'html' ? 'HTML' : 'Text', " to Clipboard", viewMode === 'html' &&
-                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-body", style: { width: '100%' }, children: [" ", viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText }))] })] })] }));
+                                        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "tooltip-text", children: "Enhanced formatting for Outlook" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleDownloadHTML, children: "Download HTML" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleOpenInOutlook, children: "Open in Email Client" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: onBackToEdit, children: "Back to Edit" })] }), copySuccess && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "copy-success", children: copySuccess })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-recipient", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "To:" }), " ", emailData.to, emailData.cc && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [", ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Cc:" }), " ", emailData.cc] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-subject", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Subject:" }), " ", emailData.subject] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-date", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Date:" }), " ", emailData.currentDate] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "preview-body", style: { width: '100%', overflowX: 'hidden' }, children: [" ", viewMode === 'html' ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("iframe", { srcDoc: htmlContent, title: "Email Preview", style: { width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF', overflow: 'auto' } })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { className: "text-preview", children: plainText }))] })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EmailPreview);
 
@@ -72959,29 +72973,49 @@ __webpack_require__.r(__webpack_exports__);
 
 // --- Refactored Components ---
 const SectionHeader = ({ title, color, theme }) => {
-    const headerBgColor = theme.backgroundColor ? `${theme.backgroundColor}1A` : '#f8f8f8';
+    // Ensure white background for header components
+    const headerBgColor = '#FFFFFF'; // Force white
     const headerTextColor = theme.textColor || '#333333';
-    const mainBgColor = theme.backgroundColor || '#FFFFFF';
-    const tableStyle = { borderCollapse: 'collapse', margin: '35px 0 20px 0' };
-    const tdOuterStyle = { padding: 0, backgroundColor: mainBgColor };
-    const tableInnerStyle = { borderCollapse: 'collapse', backgroundColor: headerBgColor, borderLeft: `4px solid ${color}`, borderRadius: '0 4px 4px 0' };
-    const tdInnerStyle = { padding: '16px' };
-    const h3Style = { color: headerTextColor, fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '18px', margin: 0, padding: 0, fontWeight: 600, backgroundColor: headerBgColor };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdOuterStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableInnerStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdInnerStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { style: h3Style, children: title }) }) }) }) }) }) }) }) }));
+    // Styles for the div-based header
+    const headerDivStyle = {
+        margin: '35px 0 20px 0',
+        padding: '16px',
+        backgroundColor: '#FFFFFF', // Ensure white background
+        borderLeft: `4px solid ${color}`,
+        borderRadius: '0 4px 4px 0', // Keep the rounded corner effect if desired
+        // Add border-top, border-bottom, border-right if needed for visual separation, e.g., border: '1px solid #eee', borderLeftWidth: '4px'
+    };
+    const h3Style = {
+        color: headerTextColor,
+        fontFamily: "'Segoe UI', Arial, sans-serif",
+        fontSize: '18px',
+        margin: 0,
+        padding: 0,
+        fontWeight: 600,
+        backgroundColor: 'transparent' // Ensure h3 background is transparent
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: headerDivStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { style: h3Style, children: title }) }));
 };
-const ContactsTable = ({ contacts, theme }) => {
+const ContactsTable = ({ contacts, theme, tierContactLimit }) => {
     const textColor = theme.textColor || '#333';
-    const headerBgColor = theme.backgroundColor ? `${theme.backgroundColor}1A` : '#f0f0f0';
-    const rowBgColor1 = theme.backgroundColor || '#FFFFFF';
-    const rowBgColor2 = theme.backgroundColor ? `${theme.backgroundColor}0D` : '#f9f9f9';
-    // Remove MSO specific styles from style object
-    const tableStyle = { borderCollapse: 'collapse', backgroundColor: theme.backgroundColor || '#FFFFFF', margin: '15px 0' };
-    const thStyle = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor };
-    const tdStyle = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: headerBgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Phone" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: contacts.map((contact, index) => {
-                    const bgColor = index % 2 === 0 ? rowBgColor2 : rowBgColor1;
-                    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.name || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.email || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.phone || '' })] }, index));
-                }) })] }));
+    // Ensure white background for table elements
+    const headerBgColor = '#FFFFFF'; // Force white header
+    const rowBgColor1 = '#FFFFFF'; // Force white rows
+    const rowBgColor2 = '#FFFFFF'; // Force white alternating rows (effectively removing alternation)
+    const placeholderBgColor = '#FFFFFF'; // Force white placeholder rows
+    const tableBgColor = '#FFFFFF'; // Force white table background
+    const tableStyle = { borderCollapse: 'collapse', backgroundColor: tableBgColor, margin: '15px 0', width: '100%' }; // Ensure width 100%
+    const thStyle = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: headerBgColor }; // White BG
+    const tdStyle = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: 'transparent' }; // Transparent cell BG (row BG will handle it)
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("thead", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: headerBgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("th", { style: thStyle, children: "Phone" })] }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tbody", { children: [contacts.map((contact, index) => {
+                        const bgColor = index % 2 === 0 ? rowBgColor2 : rowBgColor1;
+                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.name || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.email || '' }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdStyle, children: contact.phone || '' })] }, index));
+                    }), Array.from({ length: Math.max(0, tierContactLimit - contacts.length) }).map((_, index) => {
+                        const actualIndex = contacts.length + index; // Calculate index considering existing contacts
+                        const bgColor = rowBgColor1; // Use consistent white background
+                        const placeholderCellStyle = Object.assign(Object.assign({}, tdStyle), { backgroundColor: 'transparent', color: '#aaa' }); // Transparent cell BG, grey text
+                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { style: { backgroundColor: bgColor }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: placeholderCellStyle, children: "\u00A0" })] }, `placeholder-${index}`));
+                    })] })] }));
 };
 const ScriptBlock = ({ scriptContent, theme }) => {
     const cleanedScript = scriptContent.trim()
@@ -73008,34 +73042,77 @@ const ScriptBlock = ({ scriptContent, theme }) => {
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("pre", { style: preStyle, children: cleanedScript }));
 };
 const InstructionBox = ({ title, content, theme }) => {
-    const boxBgColor = theme.primaryColor ? `${theme.primaryColor}1A` : '#f0f7ff';
+    // Use theme colors or fallbacks
+    const boxBgColor = theme.primaryColor ? `${theme.primaryColor}1A` : '#f0f7ff'; // Light blue/primary tint
     const boxTextColor = theme.textColor || '#333';
-    const primaryColor = theme.primaryColor || '#0078D4';
-    const mainBgColor = theme.backgroundColor || '#FFFFFF';
-    const tableOuterStyle = { borderCollapse: 'collapse', margin: '20px 0', backgroundColor: mainBgColor };
-    const tdOuterStyle = { padding: 0, backgroundColor: mainBgColor };
-    const tableInnerStyle = { borderCollapse: 'collapse', backgroundColor: boxBgColor, border: `1px solid ${primaryColor}33`, borderRadius: '4px' };
-    const tdInnerStyle = { padding: '16px', fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '14px', lineHeight: 1.5, color: boxTextColor, backgroundColor: boxBgColor };
-    const titleDivStyle = { fontWeight: 'bold', color: primaryColor, marginBottom: '8px', fontSize: '15px', backgroundColor: boxBgColor };
-    const contentDivStyle = { color: boxTextColor, backgroundColor: boxBgColor };
+    const primaryColor = theme.primaryColor || '#0078D4'; // For title color
+    const borderColor = theme.primaryColor ? `${theme.primaryColor}33` : '#b3d7ff'; // Lighter border
+    // Styles for the div-based instruction box
+    const boxDivStyle = {
+        margin: '20px 0',
+        padding: '16px',
+        backgroundColor: boxBgColor, // Apply background color
+        border: `1px solid ${borderColor}`, // Apply border
+        borderRadius: '4px',
+        fontFamily: "'Segoe UI', Arial, sans-serif",
+        fontSize: '14px',
+        lineHeight: 1.5,
+        color: boxTextColor,
+    };
+    const titleStyle = {
+        fontWeight: 'bold',
+        color: primaryColor, // Use primary color for title
+        marginBottom: '8px',
+        fontSize: '15px',
+        backgroundColor: 'transparent', // Ensure transparent background
+    };
+    const contentStyle = {
+        color: boxTextColor,
+        backgroundColor: 'transparent', // Ensure transparent background
+    };
     // Use dangerouslySetInnerHTML if content is expected to be HTML, otherwise just render content
     const contentElement = typeof content === 'string' && content.includes('<')
-        ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: contentDivStyle, dangerouslySetInnerHTML: { __html: content } })
-        : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: contentDivStyle, children: content });
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableOuterStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdOuterStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableInnerStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("td", { style: tdInnerStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: titleDivStyle, children: title }), contentElement] }) }) }) }) }) }) }) }));
+        ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: contentStyle, dangerouslySetInnerHTML: { __html: content } })
+        : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: contentStyle, children: content });
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: boxDivStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: titleStyle, children: title }), contentElement] }));
 };
 const StepIndicator = ({ number, title, theme }) => {
     const primaryColor = theme.primaryColor || '#0078D4';
     const stepTextColor = theme.textColor || '#333';
-    const mainBgColor = theme.backgroundColor || '#FFFFFF';
-    const tableOuterStyle = { borderCollapse: 'collapse', margin: '25px 0 15px 0', backgroundColor: mainBgColor };
-    const tdOuterStyle = { padding: 0, verticalAlign: 'middle', backgroundColor: mainBgColor };
-    const tableInnerStyle = { borderCollapse: 'collapse', backgroundColor: mainBgColor };
-    const tdNumberStyle = { width: '36px', height: '36px', backgroundColor: primaryColor, borderRadius: '50%', textAlign: 'center', verticalAlign: 'middle' };
-    const spanNumberStyle = { color: 'white', fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '18px', fontWeight: 'bold', backgroundColor: primaryColor };
-    const tdTitleStyle = { paddingLeft: '12px', backgroundColor: mainBgColor };
-    const spanTitleStyle = { fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '16px', fontWeight: 600, color: stepTextColor, backgroundColor: mainBgColor };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("table", { width: "100%", cellPadding: "0", cellSpacing: "0", border: 0, style: tableOuterStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tr", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdOuterStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("table", { cellPadding: "0", cellSpacing: "0", border: 0, style: tableInnerStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("tbody", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdNumberStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: spanNumberStyle, children: number }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("td", { style: tdTitleStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: spanTitleStyle, children: title }) })] }) }) }) }) }) }) }));
+    const mainBgColor = '#FFFFFF'; // Force white background
+    // Styles for the div-based step indicator using Flexbox
+    const containerStyle = {
+        display: 'flex', // Use Flexbox
+        alignItems: 'center', // Align items vertically center
+        margin: '25px 0 15px 0',
+        backgroundColor: mainBgColor, // Ensure white background
+    };
+    const numberCircleStyle = {
+        width: '36px',
+        height: '36px',
+        backgroundColor: primaryColor,
+        borderRadius: '50%',
+        display: 'flex', // Use Flexbox for centering number inside circle
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: '12px', // Space between circle and title
+        flexShrink: 0, // Prevent circle from shrinking
+    };
+    const numberTextStyle = {
+        color: 'white',
+        fontFamily: "'Segoe UI', Arial, sans-serif",
+        fontSize: '18px',
+        fontWeight: 'bold',
+        lineHeight: 1, // Adjust line height for better centering
+    };
+    const titleStyle = {
+        fontFamily: "'Segoe UI', Arial, sans-serif",
+        fontSize: '16px',
+        fontWeight: 600,
+        color: stepTextColor,
+        backgroundColor: 'transparent', // Ensure transparent background
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: containerStyle, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: numberCircleStyle, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: numberTextStyle, children: number }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: titleStyle, children: title })] }));
 };
 
 
@@ -73536,14 +73613,86 @@ const preprocessHtml = (html) => {
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style type="text/css">
-          /* Base Styles for Email Compatibility */
-          body { margin: 0 !important; padding: 0 !important; background-color: #FFFFFF; }
-          table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
-          td, th { padding: 8px; /* Default padding, can be overridden */ }
-          p { margin: 0 0 1em 0; line-height: 1.5; } /* Basic paragraph spacing */
+          /* Final Styles v6 - Prioritize Inline, Refine Spacing */
+          body { margin: 0 auto !important; padding: 20px !important; max-width: 800px; background-color: #FFFFFF !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #333333; box-sizing: border-box; }
+          /* Allow inline colors, ensure transparent BG */
+          div, p, li, span, strong, h1, h2, h3, h4, h5, h6, pre, ul, ol { background-color: transparent !important; color: inherit; }
+
+          /* Headings - Inherit color, adjust spacing */
+          h3 { font-size: 18px; font-weight: 600; margin: 28px 0 15px 0; padding: 0; line-height: 1.4; color: inherit; }
+          h4 { font-size: 16px; font-weight: 600; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 1px solid #eeeeee; color: inherit; }
+
+          /* Paragraphs - Inherit color, consistent spacing */
+          p { margin: 0 0 16px 0 !important; line-height: 1.6 !important; font-size: 15px !important; color: inherit; }
+
+          /* Lists - Inherit color, adjust spacing */
+          ul, ol { margin: 0 0 16px 25px !important; padding: 0 !important; }
+          ul { list-style-type: disc !important; }
+          ol { list-style-type: decimal !important; }
+          li { margin-bottom: 8px !important; line-height: 1.6 !important; padding-left: 5px !important; color: inherit; }
+
+          /* Links - Inherit color (inline style sets theme color), force underline */
+          a { color: inherit; text-decoration: underline !important; }
+          a:hover { text-decoration: none !important; }
+
+          /* Button Style Link (GDAP) - Force white text, allow inline BG color */
+          a[style*="background-color"] {
+             display: inline-block !important; padding: 10px 24px !important; text-decoration: none !important; font-weight: 600 !important; border-radius: 4px !important; margin-top: 5px !important; border: none !important; cursor: pointer !important; color: #FFFFFF !important;
+          }
+
+          /* Tables (ContactsTable) - Lighter borders, better spacing */
+          table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; border: 1px solid #dddddd !important; background-color: #FFFFFF !important; margin: 1em 0 2em 0 !important; width: 100% !important; }
+          td, th { padding: 10px 12px !important; border: 1px solid #dddddd !important; vertical-align: top; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px !important; background-color: #FFFFFF !important; color: #333333; line-height: 1.5 !important; }
+          th { background-color: #f8f8f8 !important; font-weight: 600 !important; text-align: left !important; color: #111111 !important; }
+
+          /* Div-based Containers - Inherit color, adjust spacing */
+          div[style*="border-left: 4px solid"] { /* SectionHeader */
+             margin: 30px 0 15px 0 !important; padding: 16px !important; background-color: #FFFFFF !important; border-radius: 0 4px 4px 0; border-top: 1px solid #eeeeee !important; border-bottom: 1px solid #eeeeee !important; border-right: 1px solid #eeeeee !important; color: inherit;
+          }
+          div[style*="border: 1px solid #eee"] { /* Support Plan Box, Meeting Date Box, Conditional Access Box */
+             margin: 1em 0 2em 0 !important; padding: 18px 20px !important; background-color: #FFFFFF !important; border-radius: 4px !important; border: 1px solid #eeeeee !important; color: inherit;
+          }
+           div[style*="border: 1px solid #ddd"] { /* Tenant Block Box */
+             margin: 1em 0 2em 0 !important; padding: 18px 20px !important; background-color: #FFFFFF !important; border-radius: 4px !important; border: 1px solid #dddddd !important; color: inherit;
+          }
+          div[style*="display: flex"] { /* StepIndicator */
+             margin: 25px 0 10px 0 !important; background-color: #FFFFFF !important; color: inherit;
+          }
+          /* Keep specific background colors for highlights/instructions */
+          div[style*="background-color: #fff4ce"] { /* Deadline Highlight */
+             background-color: #fff4ce !important; padding: 6px 12px !important; border-radius: 4px !important; display: inline-block !important; margin-top: 12px !important; font-size: 14px !important; color: #333333 !important;
+          }
+          div[style*="background-color: #f0f7ff"] { /* InstructionBox */
+             margin: 1.5em 0 !important; padding: 16px !important; background-color: #f0f7ff !important; border-radius: 4px !important; border: 1px solid #b3d7ff !important; font-size: 14px !important; line-height: 1.5 !important; color: #333333 !important;
+          }
+
+          /* Horizontal Rule - Adjust margin */
+          hr { border: none !important; border-top: 1px solid #dddddd !important; margin: 35px 0 !important; height: 1px !important; background-color: transparent !important; }
+
+          /* Script Block - Adjust margin, ensure text color */
+          pre {
+            background-color: #f5f5f5 !important; border: 1px solid #ddd !important; border-radius: 4px !important; padding: 15px !important; font-family: Consolas, Monaco, 'Courier New', monospace !important; font-size: 13px !important; line-height: 1.45 !important; color: #333333 !important; white-space: pre !important; word-wrap: normal !important; overflow-x: auto !important; margin: 1em 0 1.5em 0 !important;
+          }
+
+          /* Footer - Adjust top margin, inherit color */
+          div[style*="border-top: 1px solid #eee"] { /* Footer Div */
+             margin-top: 35px !important; padding-top: 20px !important; background-color: #FFFFFF !important; border-top: 1px solid #eeeeee !important; text-align: center !important; font-size: 12px !important; color: #666666;
+          }
+          div[style*="border-top: 1px solid #eee"] p {
+             margin: 0 !important; line-height: 1.5 !important; font-size: 12px !important; color: #666666;
+          }
+
+          /* Utilities */
           img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
           a img { border: none; }
-          /* Add other necessary base styles or resets */
+
+          /* Word wrapping and breaking */
+          p, li, div, td, th { word-wrap: break-word; word-break: break-word; } /* Allow wrapping in standard elements */
+          pre { white-space: pre-wrap !important; word-wrap: break-word !important; word-break: break-all !important; } /* Force wrap and break in pre tags */
+          table { table-layout: fixed; } /* Help table respect width */
+
+          /* Ensure essential backgrounds are white */
+          body, table, tr, td, th { background-color: #FFFFFF !important; }
         </style>
       `;
         // Use a temporary element to parse the meta/style string
@@ -73836,20 +73985,24 @@ const emailBuilder = {
             company: formData.companyName
         });
         // Define styles as strings for email compatibility
-        const bodyStyle = `margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: ${bgColor};`;
-        const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Added width: 100% and box-sizing
-        const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
-        const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: ${bgColor};`;
-        const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: ${bgColor};`;
-        const sectionBoxCellStyle = `padding: 18px 20px; color: ${textColor};`;
-        const listItemStyle = `padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor};`;
-        const bulletStyle = `display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 10px; vertical-align: middle;`;
+        // Apply container styles directly to body for simpler structure
+        const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`; // Ensure white BG, add max-width etc.
+        // const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Style moved to body
+        const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`; // Ensure transparent BG
+        const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF; width: 100%; margin-bottom: 1em;`; // Ensure white BG, width, margin
+        // Remove unused table-based layout styles
+        // const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: #FFFFFF;`;
+        // const sectionBoxCellStyle = `padding: 18px 20px; color: ${textColor}; background-color: transparent;`;
+        const listItemStyle = `padding: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: transparent; list-style-position: outside; padding-left: 5px;`; // Use standard list styling, ensure transparent BG
+        const bulletStyle = `display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 8px; vertical-align: middle;`; // Slightly smaller bullet
         const strongStyle = `font-weight: 600; color: ${textColor};`;
-        const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: ${primaryAccentColor}; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;`;
+        // Updated linkButtonStyle for button appearance
+        const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: ${primaryAccentColor}; color: #FFFFFF !important; text-decoration: none !important; font-weight: 600; border-radius: 4px; margin-top: 5px; border: none; cursor: pointer;`;
         const deadlineHighlightStyle = `margin: 15px 0 0 0; text-align: center; font-size: 14px; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;`;
         const deadlineStrongStyle = `font-weight: 600; color: #333;`;
-        const tenantBlockStyle = `background-color: ${lightBgColor}; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;`;
-        const tenantBlockCellStyle = `padding: 20px; color: ${textColor};`;
+        // Ensure tenant block uses white background
+        const tenantBlockStyle = `background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;`;
+        const tenantBlockCellStyle = `padding: 20px; color: ${textColor}; background-color: transparent;`; // Ensure transparent BG
         // Build plain text first (reuse existing logic)
         const plainTextContent = this.buildEmailBody(formData, tenants);
         // Build HTML body content using components and string concatenation
@@ -73857,41 +74010,60 @@ const emailBuilder = {
         htmlBodyContent += `<p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>`;
         htmlBodyContent += `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany, clientCompany: formData.companyName })}</p>`;
         htmlBodyContent += `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`;
-        // Support Plan Section
+        // Support Plan Section - Use div and ul/li
         htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() }), color: primaryAccentColor, theme: effectiveTheme }));
         htmlBodyContent += `<p style="${pStyle}">${this.translate('supportPlanIntro', language, { tier: tier.name, supportType: formData.selectedTier === 'bronze' ? this.translate('supportType.bronze', language) : this.translate('supportType.other', language) })}</p>`;
-        htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${sectionBoxStyle}"><tbody><tr><td style="${sectionBoxCellStyle}"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}"><tbody>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportTypeLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}</strong> ${tier.supportHours}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}</strong> ${tier.authorizedContacts}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}</strong> ${tier.tenants}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}</strong> ${tier.supportRequestsIncluded}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</td></tr>
-                    </tbody></table></td></tr></tbody></table>`;
-        // Authorized Contacts Section
+        // Use a div with border and padding instead of table for the box
+        htmlBodyContent += `<div style="border: 1px solid #eee; border-radius: 4px; padding: 18px 20px; margin: 15px 0 25px 0; background-color: #FFFFFF;">`;
+        htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`; // Reset ul styles
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportTypeLabel', language)}:</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}:</strong> ${tier.supportHours}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}:</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}:</strong> ${tier.authorizedContacts}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}:</strong> ${tier.tenants}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
+        htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}:</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</li>`;
+        htmlBodyContent += `</ul></div>`;
+        // Authorized Contacts Section - Keep table for tabular data
         if (formData.authorizedContacts.checked) {
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
             const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: contactsSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
             htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>`;
             htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>`;
             htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>`;
-            htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ContactsTable, { contacts: formData.emailContacts, theme: effectiveTheme }));
+            // Pass the tier's contact limit to the ContactsTable component
+            htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ContactsTable, {
+                contacts: formData.emailContacts,
+                theme: effectiveTheme,
+                tierContactLimit: tier.authorizedContacts // Pass the limit here
+            }));
         }
         // Meeting Section
         if (formData.meetingDate) {
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
             const meetingSectionTitle = this.translate('meetingTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: meetingSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
             htmlBodyContent += `<p style="${pStyle}">${this.translate('meetingIntro', language)}</p>`;
-            htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0; background-color: ${lightBgColor}; border: 1px solid #eee; border-radius: 4px;"><tbody><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};"><strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: ${primaryAccentColor};">${formData.meetingDate}</span>` })}</strong></td></tr></tbody></table>`;
+            // Use a div for the meeting date box
+            htmlBodyContent += `<div style="margin: 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">`;
+            htmlBodyContent += `<strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: ${primaryAccentColor};">${formData.meetingDate}</span>` })}</strong>`;
+            htmlBodyContent += `</div>`;
             htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`;
         }
-        // Tenant Specific Sections
+        // Tenant Specific Sections - Use divs for blocks
         if (tenants.length > 0) {
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR before tenant sections
             htmlBodyContent += `<!-- Tenant Sections Start -->`;
-            tenants.forEach((tenant) => {
-                const tenantIdentifier = tenant.tenantDomain || `Tenant ${tenants.indexOf(tenant) + 1}`;
+            tenants.forEach((tenant, index) => {
+                // Add HR between tenant blocks if more than one tenant
+                if (index > 0) {
+                    htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+                }
+                const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
                 let tenantHtml = '';
+                // Add Tenant Identifier Sub-heading
+                tenantHtml += `<h4 style="font-size: 16px; font-weight: 600; color: ${textColor}; margin: 0 0 15px 0; padding-bottom: 5px; border-bottom: 1px solid #eee;">Tenant: ${tenantIdentifier}</h4>`;
                 // GDAP Section
                 let gdapHtml = '';
                 const tenantGdapLink = tenant.gdapLink || defaultGdapLink;
@@ -73904,8 +74076,9 @@ const emailBuilder = {
                 if (tenant.implementationDeadline) {
                     gdapHtml += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">Implementation Deadline:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`;
                 }
-                gdapHtml += `</td></tr></tbody></table>`;
-                tenantHtml += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tbody><tr><td style="${tenantBlockCellStyle}">${gdapHtml}</td></tr></tbody></table>`;
+                gdapHtml += `</div>`; // Close the inner div for GDAP content
+                // Use div for the tenant block
+                tenantHtml += `<div style="background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;">${gdapHtml}</div>`;
                 // RBAC Section
                 if (tenant.hasAzure) {
                     let rbacHtml = '';
@@ -73923,7 +74096,8 @@ const emailBuilder = {
                     const rbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenant.microsoftTenantDomain || 'YOUR_TENANT_ID');
                     rbacHtml += `<div style="margin-left: 48px;">${react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.ScriptBlock, { scriptContent: rbacScript, theme: effectiveTheme }))}</div>`;
                     rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
-                    tenantHtml += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tbody><tr><td style="${tenantBlockCellStyle}">${rbacHtml}</td></tr></tbody></table>`;
+                    // Use div for the tenant block
+                    tenantHtml += `<div style="background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;">${rbacHtml}</div>`;
                 }
                 htmlBodyContent += tenantHtml;
             });
@@ -73931,34 +74105,44 @@ const emailBuilder = {
         }
         // Conditional Access Section
         if (formData.conditionalAccess.checked) {
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
             const caSectionTitle = this.translate('conditionalAccessTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: caSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
             htmlBodyContent += `<p style="${pStyle}">${this.translate('conditionalAccessIntro', language)}</p>`;
-            htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 0 0 20px 0; background-color: ${lightBgColor}; border: 1px solid #eee; border-radius: 4px;"><tbody><tr><td style="padding: 16px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}"><tbody>`;
+            // Use div and ul/li for conditional access box
+            htmlBodyContent += `<div style="margin: 0 0 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px;">`;
+            htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`; // Reset ul styles
             if (formData.conditionalAccess.mfa) {
-                htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('mfaPolicy', language)}</span></td></tr>`;
+                htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('mfaPolicy', language)}</li>`;
             }
             if (formData.conditionalAccess.location) {
-                htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('locationPolicy', language)}</span></td></tr>`;
+                htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('locationPolicy', language)}</li>`;
             }
             if (formData.conditionalAccess.device) {
-                htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('devicePolicy', language)}</span></td></tr>`;
+                htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('devicePolicy', language)}</li>`;
             }
             if (formData.conditionalAccess.signIn) {
-                htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('signInPolicy', language)}</span></td></tr>`;
+                htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('signInPolicy', language)}</li>`;
             }
-            htmlBodyContent += `</tbody></table></td></tr></tbody></table>`;
+            htmlBodyContent += `</ul></div>`;
         }
-        // Additional Notes Section
+        // Additional Notes Section - Use div
         if (formData.additionalNotes) {
+            htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
             const additionalInfoTitle = this.translate('additionalInfoTitle', language);
             htmlBodyContent += react_dom_server__WEBPACK_IMPORTED_MODULE_2__.renderToStaticMarkup(react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_templates_builders__WEBPACK_IMPORTED_MODULE_4__.SectionHeader, { title: additionalInfoTitle, color: primaryAccentColor, theme: effectiveTheme }));
             const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
             htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`;
         }
-        // Closing and Footer
+        // Closing and Footer - Use divs/paragraphs
         htmlBodyContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`;
-        htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-top: 40px;"><tbody><tr><td style="padding: 0;"><p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p><p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};"><strong style="${strongStyle}">${formData.senderName}</strong><br>${formData.senderTitle}<br>${formData.senderCompany}<br><a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a></p></td></tr></tbody></table>`;
+        htmlBodyContent += `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`;
+        htmlBodyContent += `<div style="line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`; // Margin added to div
+        htmlBodyContent += `<strong style="${strongStyle}">${formData.senderName}</strong><br>`;
+        htmlBodyContent += `${formData.senderTitle}<br>`;
+        htmlBodyContent += `${formData.senderCompany}<br>`;
+        htmlBodyContent += `<a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a>`;
+        htmlBodyContent += `</div>`;
         // Construct the final HTML document shell
         const finalHtml = `<!DOCTYPE html>
 <html>
@@ -73978,28 +74162,22 @@ const emailBuilder = {
       </o:OfficeDocumentSettings>
     </xml>
     <![endif]-->
+    <style type="text/css">
+      /* Styles for Preview Iframe Overflow */
+      body { word-wrap: break-word; } /* Basic word wrap */
+      pre { white-space: pre-wrap !important; word-wrap: break-word !important; word-break: break-all !important; } /* Force wrap/break in pre */
+      table { table-layout: fixed; width: 100% !important; } /* Help tables respect width */
+      td, th { word-wrap: break-word; word-break: break-word; } /* Wrap in table cells */
+    </style>
 </head>
 <body style="${bodyStyle}">
-    <table width="100%" cellPadding="0" cellSpacing="0" border="0" style="${tableStyle} background-color: ${bgColor};">
-      <tbody>
-        <tr>
-          <td>
-            <div style="${containerStyle}">
-              ${htmlBodyContent}
-              <table width="100%" cellPadding="0" cellSpacing="0" border="0" style="${tableStyle} margin-top: 40px; border-top: 1px solid #eee;">
-                <tbody>
-                  <tr>
-                    <td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center;">
-                      <p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Removed outer table wrapper -->
+    <!-- Main content -->
+    ${htmlBodyContent}
+    <!-- Footer Div -->
+    <div style="margin-top: 40px; border-top: 1px solid #eee; padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center; background-color: transparent;">
+        <p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p>
+    </div>
 </body>
 </html>`;
         return { html: finalHtml, plainText: plainTextContent };

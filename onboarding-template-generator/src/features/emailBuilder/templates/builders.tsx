@@ -15,6 +15,7 @@ interface SectionHeaderProps {
 interface ContactsTableProps {
   contacts: Array<{ name: string; email: string; phone: string }>;
   theme: ThemeSettings;
+  tierContactLimit: number; // Add the tier contact limit prop
 }
 
 interface ScriptBlockProps {
@@ -38,46 +39,48 @@ interface StepIndicatorProps {
 // --- Refactored Components ---
 
 export const SectionHeader: React.FC<SectionHeaderProps> = ({ title, color, theme }) => {
-  const headerBgColor = theme.backgroundColor ? `${theme.backgroundColor}1A` : '#f8f8f8';
+  // Ensure white background for header components
+  const headerBgColor = '#FFFFFF'; // Force white
   const headerTextColor = theme.textColor || '#333333';
-  const mainBgColor = theme.backgroundColor || '#FFFFFF';
 
-  const tableStyle: React.CSSProperties = { borderCollapse: 'collapse', margin: '35px 0 20px 0' };
-  const tdOuterStyle: React.CSSProperties = { padding: 0, backgroundColor: mainBgColor };
-  const tableInnerStyle: React.CSSProperties = { borderCollapse: 'collapse', backgroundColor: headerBgColor, borderLeft: `4px solid ${color}`, borderRadius: '0 4px 4px 0' };
-  const tdInnerStyle: React.CSSProperties = { padding: '16px' };
-  const h3Style: React.CSSProperties = { color: headerTextColor, fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '18px', margin: 0, padding: 0, fontWeight: 600, backgroundColor: headerBgColor };
+  // Styles for the div-based header
+  const headerDivStyle: React.CSSProperties = {
+    margin: '35px 0 20px 0',
+    padding: '16px',
+    backgroundColor: '#FFFFFF', // Ensure white background
+    borderLeft: `4px solid ${color}`,
+    borderRadius: '0 4px 4px 0', // Keep the rounded corner effect if desired
+    // Add border-top, border-bottom, border-right if needed for visual separation, e.g., border: '1px solid #eee', borderLeftWidth: '4px'
+  };
+  const h3Style: React.CSSProperties = {
+    color: headerTextColor,
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    fontSize: '18px',
+    margin: 0,
+    padding: 0,
+    fontWeight: 600,
+    backgroundColor: 'transparent' // Ensure h3 background is transparent
+  };
 
   return (
-    <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableStyle}>
-      <tbody>
-        <tr>
-          <td style={tdOuterStyle}>
-            <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableInnerStyle}>
-              <tbody>
-                <tr>
-                  <td style={tdInnerStyle}>
-                    <h3 style={h3Style}>{title}</h3>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div style={headerDivStyle}>
+      <h3 style={h3Style}>{title}</h3>
+    </div>
   );
 };
 
-export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme }) => {
+export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, tierContactLimit }) => { // Add tierContactLimit to props destructuring
   const textColor = theme.textColor || '#333';
-  const headerBgColor = theme.backgroundColor ? `${theme.backgroundColor}1A` : '#f0f0f0';
-  const rowBgColor1 = theme.backgroundColor || '#FFFFFF';
-  const rowBgColor2 = theme.backgroundColor ? `${theme.backgroundColor}0D` : '#f9f9f9';
-  // Remove MSO specific styles from style object
-  const tableStyle: React.CSSProperties = { borderCollapse: 'collapse', backgroundColor: theme.backgroundColor || '#FFFFFF', margin: '15px 0' };
-  const thStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor };
-  const tdStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor };
+  // Ensure white background for table elements
+  const headerBgColor = '#FFFFFF'; // Force white header
+  const rowBgColor1 = '#FFFFFF'; // Force white rows
+  const rowBgColor2 = '#FFFFFF'; // Force white alternating rows (effectively removing alternation)
+  const placeholderBgColor = '#FFFFFF'; // Force white placeholder rows
+  const tableBgColor = '#FFFFFF'; // Force white table background
+
+  const tableStyle: React.CSSProperties = { borderCollapse: 'collapse', backgroundColor: tableBgColor, margin: '15px 0', width: '100%' }; // Ensure width 100%
+  const thStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', textAlign: 'left', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: headerBgColor }; // White BG
+  const tdStyle: React.CSSProperties = { border: '1px solid #ddd', padding: '8px', fontFamily: "'Segoe UI', Arial, sans-serif", color: textColor, backgroundColor: 'transparent' }; // Transparent cell BG (row BG will handle it)
 
   return (
     <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableStyle}>
@@ -96,6 +99,19 @@ export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme })
               <td style={tdStyle}>{contact.name || ''}</td>
               <td style={tdStyle}>{contact.email || ''}</td>
               <td style={tdStyle}>{contact.phone || ''}</td>
+            </tr>
+          );
+        })}
+        {/* Add placeholder rows - Ensure white background */}
+        {Array.from({ length: Math.max(0, tierContactLimit - contacts.length) }).map((_, index) => {
+          const actualIndex = contacts.length + index; // Calculate index considering existing contacts
+          const bgColor = rowBgColor1; // Use consistent white background
+          const placeholderCellStyle: React.CSSProperties = { ...tdStyle, backgroundColor: 'transparent', color: '#aaa' }; // Transparent cell BG, grey text
+          return (
+            <tr key={`placeholder-${index}`} style={{ backgroundColor: bgColor }}>
+              <td style={placeholderCellStyle}>&nbsp;</td>
+              <td style={placeholderCellStyle}>&nbsp;</td>
+              <td style={placeholderCellStyle}>&nbsp;</td>
             </tr>
           );
         })}
@@ -135,79 +151,93 @@ export const ScriptBlock: React.FC<ScriptBlockProps> = ({ scriptContent, theme }
 };
 
 export const InstructionBox: React.FC<InstructionBoxProps> = ({ title, content, theme }) => {
-  const boxBgColor = theme.primaryColor ? `${theme.primaryColor}1A` : '#f0f7ff';
+  // Use theme colors or fallbacks
+  const boxBgColor = theme.primaryColor ? `${theme.primaryColor}1A` : '#f0f7ff'; // Light blue/primary tint
   const boxTextColor = theme.textColor || '#333';
-  const primaryColor = theme.primaryColor || '#0078D4';
-  const mainBgColor = theme.backgroundColor || '#FFFFFF';
+  const primaryColor = theme.primaryColor || '#0078D4'; // For title color
+  const borderColor = theme.primaryColor ? `${theme.primaryColor}33` : '#b3d7ff'; // Lighter border
 
-  const tableOuterStyle: React.CSSProperties = { borderCollapse: 'collapse', margin: '20px 0', backgroundColor: mainBgColor };
-  const tdOuterStyle: React.CSSProperties = { padding: 0, backgroundColor: mainBgColor };
-  const tableInnerStyle: React.CSSProperties = { borderCollapse: 'collapse', backgroundColor: boxBgColor, border: `1px solid ${primaryColor}33`, borderRadius: '4px' };
-  const tdInnerStyle: React.CSSProperties = { padding: '16px', fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '14px', lineHeight: 1.5, color: boxTextColor, backgroundColor: boxBgColor };
-  const titleDivStyle: React.CSSProperties = { fontWeight: 'bold', color: primaryColor, marginBottom: '8px', fontSize: '15px', backgroundColor: boxBgColor };
-  const contentDivStyle: React.CSSProperties = { color: boxTextColor, backgroundColor: boxBgColor };
+  // Styles for the div-based instruction box
+  const boxDivStyle: React.CSSProperties = {
+    margin: '20px 0',
+    padding: '16px',
+    backgroundColor: boxBgColor, // Apply background color
+    border: `1px solid ${borderColor}`, // Apply border
+    borderRadius: '4px',
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    fontSize: '14px',
+    lineHeight: 1.5,
+    color: boxTextColor,
+  };
+  const titleStyle: React.CSSProperties = {
+    fontWeight: 'bold',
+    color: primaryColor, // Use primary color for title
+    marginBottom: '8px',
+    fontSize: '15px',
+    backgroundColor: 'transparent', // Ensure transparent background
+  };
+  const contentStyle: React.CSSProperties = {
+    color: boxTextColor,
+    backgroundColor: 'transparent', // Ensure transparent background
+  };
 
   // Use dangerouslySetInnerHTML if content is expected to be HTML, otherwise just render content
   const contentElement = typeof content === 'string' && content.includes('<')
-    ? <div style={contentDivStyle} dangerouslySetInnerHTML={{ __html: content }} />
-    : <div style={contentDivStyle}>{content}</div>;
-
+    ? <div style={contentStyle} dangerouslySetInnerHTML={{ __html: content }} />
+    : <div style={contentStyle}>{content}</div>;
 
   return (
-    <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableOuterStyle}>
-      <tbody>
-        <tr>
-          <td style={tdOuterStyle}>
-            <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableInnerStyle}>
-              <tbody>
-                <tr>
-                  <td style={tdInnerStyle}>
-                    <div style={titleDivStyle}>{title}</div>
-                    {contentElement}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div style={boxDivStyle}>
+      <div style={titleStyle}>{title}</div>
+      {contentElement}
+    </div>
   );
 };
 
 export const StepIndicator: React.FC<StepIndicatorProps> = ({ number, title, theme }) => {
   const primaryColor = theme.primaryColor || '#0078D4';
   const stepTextColor = theme.textColor || '#333';
-  const mainBgColor = theme.backgroundColor || '#FFFFFF';
+  const mainBgColor = '#FFFFFF'; // Force white background
 
-  const tableOuterStyle: React.CSSProperties = { borderCollapse: 'collapse', margin: '25px 0 15px 0', backgroundColor: mainBgColor };
-  const tdOuterStyle: React.CSSProperties = { padding: 0, verticalAlign: 'middle', backgroundColor: mainBgColor };
-  const tableInnerStyle: React.CSSProperties = { borderCollapse: 'collapse', backgroundColor: mainBgColor };
-  const tdNumberStyle: React.CSSProperties = { width: '36px', height: '36px', backgroundColor: primaryColor, borderRadius: '50%', textAlign: 'center', verticalAlign: 'middle' };
-  const spanNumberStyle: React.CSSProperties = { color: 'white', fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '18px', fontWeight: 'bold', backgroundColor: primaryColor };
-  const tdTitleStyle: React.CSSProperties = { paddingLeft: '12px', backgroundColor: mainBgColor };
-  const spanTitleStyle: React.CSSProperties = { fontFamily: "'Segoe UI', Arial, sans-serif", fontSize: '16px', fontWeight: 600, color: stepTextColor, backgroundColor: mainBgColor };
+  // Styles for the div-based step indicator using Flexbox
+  const containerStyle: React.CSSProperties = {
+    display: 'flex', // Use Flexbox
+    alignItems: 'center', // Align items vertically center
+    margin: '25px 0 15px 0',
+    backgroundColor: mainBgColor, // Ensure white background
+  };
+  const numberCircleStyle: React.CSSProperties = {
+    width: '36px',
+    height: '36px',
+    backgroundColor: primaryColor,
+    borderRadius: '50%',
+    display: 'flex', // Use Flexbox for centering number inside circle
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: '12px', // Space between circle and title
+    flexShrink: 0, // Prevent circle from shrinking
+  };
+  const numberTextStyle: React.CSSProperties = {
+    color: 'white',
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    fontSize: '18px',
+    fontWeight: 'bold',
+    lineHeight: 1, // Adjust line height for better centering
+  };
+  const titleStyle: React.CSSProperties = {
+    fontFamily: "'Segoe UI', Arial, sans-serif",
+    fontSize: '16px',
+    fontWeight: 600,
+    color: stepTextColor,
+    backgroundColor: 'transparent', // Ensure transparent background
+  };
 
   return (
-    <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableOuterStyle}>
-      <tbody>
-        <tr>
-          <td style={tdOuterStyle}>
-            <table cellPadding="0" cellSpacing="0" border={0} style={tableInnerStyle}>
-              <tbody>
-                <tr>
-                  <td style={tdNumberStyle}>
-                    <span style={spanNumberStyle}>{number}</span>
-                  </td>
-                  <td style={tdTitleStyle}>
-                    <span style={spanTitleStyle}>{title}</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div style={containerStyle}>
+      <div style={numberCircleStyle}>
+        <span style={numberTextStyle}>{number}</span>
+      </div>
+      <div style={titleStyle}>{title}</div>
+    </div>
   );
 };

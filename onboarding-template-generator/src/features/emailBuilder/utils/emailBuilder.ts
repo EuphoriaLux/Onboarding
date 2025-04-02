@@ -234,20 +234,24 @@ const emailBuilder = {
     });
 
     // Define styles as strings for email compatibility
-    const bodyStyle = `margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: ${bgColor};`;
-    const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Added width: 100% and box-sizing
-    const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
-    const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: ${bgColor};`;
-    const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: ${bgColor};`;
-    const sectionBoxCellStyle = `padding: 18px 20px; color: ${textColor};`;
-    const listItemStyle = `padding: 8px 0; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor};`;
-    const bulletStyle = `display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 10px; vertical-align: middle;`;
+    // Apply container styles directly to body for simpler structure
+    const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`; // Ensure white BG, add max-width etc.
+    // const containerStyle = `width: 100%; max-width: 800px; margin: 0 auto; padding: 20px; background-color: ${bgColor}; box-sizing: border-box;`; // Style moved to body
+    const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`; // Ensure transparent BG
+    const tableStyle = `border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #FFFFFF; width: 100%; margin-bottom: 1em;`; // Ensure white BG, width, margin
+    // Remove unused table-based layout styles
+    // const sectionBoxStyle = `border-collapse: collapse; margin: 15px 0 25px 0; border: 1px solid #eee; border-radius: 4px; background-color: #FFFFFF;`;
+    // const sectionBoxCellStyle = `padding: 18px 20px; color: ${textColor}; background-color: transparent;`;
+    const listItemStyle = `padding: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: transparent; list-style-position: outside; padding-left: 5px;`; // Use standard list styling, ensure transparent BG
+    const bulletStyle = `display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 8px; vertical-align: middle;`; // Slightly smaller bullet
     const strongStyle = `font-weight: 600; color: ${textColor};`;
-    const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: ${primaryAccentColor}; color: white; text-decoration: none; font-weight: 600; border-radius: 4px; margin-top: 5px;`;
+    // Updated linkButtonStyle for button appearance
+    const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: ${primaryAccentColor}; color: #FFFFFF !important; text-decoration: none !important; font-weight: 600; border-radius: 4px; margin-top: 5px; border: none; cursor: pointer;`;
     const deadlineHighlightStyle = `margin: 15px 0 0 0; text-align: center; font-size: 14px; background-color: #fff4ce; padding: 5px 10px; border-radius: 4px; display: inline-block;`;
     const deadlineStrongStyle = `font-weight: 600; color: #333;`;
-    const tenantBlockStyle = `background-color: ${lightBgColor}; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;`;
-    const tenantBlockCellStyle = `padding: 20px; color: ${textColor};`;
+    // Ensure tenant block uses white background
+    const tenantBlockStyle = `background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;`;
+    const tenantBlockCellStyle = `padding: 20px; color: ${textColor}; background-color: transparent;`; // Ensure transparent BG
 
     // Build plain text first (reuse existing logic)
     const plainTextContent = this.buildEmailBody(formData, tenants);
@@ -259,44 +263,63 @@ const emailBuilder = {
     htmlBodyContent += `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany, clientCompany: formData.companyName })}</p>`;
     htmlBodyContent += `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`;
 
-    // Support Plan Section
+    // Support Plan Section - Use div and ul/li
     htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: this.translate('supportPlanTitle', language, { tier: tier.name.toUpperCase() }), color: primaryAccentColor, theme: effectiveTheme }));
     htmlBodyContent += `<p style="${pStyle}">${this.translate('supportPlanIntro', language, { tier: tier.name, supportType: formData.selectedTier === 'bronze' ? this.translate('supportType.bronze', language) : this.translate('supportType.other', language) })}</p>`;
-    htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${sectionBoxStyle}"><tbody><tr><td style="${sectionBoxCellStyle}"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}"><tbody>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportTypeLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}</strong> ${tier.supportHours}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}</strong> ${tier.authorizedContacts}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}</strong> ${tier.tenants}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}</strong> ${tier.supportRequestsIncluded}</td></tr>
-                    <tr><td style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</td></tr>
-                    </tbody></table></td></tr></tbody></table>`;
+    // Use a div with border and padding instead of table for the box
+    htmlBodyContent += `<div style="border: 1px solid #eee; border-radius: 4px; padding: 18px 20px; margin: 15px 0 25px 0; background-color: #FFFFFF;">`;
+    htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`; // Reset ul styles
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportTypeLabel', language)}:</strong> ${formData.selectedTier === 'bronze' ? 'Microsoft Flexible Support' : 'Microsoft Premier Support'}</li>`;
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}:</strong> ${tier.supportHours}</li>`;
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}:</strong> ${formData.selectedTier === 'bronze' ? 'Level B or C' : 'Level A, B or C'}</li>`;
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}:</strong> ${tier.authorizedContacts}</li>`;
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}:</strong> ${tier.tenants}</li>`;
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
+    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}:</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</li>`;
+    htmlBodyContent += `</ul></div>`;
 
-    // Authorized Contacts Section
+    // Authorized Contacts Section - Keep table for tabular data
     if (formData.authorizedContacts.checked) {
+         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
          const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
          htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: contactsSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
          htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>`;
          htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>`;
          htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>`;
-         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(ContactsTable, { contacts: formData.emailContacts, theme: effectiveTheme }));
+         // Pass the tier's contact limit to the ContactsTable component
+         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(ContactsTable, {
+             contacts: formData.emailContacts,
+             theme: effectiveTheme,
+             tierContactLimit: tier.authorizedContacts // Pass the limit here
+         }));
     }
 
     // Meeting Section
     if (formData.meetingDate) {
+        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
         const meetingSectionTitle = this.translate('meetingTitle', language);
         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: meetingSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
         htmlBodyContent += `<p style="${pStyle}">${this.translate('meetingIntro', language)}</p>`;
-        htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 20px 0; background-color: ${lightBgColor}; border: 1px solid #eee; border-radius: 4px;"><tbody><tr><td style="padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};"><strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: ${primaryAccentColor};">${formData.meetingDate}</span>` })}</strong></td></tr></tbody></table>`;
+        // Use a div for the meeting date box
+        htmlBodyContent += `<div style="margin: 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">`;
+        htmlBodyContent += `<strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: ${primaryAccentColor};">${formData.meetingDate}</span>` })}</strong>`;
+        htmlBodyContent += `</div>`;
         htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`;
     }
 
-    // Tenant Specific Sections
+    // Tenant Specific Sections - Use divs for blocks
     if (tenants.length > 0) {
+        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR before tenant sections
         htmlBodyContent += `<!-- Tenant Sections Start -->`;
-        tenants.forEach((tenant) => {
-            const tenantIdentifier = tenant.tenantDomain || `Tenant ${tenants.indexOf(tenant) + 1}`;
+        tenants.forEach((tenant, index) => { // Add index for potential HR between tenants
+            // Add HR between tenant blocks if more than one tenant
+            if (index > 0) {
+                htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+            }
+            const tenantIdentifier = tenant.tenantDomain || `Tenant ${index + 1}`;
             let tenantHtml = '';
+            // Add Tenant Identifier Sub-heading
+            tenantHtml += `<h4 style="font-size: 16px; font-weight: 600; color: ${textColor}; margin: 0 0 15px 0; padding-bottom: 5px; border-bottom: 1px solid #eee;">Tenant: ${tenantIdentifier}</h4>`;
 
             // GDAP Section
             let gdapHtml = '';
@@ -310,8 +333,9 @@ const emailBuilder = {
              if (tenant.implementationDeadline) {
                  gdapHtml += `<br/><span style="${deadlineHighlightStyle}"><strong style="${deadlineStrongStyle}">Implementation Deadline:</strong> ${tenant.implementationDeadline.toLocaleDateString()}</span>`;
              }
-             gdapHtml += `</td></tr></tbody></table>`;
-            tenantHtml += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tbody><tr><td style="${tenantBlockCellStyle}">${gdapHtml}</td></tr></tbody></table>`;
+             gdapHtml += `</div>`; // Close the inner div for GDAP content
+            // Use div for the tenant block
+            tenantHtml += `<div style="background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;">${gdapHtml}</div>`;
 
             // RBAC Section
             if (tenant.hasAzure) {
@@ -330,7 +354,8 @@ const emailBuilder = {
                  const rbacScript = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenant.microsoftTenantDomain || 'YOUR_TENANT_ID');
                  rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: rbacScript, theme: effectiveTheme }))}</div>`;
                  rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
-                 tenantHtml += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} ${tenantBlockStyle}"><tbody><tr><td style="${tenantBlockCellStyle}">${rbacHtml}</td></tr></tbody></table>`;
+                 // Use div for the tenant block
+                 tenantHtml += `<div style="background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;">${rbacHtml}</div>`;
             }
             htmlBodyContent += tenantHtml;
         });
@@ -339,28 +364,38 @@ const emailBuilder = {
 
     // Conditional Access Section
     if (formData.conditionalAccess.checked) {
+        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
         const caSectionTitle = this.translate('conditionalAccessTitle', language);
         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: caSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
         htmlBodyContent += `<p style="${pStyle}">${this.translate('conditionalAccessIntro', language)}</p>`;
-        htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin: 0 0 20px 0; background-color: ${lightBgColor}; border: 1px solid #eee; border-radius: 4px;"><tbody><tr><td style="padding: 16px 20px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle}"><tbody>`;
-        if (formData.conditionalAccess.mfa) { htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('mfaPolicy', language)}</span></td></tr>`; }
-        if (formData.conditionalAccess.location) { htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('locationPolicy', language)}</span></td></tr>`; }
-        if (formData.conditionalAccess.device) { htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('devicePolicy', language)}</span></td></tr>`; }
-        if (formData.conditionalAccess.signIn) { htmlBodyContent += `<tr><td style="${listItemStyle} display: flex; align-items: flex-start;"><span style="${bulletStyle}"></span><span style="font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('signInPolicy', language)}</span></td></tr>`; }
-        htmlBodyContent += `</tbody></table></td></tr></tbody></table>`;
+        // Use div and ul/li for conditional access box
+        htmlBodyContent += `<div style="margin: 0 0 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px;">`;
+        htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`; // Reset ul styles
+        if (formData.conditionalAccess.mfa) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('mfaPolicy', language)}</li>`; }
+        if (formData.conditionalAccess.location) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('locationPolicy', language)}</li>`; }
+        if (formData.conditionalAccess.device) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('devicePolicy', language)}</li>`; }
+        if (formData.conditionalAccess.signIn) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('signInPolicy', language)}</li>`; }
+        htmlBodyContent += `</ul></div>`;
     }
 
-    // Additional Notes Section
+    // Additional Notes Section - Use div
     if (formData.additionalNotes) {
+        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`; // Add HR
         const additionalInfoTitle = this.translate('additionalInfoTitle', language);
         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: additionalInfoTitle, color: primaryAccentColor, theme: effectiveTheme }));
         const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
         htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`;
     }
 
-    // Closing and Footer
+    // Closing and Footer - Use divs/paragraphs
     htmlBodyContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`;
-    htmlBodyContent += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="${tableStyle} margin-top: 40px;"><tbody><tr><td style="padding: 0;"><p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p><p style="margin: 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};"><strong style="${strongStyle}">${formData.senderName}</strong><br>${formData.senderTitle}<br>${formData.senderCompany}<br><a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a></p></td></tr></tbody></table>`;
+    htmlBodyContent += `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`;
+    htmlBodyContent += `<div style="line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`; // Margin added to div
+    htmlBodyContent += `<strong style="${strongStyle}">${formData.senderName}</strong><br>`;
+    htmlBodyContent += `${formData.senderTitle}<br>`;
+    htmlBodyContent += `${formData.senderCompany}<br>`;
+    htmlBodyContent += `<a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a>`;
+    htmlBodyContent += `</div>`;
 
     // Construct the final HTML document shell
     const finalHtml = `<!DOCTYPE html>
@@ -381,28 +416,22 @@ const emailBuilder = {
       </o:OfficeDocumentSettings>
     </xml>
     <![endif]-->
+    <style type="text/css">
+      /* Styles for Preview Iframe Overflow */
+      body { word-wrap: break-word; } /* Basic word wrap */
+      pre { white-space: pre-wrap !important; word-wrap: break-word !important; word-break: break-all !important; } /* Force wrap/break in pre */
+      table { table-layout: fixed; width: 100% !important; } /* Help tables respect width */
+      td, th { word-wrap: break-word; word-break: break-word; } /* Wrap in table cells */
+    </style>
 </head>
 <body style="${bodyStyle}">
-    <table width="100%" cellPadding="0" cellSpacing="0" border="0" style="${tableStyle} background-color: ${bgColor};">
-      <tbody>
-        <tr>
-          <td>
-            <div style="${containerStyle}">
-              ${htmlBodyContent}
-              <table width="100%" cellPadding="0" cellSpacing="0" border="0" style="${tableStyle} margin-top: 40px; border-top: 1px solid #eee;">
-                <tbody>
-                  <tr>
-                    <td style="padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center;">
-                      <p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- Removed outer table wrapper -->
+    <!-- Main content -->
+    ${htmlBodyContent}
+    <!-- Footer Div -->
+    <div style="margin-top: 40px; border-top: 1px solid #eee; padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center; background-color: transparent;">
+        <p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p>
+    </div>
 </body>
 </html>`;
 

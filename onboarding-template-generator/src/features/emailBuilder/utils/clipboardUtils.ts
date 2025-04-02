@@ -156,14 +156,86 @@ export const copyFormattedContent = async (html: string, plainText: string): Pro
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style type="text/css">
-          /* Base Styles for Email Compatibility */
-          body { margin: 0 !important; padding: 0 !important; background-color: #FFFFFF; }
-          table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
-          td, th { padding: 8px; /* Default padding, can be overridden */ }
-          p { margin: 0 0 1em 0; line-height: 1.5; } /* Basic paragraph spacing */
+          /* Final Styles v6 - Prioritize Inline, Refine Spacing */
+          body { margin: 0 auto !important; padding: 20px !important; max-width: 800px; background-color: #FFFFFF !important; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; line-height: 1.6; color: #333333; box-sizing: border-box; }
+          /* Allow inline colors, ensure transparent BG */
+          div, p, li, span, strong, h1, h2, h3, h4, h5, h6, pre, ul, ol { background-color: transparent !important; color: inherit; }
+
+          /* Headings - Inherit color, adjust spacing */
+          h3 { font-size: 18px; font-weight: 600; margin: 28px 0 15px 0; padding: 0; line-height: 1.4; color: inherit; }
+          h4 { font-size: 16px; font-weight: 600; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 1px solid #eeeeee; color: inherit; }
+
+          /* Paragraphs - Inherit color, consistent spacing */
+          p { margin: 0 0 16px 0 !important; line-height: 1.6 !important; font-size: 15px !important; color: inherit; }
+
+          /* Lists - Inherit color, adjust spacing */
+          ul, ol { margin: 0 0 16px 25px !important; padding: 0 !important; }
+          ul { list-style-type: disc !important; }
+          ol { list-style-type: decimal !important; }
+          li { margin-bottom: 8px !important; line-height: 1.6 !important; padding-left: 5px !important; color: inherit; }
+
+          /* Links - Inherit color (inline style sets theme color), force underline */
+          a { color: inherit; text-decoration: underline !important; }
+          a:hover { text-decoration: none !important; }
+
+          /* Button Style Link (GDAP) - Force white text, allow inline BG color */
+          a[style*="background-color"] {
+             display: inline-block !important; padding: 10px 24px !important; text-decoration: none !important; font-weight: 600 !important; border-radius: 4px !important; margin-top: 5px !important; border: none !important; cursor: pointer !important; color: #FFFFFF !important;
+          }
+
+          /* Tables (ContactsTable) - Lighter borders, better spacing */
+          table { border-collapse: collapse !important; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; border: 1px solid #dddddd !important; background-color: #FFFFFF !important; margin: 1em 0 2em 0 !important; width: 100% !important; }
+          td, th { padding: 10px 12px !important; border: 1px solid #dddddd !important; vertical-align: top; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px !important; background-color: #FFFFFF !important; color: #333333; line-height: 1.5 !important; }
+          th { background-color: #f8f8f8 !important; font-weight: 600 !important; text-align: left !important; color: #111111 !important; }
+
+          /* Div-based Containers - Inherit color, adjust spacing */
+          div[style*="border-left: 4px solid"] { /* SectionHeader */
+             margin: 30px 0 15px 0 !important; padding: 16px !important; background-color: #FFFFFF !important; border-radius: 0 4px 4px 0; border-top: 1px solid #eeeeee !important; border-bottom: 1px solid #eeeeee !important; border-right: 1px solid #eeeeee !important; color: inherit;
+          }
+          div[style*="border: 1px solid #eee"] { /* Support Plan Box, Meeting Date Box, Conditional Access Box */
+             margin: 1em 0 2em 0 !important; padding: 18px 20px !important; background-color: #FFFFFF !important; border-radius: 4px !important; border: 1px solid #eeeeee !important; color: inherit;
+          }
+           div[style*="border: 1px solid #ddd"] { /* Tenant Block Box */
+             margin: 1em 0 2em 0 !important; padding: 18px 20px !important; background-color: #FFFFFF !important; border-radius: 4px !important; border: 1px solid #dddddd !important; color: inherit;
+          }
+          div[style*="display: flex"] { /* StepIndicator */
+             margin: 25px 0 10px 0 !important; background-color: #FFFFFF !important; color: inherit;
+          }
+          /* Keep specific background colors for highlights/instructions */
+          div[style*="background-color: #fff4ce"] { /* Deadline Highlight */
+             background-color: #fff4ce !important; padding: 6px 12px !important; border-radius: 4px !important; display: inline-block !important; margin-top: 12px !important; font-size: 14px !important; color: #333333 !important;
+          }
+          div[style*="background-color: #f0f7ff"] { /* InstructionBox */
+             margin: 1.5em 0 !important; padding: 16px !important; background-color: #f0f7ff !important; border-radius: 4px !important; border: 1px solid #b3d7ff !important; font-size: 14px !important; line-height: 1.5 !important; color: #333333 !important;
+          }
+
+          /* Horizontal Rule - Adjust margin */
+          hr { border: none !important; border-top: 1px solid #dddddd !important; margin: 35px 0 !important; height: 1px !important; background-color: transparent !important; }
+
+          /* Script Block - Adjust margin, ensure text color */
+          pre {
+            background-color: #f5f5f5 !important; border: 1px solid #ddd !important; border-radius: 4px !important; padding: 15px !important; font-family: Consolas, Monaco, 'Courier New', monospace !important; font-size: 13px !important; line-height: 1.45 !important; color: #333333 !important; white-space: pre !important; word-wrap: normal !important; overflow-x: auto !important; margin: 1em 0 1.5em 0 !important;
+          }
+
+          /* Footer - Adjust top margin, inherit color */
+          div[style*="border-top: 1px solid #eee"] { /* Footer Div */
+             margin-top: 35px !important; padding-top: 20px !important; background-color: #FFFFFF !important; border-top: 1px solid #eeeeee !important; text-align: center !important; font-size: 12px !important; color: #666666;
+          }
+          div[style*="border-top: 1px solid #eee"] p {
+             margin: 0 !important; line-height: 1.5 !important; font-size: 12px !important; color: #666666;
+          }
+
+          /* Utilities */
           img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
           a img { border: none; }
-          /* Add other necessary base styles or resets */
+
+          /* Word wrapping and breaking */
+          p, li, div, td, th { word-wrap: break-word; word-break: break-word; } /* Allow wrapping in standard elements */
+          pre { white-space: pre-wrap !important; word-wrap: break-word !important; word-break: break-all !important; } /* Force wrap and break in pre tags */
+          table { table-layout: fixed; } /* Help table respect width */
+
+          /* Ensure essential backgrounds are white */
+          body, table, tr, td, th { background-color: #FFFFFF !important; }
         </style>
       `;
       // Use a temporary element to parse the meta/style string

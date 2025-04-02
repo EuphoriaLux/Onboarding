@@ -5,6 +5,7 @@ import { StorageService } from '../services/storage';
 import { TenantInfo } from '../features/tenants/types';
 import { EmailFormData } from '../features/emailBuilder/utils/types';
 import { SupportTier } from '../features/supportTiers/types';
+import { supportTiers } from '../features/supportTiers/data/supportTiers'; // Import supportTiers
 
 interface Contact {
   name: string;
@@ -181,13 +182,27 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   const updateTier = (tier: string) => {
-    setState(prevState => ({
-      ...prevState,
-      customerInfo: {
-        ...prevState.customerInfo,
-        selectedTier: tier
+    // Get the contact limit for the new tier
+    const newTierLimit = supportTiers[tier]?.authorizedContacts;
+
+    setState(prevState => {
+      let updatedContacts = prevState.customerInfo.authorizedContacts;
+
+      // Check if the limit is defined and if the current contacts exceed it
+      if (newTierLimit !== undefined && updatedContacts.length > newTierLimit) {
+        // Truncate the contacts array to the new limit
+        updatedContacts = updatedContacts.slice(0, newTierLimit);
       }
-    }));
+
+      return {
+        ...prevState,
+        customerInfo: {
+          ...prevState.customerInfo,
+          selectedTier: tier,
+          authorizedContacts: updatedContacts // Update contacts along with the tier
+        }
+      };
+    });
   };
 
   const updateEmailData = (data: EmailFormData) => {
