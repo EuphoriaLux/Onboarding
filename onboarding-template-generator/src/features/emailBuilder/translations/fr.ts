@@ -22,8 +22,9 @@ const translations: Translations = {
   'rbacTitle': 'ACTION REQUISE : Contrôle d\'Accès Basé sur les Rôles (RBAC)', // Updated RBAC Title
   'conditionalAccessTitle': 'RECOMMANDÉ : POLITIQUES D\'ACCÈS CONDITIONNEL', // Kept Conditional Access Title
   'meetingTitle': 'PLANIFIÉ : RÉUNION D\'INTÉGRATION', // Kept Meeting Title
+  'meetingSlotsTitle': 'PROPOSÉ : CRÉNEAUX DE RÉUNION D\'INTÉGRATION', // New title for slots
   'additionalInfoTitle': 'INFORMATIONS SUPPLÉMENTAIRES', // Kept Additional Info Title
-  
+
   // Support plan section
   'supportPlanIntro': 'Le Plan de Support {tier} fournit un support complet avec les caractéristiques suivantes :', // Updated Support Plan Intro
   // Removed 'supportType.bronze', 'supportType.other', 'supportTypeLabel'
@@ -55,10 +56,14 @@ const translations: Translations = {
   'jobTitleHeader': 'Fonction',
   
   // Meeting section
-  'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :',
-  'meetingDate': 'Date : {date}', // Kept
+  'meetingIntro': 'Nous avons planifié une réunion d\'intégration pour discuter de ces éléments en détail et répondre à vos questions :', // Old intro - Keep for reference?
+  'meetingDate': 'Date : {date}', // Old date format - Keep for reference?
+  'meetingSlotsIntro': 'Veuillez nous indiquer lequel des créneaux horaires de 30 minutes suivants convient le mieux pour l\'appel d\'intégration via Microsoft Teams :', // Intro for slots list
+  'meetingBlockMorning': '(Matin, 10:00-12:00)', // Re-add key for summarized morning block
+  'meetingBlockAfternoon': '(Après-midi, 14:00-16:00)', // Re-add key for summarized afternoon block
+  'meetingBlockBoth': '(Matin & Après-midi)', // Re-add key for summarized full day block
   'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.', // Kept
-  
+
   // GDAP section
   'gdapIntro': 'Microsoft recommande d\'utiliser les Privilèges d\'Administrateur Délégué Granulaire (GDAP) pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}. Nous demandons le rôle "{roles}".', // Updated GDAP Intro, incorporated roles
   // Removed 'gdapRoles'

@@ -16,7 +16,7 @@ interface Contact {
 interface CustomerInfo {
   contactName: string;
   contactEmail: string;
-  proposedDate: Date;
+  proposedSlots: Date[]; // Changed from proposedDate
   authorizedContacts: Contact[];
   selectedTier: string;
   tenants: TenantInfo[];
@@ -36,6 +36,7 @@ interface AppStateContextType {
   updateTier: (tier: string) => void;
   updateEmailData: (data: EmailFormData) => void;
   updateLanguage: (language: Language) => void;
+  updateProposedSlots: (slots: Date[]) => void; // Add handler for slots
   resetState: () => void;
 }
 
@@ -43,7 +44,7 @@ const defaultState: AppState = {
   customerInfo: {
     contactName: '',
     contactEmail: '',
-    proposedDate: new Date(),
+    proposedSlots: [], // Initialize as empty array
     authorizedContacts: [{ name: '', email: '', phone: '' }],
     selectedTier: 'silver',
     // Initialize default tenant with all flags
@@ -74,18 +75,22 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
         
         if (savedState) {
           const newState = { ...defaultState };
-          
+
           if (savedState.customerInfo) {
-            // Process proposedDate from storage (convert string to Date)
-            let customerInfo = savedState.customerInfo;
-            if (customerInfo.proposedDate) {
-              const parsedDate = new Date(customerInfo.proposedDate);
-              if (!isNaN(parsedDate.getTime())) {
-                customerInfo.proposedDate = parsedDate;
-              } else {
-                customerInfo.proposedDate = new Date();
-              }
+            let customerInfo = { ...savedState.customerInfo }; // Clone to modify
+
+            // Process proposedSlots from storage (convert array of strings to Dates)
+            if (customerInfo.proposedSlots && Array.isArray(customerInfo.proposedSlots)) {
+              customerInfo.proposedSlots = customerInfo.proposedSlots
+                .map((slotString: string) => {
+                  const parsedDate = new Date(slotString);
+                  return !isNaN(parsedDate.getTime()) ? parsedDate : null;
+                })
+                .filter((slot: Date | null): slot is Date => slot !== null); // Filter out invalid dates
+            } else {
+              customerInfo.proposedSlots = []; // Default to empty array if missing or invalid
             }
+
 
             // Also parse implementationDeadline and ensure boolean flags within tenants
             if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
@@ -157,6 +162,17 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       customerInfo: {
         ...prevState.customerInfo,
         [field]: value
+      }
+    }));
+  };
+
+  // Add handler for updating proposed slots
+  const updateProposedSlots = (slots: Date[]) => {
+    setState(prevState => ({
+      ...prevState,
+      customerInfo: {
+        ...prevState.customerInfo,
+        proposedSlots: slots
       }
     }));
   };
@@ -233,6 +249,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       updateTier,
       updateEmailData,
       updateLanguage,
+      updateProposedSlots, // Add new handler to context value
       resetState
     }}>
       {children}

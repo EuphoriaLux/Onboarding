@@ -22,6 +22,7 @@ const translations: Translations = {
   'rbacTitle': 'AKTION ERFORDERLICH: Role-Based Access Control (RBAC)', // Updated RBAC Title
   'conditionalAccessTitle': 'EMPFOHLEN: RICHTLINIEN FÜR BEDINGTEN ZUGRIFF', // Kept Conditional Access Title
   'meetingTitle': 'GEPLANT: ONBOARDING-MEETING', // Kept Meeting Title
+  'meetingSlotsTitle': 'VORGESCHLAGEN: ONBOARDING-MEETING-TERMINE', // New title for slots
   'additionalInfoTitle': 'ZUSÄTZLICHE INFORMATIONEN', // Kept Additional Info Title
 
   // Support plan section
@@ -55,8 +56,12 @@ const translations: Translations = {
   'jobTitleHeader': 'Position',
 
   // Meeting section
-  'meetingIntro': 'Wir haben ein Onboarding-Meeting angesetzt, um diese Punkte im Detail zu besprechen und Ihre Fragen zu beantworten:',
-  'meetingDate': 'Datum: {date}', // Kept
+  'meetingIntro': 'Wir haben ein Onboarding-Meeting angesetzt, um diese Punkte im Detail zu besprechen und Ihre Fragen zu beantworten:', // Old intro - Keep for reference?
+  'meetingDate': 'Datum: {date}', // Old date format - Keep for reference?
+  'meetingSlotsIntro': 'Bitte teilen Sie uns mit, welcher der folgenden 30-minütigen Zeitfenster für den Onboarding-Anruf über Microsoft Teams am besten passt:', // Intro for slots list
+  'meetingBlockMorning': '(Vormittag, 10:00-12:00)', // Re-add key for summarized morning block
+  'meetingBlockAfternoon': '(Nachmittag, 14:00-16:00)', // Re-add key for summarized afternoon block
+  'meetingBlockBoth': '(Vormittag & Nachmittag)', // Re-add key for summarized full day block
   'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.', // Kept
 
   // GDAP section

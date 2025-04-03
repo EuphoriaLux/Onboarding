@@ -8,8 +8,8 @@ export interface EmailFormData {
   companyName: string;
   contactName: string;
   contactEmail: string;
-  proposedDate: Date | string;
-  tenantId: string;
+  // proposedDate: Date | string; // Replaced by proposedSlots
+  tenantId: string; // Note: This might be redundant if using CustomerInfo.tenants
   selectedTier: string;
   emailContacts: { name: string; email: string; phone: string }[];
   to: string;
@@ -28,7 +28,9 @@ export interface EmailFormData {
     checked: boolean;
     roles: string;
   };
-  meetingDate?: string;
+  // meetingDate?: string; // Replaced by proposedSlots
+  proposedSlots: Date[]; // Array of selected slot start times
+  includeMeetingSlots?: boolean; // Flag to include the meeting section
   additionalNotes?: string;
   senderName: string;
   senderTitle: string;
@@ -45,7 +47,8 @@ export interface CustomerInfo {
   companyName: string;
   contactName: string;
   contactEmail: string;
-  proposedDate: Date;
+  // proposedDate: Date; // Replaced by proposedSlots
+  proposedSlots: Date[]; // Array of selected slot start times
   // tenantId: string; // Removed single tenant ID
   tenants: TenantInfo[]; // Added array of tenants
   authorizedContacts: Array<{name: string, email: string, phone: string}>;

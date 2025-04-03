@@ -163,7 +163,8 @@ textarea:focus {
   box-shadow: var(--focus-ring);
 }
 
-input[type="checkbox"] {
+input[type="checkbox"],
+input[type="radio"] {
   margin-right: 8px;
   transform: scale(1.1);
   cursor: pointer;
@@ -1302,4 +1303,81 @@ textarea {
   margin-bottom: 8px;
   padding-top: 16px;
   border-top: 1px solid var(--border-color);
+}
+
+/* ========== Meeting Slot Selection Styles ========== */
+.meeting-slots-section h2 {
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.slot-day-columns-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px; /* Space between day columns */
+  margin-top: 16px;
+}
+
+.slot-day-column {
+  flex: 1; /* Allow columns to grow */
+  min-width: 180px; /* Minimum width for readability */
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--background-lighter);
+}
+
+.slot-day-header {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.slot-checkbox-group.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Space between checkboxes */
+}
+
+.slot-checkbox label {
+  font-size: 14px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.slot-checkbox input[type="checkbox"] {
+  margin-top: 2px; /* Align checkbox slightly better with text */
+}
+
+/* Adjustments for radio buttons if needed */
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.radio-container.inline-label {
+  margin-right: 15px; /* Space between inline radio buttons */
+}
+
+.radio-container input[type="radio"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.radio-container label {
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.radio-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Space between radio buttons */
+  margin-top: 8px;
 }

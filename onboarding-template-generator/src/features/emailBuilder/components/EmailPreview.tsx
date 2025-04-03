@@ -17,10 +17,11 @@ interface EmailPreviewProps {
   companyName?: string; // Agent's company
   agentEmail?: string;
   flags?: { // Add flags prop
-    includeGdap?: boolean;
-    includeRbac?: boolean;
+    includeGdap?: boolean; // Note: These might be deprecated if logic moved elsewhere
+    includeRbac?: boolean; // Note: These might be deprecated if logic moved elsewhere
     includeConditionalAccess?: boolean;
     includeNotes?: boolean;
+    includeMeetingSlots?: boolean; // Add the new flag here
   };
   additionalNotes?: string; // Add notes prop
   themeSettings: ThemeSettings | null; // Add theme settings prop

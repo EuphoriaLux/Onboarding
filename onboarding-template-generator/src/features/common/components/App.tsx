@@ -10,6 +10,7 @@ import { useLanguage } from '../../../contexts/LanguageContext';
 import { StorageService } from '../../../services/storage'; // Import StorageService
 import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 import { supportTiers } from '../../supportTiers/data/supportTiers'; // Import supportTiers
+import { generateMeetingSlots, formatSlot } from '../../emailBuilder/utils/dateSlotGenerator'; // Import slot utilities
 import '../../../styles/App.css';
 
 // Define AgentSettings interface (can be moved to a shared types file later)
@@ -57,7 +58,8 @@ const App: React.FC = () => {
     updateContacts,
     updateTenants,
     updateTier,
-    updateEmailData
+    updateEmailData,
+    updateProposedSlots // Get the new handler
   } = useAppState();
 
   const { language, setLanguage } = useLanguage();
@@ -72,11 +74,11 @@ const App: React.FC = () => {
     subject: ''
   });
   // State for conditional sections
-  // Removed includeGdap state
-  // Removed includeRbac state
   const [includeConditionalAccess, setIncludeConditionalAccess] = useState(true);
   const [includeNotes, setIncludeNotes] = useState(true); // Assuming notes are optional too
   const [additionalNotes, setAdditionalNotes] = useState('');
+  // const [selectedSlotDay, setSelectedSlotDay] = useState<string | null>(null); // No longer needed for block selection
+  const [includeMeetingSlots, setIncludeMeetingSlots] = useState(false); // State for the master toggle
 
 
   // Fetch agent and theme settings on mount
@@ -86,36 +88,102 @@ const App: React.FC = () => {
       StorageService.get<ThemeSettings>('themeSettings')
     ])
     .then(([agentData, themeData]) => {
-      // Set agent settings or defaults
       setAgentSettings(agentData || { agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
-      // Set theme settings or null (defaults handled in generateTemplate)
       setThemeSettings(themeData || null);
     })
     .catch(error => {
       console.error("Error loading settings in App:", error);
-      // Set default settings on error
       setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
-      setThemeSettings(null); // Use null to signify defaults should be used
+      setThemeSettings(null);
     });
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
+  // Generate available slots (memoize to avoid regeneration on every render)
+  const availableSlots = React.useMemo(() => generateMeetingSlots(2), []);
 
-  // Handle date change with proper type handling
-  const handleDateChange = (date: string) => {
-    try {
-      // Create a Date object safely
-      const newDate = new Date(date);
+  // Handle meeting slot selection change (for individual slots - needed by block change handler)
+  const handleSlotChange = (slot: Date, isChecked: boolean) => {
+    const currentSlots = state.customerInfo.proposedSlots || [];
+    let updatedSlots: Date[];
 
-      // Verify it's a valid date before setting it
-      if (!isNaN(newDate.getTime())) {
-        updateCustomerInfo('proposedDate', newDate);
+    if (isChecked) {
+      if (!currentSlots.some(s => s.getTime() === slot.getTime())) {
+        updatedSlots = [...currentSlots, slot];
       } else {
-        console.warn("Invalid date input: ", date);
+        updatedSlots = currentSlots;
       }
-    } catch (err) {
-      console.error("Error parsing date: ", err);
+    } else {
+      updatedSlots = currentSlots.filter(s => s.getTime() !== slot.getTime());
+    }
+    updatedSlots.sort((a, b) => a.getTime() - b.getTime());
+    updateProposedSlots(updatedSlots);
+  };
+
+  // Handler for selecting/deselecting morning/afternoon blocks by toggling individual slots
+  const handleTimeBlockChange = (dayKey: string, block: 'morning' | 'afternoon', isSelected: boolean) => {
+    const slotsForDay = slotsByDay[dayKey] || [];
+    let blockSlots: Date[] = [];
+
+    if (block === 'morning') {
+      blockSlots = slotsForDay.filter(slot => slot.getHours() >= 10 && slot.getHours() < 12);
+    } else { // afternoon
+      blockSlots = slotsForDay.filter(slot => slot.getHours() >= 14 && slot.getHours() < 16);
+    }
+
+    // Update the state based on the block selection
+    const currentSlots = state.customerInfo.proposedSlots || [];
+    let updatedSlots: Date[];
+
+    if (isSelected) {
+      // Add block slots, avoiding duplicates
+      const slotsToAdd = blockSlots.filter(bs => !currentSlots.some(cs => cs.getTime() === bs.getTime()));
+      updatedSlots = [...currentSlots, ...slotsToAdd];
+    } else {
+      // Remove block slots
+      const blockSlotTimes = blockSlots.map(s => s.getTime());
+      updatedSlots = currentSlots.filter(cs => !blockSlotTimes.includes(cs.getTime()));
+    }
+
+    updatedSlots.sort((a, b) => a.getTime() - b.getTime());
+    updateProposedSlots(updatedSlots);
+  };
+
+
+  // Group available slots by day (YYYY-MM-DD)
+  const slotsByDay = React.useMemo(() => {
+    const grouped: { [key: string]: Date[] } = {};
+    availableSlots.forEach(slot => {
+      const dayKey = slot.toISOString().split('T')[0];
+      if (!grouped[dayKey]) {
+        grouped[dayKey] = [];
+      }
+      grouped[dayKey].push(slot);
+    });
+    return grouped;
+  }, [availableSlots]);
+
+  // Get unique days for day selection
+  const availableDays = React.useMemo(() => Object.keys(slotsByDay).sort(), [slotsByDay]);
+
+  // Handler for the master meeting slots toggle
+  const handleIncludeMeetingSlotsToggle = (isChecked: boolean) => {
+    setIncludeMeetingSlots(isChecked);
+    if (isChecked) {
+      // Select all available slots
+      updateProposedSlots(availableSlots);
+    } else {
+      // Clear selected slots
+      updateProposedSlots([]);
     }
   };
+
+  // Effect to set default meeting slot state based on tier
+  useEffect(() => {
+    const isBronze = state.customerInfo.selectedTier === 'bronze';
+    handleIncludeMeetingSlotsToggle(!isBronze);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.customerInfo.selectedTier, availableSlots]);
+
 
   // Handle email recipient changes
   const handleEmailRecipientsChange = (field: string, value: string) => {
@@ -123,104 +191,61 @@ const App: React.FC = () => {
       ...emailRecipients,
       [field]: value
     });
-
-    // If it's the 'to' field, also update the primary contact email
     if (field === 'to') {
       updateCustomerInfo('contactEmail', value);
     }
   };
 
-  // Prepare data for Email Form
-  const getEmailCustomerInfo = () => {
-    // Use the first tenant's info for the email by default
-    const primaryTenant = state.customerInfo.tenants[0] || { id: '', companyName: '' };
-
-    return {
-      companyName: primaryTenant.companyName,
-      contactName: state.customerInfo.contactName,
-      contactEmail: state.customerInfo.contactEmail,
-      proposedDate: state.customerInfo.proposedDate,
-      tenantId: primaryTenant.id,
-      authorizedContacts: state.customerInfo.authorizedContacts,
-      selectedTier: state.customerInfo.selectedTier
-    };
-  };
+  // Prepare data for Email Form (No longer needed by EmailForm component itself)
+  // const getEmailCustomerInfo = () => { ... };
 
   // Generate email preview with all required properties
   const handlePreviewEmail = () => {
-    // --- DEBUGGING START ---
-    console.log("State before preview:", JSON.stringify(state.customerInfo, null, 2));
-    console.log("Tenants:", JSON.stringify(state.customerInfo.tenants, null, 2));
-    console.log("Contacts:", JSON.stringify(state.customerInfo.authorizedContacts, null, 2));
-    // --- DEBUGGING END ---
-
     // Use fetched agent settings, provide defaults if not loaded yet or empty
     const currentAgentName = agentSettings?.agentName || 'Your Name';
     const currentAgentTitle = agentSettings?.agentTitle || 'Support Specialist';
     const currentCompanyName = agentSettings?.companyName || 'Microsoft Partner Support';
-    const currentAgentEmail = agentSettings?.agentEmail || ''; // Get email, default to empty
+    const currentAgentEmail = agentSettings?.agentEmail || '';
 
     // --- Automatic Subject Line ---
-    const customerInfo = getEmailCustomerInfo(); // Get customer info first
-    // Ensure supportTiers is imported and used correctly
-    const tierName = supportTiers[customerInfo.selectedTier as keyof typeof supportTiers]?.name || 'Support'; // Get tier name safely with type assertion
-    const companyName = customerInfo.companyName || 'Customer'; // Get company name safely
+    const tierName = supportTiers[state.customerInfo.selectedTier as keyof typeof supportTiers]?.name || 'Support';
+    const companyName = state.customerInfo.tenants[0]?.companyName || 'Customer';
     const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
     // --- End Automatic Subject ---
 
-    // --- Determine GDAP Link ---
-    // Use the first tenant by default for the email content
-    const primaryTenant = state.customerInfo.tenants[0];
-    const defaultGdapLink = "https://partner.microsoft.com/dashboard/commerce/granularadmin";
-    const tenantSpecificGdapLink = primaryTenant?.gdapLink || defaultGdapLink;
-    // --- End Determine GDAP Link ---
-
     // Create an EmailFormData object with all the collected data
-    // Note: EmailFormData type in types.ts might need updating if it doesn't match this structure
     const emailData = {
+      companyName: companyName,
+      contactName: state.customerInfo.contactName,
+      contactEmail: state.customerInfo.contactEmail,
+      proposedSlots: state.customerInfo.proposedSlots, // Pass the array
+      tenantId: state.customerInfo.tenants[0]?.id || '', // Use primary tenant ID
+      selectedTier: state.customerInfo.selectedTier,
+      emailContacts: state.customerInfo.authorizedContacts, // Pass contacts
       to: emailRecipients.to,
       cc: emailRecipients.cc,
-      subject: autoSubject, // Use automatically generated subject
-      // Add other fields from the form
-      ...customerInfo, // Use the customerInfo object we already got
-      // Include emailContacts required by EmailFormData type
-      emailContacts: state.customerInfo.authorizedContacts,
-      // Removed gdap property construction
-      // Removed rbac property construction
+      subject: autoSubject,
+      includeMeetingSlots: includeMeetingSlots, // Pass the flag
       conditionalAccess: {
-        checked: includeConditionalAccess, // Use state variable
-        mfa: true, // Keep defaults for now
-        location: true,
-        device: true,
-        signIn: true
+        checked: includeConditionalAccess,
+        mfa: true, location: true, device: true, signIn: true // Assuming these are fixed for now
       },
-      // This seems redundant if emailContacts holds the list? Check usage.
-      // Keeping structure for now, but using includeContacts flag if needed later.
       authorizedContacts: {
-         checked: true, // Maybe control this section too?
-         roles: 'Technical and Administrative contacts' // Keep default for now
+         checked: true, // Assuming this section is always included if contacts exist
+         roles: 'Technical and Administrative contacts' // Example default
       },
-      // Add additional notes from state
-      additionalNotes: includeNotes ? additionalNotes : '', // Only include notes if flag is true
-      // Use fetched agent settings here
+      additionalNotes: includeNotes ? additionalNotes : '',
       senderName: currentAgentName,
       senderTitle: currentAgentTitle,
       senderCompany: currentCompanyName,
-      // Use the fetched agent email here
-      senderContact: currentAgentEmail, // Renamed from senderContact to match template usage? Check templateGenerator.ts if needed. Assuming senderContact maps to agentEmail.
+      senderContact: currentAgentEmail,
       currentDate: new Date().toLocaleDateString(),
       language: language
     };
 
-    // Store complete email data in local state for immediate use
-    // Pass agent settings separately to EmailPreview if needed there, or rely on them being in emailData
     const completeEmailData = {...emailData, language};
     setLocalEmailData(completeEmailData);
-
-    // Also update the app state (for persistence) - ensure updateEmailData handles the full structure
-    updateEmailData(emailData);
-
-    // Show the preview
+    updateEmailData(emailData); // Update central state for persistence if needed
     setShowEmailPreview(true);
   };
 
@@ -241,22 +266,17 @@ const App: React.FC = () => {
       )}
 
       {showEmailPreview && localEmailData ? (
-        // Pass the full tenants array to EmailPreview
         <EmailPreview
-          emailData={localEmailData} // Contains subject, recipients, sender details etc.
-          // customerInfo={getEmailCustomerInfo()} // No longer needed by EmailPreview directly for HTML generation
-          tenants={state.customerInfo.tenants} // Pass the full tenants array
-          // Pass agent details separately as expected by EmailPreview props
+          emailData={localEmailData}
+          tenants={state.customerInfo.tenants}
           agentName={agentSettings?.agentName}
           agentTitle={agentSettings?.agentTitle}
-          companyName={agentSettings?.companyName} // Agent's company
+          companyName={agentSettings?.companyName}
           agentEmail={agentSettings?.agentEmail}
-          // Pass conditional flags and notes to EmailPreview -> generateTemplate
-          // Removed includeGdap from flags
-          // Removed includeRbac from flags
-          flags={{ includeConditionalAccess, includeNotes }}
+          // Correctly pass flags including includeMeetingSlots
+          flags={{ includeConditionalAccess, includeNotes, includeMeetingSlots }}
           additionalNotes={includeNotes ? additionalNotes : undefined}
-          themeSettings={themeSettings} // Pass loaded theme settings
+          themeSettings={themeSettings}
           onBackToEdit={handleBackToEdit}
         />
       ) : (
@@ -281,7 +301,6 @@ const App: React.FC = () => {
               />
               <small className="form-text">Use semicolons (;) to separate multiple addresses.</small>
             </div>
-
             <div className="form-group">
               <label htmlFor="cc-field">Cc:</label>
               <input
@@ -293,8 +312,6 @@ const App: React.FC = () => {
               />
               <small className="form-text">Use semicolons (;) to separate multiple addresses.</small>
             </div>
-
-            {/* Removed manual subject input field */}
           </div>
 
           {/* 2. Support Tier Selection */}
@@ -308,7 +325,6 @@ const App: React.FC = () => {
           {/* 3. Customer Contact Information */}
           <div className="form-section customer-info-section">
             <h2>Customer Contact Information</h2>
-
             <div className="form-group">
               <label htmlFor="contact-name">Primary Contact Name</label>
               <input
@@ -320,7 +336,6 @@ const App: React.FC = () => {
                 required
               />
             </div>
-
             <div className="form-group">
               <label htmlFor="contact-email">Primary Contact Email</label>
               <input
@@ -330,24 +345,101 @@ const App: React.FC = () => {
                 onChange={(e) => updateCustomerInfo('contactEmail', e.target.value)}
                 placeholder="email@company.com"
                 required
-                disabled={true} // Keep disabled as it syncs with 'To' field
+                disabled={true}
               />
               <small className="form-text">This is synchronized with the email recipient above</small>
             </div>
-
-            <div className="form-group">
-              <label htmlFor="proposed-date">Proposed Meeting Date</label>
-              <input
-                id="proposed-date"
-                type="date"
-                value={state.customerInfo.proposedDate instanceof Date && !isNaN(state.customerInfo.proposedDate.getTime())
-                  ? state.customerInfo.proposedDate.toISOString().split('T')[0]
-                  : ''}
-                onChange={(e) => handleDateChange(e.target.value)}
-                required
-              />
-            </div>
           </div>
+
+          {/* UPDATED: Proposed Meeting Slots Section - Block + Individual */}
+          <div className="form-section meeting-slots-section">
+            <div className="section-header-with-toggle">
+              <h2>Propose Meeting Slots</h2>
+              <div className="checkbox-container inline-label master-toggle">
+                <input
+                  type="checkbox"
+                  id="includeMeetingSlots"
+                  checked={includeMeetingSlots}
+                  onChange={(e) => handleIncludeMeetingSlotsToggle(e.target.checked)}
+                />
+                <label htmlFor="includeMeetingSlots">Include Meeting Proposal</label>
+              </div>
+            </div>
+            <p className="section-description">Select potential 30-minute slots for the onboarding call (Tuesdays/Thursdays, 10-12 & 14-16). Use the toggle above to include/exclude this section in the email and select/deselect all slots.</p>
+
+            <div className="slot-day-columns-container"> {/* Container for horizontal columns */}
+              {availableDays.length > 0 ? (
+                availableDays.map((dayKey) => {
+                    const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse YYYY-MM-DD as UTC
+                    const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
+                    const morningSlots = slotsByDay[dayKey]?.filter(s => s.getHours() >= 10 && s.getHours() < 12) || [];
+                    const afternoonSlots = slotsByDay[dayKey]?.filter(s => s.getHours() >= 14 && s.getHours() < 16) || [];
+
+                    // Determine if morning/afternoon blocks are fully selected
+                    const isMorningSelected = morningSlots.length > 0 && morningSlots.every(ms => state.customerInfo.proposedSlots?.some(ps => ps.getTime() === ms.getTime()));
+                    const isAfternoonSelected = afternoonSlots.length > 0 && afternoonSlots.every(as => state.customerInfo.proposedSlots?.some(ps => ps.getTime() === as.getTime()));
+
+                    return (
+                      <div key={dayKey} className="slot-day-column"> {/* Column for each day */}
+                        <h4 className="slot-day-header">{dayLabel}</h4>
+                        {/* Block Selectors */}
+                        <div className="slot-block-group">
+                          {morningSlots.length > 0 && (
+                            <div className="checkbox-container slot-block-checkbox">
+                              <input
+                                type="checkbox"
+                                id={`morning-${dayKey}`}
+                                checked={isMorningSelected}
+                                onChange={(e) => handleTimeBlockChange(dayKey, 'morning', e.target.checked)}
+                                disabled={!includeMeetingSlots}
+                              />
+                              <label htmlFor={`morning-${dayKey}`}>Morning (10:00-12:00)</label>
+                            </div>
+                          )}
+                          {afternoonSlots.length > 0 && (
+                            <div className="checkbox-container slot-block-checkbox">
+                              <input
+                                type="checkbox"
+                                id={`afternoon-${dayKey}`}
+                                checked={isAfternoonSelected}
+                                onChange={(e) => handleTimeBlockChange(dayKey, 'afternoon', e.target.checked)}
+                                disabled={!includeMeetingSlots}
+                              />
+                              <label htmlFor={`afternoon-${dayKey}`}>Afternoon (14:00-16:00)</label>
+                            </div>
+                          )}
+                        </div>
+                        {/* Divider */}
+                        {(morningSlots.length > 0 || afternoonSlots.length > 0) && <hr className="slot-divider" />}
+                        {/* Individual Slots */}
+                        <div className="slot-checkbox-group vertical">
+                          {slotsByDay[dayKey].map((slot) => {
+                            const slotId = `slot-${slot.toISOString()}`;
+                            const isChecked = state.customerInfo.proposedSlots?.some(s => s.getTime() === slot.getTime()) || false;
+                            const timeLabel = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false }) + ' - ' + new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+                            return (
+                              <div key={slotId} className="checkbox-container slot-checkbox">
+                                <input
+                                  type="checkbox"
+                                  id={slotId}
+                                  checked={isChecked}
+                                  onChange={(e) => handleSlotChange(slot, e.target.checked)}
+                                  disabled={!includeMeetingSlots}
+                                />
+                                <label htmlFor={slotId}>{timeLabel}</label>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <p>No available slots found in the coming weeks.</p>
+                )}
+              </div>
+          </div>
+
 
           {/* 4. Authorized Contacts */}
           <div className="form-section contacts-section">
@@ -373,17 +465,11 @@ const App: React.FC = () => {
             <p className="section-description">
               Configure the detailed sections to include in your onboarding email
             </p>
-
-            {/* Removed GDAP CollapsibleSection */}
-
-            {/* Removed RBAC CollapsibleSection */}
-
             <CollapsibleSection title="Conditional Access">
                <div className="form-group checkbox-container inline-label">
                  <input type="checkbox" id="includeConditionalAccess" checked={includeConditionalAccess} onChange={(e) => setIncludeConditionalAccess(e.target.checked)} />
                  <label htmlFor="includeConditionalAccess">Include Conditional Access Section</label>
                </div>
-              {/* Inputs for Conditional Access */}
               <div className="form-group">
                 <label>Policies to Implement:</label>
                 <div className="inline-checks">
@@ -394,13 +480,11 @@ const App: React.FC = () => {
                 </div>
               </div>
             </CollapsibleSection>
-
             <CollapsibleSection title="Additional Notes">
                <div className="form-group checkbox-container inline-label">
                  <input type="checkbox" id="includeNotes" checked={includeNotes} onChange={(e) => setIncludeNotes(e.target.checked)} />
                  <label htmlFor="includeNotes">Include Additional Notes Section</label>
                </div>
-              {/* Input for Additional Notes */}
               <div className="form-group">
                 <label htmlFor="additional-notes">Notes or Instructions:</label>
                 <textarea
@@ -415,7 +499,6 @@ const App: React.FC = () => {
           </div>
 
           {/* 7. Email Builder with Preview Button */}
-          {/* Removed sender input fields as they now come from settings */}
           <div className="form-section email-section">
             <h2>Email Preview & Generate</h2>
             <p className="section-description">
@@ -426,7 +509,7 @@ const App: React.FC = () => {
                 type="button"
                 className="btn-preview"
                 onClick={handlePreviewEmail}
-                disabled={!agentSettings} // Disable button until settings are loaded
+                disabled={!agentSettings}
               >
                 {agentSettings ? 'Preview Email' : 'Loading Settings...'}
               </button>

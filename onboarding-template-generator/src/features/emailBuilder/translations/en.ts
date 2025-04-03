@@ -22,6 +22,7 @@ const translations: Translations = {
   'rbacTitle': 'ACTION REQUIRED: Role-Based Access Control (RBAC)', // Updated RBAC Title
   'conditionalAccessTitle': 'RECOMMENDED: CONDITIONAL ACCESS POLICIES', // Kept Conditional Access Title
   'meetingTitle': 'SCHEDULED: ONBOARDING MEETING', // Kept Meeting Title (though not used in new template)
+  'meetingSlotsTitle': 'PROPOSED: ONBOARDING MEETING SLOTS', // New title for slots
   'additionalInfoTitle': 'ADDITIONAL INFORMATION', // Kept Additional Info Title (though not used in new template)
 
   // Support plan section
@@ -55,8 +56,12 @@ const translations: Translations = {
   'jobTitleHeader': 'Job Title', // Kept
 
   // Meeting section (Kept for potential future use, though not in new template)
-  'meetingIntro': 'We have scheduled an onboarding meeting to discuss these items in detail and answer any questions you may have:',
-  'meetingDate': 'Date: {date}',
+  'meetingIntro': 'We have scheduled an onboarding meeting to discuss these items in detail and answer any questions you may have:', // Old intro - Keep for reference?
+  'meetingDate': 'Date: {date}', // Old date format - Keep for reference?
+  'meetingSlotsIntro': 'Please let us know which of the following 30-minute time slots work best for the onboarding call via Microsoft Teams:', // Intro for slots list
+  'meetingBlockMorning': '(Morning, 10:00-12:00)', // Re-add key for summarized morning block
+  'meetingBlockAfternoon': '(Afternoon, 14:00-16:00)', // Re-add key for summarized afternoon block
+  'meetingBlockBoth': '(Morning & Afternoon)', // Re-add key for summarized full day block
   'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
 
   // GDAP section

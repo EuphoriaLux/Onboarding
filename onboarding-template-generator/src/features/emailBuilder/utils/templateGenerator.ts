@@ -160,12 +160,16 @@ const _generateGreeting = (info: CustomerInfo, theme: ThemeSettings): string => 
   <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Dear ${info.contactName},</p>`;
 };
 
+// Updated to use proposedSlots (takes the first slot if available)
 const _generateMeetingProposal = (info: CustomerInfo, tier: SupportTier, theme: ThemeSettings): string => {
-  const formattedDate = _formatDate(info.proposedDate);
+  // Use the first proposed slot if available, otherwise use a fallback date
+  const firstSlot = info.proposedSlots && info.proposedSlots.length > 0 ? info.proposedSlots[0] : null;
+  const formattedDate = _formatDate(firstSlot); // _formatDate handles null
   const textColor = theme.textColor || '#333'; // Fallback text color
   return `
-    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Thank you for choosing Microsoft Premier Support. We would like to schedule an onboarding session to explain our support request process and modalities for your <strong style="font-weight: 600;">${tier.name}</strong> plan.</p>
-    <p style="margin: 0 0 20px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">I propose we meet on <strong style="font-weight: 600;">${formattedDate}</strong> to discuss the following onboarding steps:</p>`;
+    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">Thank you for choosing Microsoft Premier Support for your <strong style="font-weight: 600;">${tier.name}</strong> plan. To ensure you get the most out of our services, we would like to schedule an onboarding session via Microsoft Teams.</p>
+    <p style="margin: 0 0 15px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">During this session, we will explain how to open a support request and how we address issues based on their severity level.</p>
+    <p style="margin: 0 0 20px 0; line-height: 1.5; font-family: 'Segoe UI', Arial, sans-serif; color: ${textColor};">I propose we meet on <strong style="font-weight: 600;">${formattedDate}</strong> for this onboarding.</p>`;
 };
 
 const _generateTierDetailsSection = (tier: SupportTier, theme: ThemeSettings): string => {

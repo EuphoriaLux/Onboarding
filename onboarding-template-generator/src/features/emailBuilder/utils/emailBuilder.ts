@@ -13,6 +13,27 @@ import {
   ContactsTable,
   ScriptBlock,
 } from '../templates/builders'; // Should resolve to builders.tsx now
+import { formatSlot } from './dateSlotGenerator'; // Import formatSlot
+
+// --- Helper Functions ---
+
+// Helper to group slots by day
+const _groupSlotsByDay = (slots: Date[]): { [key: string]: Date[] } => {
+  const grouped: { [key: string]: Date[] } = {};
+  slots.forEach(slot => {
+    const dayKey = slot.toISOString().split('T')[0]; // YYYY-MM-DD
+    if (!grouped[dayKey]) {
+      grouped[dayKey] = [];
+    }
+    grouped[dayKey].push(slot);
+  });
+  // Sort slots within each day
+  for (const dayKey in grouped) {
+    grouped[dayKey].sort((a, b) => a.getTime() - b.getTime());
+  }
+  return grouped;
+};
+
 
 // --- Constants ---
 const HELP_DESK_AGENTS_OBJECT_ID = "b6770181-d9f5-4818-b5b1-ea51cd9f66e5";
@@ -72,6 +93,30 @@ const emailBuilder = {
       tier: tier.name
     }) + '\n\n';
 
+    // Proposed Meeting Slots Section (Plain Text) - Grouped by day, listed horizontally
+    // Only include if the flag is set and slots exist
+    if (formData.includeMeetingSlots && formData.proposedSlots && formData.proposedSlots.length > 0) {
+      body += `**${this.translate('meetingSlotsTitle', language)}**\n\n`;
+      body += this.translate('meetingSlotsIntro', language) + '\n\n';
+
+      const groupedSlots = _groupSlotsByDay(formData.proposedSlots);
+      const sortedDays = Object.keys(groupedSlots).sort();
+
+      sortedDays.forEach(dayKey => {
+        const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
+        const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
+        // Format only time for the list
+        const formattedTimes = groupedSlots[dayKey].map(slot => {
+            const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+            const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+            return `${startTime} - ${endTime}`;
+        }).join(', ');
+        body += `**${dayLabel}:** ${formattedTimes}\n`; // List times horizontally after day label
+      });
+      body += '\n'; // Add space after the list
+      // body += this.translate('meetingAttendees', language) + '\n\n'; // Keep if needed
+    }
+
     // Support Plan Section
     body += `**${this.translate('supportPlanTitle', language, { tier: tier.name })}**\n\n`;
     body += this.translate('supportPlanIntro', language, { tier: tier.name }) + '\n\n';
@@ -119,14 +164,6 @@ const emailBuilder = {
         body += `${i}\t|            |           |                |                |               |           \n`;
       }
       body += '\n';
-    }
-
-    // Meeting Section (Kept for potential future use)
-    if (formData.meetingDate) {
-      body += `**${this.translate('meetingTitle', language)}**\n\n`;
-      body += this.translate('meetingIntro', language) + '\n\n';
-      body += this.translate('meetingDate', language, { date: formData.meetingDate }) + '\n';
-      body += this.translate('meetingAttendees', language) + '\n\n';
     }
 
     // GDAP Section (Plain Text - Adjusted for multiple tenants, removed default link)
@@ -236,14 +273,20 @@ const emailBuilder = {
       clientCompany: formData.companyName
     });
 
-    // Define styles
-    const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`;
-    const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`;
-    const listItemStyle = `padding: 0; margin-bottom: 8px; font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: transparent; list-style-position: outside; padding-left: 5px;`;
-    const bulletStyle = `display: inline-block; width: 6px; height: 6px; border-radius: 50%; background-color: ${primaryAccentColor}; margin-right: 8px; vertical-align: middle;`;
-    const strongStyle = `font-weight: 600; color: ${textColor};`;
+    // Define styles with Calibri font
+    const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: Calibri, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`;
+    const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`;
+    // Final listItemStyle for custom bullets
+    const listItemStyle = `padding: 0 0 0 20px; margin-bottom: 8px; font-family: Calibri, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: transparent; list-style-type: none; position: relative;`; // Ensure list-style-type is none
+    const bulletStyle = `position: absolute; left: 0; top: 0.6em; /* Adjust vertical alignment */ width: 6px; height: 6px; border-radius: 50%; background-color: ${primaryAccentColor};`; // Uses theme color
+    const strongStyle = `font-weight: 600; color: ${textColor};`; // Keep strong style as is
     const linkButtonStyle = `display: inline-block; padding: 10px 24px; background-color: ${primaryAccentColor}; color: #FFFFFF !important; text-decoration: none !important; font-weight: 600; border-radius: 4px; margin-top: 5px; border: none; cursor: pointer;`;
     const tenantBlockStyle = `background-color: #FFFFFF; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px; padding: 20px;`;
+    // Table styles for meeting slots
+    const tableStyle = `width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
+    const thStyle = `border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #f8f8f8; font-weight: 600; color: ${textColor};`;
+    const tdStyle = `border: 1px solid #ddd; padding: 10px; vertical-align: top;`;
+
 
     // Build plain text first
     const plainTextContent = this.buildEmailBody(formData, tenants);
@@ -254,7 +297,45 @@ const emailBuilder = {
     // Intro
     htmlBodyContent += `<p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>`;
     htmlBodyContent += `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany })}</p>`;
-    htmlBodyContent += `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`;
+    htmlBodyContent += `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`; // Changed font
+
+    // Proposed Meeting Slots Section (HTML) - Grouped by day in a table
+    // Only include if the flag is set and slots exist
+    if (formData.includeMeetingSlots && formData.proposedSlots && formData.proposedSlots.length > 0) {
+        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+        const meetingSlotsTitle = this.translate('meetingSlotsTitle', language);
+        htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: meetingSlotsTitle, color: primaryAccentColor, theme: effectiveTheme }));
+        htmlBodyContent += `<p style="${pStyle}">${this.translate('meetingSlotsIntro', language)}</p>`;
+
+        const groupedSlots = _groupSlotsByDay(formData.proposedSlots);
+        const sortedDays = Object.keys(groupedSlots).sort();
+
+        // Start table
+        htmlBodyContent += `<table style="${tableStyle}">`;
+        // Table Header
+        htmlBodyContent += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">Available Times</th></tr></thead>`;
+        // Table Body
+        htmlBodyContent += `<tbody>`;
+        sortedDays.forEach(dayKey => {
+          const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
+          const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
+          // Format only the time part for the second column
+          const timeStrings = groupedSlots[dayKey].map(slot => {
+              const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+              const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+              return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`; // Reconstruct time format directly
+          });
+          const formattedTimes = timeStrings.join(', '); // Join with comma and space
+
+          htmlBodyContent += `<tr>`;
+          htmlBodyContent += `<td style="${tdStyle}">${dayLabel}</td>`;
+          htmlBodyContent += `<td style="${tdStyle}">${formattedTimes}</td>`; // Use the explicitly formatted times
+          htmlBodyContent += `</tr>`;
+        });
+        htmlBodyContent += `</tbody></table>`;
+
+        // htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`; // Keep if needed, update font
+    }
 
     // Support Plan Section
     htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: this.translate('supportPlanTitle', language, { tier: tier.name }), color: primaryAccentColor, theme: effectiveTheme }));
@@ -310,18 +391,6 @@ const emailBuilder = {
          }));
     }
 
-    // Meeting Section (HTML - No changes needed)
-    if (formData.meetingDate) {
-        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-        const meetingSectionTitle = this.translate('meetingTitle', language);
-        htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: meetingSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('meetingIntro', language)}</p>`;
-        htmlBodyContent += `<div style="margin: 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">`;
-        htmlBodyContent += `<strong style="${strongStyle}">${this.translate('meetingDate', language, { date: `<span style="color: ${primaryAccentColor};">${formData.meetingDate}</span>` })}</strong>`;
-        htmlBodyContent += `</div>`;
-        htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`;
-    }
-
     // GDAP Section (HTML - Adjusted for multiple tenants, removed default link)
     if (tenants.length > 0) {
         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
@@ -363,27 +432,27 @@ const emailBuilder = {
 
          // Step 1: Install/Update Module (Common instruction)
          rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 1, title: this.translate('rbacStep1', language), theme: effectiveTheme }));
-         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
-         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`; // Changed font
+         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`; // Changed font
          rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Install-Module -Name Az -Repository PSGallery -Force', theme: effectiveTheme }))}</div>`;
-         rbacHtml += `<p style="margin: 15px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">or update it:</p>`;
-         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+         rbacHtml += `<p style="margin: 15px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">or update it:</p>`; // Changed font
+         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`; // Changed font
          rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Update-Module Az.Resources -Force', theme: effectiveTheme }))}</div>`;
 
          // Step 2: Run script per tenant
          rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 2, title: this.translate('rbacStep2', language), theme: effectiveTheme }));
-         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2InstructionMultiTenant', language)}</p>`; // Instruction updated via translations
+         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2InstructionMultiTenant', language)}</p>`; // Changed font
 
          relevantRbacTenants.forEach(tenant => {
             const tenantDomain = tenant.microsoftTenantDomain || '[MS_TENANT_DOMAIN_MISSING]'; // Use MS Domain or placeholder
             const scriptForTenant = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantDomain);
             // Add a sub-header for each script block showing the domain
-            rbacHtml += `<h4 style="margin: 20px 0 5px 48px; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; font-weight: 600;">Script for Tenant: ${tenant.companyName} (Domain: ${tenantDomain})</h4>`;
-            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+            rbacHtml += `<h4 style="margin: 20px 0 5px 48px; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; font-weight: 600;">Script for Tenant: ${tenant.companyName} (Domain: ${tenantDomain})</h4>`; // Changed font
+            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`; // Changed font
             rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: scriptForTenant, theme: effectiveTheme }))}</div>`;
          });
 
-         rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
+         rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`; // Changed font
          htmlBodyContent += `<div style="${tenantBlockStyle}">${rbacHtml}</div>`;
     }
 
@@ -408,13 +477,13 @@ const emailBuilder = {
         const additionalInfoTitle = this.translate('additionalInfoTitle', language);
         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: additionalInfoTitle, color: primaryAccentColor, theme: effectiveTheme }));
         const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
-        htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`;
+        htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`; // Changed font
     }
 
     // Closing and Footer
-    htmlBodyContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`;
-    htmlBodyContent += `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`;
-    htmlBodyContent += `<div style="line-height: 1.6; font-family: 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`;
+    htmlBodyContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`; // Changed font
+    htmlBodyContent += `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`; // Changed font
+    htmlBodyContent += `<div style="line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`; // Changed font
     htmlBodyContent += `${formData.senderName}<br>`;
     htmlBodyContent += `${formData.senderTitle}<br>`;
     htmlBodyContent += `${formData.senderCompany}<br>`;
@@ -431,6 +500,7 @@ const emailBuilder = {
     <title>${subject}</title>
     <!--[if mso]>
     <style type="text/css">
+      body, table, td, th, div, p, h1, h2, h3, h4, h5, h6 {font-family: Calibri, 'Segoe UI', Arial, sans-serif !important;} /* Add Calibri for MSO */
       table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
     </style>
     <xml>
@@ -451,7 +521,7 @@ const emailBuilder = {
     <!-- Main content -->
     ${htmlBodyContent}
     <!-- Footer Div -->
-    <div style="margin-top: 40px; border-top: 1px solid #eee; padding: 20px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center; background-color: transparent;">
+    <div style="margin-top: 40px; border-top: 1px solid #eee; padding: 20px 0 0 0; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center; background-color: transparent;">
         <p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p>
     </div>
 </body>
@@ -483,27 +553,25 @@ const emailBuilder = {
     return `${supportPlanIntro}<br><br>${bulletItems}`;
   },
 
-  // processCustomerInfoToEmailData - Updated default subject and sender details
+  // processCustomerInfoToEmailData - Updated to use proposedSlots
   processCustomerInfoToEmailData: function(info: CustomerInfo, language: string = 'en'): EmailFormData {
     const tier = supportTiers[info.selectedTier];
     const today = new Date();
     const currentDate = today.toLocaleDateString();
-    let meetingDateStr;
-    if (info.proposedDate instanceof Date && !isNaN(info.proposedDate.getTime())) {
-      meetingDateStr = info.proposedDate.toLocaleDateString();
-    }
-    const formData: Omit<EmailFormData, 'rbac'> = {
+
+    // Note: EmailFormData still expects a single tenantId. This function might need
+    // further refactoring depending on how it's used, or EmailFormData needs updating.
+    // For now, providing the first tenant's ID or an empty string if no tenants.
+    const primaryTenantId = info.tenants && info.tenants.length > 0 ? info.tenants[0].id : '';
+
+    const formData = {
       companyName: info.companyName, // This is the client company
       contactName: info.contactName,
       contactEmail: info.contactEmail,
-      proposedDate: info.proposedDate,
-      // tenantId: info.tenantId, // Removed - tenants are now in CustomerInfo.tenants
+      proposedSlots: info.proposedSlots || [], // Pass the array of Date objects, default to empty array
+      tenantId: primaryTenantId,
       selectedTier: info.selectedTier,
-      emailContacts: info.authorizedContacts,
-      // Note: EmailFormData still expects a single tenantId. This function might need
-      // further refactoring depending on how it's used, or EmailFormData needs updating.
-      // For now, providing the first tenant's ID or an empty string if no tenants.
-      tenantId: info.tenants && info.tenants.length > 0 ? info.tenants[0].id : '',
+      emailContacts: info.authorizedContacts, // This might be redundant if CustomerInfo.authorizedContacts is the source of truth
       to: info.contactEmail || '',
       cc: '',
       subject: this.translate('subject', language as Language, {
@@ -516,7 +584,6 @@ const emailBuilder = {
       authorizedContacts: {
         checked: true, roles: 'Technical and Administrative contacts' // Default roles
       },
-      meetingDate: meetingDateStr,
       additionalNotes: '',
       senderName: 'Your Name', // Default sender details
       senderTitle: 'Support Specialist',
@@ -525,7 +592,7 @@ const emailBuilder = {
       currentDate: currentDate,
       language: language
     };
-    // Cast needed because Omit doesn't fully satisfy EmailFormData structure if rbac was optional
+    // Cast needed because EmailFormData might have optional fields not covered by Omit
     return formData as EmailFormData;
   },
 

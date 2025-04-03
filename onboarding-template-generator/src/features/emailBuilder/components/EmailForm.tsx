@@ -4,6 +4,7 @@ import { supportTiers } from '../../supportTiers/constants';
 import { CustomerInfo, EmailFormData } from '../utils/types';
 import { Language } from '../../../services/i18n';
 import emailBuilder from '../utils/emailBuilder';
+import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
 
 interface EmailFormProps {
   customerInfo: CustomerInfo;
@@ -18,20 +19,41 @@ const EmailForm: React.FC<EmailFormProps> = ({
   onPreviewEmail,
   language = 'en' // Default to English if not provided
 }) => {
+  const { updateCustomerInfo } = useAppState(); // Get updateCustomerInfo from context
   const [emailData, setEmailData] = useState<EmailFormData>(
     emailBuilder.processCustomerInfoToEmailData(customerInfo, language)
   );
 
   useEffect(() => {
     // Update email data when customer info or language changes
+    // This will now correctly format the proposedDate from context into YYYY-MM-DD for the input
     setEmailData(emailBuilder.processCustomerInfoToEmailData(customerInfo, language));
   }, [customerInfo, language]);
 
   const handleInputChange = (field: string, value: any) => {
-    setEmailData((prev: EmailFormData) => ({ // Fix implicit any
-      ...prev,
-      [field]: value
-    }));
+    if (field === 'meetingDate') {
+      // Handle date input specifically
+      if (value) {
+        const dateParts = value.split('-'); // YYYY-MM-DD
+        // Create date in UTC to avoid timezone issues with Date constructor
+        const parsedDate = new Date(Date.UTC(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2])));
+        if (!isNaN(parsedDate.getTime())) {
+          updateCustomerInfo('proposedDate', parsedDate); // Update central state with Date object
+        } else {
+          updateCustomerInfo('proposedDate', null); // Handle invalid date string
+        }
+      } else {
+        updateCustomerInfo('proposedDate', null); // Handle empty input
+      }
+      // Update local form state as well (though it's derived from context now)
+      setEmailData((prev: EmailFormData) => ({ ...prev, [field]: value }));
+    } else {
+      // Handle other inputs normally
+      setEmailData((prev: EmailFormData) => ({
+        ...prev,
+        [field]: value
+      }));
+    }
   };
 
   const handleNestedChange = (section: string, field: string, value: any) => {
@@ -229,16 +251,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
 
         <div className="section">
           <h3>Additional Information</h3>
-          <div className="form-group">
-            <label htmlFor="meetingDate">Onboarding Meeting Date (if applicable):</label>
-            <input
-              type="text"
-              id="meetingDate"
-              value={emailData.meetingDate || ''}
-              onChange={(e) => handleInputChange('meetingDate', e.target.value)}
-              placeholder="e.g., March 20, 2025 at 2:00 PM EST"
-            />
-          </div>
+          {/* Removed single date input - replaced by slot selection in App.tsx */}
 
           <div className="form-group">
             <label htmlFor="additionalNotes">Additional Notes or Instructions:</label>
