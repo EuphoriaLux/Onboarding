@@ -77,8 +77,9 @@ const emailBuilder = {
 
   /**
    * Build Plain Text version of the email.
+   * @param isHtmlContext - Optional flag, currently unused but could differentiate logic if needed.
    */
-  buildEmailBody: function(formData: EmailFormData, tenants: TenantInfo[] = []): string {
+  buildEmailBody: function(formData: EmailFormData, tenants: TenantInfo[] = [], isHtmlContext: boolean = false): string { // Added optional flag
     const tier = supportTiers[formData.selectedTier];
     const language = (formData.language || 'en') as Language;
 
@@ -102,19 +103,44 @@ const emailBuilder = {
       const groupedSlots = _groupSlotsByDay(formData.proposedSlots);
       const sortedDays = Object.keys(groupedSlots).sort();
 
+      // Plain text table header
+      const dateHeader = "Date";
+      const morningHeader = "Morning Slots";
+      const afternoonHeader = "Afternoon Slots";
+      const colWidthDate = 20; // Adjust widths as needed
+      const colWidthMorning = 20;
+      const colWidthAfternoon = 20;
+
+      body += `${dateHeader.padEnd(colWidthDate)} | ${morningHeader.padEnd(colWidthMorning)} | ${afternoonHeader.padEnd(colWidthAfternoon)}\n`;
+      body += `${'-'.repeat(colWidthDate)}-|-${'-'.repeat(colWidthMorning)}-|-${'-'.repeat(colWidthAfternoon)}\n`;
+
       sortedDays.forEach(dayKey => {
         const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
         const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
-        // Format only time for the list
-        const formattedTimes = groupedSlots[dayKey].map(slot => {
+
+        const morningSlots = groupedSlots[dayKey].filter(slot => slot.getHours() < 12);
+        const afternoonSlots = groupedSlots[dayKey].filter(slot => slot.getHours() >= 12);
+
+        const formatTime = (slot: Date) => {
             const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
             const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
             return `${startTime} - ${endTime}`;
-        }).join(', ');
-        body += `**${dayLabel}:** ${formattedTimes}\n`; // List times horizontally after day label
+        };
+
+        const morningTimes = morningSlots.map(formatTime);
+        const afternoonTimes = afternoonSlots.map(formatTime);
+
+        const maxRows = Math.max(morningTimes.length, afternoonTimes.length);
+
+        for (let i = 0; i < maxRows; i++) {
+            const datePart = (i === 0) ? dayLabel.padEnd(colWidthDate) : ''.padEnd(colWidthDate);
+            const morningPart = (morningTimes[i] || '').padEnd(colWidthMorning);
+            const afternoonPart = (afternoonTimes[i] || '').padEnd(colWidthAfternoon);
+            body += `${datePart} | ${morningPart} | ${afternoonPart}\n`;
+        }
+         body += `${'-'.repeat(colWidthDate)}-|-${'-'.repeat(colWidthMorning)}-|-${'-'.repeat(colWidthAfternoon)}\n`; // Separator after each day
       });
-      body += '\n'; // Add space after the list
-      // body += this.translate('meetingAttendees', language) + '\n\n'; // Keep if needed
+      body += '\n'; // Add space after the table
     }
 
     // Support Plan Section
@@ -285,11 +311,11 @@ const emailBuilder = {
     // Table styles for meeting slots
     const tableStyle = `width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
     const thStyle = `border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #f8f8f8; font-weight: 600; color: ${textColor};`;
-    const tdStyle = `border: 1px solid #ddd; padding: 10px; vertical-align: top;`;
+    const tdStyle = `border: 1px solid #ddd; padding: 10px; vertical-align: top;`; // Keep vertical-align: top for consistency
 
 
     // Build plain text first
-    const plainTextContent = this.buildEmailBody(formData, tenants);
+    const plainTextContent = this.buildEmailBody(formData, tenants); // Removed the third argument
 
     // Build HTML body content
     let htmlBodyContent = '';
@@ -312,24 +338,38 @@ const emailBuilder = {
 
         // Start table
         htmlBodyContent += `<table style="${tableStyle}">`;
-        // Table Header
-        htmlBodyContent += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">Available Times</th></tr></thead>`;
+        // Table Header - Updated for three columns
+        htmlBodyContent += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">Morning Slots</th><th style="${thStyle}">Afternoon Slots</th></tr></thead>`;
         // Table Body
         htmlBodyContent += `<tbody>`;
         sortedDays.forEach(dayKey => {
           const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
           const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
-          // Format only the time part for the second column
-          const timeStrings = groupedSlots[dayKey].map(slot => {
+
+          // Filter slots into morning and afternoon
+          const morningSlots = groupedSlots[dayKey].filter(slot => slot.getHours() < 12);
+          const afternoonSlots = groupedSlots[dayKey].filter(slot => slot.getHours() >= 12);
+
+          // Format morning slots vertically
+          const morningTimeStrings = morningSlots.map(slot => {
               const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
               const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
-              return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`; // Reconstruct time format directly
+              return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`;
           });
-          const formattedTimes = timeStrings.join(', '); // Join with comma and space
+          const formattedMorningTimes = morningTimeStrings.join('<br>'); // Join with line breaks
+
+          // Format afternoon slots vertically
+          const afternoonTimeStrings = afternoonSlots.map(slot => {
+              const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+              const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+              return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`;
+          });
+          const formattedAfternoonTimes = afternoonTimeStrings.join('<br>'); // Join with line breaks
 
           htmlBodyContent += `<tr>`;
           htmlBodyContent += `<td style="${tdStyle}">${dayLabel}</td>`;
-          htmlBodyContent += `<td style="${tdStyle}">${formattedTimes}</td>`; // Use the explicitly formatted times
+          htmlBodyContent += `<td style="${tdStyle}">${formattedMorningTimes || '&nbsp;'}</td>`; // Add morning slots or non-breaking space
+          htmlBodyContent += `<td style="${tdStyle}">${formattedAfternoonTimes || '&nbsp;'}</td>`; // Add afternoon slots or non-breaking space
           htmlBodyContent += `</tr>`;
         });
         htmlBodyContent += `</tbody></table>`;

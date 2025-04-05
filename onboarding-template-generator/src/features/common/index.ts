@@ -1,3 +1,2 @@
 // src/features/common/index.ts
-export { default as App } from './components/App';
-export { default as LanguageSelector } from './components/LanguageSelector';
+// Removed exports for moved components (App, LanguageSelector)

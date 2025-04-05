@@ -41,3 +41,13 @@ export interface ThemeSettings {
   textColor: string;
   backgroundColor: string;
 }
+
+/**
+ * Agent details used in email generation
+ */
+export interface AgentSettings {
+  agentName: string;
+  agentTitle: string;
+  companyName: string;
+  agentEmail: string;
+}

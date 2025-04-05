@@ -1,6 +1,6 @@
-// src/features/common/components/LanguageSelector.tsx
+// src/components/LanguageSelector.tsx - Moved from features/common/components
 import React from 'react';
-import { Language } from '../../../services/i18n';
+import { Language } from '../services/i18n'; // Adjusted path
 
 interface LanguageSelectorProps {
   selectedLanguage: Language;

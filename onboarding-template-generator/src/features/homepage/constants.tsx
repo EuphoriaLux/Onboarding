@@ -1,5 +1,5 @@
 import React from 'react';
-import App from '../common/components/App';
+import App from '../../App'; // Adjusted path
 import SettingsPage from '../settings/components/SettingsPage';
 import OnCallDutyForm from '../icsGenerator/components/OnCallDutyForm';
 import VacationRequestForm from '../icsGenerator/components/VacationRequestForm';
@@ -10,7 +10,7 @@ import {
   ReportingIcon,
   SettingsIcon,
   CalendarIcon
-} from '../common/components/Icons'; // Assuming Icons.tsx is in common/components
+} from '../../components/Icons'; // Adjusted path
 
 // Feature type definition
 export interface Feature {

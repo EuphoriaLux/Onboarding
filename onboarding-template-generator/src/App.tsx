@@ -1,51 +1,20 @@
-// src/features/common/components/App.tsx
+// src/App.tsx - Moved from features/common/components
 import React, { useState, useEffect } from 'react'; // Added useEffect
-import { TierSelector } from '../../supportTiers';
-import { ContactsForm } from '../../contacts';
-import { TenantManager } from '../../tenants';
-import { EmailForm, EmailPreview } from '../../emailBuilder';
-import LanguageSelector from './LanguageSelector';
-import { useAppState } from '../../../contexts/AppStateContext';
-import { useLanguage } from '../../../contexts/LanguageContext';
-import { StorageService } from '../../../services/storage'; // Import StorageService
-import { ThemeSettings } from '../../../types'; // Import ThemeSettings
-import { supportTiers } from '../../supportTiers/data/supportTiers'; // Import supportTiers
-import { generateMeetingSlots, formatSlot } from '../../emailBuilder/utils/dateSlotGenerator'; // Import slot utilities
-import '../../../styles/App.css';
+import { TierSelector } from './features/supportTiers'; // Adjusted path
+import { ContactsForm } from './features/contacts'; // Adjusted path
+import { TenantManager } from './features/tenants'; // Adjusted path
+import { EmailForm, EmailPreview } from './features/emailBuilder'; // Adjusted path
+import LanguageSelector from './components/LanguageSelector'; // Adjusted path
+import { useAppState } from './contexts/AppStateContext'; // Adjusted path
+import { useLanguage } from './contexts/LanguageContext'; // Adjusted path
+import { StorageService } from './services/storage'; // Adjusted path
+import { ThemeSettings, AgentSettings } from './types'; // Adjusted path, added AgentSettings
+import { supportTiers } from './features/supportTiers/data/supportTiers'; // Adjusted path
+import { generateMeetingSlots, formatSlot } from './features/emailBuilder/utils/dateSlotGenerator'; // Adjusted path
+import CollapsibleSection from './components/CollapsibleSection'; // Import moved component
+import './styles/App.css'; // Adjusted path
 
-// Define AgentSettings interface (can be moved to a shared types file later)
-interface AgentSettings {
-  agentName: string;
-  agentTitle: string;
-  companyName: string;
-  agentEmail: string; // Add agentEmail
-}
-
-// Collapsible Section component for onboarding components
-const CollapsibleSection: React.FC<{
-  title: string;
-  children: React.ReactNode;
-  initialExpanded?: boolean;
-}> = ({ title, children, initialExpanded = false }) => {
-  const [isExpanded, setIsExpanded] = useState(initialExpanded);
-
-  return (
-    <div className="form-section collapsible-section">
-      <div
-        className={`collapsible-header ${isExpanded ? 'expanded' : ''}`}
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <h3>{title}</h3>
-        <span className="toggle-icon">{isExpanded ? '−' : '+'}</span>
-      </div>
-      {isExpanded && (
-        <div className="collapsible-content">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-};
+// AgentSettings interface moved to src/types/index.ts
 
 /**
  * Main App Component for the Onboarding Template Generator

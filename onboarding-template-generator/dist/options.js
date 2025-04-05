@@ -72128,6 +72128,321 @@ var isFocusable = function isFocusable(node, options) {
 
 /***/ }),
 
+/***/ "./src/App.tsx":
+/*!*********************!*\
+  !*** ./src/App.tsx ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _features_supportTiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/supportTiers */ "./src/features/supportTiers/index.ts");
+/* harmony import */ var _features_contacts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/contacts */ "./src/features/contacts/index.ts");
+/* harmony import */ var _features_tenants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/tenants */ "./src/features/tenants/index.ts");
+/* harmony import */ var _features_emailBuilder__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./features/emailBuilder */ "./src/features/emailBuilder/index.ts");
+/* harmony import */ var _components_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/LanguageSelector */ "./src/components/LanguageSelector.tsx");
+/* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
+/* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
+/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/storage */ "./src/services/storage/index.ts");
+/* harmony import */ var _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./features/supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
+/* harmony import */ var _features_emailBuilder_utils_dateSlotGenerator__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./features/emailBuilder/utils/dateSlotGenerator */ "./src/features/emailBuilder/utils/dateSlotGenerator.ts");
+/* harmony import */ var _components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/CollapsibleSection */ "./src/components/CollapsibleSection.tsx");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
+
+// src/App.tsx - Moved from features/common/components
+ // Added useEffect
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Adjusted path
+ // Import moved component
+ // Adjusted path
+// AgentSettings interface moved to src/types/index.ts
+/**
+ * Main App Component for the Onboarding Template Generator
+ * Uses contexts for state management and i18n
+ */
+const App = () => {
+    const { state, updateCustomerInfo, updateContacts, updateTenants, updateTier, updateEmailData, updateProposedSlots // Get the new handler
+     } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__.useAppState)();
+    const { language, setLanguage } = (0,_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__.useLanguage)();
+    const [showEmailPreview, setShowEmailPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [localEmailData, setLocalEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // Consider using a more specific type
+    const [agentSettings, setAgentSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // State for agent settings
+    const [themeSettings, setThemeSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // State for theme settings
+    const [emailRecipients, setEmailRecipients] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+        to: state.customerInfo.contactEmail || '',
+        cc: '',
+        subject: ''
+    });
+    // State for conditional sections
+    const [includeConditionalAccess, setIncludeConditionalAccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    const [includeNotes, setIncludeNotes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true); // Assuming notes are optional too
+    const [additionalNotes, setAdditionalNotes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    // const [selectedSlotDay, setSelectedSlotDay] = useState<string | null>(null); // No longer needed for block selection
+    const [includeMeetingSlots, setIncludeMeetingSlots] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false); // State for the master toggle
+    // Fetch agent and theme settings on mount
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        Promise.all([
+            _services_storage__WEBPACK_IMPORTED_MODULE_9__.StorageService.get('agentSettings'),
+            _services_storage__WEBPACK_IMPORTED_MODULE_9__.StorageService.get('themeSettings')
+        ])
+            .then(([agentData, themeData]) => {
+            setAgentSettings(agentData || { agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+            setThemeSettings(themeData || null);
+        })
+            .catch(error => {
+            console.error("Error loading settings in App:", error);
+            setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
+            setThemeSettings(null);
+        });
+    }, []);
+    // Generate available slots (memoize to avoid regeneration on every render)
+    const availableSlots = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => (0,_features_emailBuilder_utils_dateSlotGenerator__WEBPACK_IMPORTED_MODULE_11__.generateMeetingSlots)(2), []);
+    // Handle meeting slot selection change (for individual slots - needed by block change handler)
+    const handleSlotChange = (slot, isChecked) => {
+        const currentSlots = state.customerInfo.proposedSlots || [];
+        let updatedSlots;
+        if (isChecked) {
+            if (!currentSlots.some(s => s.getTime() === slot.getTime())) {
+                updatedSlots = [...currentSlots, slot];
+            }
+            else {
+                updatedSlots = currentSlots;
+            }
+        }
+        else {
+            updatedSlots = currentSlots.filter(s => s.getTime() !== slot.getTime());
+        }
+        updatedSlots.sort((a, b) => a.getTime() - b.getTime());
+        updateProposedSlots(updatedSlots);
+    };
+    // Handler for selecting/deselecting morning/afternoon blocks by toggling individual slots
+    const handleTimeBlockChange = (dayKey, block, isSelected) => {
+        const slotsForDay = slotsByDay[dayKey] || [];
+        let blockSlots = [];
+        if (block === 'morning') {
+            blockSlots = slotsForDay.filter(slot => slot.getHours() >= 10 && slot.getHours() < 12);
+        }
+        else { // afternoon
+            blockSlots = slotsForDay.filter(slot => slot.getHours() >= 14 && slot.getHours() < 16);
+        }
+        // Update the state based on the block selection
+        const currentSlots = state.customerInfo.proposedSlots || [];
+        let updatedSlots;
+        if (isSelected) {
+            // Add block slots, avoiding duplicates
+            const slotsToAdd = blockSlots.filter(bs => !currentSlots.some(cs => cs.getTime() === bs.getTime()));
+            updatedSlots = [...currentSlots, ...slotsToAdd];
+        }
+        else {
+            // Remove block slots
+            const blockSlotTimes = blockSlots.map(s => s.getTime());
+            updatedSlots = currentSlots.filter(cs => !blockSlotTimes.includes(cs.getTime()));
+        }
+        updatedSlots.sort((a, b) => a.getTime() - b.getTime());
+        updateProposedSlots(updatedSlots);
+    };
+    // Group available slots by day (YYYY-MM-DD)
+    const slotsByDay = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => {
+        const grouped = {};
+        availableSlots.forEach(slot => {
+            const dayKey = slot.toISOString().split('T')[0];
+            if (!grouped[dayKey]) {
+                grouped[dayKey] = [];
+            }
+            grouped[dayKey].push(slot);
+        });
+        return grouped;
+    }, [availableSlots]);
+    // Get unique days for day selection
+    const availableDays = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => Object.keys(slotsByDay).sort(), [slotsByDay]);
+    // Handler for the master meeting slots toggle
+    const handleIncludeMeetingSlotsToggle = (isChecked) => {
+        setIncludeMeetingSlots(isChecked);
+        if (isChecked) {
+            // Select all available slots
+            updateProposedSlots(availableSlots);
+        }
+        else {
+            // Clear selected slots
+            updateProposedSlots([]);
+        }
+    };
+    // Effect to set default meeting slot state based on tier
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const isBronze = state.customerInfo.selectedTier === 'bronze';
+        handleIncludeMeetingSlotsToggle(!isBronze);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.customerInfo.selectedTier, availableSlots]);
+    // Handle email recipient changes
+    const handleEmailRecipientsChange = (field, value) => {
+        setEmailRecipients(Object.assign(Object.assign({}, emailRecipients), { [field]: value }));
+        if (field === 'to') {
+            updateCustomerInfo('contactEmail', value);
+        }
+    };
+    // Prepare data for Email Form (No longer needed by EmailForm component itself)
+    // const getEmailCustomerInfo = () => { ... };
+    // Generate email preview with all required properties
+    const handlePreviewEmail = () => {
+        var _a, _b, _c;
+        // Use fetched agent settings, provide defaults if not loaded yet or empty
+        const currentAgentName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName) || 'Your Name';
+        const currentAgentTitle = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle) || 'Support Specialist';
+        const currentCompanyName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName) || 'Microsoft Partner Support';
+        const currentAgentEmail = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail) || '';
+        // --- Automatic Subject Line ---
+        const tierName = ((_a = _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__.supportTiers[state.customerInfo.selectedTier]) === null || _a === void 0 ? void 0 : _a.name) || 'Support';
+        const companyName = ((_b = state.customerInfo.tenants[0]) === null || _b === void 0 ? void 0 : _b.companyName) || 'Customer';
+        const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
+        // --- End Automatic Subject ---
+        // Create an EmailFormData object with all the collected data
+        const emailData = {
+            companyName: companyName,
+            contactName: state.customerInfo.contactName,
+            contactEmail: state.customerInfo.contactEmail,
+            proposedSlots: state.customerInfo.proposedSlots, // Pass the array
+            tenantId: ((_c = state.customerInfo.tenants[0]) === null || _c === void 0 ? void 0 : _c.id) || '', // Use primary tenant ID
+            selectedTier: state.customerInfo.selectedTier,
+            emailContacts: state.customerInfo.authorizedContacts, // Pass contacts
+            to: emailRecipients.to,
+            cc: emailRecipients.cc,
+            subject: autoSubject,
+            includeMeetingSlots: includeMeetingSlots, // Pass the flag
+            conditionalAccess: {
+                checked: includeConditionalAccess,
+                mfa: true, location: true, device: true, signIn: true // Assuming these are fixed for now
+            },
+            authorizedContacts: {
+                checked: true, // Assuming this section is always included if contacts exist
+                roles: 'Technical and Administrative contacts' // Example default
+            },
+            additionalNotes: includeNotes ? additionalNotes : '',
+            senderName: currentAgentName,
+            senderTitle: currentAgentTitle,
+            senderCompany: currentCompanyName,
+            senderContact: currentAgentEmail,
+            currentDate: new Date().toLocaleDateString(),
+            language: language
+        };
+        const completeEmailData = Object.assign(Object.assign({}, emailData), { language });
+        setLocalEmailData(completeEmailData);
+        updateEmailData(emailData); // Update central state for persistence if needed
+        setShowEmailPreview(true);
+    };
+    // Return to form editing
+    const handleBackToEdit = () => {
+        setShowEmailPreview(false);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container onboarding-container", children: [!showEmailPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__["default"], { selectedLanguage: language, onChange: setLanguage }) })), showEmailPreview && localEmailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, tenants: state.customerInfo.tenants, agentName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName, agentTitle: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle, companyName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName, agentEmail: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail, 
+                // Correctly pass flags including includeMeetingSlots
+                flags: { includeConditionalAccess, includeNotes, includeMeetingSlots }, additionalNotes: includeNotes ? additionalNotes : undefined, themeSettings: themeSettings, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section meeting-slots-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section-header-with-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Propose Meeting Slots" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container inline-label master-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeMeetingSlots", checked: includeMeetingSlots, onChange: (e) => handleIncludeMeetingSlotsToggle(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeMeetingSlots", children: "Include Meeting Proposal" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Select potential 30-minute slots for the onboarding call (Tuesdays/Thursdays, 10-12 & 14-16). Use the toggle above to include/exclude this section in the email and select/deselect all slots." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-day-columns-container", children: [" ", availableDays.length > 0 ? (availableDays.map((dayKey) => {
+                                        var _a, _b;
+                                        const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse YYYY-MM-DD as UTC
+                                        const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
+                                        const morningSlots = ((_a = slotsByDay[dayKey]) === null || _a === void 0 ? void 0 : _a.filter(s => s.getHours() >= 10 && s.getHours() < 12)) || [];
+                                        const afternoonSlots = ((_b = slotsByDay[dayKey]) === null || _b === void 0 ? void 0 : _b.filter(s => s.getHours() >= 14 && s.getHours() < 16)) || [];
+                                        // Determine if morning/afternoon blocks are fully selected
+                                        const isMorningSelected = morningSlots.length > 0 && morningSlots.every(ms => { var _a; return (_a = state.customerInfo.proposedSlots) === null || _a === void 0 ? void 0 : _a.some(ps => ps.getTime() === ms.getTime()); });
+                                        const isAfternoonSelected = afternoonSlots.length > 0 && afternoonSlots.every(as => { var _a; return (_a = state.customerInfo.proposedSlots) === null || _a === void 0 ? void 0 : _a.some(ps => ps.getTime() === as.getTime()); });
+                                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-day-column", children: [" ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { className: "slot-day-header", children: dayLabel }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-block-group", children: [morningSlots.length > 0 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-block-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `morning-${dayKey}`, checked: isMorningSelected, onChange: (e) => handleTimeBlockChange(dayKey, 'morning', e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `morning-${dayKey}`, children: "Morning (10:00-12:00)" })] })), afternoonSlots.length > 0 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-block-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `afternoon-${dayKey}`, checked: isAfternoonSelected, onChange: (e) => handleTimeBlockChange(dayKey, 'afternoon', e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `afternoon-${dayKey}`, children: "Afternoon (14:00-16:00)" })] }))] }), (morningSlots.length > 0 || afternoonSlots.length > 0) && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("hr", { className: "slot-divider" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "slot-checkbox-group vertical", children: slotsByDay[dayKey].map((slot) => {
+                                                        var _a;
+                                                        const slotId = `slot-${slot.toISOString()}`;
+                                                        const isChecked = ((_a = state.customerInfo.proposedSlots) === null || _a === void 0 ? void 0 : _a.some(s => s.getTime() === slot.getTime())) || false;
+                                                        const timeLabel = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false }) + ' - ' + new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+                                                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: slotId, checked: isChecked, onChange: (e) => handleSlotChange(slot, e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: slotId, children: timeLabel })] }, slotId));
+                                                    }) })] }, dayKey));
+                                    })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "No available slots found in the coming weeks." }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_12__["default"], { title: "Conditional Access", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeConditionalAccess", checked: includeConditionalAccess, onChange: (e) => setIncludeConditionalAccess(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeConditionalAccess", children: "Include Conditional Access Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_12__["default"], { title: "Additional Notes", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeNotes", checked: includeNotes, onChange: (e) => setIncludeNotes(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeNotes", children: "Include Additional Notes Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4, value: additionalNotes, onChange: (e) => setAdditionalNotes(e.target.value) })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending. Agent details are configured in Extension Settings." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, disabled: !agentSettings, children: agentSettings ? 'Preview Email' : 'Loading Settings...' }) })] })] }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
+
+
+/***/ }),
+
+/***/ "./src/components/CollapsibleSection.tsx":
+/*!***********************************************!*\
+  !*** ./src/components/CollapsibleSection.tsx ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+
+// Collapsible Section component (moved from App.tsx)
+const CollapsibleSection = ({ title, children, initialExpanded = false }) => {
+    const [isExpanded, setIsExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(initialExpanded);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section collapsible-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `collapsible-header ${isExpanded ? 'expanded' : ''}`, onClick: () => setIsExpanded(!isExpanded), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: title }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "toggle-icon", children: isExpanded ? '−' : '+' })] }), isExpanded && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "collapsible-content", children: children }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CollapsibleSection);
+
+
+/***/ }),
+
+/***/ "./src/components/Icons.tsx":
+/*!**********************************!*\
+  !*** ./src/components/Icons.tsx ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CalendarIcon: () => (/* binding */ CalendarIcon),
+/* harmony export */   ComplianceIcon: () => (/* binding */ ComplianceIcon),
+/* harmony export */   OnboardingIcon: () => (/* binding */ OnboardingIcon),
+/* harmony export */   ReportingIcon: () => (/* binding */ ReportingIcon),
+/* harmony export */   SettingsIcon: () => (/* binding */ SettingsIcon)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+const OnboardingIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#0078D4", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M30 10H10C8.9 10 8 10.9 8 12V28C8 29.1 8.9 30 10 30H30C31.1 30 32 29.1 32 28V12C32 10.9 31.1 10 30 10ZM30 28H10V12H30V28Z", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M15 22H25V24H15V22ZM15 18H25V20H15V18ZM15 14H25V16H15V14Z", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "30", cy: "10", r: "4", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M30 8V12M28 10H32", stroke: "white", strokeWidth: "1.5" })] }));
+const ComplianceIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#107C10", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 8L8 14V20C8 26.6274 13.3726 32 20 32C26.6274 32 32 26.6274 32 20V14L20 8Z", stroke: "#107C10", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M17.25 20.25L19.25 22.25L23.25 18.25", stroke: "#107C10", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 15V16M16 19H15M25 19H24M17 16L16 15M23 16L24 15", stroke: "#107C10", strokeLinecap: "round", strokeLinejoin: "round" })] }));
+const ReportingIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#D83B01", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { x: "10", y: "8", width: "6", height: "24", rx: "1", stroke: "#D83B01", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { x: "22", y: "14", width: "6", height: "18", rx: "1", stroke: "#D83B01", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M10 20L18 12L30 22", stroke: "#D83B01", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "18", cy: "12", r: "2", fill: "#D83B01" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "30", cy: "22", r: "2", fill: "#D83B01" })] }));
+const SettingsIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#605E5C", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 24C22.2091 24 24 22.2091 24 20C24 17.7909 22.2091 16 20 16C17.7909 16 16 17.7909 16 20C16 22.2091 17.7909 24 20 24Z", stroke: "#605E5C", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M32 21.3299V18.6699C32 18.1876 31.6693 17.7742 31.2 17.6839L28.6745 17.1838C28.4805 16.6984 28.238 16.235 27.9525 15.8026L29.0395 13.4359C29.2489 13.0171 29.1663 12.5086 28.8264 12.1687L26.8311 10.1734C26.4912 9.8335 25.9827 9.75091 25.5639 9.96028L23.1972 11.0473C22.7648 10.7618 22.3013 10.5193 21.8159 10.3253L21.3159 7.79992C21.2255 7.33063 20.8122 7 20.3299 7H17.6699C17.1876 7 16.7742 7.33063 16.6839 7.79992L16.1838 10.3253C15.6984 10.5193 15.235 10.7618 14.8026 11.0473L12.4359 9.96028C12.0171 9.75091 11.5086 9.8335 11.1687 10.1734L9.17346 12.1687C8.83356 12.5086 8.75096 13.0171 8.96034 13.4359L10.0473 15.8026C9.76183 16.235 9.51933 16.6984 9.32532 17.1838L6.79991 17.6839C6.33061 17.7742 5.99998 18.1876 5.99998 18.6699V21.3299C5.99998 21.8122 6.33061 22.2255 6.79991 22.3159L9.32532 22.816C9.51933 23.3013 9.76183 23.7648 10.0473 24.1972L8.96034 26.5639C8.75096 26.9827 8.83356 27.4912 9.17346 27.8311L11.1687 29.8264C11.5086 30.1663 12.0171 30.2489 12.4359 30.0395L14.8026 28.9525C15.235 29.238 15.6984 29.4805 16.1838 29.6745L16.6839 32.1999C16.7742 32.6692 17.1876 32.9998 17.6699 32.9998H20.3299C20.8122 32.9998 21.2255 32.6692 21.3159 32.1999L21.8159 29.6745C22.3013 29.4805 22.7648 29.238 23.1972 28.9525L25.5639 30.0395C25.9827 30.2489 26.4912 30.1663 26.8311 29.8264L28.8264 27.8311C29.1663 27.4912 29.2489 26.9827 29.0395 26.5639L27.9525 24.1972C28.238 23.7648 28.4805 23.3013 28.6745 22.816L31.2 22.3159C31.6693 22.2255 32 21.8122 32 21.3299Z", stroke: "#605E5C", strokeWidth: "2", fill: "none" })] }));
+// Placeholder Icons for new features (Simple Calendar Icons)
+const CalendarIcon = ({ color = "#757575" }) => ( // Default gray color
+(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: color, fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M29 12H11C9.89543 12 9 12.8954 9 14V30C9 31.1046 9.89543 32 11 32H29C30.1046 32 31 31.1046 31 30V14C31 12.8954 30.1046 12 29 12Z", stroke: color, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M26 8V12M14 8V12M9 18H31", stroke: color, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })] }));
+
+
+/***/ }),
+
+/***/ "./src/components/LanguageSelector.tsx":
+/*!*********************************************!*\
+  !*** ./src/components/LanguageSelector.tsx ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+const LanguageSelector = ({ selectedLanguage, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "language-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "language-select", children: "Template Language:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { id: "language-select", value: selectedLanguage, onChange: (e) => onChange(e.target.value), className: "language-select", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "en", children: "English" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "fr", children: "Fran\u00E7ais" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "de", children: "Deutsch" })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LanguageSelector);
+
+
+/***/ }),
+
 /***/ "./src/contexts/AppStateContext.tsx":
 /*!******************************************!*\
   !*** ./src/contexts/AppStateContext.tsx ***!
@@ -72391,298 +72706,6 @@ const useLanguage = () => {
     }
     return context;
 };
-
-
-/***/ }),
-
-/***/ "./src/features/common/components/App.tsx":
-/*!************************************************!*\
-  !*** ./src/features/common/components/App.tsx ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _supportTiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../supportTiers */ "./src/features/supportTiers/index.ts");
-/* harmony import */ var _contacts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../contacts */ "./src/features/contacts/index.ts");
-/* harmony import */ var _tenants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../tenants */ "./src/features/tenants/index.ts");
-/* harmony import */ var _emailBuilder__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../emailBuilder */ "./src/features/emailBuilder/index.ts");
-/* harmony import */ var _LanguageSelector__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./LanguageSelector */ "./src/features/common/components/LanguageSelector.tsx");
-/* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
-/* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
-/* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/storage */ "./src/services/storage/index.ts");
-/* harmony import */ var _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
-/* harmony import */ var _emailBuilder_utils_dateSlotGenerator__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../emailBuilder/utils/dateSlotGenerator */ "./src/features/emailBuilder/utils/dateSlotGenerator.ts");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../styles/App.css */ "./src/styles/App.css");
-
-// src/features/common/components/App.tsx
- // Added useEffect
-
-
-
-
-
-
-
- // Import StorageService
- // Import supportTiers
- // Import slot utilities
-
-// Collapsible Section component for onboarding components
-const CollapsibleSection = ({ title, children, initialExpanded = false }) => {
-    const [isExpanded, setIsExpanded] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(initialExpanded);
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section collapsible-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `collapsible-header ${isExpanded ? 'expanded' : ''}`, onClick: () => setIsExpanded(!isExpanded), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: title }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "toggle-icon", children: isExpanded ? '−' : '+' })] }), isExpanded && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "collapsible-content", children: children }))] }));
-};
-/**
- * Main App Component for the Onboarding Template Generator
- * Uses contexts for state management and i18n
- */
-const App = () => {
-    const { state, updateCustomerInfo, updateContacts, updateTenants, updateTier, updateEmailData, updateProposedSlots // Get the new handler
-     } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__.useAppState)();
-    const { language, setLanguage } = (0,_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__.useLanguage)();
-    const [showEmailPreview, setShowEmailPreview] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
-    const [localEmailData, setLocalEmailData] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // Consider using a more specific type
-    const [agentSettings, setAgentSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // State for agent settings
-    const [themeSettings, setThemeSettings] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null); // State for theme settings
-    const [emailRecipients, setEmailRecipients] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
-        to: state.customerInfo.contactEmail || '',
-        cc: '',
-        subject: ''
-    });
-    // State for conditional sections
-    const [includeConditionalAccess, setIncludeConditionalAccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
-    const [includeNotes, setIncludeNotes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true); // Assuming notes are optional too
-    const [additionalNotes, setAdditionalNotes] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
-    // const [selectedSlotDay, setSelectedSlotDay] = useState<string | null>(null); // No longer needed for block selection
-    const [includeMeetingSlots, setIncludeMeetingSlots] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false); // State for the master toggle
-    // Fetch agent and theme settings on mount
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        Promise.all([
-            _services_storage__WEBPACK_IMPORTED_MODULE_9__.StorageService.get('agentSettings'),
-            _services_storage__WEBPACK_IMPORTED_MODULE_9__.StorageService.get('themeSettings')
-        ])
-            .then(([agentData, themeData]) => {
-            setAgentSettings(agentData || { agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
-            setThemeSettings(themeData || null);
-        })
-            .catch(error => {
-            console.error("Error loading settings in App:", error);
-            setAgentSettings({ agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
-            setThemeSettings(null);
-        });
-    }, []);
-    // Generate available slots (memoize to avoid regeneration on every render)
-    const availableSlots = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => (0,_emailBuilder_utils_dateSlotGenerator__WEBPACK_IMPORTED_MODULE_11__.generateMeetingSlots)(2), []);
-    // Handle meeting slot selection change (for individual slots - needed by block change handler)
-    const handleSlotChange = (slot, isChecked) => {
-        const currentSlots = state.customerInfo.proposedSlots || [];
-        let updatedSlots;
-        if (isChecked) {
-            if (!currentSlots.some(s => s.getTime() === slot.getTime())) {
-                updatedSlots = [...currentSlots, slot];
-            }
-            else {
-                updatedSlots = currentSlots;
-            }
-        }
-        else {
-            updatedSlots = currentSlots.filter(s => s.getTime() !== slot.getTime());
-        }
-        updatedSlots.sort((a, b) => a.getTime() - b.getTime());
-        updateProposedSlots(updatedSlots);
-    };
-    // Handler for selecting/deselecting morning/afternoon blocks by toggling individual slots
-    const handleTimeBlockChange = (dayKey, block, isSelected) => {
-        const slotsForDay = slotsByDay[dayKey] || [];
-        let blockSlots = [];
-        if (block === 'morning') {
-            blockSlots = slotsForDay.filter(slot => slot.getHours() >= 10 && slot.getHours() < 12);
-        }
-        else { // afternoon
-            blockSlots = slotsForDay.filter(slot => slot.getHours() >= 14 && slot.getHours() < 16);
-        }
-        // Update the state based on the block selection
-        const currentSlots = state.customerInfo.proposedSlots || [];
-        let updatedSlots;
-        if (isSelected) {
-            // Add block slots, avoiding duplicates
-            const slotsToAdd = blockSlots.filter(bs => !currentSlots.some(cs => cs.getTime() === bs.getTime()));
-            updatedSlots = [...currentSlots, ...slotsToAdd];
-        }
-        else {
-            // Remove block slots
-            const blockSlotTimes = blockSlots.map(s => s.getTime());
-            updatedSlots = currentSlots.filter(cs => !blockSlotTimes.includes(cs.getTime()));
-        }
-        updatedSlots.sort((a, b) => a.getTime() - b.getTime());
-        updateProposedSlots(updatedSlots);
-    };
-    // Group available slots by day (YYYY-MM-DD)
-    const slotsByDay = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => {
-        const grouped = {};
-        availableSlots.forEach(slot => {
-            const dayKey = slot.toISOString().split('T')[0];
-            if (!grouped[dayKey]) {
-                grouped[dayKey] = [];
-            }
-            grouped[dayKey].push(slot);
-        });
-        return grouped;
-    }, [availableSlots]);
-    // Get unique days for day selection
-    const availableDays = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => Object.keys(slotsByDay).sort(), [slotsByDay]);
-    // Handler for the master meeting slots toggle
-    const handleIncludeMeetingSlotsToggle = (isChecked) => {
-        setIncludeMeetingSlots(isChecked);
-        if (isChecked) {
-            // Select all available slots
-            updateProposedSlots(availableSlots);
-        }
-        else {
-            // Clear selected slots
-            updateProposedSlots([]);
-        }
-    };
-    // Effect to set default meeting slot state based on tier
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        const isBronze = state.customerInfo.selectedTier === 'bronze';
-        handleIncludeMeetingSlotsToggle(!isBronze);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.customerInfo.selectedTier, availableSlots]);
-    // Handle email recipient changes
-    const handleEmailRecipientsChange = (field, value) => {
-        setEmailRecipients(Object.assign(Object.assign({}, emailRecipients), { [field]: value }));
-        if (field === 'to') {
-            updateCustomerInfo('contactEmail', value);
-        }
-    };
-    // Prepare data for Email Form (No longer needed by EmailForm component itself)
-    // const getEmailCustomerInfo = () => { ... };
-    // Generate email preview with all required properties
-    const handlePreviewEmail = () => {
-        var _a, _b, _c;
-        // Use fetched agent settings, provide defaults if not loaded yet or empty
-        const currentAgentName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName) || 'Your Name';
-        const currentAgentTitle = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle) || 'Support Specialist';
-        const currentCompanyName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName) || 'Microsoft Partner Support';
-        const currentAgentEmail = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail) || '';
-        // --- Automatic Subject Line ---
-        const tierName = ((_a = _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__.supportTiers[state.customerInfo.selectedTier]) === null || _a === void 0 ? void 0 : _a.name) || 'Support';
-        const companyName = ((_b = state.customerInfo.tenants[0]) === null || _b === void 0 ? void 0 : _b.companyName) || 'Customer';
-        const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
-        // --- End Automatic Subject ---
-        // Create an EmailFormData object with all the collected data
-        const emailData = {
-            companyName: companyName,
-            contactName: state.customerInfo.contactName,
-            contactEmail: state.customerInfo.contactEmail,
-            proposedSlots: state.customerInfo.proposedSlots, // Pass the array
-            tenantId: ((_c = state.customerInfo.tenants[0]) === null || _c === void 0 ? void 0 : _c.id) || '', // Use primary tenant ID
-            selectedTier: state.customerInfo.selectedTier,
-            emailContacts: state.customerInfo.authorizedContacts, // Pass contacts
-            to: emailRecipients.to,
-            cc: emailRecipients.cc,
-            subject: autoSubject,
-            includeMeetingSlots: includeMeetingSlots, // Pass the flag
-            conditionalAccess: {
-                checked: includeConditionalAccess,
-                mfa: true, location: true, device: true, signIn: true // Assuming these are fixed for now
-            },
-            authorizedContacts: {
-                checked: true, // Assuming this section is always included if contacts exist
-                roles: 'Technical and Administrative contacts' // Example default
-            },
-            additionalNotes: includeNotes ? additionalNotes : '',
-            senderName: currentAgentName,
-            senderTitle: currentAgentTitle,
-            senderCompany: currentCompanyName,
-            senderContact: currentAgentEmail,
-            currentDate: new Date().toLocaleDateString(),
-            language: language
-        };
-        const completeEmailData = Object.assign(Object.assign({}, emailData), { language });
-        setLocalEmailData(completeEmailData);
-        updateEmailData(emailData); // Update central state for persistence if needed
-        setShowEmailPreview(true);
-    };
-    // Return to form editing
-    const handleBackToEdit = () => {
-        setShowEmailPreview(false);
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container onboarding-container", children: [!showEmailPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__["default"], { selectedLanguage: language, onChange: setLanguage }) })), showEmailPreview && localEmailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, tenants: state.customerInfo.tenants, agentName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName, agentTitle: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle, companyName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName, agentEmail: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail, 
-                // Correctly pass flags including includeMeetingSlots
-                flags: { includeConditionalAccess, includeNotes, includeMeetingSlots }, additionalNotes: includeNotes ? additionalNotes : undefined, themeSettings: themeSettings, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section meeting-slots-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section-header-with-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Propose Meeting Slots" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container inline-label master-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeMeetingSlots", checked: includeMeetingSlots, onChange: (e) => handleIncludeMeetingSlotsToggle(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeMeetingSlots", children: "Include Meeting Proposal" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Select potential 30-minute slots for the onboarding call (Tuesdays/Thursdays, 10-12 & 14-16). Use the toggle above to include/exclude this section in the email and select/deselect all slots." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-day-columns-container", children: [" ", availableDays.length > 0 ? (availableDays.map((dayKey) => {
-                                        var _a, _b;
-                                        const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse YYYY-MM-DD as UTC
-                                        const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
-                                        const morningSlots = ((_a = slotsByDay[dayKey]) === null || _a === void 0 ? void 0 : _a.filter(s => s.getHours() >= 10 && s.getHours() < 12)) || [];
-                                        const afternoonSlots = ((_b = slotsByDay[dayKey]) === null || _b === void 0 ? void 0 : _b.filter(s => s.getHours() >= 14 && s.getHours() < 16)) || [];
-                                        // Determine if morning/afternoon blocks are fully selected
-                                        const isMorningSelected = morningSlots.length > 0 && morningSlots.every(ms => { var _a; return (_a = state.customerInfo.proposedSlots) === null || _a === void 0 ? void 0 : _a.some(ps => ps.getTime() === ms.getTime()); });
-                                        const isAfternoonSelected = afternoonSlots.length > 0 && afternoonSlots.every(as => { var _a; return (_a = state.customerInfo.proposedSlots) === null || _a === void 0 ? void 0 : _a.some(ps => ps.getTime() === as.getTime()); });
-                                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-day-column", children: [" ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { className: "slot-day-header", children: dayLabel }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-block-group", children: [morningSlots.length > 0 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-block-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `morning-${dayKey}`, checked: isMorningSelected, onChange: (e) => handleTimeBlockChange(dayKey, 'morning', e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `morning-${dayKey}`, children: "Morning (10:00-12:00)" })] })), afternoonSlots.length > 0 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-block-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `afternoon-${dayKey}`, checked: isAfternoonSelected, onChange: (e) => handleTimeBlockChange(dayKey, 'afternoon', e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `afternoon-${dayKey}`, children: "Afternoon (14:00-16:00)" })] }))] }), (morningSlots.length > 0 || afternoonSlots.length > 0) && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("hr", { className: "slot-divider" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "slot-checkbox-group vertical", children: slotsByDay[dayKey].map((slot) => {
-                                                        var _a;
-                                                        const slotId = `slot-${slot.toISOString()}`;
-                                                        const isChecked = ((_a = state.customerInfo.proposedSlots) === null || _a === void 0 ? void 0 : _a.some(s => s.getTime() === slot.getTime())) || false;
-                                                        const timeLabel = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false }) + ' - ' + new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
-                                                        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: slotId, checked: isChecked, onChange: (e) => handleSlotChange(slot, e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: slotId, children: timeLabel })] }, slotId));
-                                                    }) })] }, dayKey));
-                                    })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "No available slots found in the coming weeks." }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "Conditional Access", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeConditionalAccess", checked: includeConditionalAccess, onChange: (e) => setIncludeConditionalAccess(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeConditionalAccess", children: "Include Conditional Access Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(CollapsibleSection, { title: "Additional Notes", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeNotes", checked: includeNotes, onChange: (e) => setIncludeNotes(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeNotes", children: "Include Additional Notes Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4, value: additionalNotes, onChange: (e) => setAdditionalNotes(e.target.value) })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending. Agent details are configured in Extension Settings." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, disabled: !agentSettings, children: agentSettings ? 'Preview Email' : 'Loading Settings...' }) })] })] }))] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
-
-
-/***/ }),
-
-/***/ "./src/features/common/components/Icons.tsx":
-/*!**************************************************!*\
-  !*** ./src/features/common/components/Icons.tsx ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   CalendarIcon: () => (/* binding */ CalendarIcon),
-/* harmony export */   ComplianceIcon: () => (/* binding */ ComplianceIcon),
-/* harmony export */   OnboardingIcon: () => (/* binding */ OnboardingIcon),
-/* harmony export */   ReportingIcon: () => (/* binding */ ReportingIcon),
-/* harmony export */   SettingsIcon: () => (/* binding */ SettingsIcon)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-const OnboardingIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#0078D4", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M30 10H10C8.9 10 8 10.9 8 12V28C8 29.1 8.9 30 10 30H30C31.1 30 32 29.1 32 28V12C32 10.9 31.1 10 30 10ZM30 28H10V12H30V28Z", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M15 22H25V24H15V22ZM15 18H25V20H15V18ZM15 14H25V16H15V14Z", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "30", cy: "10", r: "4", fill: "#0078D4" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M30 8V12M28 10H32", stroke: "white", strokeWidth: "1.5" })] }));
-const ComplianceIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#107C10", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 8L8 14V20C8 26.6274 13.3726 32 20 32C26.6274 32 32 26.6274 32 20V14L20 8Z", stroke: "#107C10", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M17.25 20.25L19.25 22.25L23.25 18.25", stroke: "#107C10", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 15V16M16 19H15M25 19H24M17 16L16 15M23 16L24 15", stroke: "#107C10", strokeLinecap: "round", strokeLinejoin: "round" })] }));
-const ReportingIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#D83B01", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { x: "10", y: "8", width: "6", height: "24", rx: "1", stroke: "#D83B01", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { x: "22", y: "14", width: "6", height: "18", rx: "1", stroke: "#D83B01", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M10 20L18 12L30 22", stroke: "#D83B01", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "18", cy: "12", r: "2", fill: "#D83B01" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("circle", { cx: "30", cy: "22", r: "2", fill: "#D83B01" })] }));
-const SettingsIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#605E5C", fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 24C22.2091 24 24 22.2091 24 20C24 17.7909 22.2091 16 20 16C17.7909 16 16 17.7909 16 20C16 22.2091 17.7909 24 20 24Z", stroke: "#605E5C", strokeWidth: "2", fill: "none" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M32 21.3299V18.6699C32 18.1876 31.6693 17.7742 31.2 17.6839L28.6745 17.1838C28.4805 16.6984 28.238 16.235 27.9525 15.8026L29.0395 13.4359C29.2489 13.0171 29.1663 12.5086 28.8264 12.1687L26.8311 10.1734C26.4912 9.8335 25.9827 9.75091 25.5639 9.96028L23.1972 11.0473C22.7648 10.7618 22.3013 10.5193 21.8159 10.3253L21.3159 7.79992C21.2255 7.33063 20.8122 7 20.3299 7H17.6699C17.1876 7 16.7742 7.33063 16.6839 7.79992L16.1838 10.3253C15.6984 10.5193 15.235 10.7618 14.8026 11.0473L12.4359 9.96028C12.0171 9.75091 11.5086 9.8335 11.1687 10.1734L9.17346 12.1687C8.83356 12.5086 8.75096 13.0171 8.96034 13.4359L10.0473 15.8026C9.76183 16.235 9.51933 16.6984 9.32532 17.1838L6.79991 17.6839C6.33061 17.7742 5.99998 18.1876 5.99998 18.6699V21.3299C5.99998 21.8122 6.33061 22.2255 6.79991 22.3159L9.32532 22.816C9.51933 23.3013 9.76183 23.7648 10.0473 24.1972L8.96034 26.5639C8.75096 26.9827 8.83356 27.4912 9.17346 27.8311L11.1687 29.8264C11.5086 30.1663 12.0171 30.2489 12.4359 30.0395L14.8026 28.9525C15.235 29.238 15.6984 29.4805 16.1838 29.6745L16.6839 32.1999C16.7742 32.6692 17.1876 32.9998 17.6699 32.9998H20.3299C20.8122 32.9998 21.2255 32.6692 21.3159 32.1999L21.8159 29.6745C22.3013 29.4805 22.7648 29.238 23.1972 28.9525L25.5639 30.0395C25.9827 30.2489 26.4912 30.1663 26.8311 29.8264L28.8264 27.8311C29.1663 27.4912 29.2489 26.9827 29.0395 26.5639L27.9525 24.1972C28.238 23.7648 28.4805 23.3013 28.6745 22.816L31.2 22.3159C31.6693 22.2255 32 21.8122 32 21.3299Z", stroke: "#605E5C", strokeWidth: "2", fill: "none" })] }));
-// Placeholder Icons for new features (Simple Calendar Icons)
-const CalendarIcon = ({ color = "#757575" }) => ( // Default gray color
-(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: color, fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M29 12H11C9.89543 12 9 12.8954 9 14V30C9 31.1046 9.89543 32 11 32H29C30.1046 32 31 31.1046 31 30V14C31 12.8954 30.1046 12 29 12Z", stroke: color, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M26 8V12M14 8V12M9 18H31", stroke: color, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })] }));
-
-
-/***/ }),
-
-/***/ "./src/features/common/components/LanguageSelector.tsx":
-/*!*************************************************************!*\
-  !*** ./src/features/common/components/LanguageSelector.tsx ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-const LanguageSelector = ({ selectedLanguage, onChange }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "language-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "language-select", children: "Template Language:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { id: "language-select", value: selectedLanguage, onChange: (e) => onChange(e.target.value), className: "language-select", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "en", children: "English" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "fr", children: "Fran\u00E7ais" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "de", children: "Deutsch" })] })] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LanguageSelector);
 
 
 /***/ }),
@@ -74119,8 +74142,9 @@ const emailBuilder = {
     translate: _translationService__WEBPACK_IMPORTED_MODULE_3__.getTranslation,
     /**
      * Build Plain Text version of the email.
+     * @param isHtmlContext - Optional flag, currently unused but could differentiate logic if needed.
      */
-    buildEmailBody: function (formData, tenants = []) {
+    buildEmailBody: function (formData, tenants = [], isHtmlContext = false) {
         var _a;
         const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__.supportTiers[formData.selectedTier];
         const language = (formData.language || 'en');
@@ -74139,19 +74163,37 @@ const emailBuilder = {
             body += this.translate('meetingSlotsIntro', language) + '\n\n';
             const groupedSlots = _groupSlotsByDay(formData.proposedSlots);
             const sortedDays = Object.keys(groupedSlots).sort();
+            // Plain text table header
+            const dateHeader = "Date";
+            const morningHeader = "Morning Slots";
+            const afternoonHeader = "Afternoon Slots";
+            const colWidthDate = 20; // Adjust widths as needed
+            const colWidthMorning = 20;
+            const colWidthAfternoon = 20;
+            body += `${dateHeader.padEnd(colWidthDate)} | ${morningHeader.padEnd(colWidthMorning)} | ${afternoonHeader.padEnd(colWidthAfternoon)}\n`;
+            body += `${'-'.repeat(colWidthDate)}-|-${'-'.repeat(colWidthMorning)}-|-${'-'.repeat(colWidthAfternoon)}\n`;
             sortedDays.forEach(dayKey => {
                 const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
                 const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
-                // Format only time for the list
-                const formattedTimes = groupedSlots[dayKey].map(slot => {
+                const morningSlots = groupedSlots[dayKey].filter(slot => slot.getHours() < 12);
+                const afternoonSlots = groupedSlots[dayKey].filter(slot => slot.getHours() >= 12);
+                const formatTime = (slot) => {
                     const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
                     const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
                     return `${startTime} - ${endTime}`;
-                }).join(', ');
-                body += `**${dayLabel}:** ${formattedTimes}\n`; // List times horizontally after day label
+                };
+                const morningTimes = morningSlots.map(formatTime);
+                const afternoonTimes = afternoonSlots.map(formatTime);
+                const maxRows = Math.max(morningTimes.length, afternoonTimes.length);
+                for (let i = 0; i < maxRows; i++) {
+                    const datePart = (i === 0) ? dayLabel.padEnd(colWidthDate) : ''.padEnd(colWidthDate);
+                    const morningPart = (morningTimes[i] || '').padEnd(colWidthMorning);
+                    const afternoonPart = (afternoonTimes[i] || '').padEnd(colWidthAfternoon);
+                    body += `${datePart} | ${morningPart} | ${afternoonPart}\n`;
+                }
+                body += `${'-'.repeat(colWidthDate)}-|-${'-'.repeat(colWidthMorning)}-|-${'-'.repeat(colWidthAfternoon)}\n`; // Separator after each day
             });
-            body += '\n'; // Add space after the list
-            // body += this.translate('meetingAttendees', language) + '\n\n'; // Keep if needed
+            body += '\n'; // Add space after the table
         }
         // Support Plan Section
         body += `**${this.translate('supportPlanTitle', language, { tier: tier.name })}**\n\n`;
@@ -74313,9 +74355,9 @@ const emailBuilder = {
         // Table styles for meeting slots
         const tableStyle = `width: 100%; border-collapse: collapse; margin: 20px 0; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};`;
         const thStyle = `border: 1px solid #ddd; padding: 10px; text-align: left; background-color: #f8f8f8; font-weight: 600; color: ${textColor};`;
-        const tdStyle = `border: 1px solid #ddd; padding: 10px; vertical-align: top;`;
+        const tdStyle = `border: 1px solid #ddd; padding: 10px; vertical-align: top;`; // Keep vertical-align: top for consistency
         // Build plain text first
-        const plainTextContent = this.buildEmailBody(formData, tenants);
+        const plainTextContent = this.buildEmailBody(formData, tenants); // Removed the third argument
         // Build HTML body content
         let htmlBodyContent = '';
         // Intro
@@ -74333,23 +74375,34 @@ const emailBuilder = {
             const sortedDays = Object.keys(groupedSlots).sort();
             // Start table
             htmlBodyContent += `<table style="${tableStyle}">`;
-            // Table Header
-            htmlBodyContent += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">Available Times</th></tr></thead>`;
+            // Table Header - Updated for three columns
+            htmlBodyContent += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">Morning Slots</th><th style="${thStyle}">Afternoon Slots</th></tr></thead>`;
             // Table Body
             htmlBodyContent += `<tbody>`;
             sortedDays.forEach(dayKey => {
                 const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
                 const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
-                // Format only the time part for the second column
-                const timeStrings = groupedSlots[dayKey].map(slot => {
+                // Filter slots into morning and afternoon
+                const morningSlots = groupedSlots[dayKey].filter(slot => slot.getHours() < 12);
+                const afternoonSlots = groupedSlots[dayKey].filter(slot => slot.getHours() >= 12);
+                // Format morning slots vertically
+                const morningTimeStrings = morningSlots.map(slot => {
                     const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
                     const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
-                    return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`; // Reconstruct time format directly
+                    return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`;
                 });
-                const formattedTimes = timeStrings.join(', '); // Join with comma and space
+                const formattedMorningTimes = morningTimeStrings.join('<br>'); // Join with line breaks
+                // Format afternoon slots vertically
+                const afternoonTimeStrings = afternoonSlots.map(slot => {
+                    const startTime = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+                    const endTime = new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
+                    return `<strong style="${strongStyle}">${startTime} - ${endTime}</strong>`;
+                });
+                const formattedAfternoonTimes = afternoonTimeStrings.join('<br>'); // Join with line breaks
                 htmlBodyContent += `<tr>`;
                 htmlBodyContent += `<td style="${tdStyle}">${dayLabel}</td>`;
-                htmlBodyContent += `<td style="${tdStyle}">${formattedTimes}</td>`; // Use the explicitly formatted times
+                htmlBodyContent += `<td style="${tdStyle}">${formattedMorningTimes || '&nbsp;'}</td>`; // Add morning slots or non-breaking space
+                htmlBodyContent += `<td style="${tdStyle}">${formattedAfternoonTimes || '&nbsp;'}</td>`; // Add afternoon slots or non-breaking space
                 htmlBodyContent += `</tr>`;
             });
             htmlBodyContent += `</tbody></table>`;
@@ -74790,34 +74843,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   features: () => (/* binding */ features)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _common_components_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/components/App */ "./src/features/common/components/App.tsx");
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../App */ "./src/App.tsx");
 /* harmony import */ var _settings_components_SettingsPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../settings/components/SettingsPage */ "./src/features/settings/components/SettingsPage.tsx");
 /* harmony import */ var _icsGenerator_components_OnCallDutyForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icsGenerator/components/OnCallDutyForm */ "./src/features/icsGenerator/components/OnCallDutyForm.tsx");
 /* harmony import */ var _icsGenerator_components_VacationRequestForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icsGenerator/components/VacationRequestForm */ "./src/features/icsGenerator/components/VacationRequestForm.tsx");
 /* harmony import */ var _icsGenerator_components_SupportRequestForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icsGenerator/components/SupportRequestForm */ "./src/features/icsGenerator/components/SupportRequestForm.tsx");
-/* harmony import */ var _common_components_Icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../common/components/Icons */ "./src/features/common/components/Icons.tsx");
+/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/Icons */ "./src/components/Icons.tsx");
+
+ // Adjusted path
 
 
 
 
-
-
- // Assuming Icons.tsx is in common/components
+ // Adjusted path
 // Define available features
 const features = [
     {
         id: 'onboarding',
         name: 'Onboarding Template Generator',
         description: 'Create rich text onboarding templates for Microsoft support customers.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.OnboardingIcon, {}),
-        component: _common_components_App__WEBPACK_IMPORTED_MODULE_1__["default"],
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.OnboardingIcon, {}),
+        component: _App__WEBPACK_IMPORTED_MODULE_1__["default"],
         enabled: true
     },
     {
         id: 'compliance',
         name: 'Compliance Assessment',
         description: 'Generate Microsoft compliance assessment reports and recommendations.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.ComplianceIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.ComplianceIcon, {}),
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false
     },
@@ -74825,7 +74878,7 @@ const features = [
         id: 'reporting',
         name: 'Support Reporting',
         description: 'Create and export support usage reports and analytics.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.ReportingIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.ReportingIcon, {}),
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false
     },
@@ -74833,7 +74886,7 @@ const features = [
         id: 'settings',
         name: 'Extension Settings',
         description: 'Configure extension preferences and defaults.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.SettingsIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.SettingsIcon, {}),
         component: _settings_components_SettingsPage__WEBPACK_IMPORTED_MODULE_2__["default"], // Use the actual component
         enabled: true
     },
@@ -74842,7 +74895,7 @@ const features = [
         id: 'onCallDuty',
         name: 'On-Call Duty ICS Generator',
         description: 'Create an .ics file for on-call duty periods.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#E81123" }), // Red color for On-Call
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#E81123" }), // Red color for On-Call
         component: _icsGenerator_components_OnCallDutyForm__WEBPACK_IMPORTED_MODULE_3__["default"],
         enabled: true
     },
@@ -74850,7 +74903,7 @@ const features = [
         id: 'vacationRequest',
         name: 'Vacation Request ICS Generator',
         description: 'Generate an .ics file for vacation requests.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#0078D4" }), // Blue color for Vacation
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#0078D4" }), // Blue color for Vacation
         component: _icsGenerator_components_VacationRequestForm__WEBPACK_IMPORTED_MODULE_4__["default"],
         enabled: true
     },
@@ -74858,7 +74911,7 @@ const features = [
         id: 'supportRequest',
         name: 'Support Request ICS Generator',
         description: 'Generate an .ics file for support request entries.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_common_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#107C10" }), // Green color for Support
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#107C10" }), // Green color for Support
         component: _icsGenerator_components_SupportRequestForm__WEBPACK_IMPORTED_MODULE_5__["default"],
         enabled: true
     },

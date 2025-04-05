@@ -1,10 +1,10 @@
-// src/features/common/components/TableCopyComponent.tsx
+// src/components/TableCopyComponent.tsx - Moved from features/common/components
 import React, { useState } from 'react';
-import emailBuilder from '../../emailBuilder/utils/emailBuilder';
-import { CustomerInfo } from '../../emailBuilder/utils/types';
-import { supportTiers } from '../../supportTiers/constants';
+import emailBuilder from '../features/emailBuilder/utils/emailBuilder'; // Adjusted path
+import { CustomerInfo } from '../features/emailBuilder/utils/types'; // Adjusted path
+import { supportTiers } from '../features/supportTiers/constants'; // Adjusted path
 // Import createContactsTable directly
-import { createContactsTable } from '../../emailBuilder/utils/components';
+import { createContactsTable } from '../features/emailBuilder/utils/components'; // Adjusted path
 
 interface TableCopyComponentProps {
   customerInfo: CustomerInfo;
