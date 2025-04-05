@@ -3,6 +3,7 @@ import { supportTiers } from '../../supportTiers/constants';
 import { CustomerInfo, EmailFormData, Language } from './types';
 import { TenantInfo } from '../../tenants/types';
 import { ThemeSettings } from '../../../types';
+import { StorageService } from '../../../services/storage'; // Import StorageService
 import React from 'react'; // Single React import
 import ReactDOMServer from 'react-dom/server'; // Single ReactDOMServer import
 import { getTranslation } from './translationService';
@@ -104,9 +105,9 @@ const emailBuilder = {
       const sortedDays = Object.keys(groupedSlots).sort();
 
       // Plain text table header
-      const dateHeader = "Date";
-      const morningHeader = "Morning Slots";
-      const afternoonHeader = "Afternoon Slots";
+      const dateHeader = "Date"; // Keep 'Date' as it's often universal in tables, or add key 'dateHeader' if needed
+      const morningHeader = this.translate('meetingSlotsMorningHeader', language);
+      const afternoonHeader = this.translate('meetingSlotsAfternoonHeader', language);
       const colWidthDate = 20; // Adjust widths as needed
       const colWidthMorning = 20;
       const colWidthAfternoon = 20;
@@ -159,7 +160,8 @@ const emailBuilder = {
     // Tenant Information Section (Plain Text) - Moved Up
     body += `**${this.translate('tenantInfoTitle', language)}**\n\n`;
     if (tenants.length > 0) {
-        body += this.translate('tenantInfoIntro', language) + '\n\n'; // Added intro text
+        const introKey = tenants.length === 1 ? 'tenantInfoIntro_singular' : 'tenantInfoIntro';
+        body += this.translate(introKey, language) + '\n\n'; // Use singular/plural key
         tenants.forEach((tenant, index) => {
             body += `Tenant ${index + 1}: ${tenant.companyName}\n`;
             body += `  Domain: ${tenant.tenantDomain || 'N/A'}\n`;
@@ -201,9 +203,10 @@ const emailBuilder = {
         body += this.translate('gdapPermission', language) + '\n\n';
         body += this.translate('gdapInstruction', language) + '\n'; // General instruction to approve
         if (specificLinks.length > 0) {
-            body += this.translate('gdapSpecificLinkInfo', language) + '\n'; // "Use the specific links provided below:"
+            body += this.translate('gdapSpecificTenantDetailsHeader', language) + '\n'; // Use new header key
             specificLinks.forEach(tenant => {
-                body += `  ${tenant.companyName}: ${tenant.gdapLink}\n`;
+                const domain = tenant.tenantDomain || 'N/A'; // Add domain info
+                body += `  ${tenant.companyName} (Domain: ${domain}): ${tenant.gdapLink}\n`; // Updated format
             });
             if (specificLinks.length < tenants.length) {
                  // If some tenants have links but not all
@@ -226,7 +229,7 @@ const emailBuilder = {
         body += `Source: https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0\n`;
         body += `${this.translate('rbacScriptHeader', language)}\n`;
         body += `Install-Module -Name Az -Repository PSGallery -Force\n\n`;
-        body += `or update it:\n`;
+        body += `${this.translate('rbacOrUpdateIt', language)}\n`;
         body += `${this.translate('rbacScriptHeader', language)}\n`;
         body += `Update-Module Az.Resources -Force\n\n`;
 
@@ -237,7 +240,7 @@ const emailBuilder = {
         relevantRbacTenants.forEach(tenant => {
             const tenantDomain = tenant.microsoftTenantDomain || '[MS_TENANT_DOMAIN_MISSING]'; // Use MS Domain or placeholder
             const scriptForTenant = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantDomain);
-            body += `--- Script for Tenant: ${tenant.companyName} (Domain: ${tenantDomain}) ---\n`; // Show domain in header
+            body += `--- ${this.translate('rbacScriptForTenantHeader', language, { companyName: tenant.companyName, tenantDomain: tenantDomain })} ---\n`; // Use translation key
             body += `${this.translate('rbacScriptHeader', language)}\n`;
             body += scriptForTenant + '\n\n';
         });
@@ -279,9 +282,13 @@ const emailBuilder = {
   /**
    * Build HTML version of the email using JSX components rendered to string.
    */
+  // Reverted to synchronous function
   buildEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = [], theme: ThemeSettings | null = null): { html: string; plainText: string } {
     const tier = supportTiers[formData.selectedTier];
     const language = (formData.language || 'en') as Language;
+
+    // Removed custom template fetching
+    // const customTemplate = await StorageService.get<string>('customEmailTemplate');
 
     const effectiveTheme: ThemeSettings = {
       primaryColor: theme?.primaryColor || '#0078d4',
@@ -299,7 +306,7 @@ const emailBuilder = {
       clientCompany: formData.companyName
     });
 
-    // Define styles with Calibri font
+    // Define styles with Calibri font (used by default template and potentially by placeholders)
     const bodyStyle = `margin: 0 auto; padding: 20px; width: 100%; max-width: 800px; font-family: Calibri, 'Segoe UI', Arial, sans-serif; line-height: 1.6; color: ${textColor}; background-color: #FFFFFF; box-sizing: border-box;`;
     const pStyle = `margin: 0 0 15px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; background-color: transparent;`;
     // Final listItemStyle for custom bullets
@@ -314,34 +321,38 @@ const emailBuilder = {
     const tdStyle = `border: 1px solid #ddd; padding: 10px; vertical-align: top;`; // Keep vertical-align: top for consistency
 
 
-    // Build plain text first
-    const plainTextContent = this.buildEmailBody(formData, tenants); // Removed the third argument
+    // Build plain text first (always uses the standard builder for now)
+    const plainTextContent = this.buildEmailBody(formData, tenants);
 
-    // Build HTML body content
+    // --- Build HTML Body Content ---
     let htmlBodyContent = '';
 
-    // Intro
-    htmlBodyContent += `<p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>`;
-    htmlBodyContent += `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany })}</p>`;
-    htmlBodyContent += `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`; // Changed font
+    // --- Placeholder Generation ---
+    // Generate content for all potential placeholders, regardless of whether custom template is used
+    const placeholders: { [key: string]: string } = {};
 
-    // Proposed Meeting Slots Section (HTML) - Grouped by day in a table
-    // Only include if the flag is set and slots exist
+    // Basic Info
+    placeholders['{greeting}'] = `<p style="${pStyle}">${this.translate('greeting', language, { name: formData.contactName })}</p>`;
+    placeholders['{intro1}'] = `<p style="${pStyle}">${this.translate('intro1', language, { company: formData.senderCompany })}</p>`;
+    placeholders['{intro2}'] = `<p style="margin: 0 0 25px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('intro2', language, { tier: tier.name })}</p>`;
+
+    // Meeting Slots
+    let meetingSlotsHtml = '';
     if (formData.includeMeetingSlots && formData.proposedSlots && formData.proposedSlots.length > 0) {
-        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+        meetingSlotsHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
         const meetingSlotsTitle = this.translate('meetingSlotsTitle', language);
-        htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: meetingSlotsTitle, color: primaryAccentColor, theme: effectiveTheme }));
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('meetingSlotsIntro', language)}</p>`;
+        meetingSlotsHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: meetingSlotsTitle, color: primaryAccentColor, theme: effectiveTheme }));
+        meetingSlotsHtml += `<p style="${pStyle}">${this.translate('meetingSlotsIntro', language)}</p>`;
 
         const groupedSlots = _groupSlotsByDay(formData.proposedSlots);
         const sortedDays = Object.keys(groupedSlots).sort();
 
-        // Start table
-        htmlBodyContent += `<table style="${tableStyle}">`;
-        // Table Header - Updated for three columns
-        htmlBodyContent += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">Morning Slots</th><th style="${thStyle}">Afternoon Slots</th></tr></thead>`;
+        // Start table generation for the placeholder string
+        meetingSlotsHtml += `<table style="${tableStyle}">`;
+        // Table Header - Updated for three columns - Use translation keys
+        meetingSlotsHtml += `<thead><tr><th style="${thStyle}">Date</th><th style="${thStyle}">${this.translate('meetingSlotsMorningHeader', language)}</th><th style="${thStyle}">${this.translate('meetingSlotsAfternoonHeader', language)}</th></tr></thead>`;
         // Table Body
-        htmlBodyContent += `<tbody>`;
+        meetingSlotsHtml += `<tbody>`;
         sortedDays.forEach(dayKey => {
           const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse as UTC
           const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
@@ -366,169 +377,227 @@ const emailBuilder = {
           });
           const formattedAfternoonTimes = afternoonTimeStrings.join('<br>'); // Join with line breaks
 
-          htmlBodyContent += `<tr>`;
-          htmlBodyContent += `<td style="${tdStyle}">${dayLabel}</td>`;
-          htmlBodyContent += `<td style="${tdStyle}">${formattedMorningTimes || '&nbsp;'}</td>`; // Add morning slots or non-breaking space
-          htmlBodyContent += `<td style="${tdStyle}">${formattedAfternoonTimes || '&nbsp;'}</td>`; // Add afternoon slots or non-breaking space
-          htmlBodyContent += `</tr>`;
+          // Add table row to the placeholder string
+          meetingSlotsHtml += `<tr>`;
+          meetingSlotsHtml += `<td style="${tdStyle}">${dayLabel}</td>`;
+          meetingSlotsHtml += `<td style="${tdStyle}">${formattedMorningTimes || '&nbsp;'}</td>`; // Add morning slots or non-breaking space
+          meetingSlotsHtml += `<td style="${tdStyle}">${formattedAfternoonTimes || '&nbsp;'}</td>`; // Add afternoon slots or non-breaking space
+          meetingSlotsHtml += `</tr>`;
         });
-        htmlBodyContent += `</tbody></table>`;
-
-        // htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('meetingAttendees', language)}</p>`; // Keep if needed, update font
+        meetingSlotsHtml += `</tbody></table>`; // Close the table in the placeholder string
     }
+    placeholders['{meetingSlots}'] = meetingSlotsHtml;
 
-    // Support Plan Section
-    htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: this.translate('supportPlanTitle', language, { tier: tier.name }), color: primaryAccentColor, theme: effectiveTheme }));
-    htmlBodyContent += `<p style="${pStyle}">${this.translate('supportPlanIntro', language, { tier: tier.name })}</p>`;
-    htmlBodyContent += `<div style="border: 1px solid #eee; border-radius: 4px; padding: 18px 20px; margin: 15px 0 25px 0; background-color: #FFFFFF;">`;
-    htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportProviderLabel', language)}:</strong> ${tier.supportProvider}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('productsCoveredLabel', language)}:</strong> ${tier.products.join(', ')}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}:</strong> ${tier.severityLevels}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}:</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}:</strong> ${tier.supportHours}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportRequestSubmissionLabel', language)}:</strong> ${tier.supportRequestSubmission}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}:</strong> ${tier.tenants}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}:</strong> ${tier.authorizedContacts}</li>`;
-    htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
-    htmlBodyContent += `</ul></div>`;
+    // Support Plan
+    let supportPlanHtml = '';
+    const supportPlanTitle = this.translate('supportPlanTitle', language, { tier: tier.name });
+    supportPlanHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: supportPlanTitle, color: primaryAccentColor, theme: effectiveTheme }));
+    supportPlanHtml += `<p style="${pStyle}">${this.translate('supportPlanIntro', language, { tier: tier.name })}</p>`;
+    supportPlanHtml += `<div style="border: 1px solid #eee; border-radius: 4px; padding: 18px 20px; margin: 15px 0 25px 0; background-color: #FFFFFF;">`;
+    supportPlanHtml += `<ul style="margin: 0; padding: 0; list-style: none;">`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportProviderLabel', language)}:</strong> ${tier.supportProvider}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('productsCoveredLabel', language)}:</strong> ${tier.products.join(', ')}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('severityLevelsLabel', language)}:</strong> ${tier.severityLevels}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('criticalLabel', language)}:</strong> ${tier.criticalSituation ? '<span style="color: #107c10; font-weight: 600;">' + this.translate('yes', language) + '</span>' : '<span style="color: #d83b01; font-weight: 600;">' + this.translate('no', language) + '</span>'}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportHoursLabel', language)}:</strong> ${tier.supportHours}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('supportRequestSubmissionLabel', language)}:</strong> ${tier.supportRequestSubmission}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('tenantsLabel', language)}:</strong> ${tier.tenants}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('contactsLabel', language)}:</strong> ${tier.authorizedContacts}</li>`;
+    supportPlanHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span><strong style="${strongStyle}">${this.translate('requestsLabel', language)}:</strong> ${tier.supportRequestsIncluded}</li>`;
+    supportPlanHtml += `</ul></div>`;
+    placeholders['{supportPlanTitle}'] = ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: supportPlanTitle, color: primaryAccentColor, theme: effectiveTheme }));
+    placeholders['{supportPlanDetails}'] = supportPlanHtml; // Includes title + details
 
-    // Tenant Information Section (HTML) - Moved Up
-    htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+    // Tenant Info
+    let tenantInfoHtml = '';
     const tenantSectionTitle = this.translate('tenantInfoTitle', language);
-    htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: tenantSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+    tenantInfoHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+    tenantInfoHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: tenantSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
     if (tenants.length > 0) {
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('tenantInfoIntro', language)}</p>`; // Added intro text
+        const introKey = tenants.length === 1 ? 'tenantInfoIntro_singular' : 'tenantInfoIntro';
+        tenantInfoHtml += `<p style="${pStyle}">${this.translate(introKey, language)}</p>`; // Use singular/plural key
         tenants.forEach((tenant, index) => {
             const deadline = tenant.implementationDeadline ? tenant.implementationDeadline.toLocaleDateString() : 'N/A';
             const azureStatus = tenant.hasAzure ? this.translate('yes', language) : this.translate('no', language);
             const azureColor = tenant.hasAzure ? '#107c10' : '#d83b01';
-            htmlBodyContent += `<div style="background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; margin-bottom: 15px; padding: 15px 20px;">`;
-            htmlBodyContent += `<strong style="font-weight: 600; color: ${primaryAccentColor}; font-size: 16px; display: block; margin-bottom: 10px;">Tenant ${index + 1}: ${tenant.companyName}</strong>`;
-            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Domain:</strong> ${tenant.tenantDomain || 'N/A'}</p>`;
-            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">MS Domain:</strong> ${tenant.microsoftTenantDomain || 'N/A'}</p>`;
-            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Tenant ID:</strong> ${tenant.id || 'N/A'}</p>`;
-            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Deadline:</strong> ${deadline}</p>`;
-            htmlBodyContent += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Azure RBAC Relevant:</strong> <span style="color: ${azureColor}; font-weight: 600;">${azureStatus}</span></p>`;
-            htmlBodyContent += `</div>`;
+            tenantInfoHtml += `<div style="background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; margin-bottom: 15px; padding: 15px 20px;">`;
+            tenantInfoHtml += `<strong style="font-weight: 600; color: ${primaryAccentColor}; font-size: 16px; display: block; margin-bottom: 10px;">Tenant ${index + 1}: ${tenant.companyName}</strong>`;
+            tenantInfoHtml += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Domain:</strong> ${tenant.tenantDomain || 'N/A'}</p>`;
+            tenantInfoHtml += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">MS Domain:</strong> ${tenant.microsoftTenantDomain || 'N/A'}</p>`;
+            tenantInfoHtml += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Tenant ID:</strong> ${tenant.id || 'N/A'}</p>`;
+            tenantInfoHtml += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Deadline:</strong> ${deadline}</p>`;
+            tenantInfoHtml += `<p style="margin: 5px 0; font-size: 14px; color: ${textColor};"><strong style="font-weight: 600;">Azure RBAC Relevant:</strong> <span style="color: ${azureColor}; font-weight: 600;">${azureStatus}</span></p>`;
+            tenantInfoHtml += `</div>`;
         });
     } else {
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('noTenantInfo', language)}</p>`;
+        tenantInfoHtml += `<p style="${pStyle}">${this.translate('noTenantInfo', language)}</p>`;
     }
+    placeholders['{tenantInfoTitle}'] = ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: tenantSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+    placeholders['{tenantInfo}'] = tenantInfoHtml; // Includes title + details
 
-    // Authorized Contacts Section
+    // Authorized Contacts
+    let contactsHtml = '';
+    let contactsTableHtml = '';
+    const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
     if (formData.authorizedContacts.checked) {
-         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-         const contactsSectionTitle = this.translate('authorizedContactsTitle', language);
-         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: contactsSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-         htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>`;
-         htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>`;
-         htmlBodyContent += `<p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>`;
-         htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(ContactsTable, {
+         contactsHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+         contactsHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: contactsSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+         contactsHtml += `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>`;
+         contactsHtml += `<p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>`;
+         contactsHtml += `<p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>`;
+         contactsTableHtml = ReactDOMServer.renderToStaticMarkup(React.createElement(ContactsTable, {
              contacts: formData.emailContacts,
              theme: effectiveTheme,
-             tierContactLimit: tier.authorizedContacts
+             tierContactLimit: tier.authorizedContacts,
+             language: language // Pass the language prop
          }));
+         contactsHtml += contactsTableHtml;
     }
+    placeholders['{authorizedContactsTitle}'] = contactsSectionTitle; // Just the title text
+    placeholders['{contactsIntro}'] = `<p style="${pStyle}">${this.translate('contactsIntro', language, { tier: tier.name, count: tier.authorizedContacts })}</p>`;
+    placeholders['{contactsRolesIntro}'] = `<p style="${pStyle}">${this.translate('contactsRolesIntro', language, { roles: `<strong style="${strongStyle}">${formData.authorizedContacts.roles}</strong>` })}</p>`;
+    placeholders['{contactsInstruction}'] = `<p style="${pStyle}">${this.translate('contactsInstruction', language)}</p>`;
+    placeholders['{contactsTable}'] = contactsTableHtml;
 
-    // GDAP Section (HTML - Adjusted for multiple tenants, removed default link)
+    // GDAP
+    let gdapHtml = '';
+    const gdapSectionTitle = this.translate('gdapTitle', language);
     if (tenants.length > 0) {
-        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-        let gdapHtml = '';
+        gdapHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+        let gdapInnerHtml = '';
         const specificLinks = tenants.filter(t => t.gdapLink && t.gdapLink.trim() !== '');
-        const deadline = tenants[0]?.implementationDeadline ? tenants[0].implementationDeadline.toLocaleDateString() : 'N/A'; // Use first tenant's deadline or N/A
-        const gdapSectionTitle = this.translate('gdapTitle', language);
-
-        gdapHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: gdapSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-        gdapHtml += `<p style="${pStyle}">${this.translate('gdapIntro', language, { deadline: deadline, roles: GDAP_ROLE })}</p>`;
-        gdapHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>`;
-        gdapHtml += `<p style="margin: 15px 0 10px 0; font-weight: 600; color: ${textColor};">${this.translate('gdapInstruction', language)}</p>`; // General instruction
-
+        const deadline = tenants[0]?.implementationDeadline ? tenants[0].implementationDeadline.toLocaleDateString() : 'N/A';
+        gdapInnerHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: gdapSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+        gdapInnerHtml += `<p style="${pStyle}">${this.translate('gdapIntro', language, { deadline: deadline, roles: GDAP_ROLE })}</p>`;
+        gdapInnerHtml += `<p style="${pStyle}">${this.translate('gdapPermission', language)}</p>`;
+        gdapInnerHtml += `<p style="margin: 15px 0 10px 0; font-weight: 600; color: ${textColor};">${this.translate('gdapInstruction', language)}</p>`;
         if (specificLinks.length > 0) {
-            gdapHtml += `<p style="${pStyle}">${this.translate('gdapSpecificLinkInfo', language)}</p>`; // "Use the specific links provided below:"
-            gdapHtml += `<ul style="padding-left: 20px; margin: 10px 0 15px 0;">`;
+            gdapInnerHtml += `<p style="${pStyle}">${this.translate('gdapSpecificTenantDetailsHeader', language)}</p>`; // Use new header key
+            gdapInnerHtml += `<ul style="padding-left: 20px; margin: 10px 0 15px 0;">`;
             specificLinks.forEach(tenant => {
-                 gdapHtml += `<li style="${listItemStyle}"><strong style="${strongStyle}">${tenant.companyName}:</strong> <a href="${tenant.gdapLink}" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">${tenant.gdapLink}</a></li>`;
+                 const domain = tenant.tenantDomain || 'N/A'; // Add domain info
+                 gdapInnerHtml += `<li style="${listItemStyle}"><strong style="${strongStyle}">${tenant.companyName}</strong> (Domain: ${domain}): <a href="${tenant.gdapLink}" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">${tenant.gdapLink}</a></li>`; // Updated format
             });
-            gdapHtml += `</ul>`;
+            gdapInnerHtml += `</ul>`;
             if (specificLinks.length < tenants.length) {
-                 // If some tenants have links but not all
-                 gdapHtml += `<p style="${pStyle}">${this.translate('gdapDefaultLinkInfo', language)}</p>`; // "For other tenants, the link will be sent separately."
+                 gdapInnerHtml += `<p style="${pStyle}">${this.translate('gdapDefaultLinkInfo', language)}</p>`;
             }
         } else {
-            // If no tenants have specific links
-            gdapHtml += `<p style="${pStyle}">${this.translate('gdapLinksSentSeparately', language)}</p>`; // New translation key: "The necessary GDAP approval link(s) will be sent in a separate communication."
+            gdapInnerHtml += `<p style="${pStyle}">${this.translate('gdapLinksSentSeparately', language)}</p>`;
         }
-        htmlBodyContent += `<div style="${tenantBlockStyle}">${gdapHtml}</div>`;
+        gdapHtml += `<div style="${tenantBlockStyle}">${gdapInnerHtml}</div>`;
     }
+    placeholders['{gdapTitle}'] = gdapSectionTitle;
+    placeholders['{gdapSection}'] = gdapHtml;
 
-    // RBAC Section (HTML - Generates script per relevant tenant)
+    // RBAC
+    let rbacHtml = '';
+    const rbacSectionTitle = this.translate('rbacTitle', language);
     const relevantRbacTenants = tenants.filter(t => t.hasAzure);
     if (relevantRbacTenants.length > 0) {
-         htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-         let rbacHtml = '';
-         const rbacSectionTitle = this.translate('rbacTitle', language);
-         rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: rbacSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-
-         // Step 1: Install/Update Module (Common instruction)
-         rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 1, title: this.translate('rbacStep1', language), theme: effectiveTheme }));
-         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`; // Changed font
-         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`; // Changed font
-         rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Install-Module -Name Az -Repository PSGallery -Force', theme: effectiveTheme }))}</div>`;
-         rbacHtml += `<p style="margin: 15px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">or update it:</p>`; // Changed font
-         rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`; // Changed font
-         rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Update-Module Az.Resources -Force', theme: effectiveTheme }))}</div>`;
-
-         // Step 2: Run script per tenant
-         rbacHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 2, title: this.translate('rbacStep2', language), theme: effectiveTheme }));
-         rbacHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2InstructionMultiTenant', language)}</p>`; // Changed font
-
+         rbacHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+         let rbacInnerHtml = '';
+         rbacInnerHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: rbacSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+         // Step 1
+         rbacInnerHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 1, title: this.translate('rbacStep1', language), theme: effectiveTheme }));
+         rbacInnerHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep1Source', language)} <a href="https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0" target="_blank" style="color: ${primaryAccentColor}; text-decoration: underline;">https://docs.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-6.6.0</a></p>`;
+         rbacInnerHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+         rbacInnerHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Install-Module -Name Az -Repository PSGallery -Force', theme: effectiveTheme }))}</div>`;
+         rbacInnerHtml += `<p style="margin: 15px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacOrUpdateIt', language)}</p>`;
+         rbacInnerHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+         rbacInnerHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: 'Update-Module Az.Resources -Force', theme: effectiveTheme }))}</div>`;
+         // Step 2
+         rbacInnerHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(StepIndicator, { number: 2, title: this.translate('rbacStep2', language), theme: effectiveTheme }));
+         rbacInnerHtml += `<p style="margin: 5px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacStep2InstructionMultiTenant', language)}</p>`;
          relevantRbacTenants.forEach(tenant => {
-            const tenantDomain = tenant.microsoftTenantDomain || '[MS_TENANT_DOMAIN_MISSING]'; // Use MS Domain or placeholder
+            const tenantDomain = tenant.microsoftTenantDomain || '[MS_TENANT_DOMAIN_MISSING]';
             const scriptForTenant = RBAC_POWERSHELL_SCRIPT_TEMPLATE.replace('{TENANT_ID}', tenantDomain);
-            // Add a sub-header for each script block showing the domain
-            rbacHtml += `<h4 style="margin: 20px 0 5px 48px; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; font-weight: 600;">Script for Tenant: ${tenant.companyName} (Domain: ${tenantDomain})</h4>`; // Changed font
-            rbacHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`; // Changed font
-            rbacHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: scriptForTenant, theme: effectiveTheme }))}</div>`;
+            rbacInnerHtml += `<h4 style="margin: 20px 0 5px 48px; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; font-weight: 600;">${this.translate('rbacScriptForTenantHeader', language, { companyName: tenant.companyName, tenantDomain: tenantDomain })}</h4>`; // Use translation key
+            rbacInnerHtml += `<p style="margin: 5px 0 5px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScriptHeader', language)}</p>`;
+            rbacInnerHtml += `<div style="margin-left: 48px;">${ReactDOMServer.renderToStaticMarkup(React.createElement(ScriptBlock, { scriptContent: scriptForTenant, theme: effectiveTheme }))}</div>`;
          });
-
-         rbacHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`; // Changed font
-         htmlBodyContent += `<div style="${tenantBlockStyle}">${rbacHtml}</div>`;
+         rbacInnerHtml += `<p style="margin: 20px 0 15px 48px; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('rbacScreenshot', language)}</p>`;
+         rbacHtml += `<div style="${tenantBlockStyle}">${rbacInnerHtml}</div>`;
     }
+    placeholders['{rbacTitle}'] = rbacSectionTitle;
+    placeholders['{rbacSection}'] = rbacHtml;
 
-    // Conditional Access Section
+    // Conditional Access
+    let caHtml = '';
+    const caSectionTitle = this.translate('conditionalAccessTitle', language);
     if (formData.conditionalAccess.checked) {
-        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-        const caSectionTitle = this.translate('conditionalAccessTitle', language);
-        htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: caSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
-        htmlBodyContent += `<p style="${pStyle}">${this.translate('conditionalAccessIntro', language)}</p>`;
-        htmlBodyContent += `<div style="margin: 0 0 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px;">`;
-        htmlBodyContent += `<ul style="margin: 0; padding: 0; list-style: none;">`;
-        if (formData.conditionalAccess.mfa) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('mfaPolicy', language)}</li>`; }
-        if (formData.conditionalAccess.location) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('locationPolicy', language)}</li>`; }
-        if (formData.conditionalAccess.device) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('devicePolicy', language)}</li>`; }
-        if (formData.conditionalAccess.signIn) { htmlBodyContent += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('signInPolicy', language)}</li>`; }
-        htmlBodyContent += `</ul></div>`;
+        caHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+        caHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: caSectionTitle, color: primaryAccentColor, theme: effectiveTheme }));
+        caHtml += `<p style="${pStyle}">${this.translate('conditionalAccessIntro', language)}</p>`;
+        caHtml += `<div style="margin: 0 0 20px 0; background-color: #FFFFFF; border: 1px solid #eee; border-radius: 4px; padding: 16px 20px;">`;
+        caHtml += `<ul style="margin: 0; padding: 0; list-style: none;">`;
+        if (formData.conditionalAccess.mfa) { caHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('mfaPolicy', language)}</li>`; }
+        if (formData.conditionalAccess.location) { caHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('locationPolicy', language)}</li>`; }
+        if (formData.conditionalAccess.device) { caHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('devicePolicy', language)}</li>`; }
+        if (formData.conditionalAccess.signIn) { caHtml += `<li style="${listItemStyle}"><span style="${bulletStyle}"></span>${this.translate('signInPolicy', language)}</li>`; }
+        caHtml += `</ul></div>`;
     }
+    placeholders['{conditionalAccessTitle}'] = caSectionTitle;
+    placeholders['{conditionalAccessSection}'] = caHtml;
 
-    // Additional Notes Section
+    // Additional Notes
+    let notesHtml = '';
+    const additionalInfoTitle = this.translate('additionalInfoTitle', language);
     if (formData.additionalNotes) {
-        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
-        const additionalInfoTitle = this.translate('additionalInfoTitle', language);
-        htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: additionalInfoTitle, color: primaryAccentColor, theme: effectiveTheme }));
+        notesHtml += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+        notesHtml += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: additionalInfoTitle, color: primaryAccentColor, theme: effectiveTheme }));
         const formattedNotes = formData.additionalNotes.replace(/\n/g, '<br>');
-        htmlBodyContent += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`; // Changed font
+        notesHtml += `<p style="margin: 0 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${formattedNotes}</p>`;
     }
+    placeholders['{additionalInfoTitle}'] = additionalInfoTitle;
+    placeholders['{additionalNotes}'] = notesHtml; // Includes title + notes
 
-    // Closing and Footer
-    htmlBodyContent += `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`; // Changed font
-    htmlBodyContent += `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`; // Changed font
-    htmlBodyContent += `<div style="line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`; // Changed font
-    htmlBodyContent += `${formData.senderName}<br>`;
-    htmlBodyContent += `${formData.senderTitle}<br>`;
-    htmlBodyContent += `${formData.senderCompany}<br>`;
-    htmlBodyContent += `<a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a>`;
-    htmlBodyContent += `</div>`;
+    // Closing & Signature
+    placeholders['{closing}'] = `<p style="margin: 30px 0 20px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('closing', language)}</p>`;
+    placeholders['{regards}'] = `<p style="margin: 0 0 10px 0; line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor};">${this.translate('regards', language)}</p>`;
+    let signatureHtml = `<div style="line-height: 1.6; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 15px; color: ${textColor}; margin-bottom: 40px;">`;
+    signatureHtml += `${formData.senderName}<br>`;
+    signatureHtml += `${formData.senderTitle}<br>`;
+    signatureHtml += `${formData.senderCompany}<br>`;
+    signatureHtml += `<a href="mailto:${formData.senderContact || ''}" style="color: ${primaryAccentColor}; text-decoration: none;">${formData.senderContact || ''}</a>`;
+    signatureHtml += `</div>`;
+    placeholders['{senderSignature}'] = signatureHtml;
+
+    // Footer
+    placeholders['{footer}'] = `<div style="margin-top: 40px; border-top: 1px solid #eee; padding: 20px 0 0 0; font-family: Calibri, 'Segoe UI', Arial, sans-serif; font-size: 12px; color: ${footerTextColor}; text-align: center; background-color: transparent;">
+        <p style="margin: 0; line-height: 1.5;">${this.translate('footer', language)}</p>
+    </div>`;
+    // --- End Placeholder Generation ---
+
+
+    // --- Assemble Final HTML ---
+    // Removed custom template logic, always use default assembly
+    // if (customTemplate && customTemplate.trim() !== '') { ... } else { ... }
+    // Use Default Template (assemble from placeholders)
+    htmlBodyContent += placeholders['{greeting}'];
+    htmlBodyContent += placeholders['{intro1}'];
+      htmlBodyContent += placeholders['{intro2}'];
+      htmlBodyContent += placeholders['{meetingSlots}'];
+      htmlBodyContent += placeholders['{supportPlanDetails}']; // Includes title
+      htmlBodyContent += placeholders['{tenantInfo}']; // Includes title
+      if (formData.authorizedContacts.checked) {
+        htmlBodyContent += `<hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;" />`;
+        htmlBodyContent += ReactDOMServer.renderToStaticMarkup(React.createElement(SectionHeader, { title: placeholders['{authorizedContactsTitle}'], color: primaryAccentColor, theme: effectiveTheme }));
+        htmlBodyContent += placeholders['{contactsIntro}'];
+        htmlBodyContent += placeholders['{contactsRolesIntro}'];
+        htmlBodyContent += placeholders['{contactsInstruction}'];
+        htmlBodyContent += placeholders['{contactsTable}'];
+      }
+      htmlBodyContent += placeholders['{gdapSection}']; // Includes title and hr
+      htmlBodyContent += placeholders['{rbacSection}']; // Includes title and hr
+      htmlBodyContent += placeholders['{conditionalAccessSection}']; // Includes title and hr
+      htmlBodyContent += placeholders['{additionalNotes}']; // Includes title and hr
+      htmlBodyContent += placeholders['{closing}'];
+      htmlBodyContent += placeholders['{regards}'];
+      htmlBodyContent += placeholders['{senderSignature}'];
+      // Footer is added outside the body content in the final HTML shell
+    // } // Removed closing brace for custom template else block
+
 
     // Construct the final HTML document shell
     const finalHtml = `<!DOCTYPE html>
@@ -622,7 +691,8 @@ const emailBuilder = {
         checked: true, mfa: true, location: true, device: true, signIn: true
       },
       authorizedContacts: {
-        checked: true, roles: 'Technical and Administrative contacts' // Default roles
+        checked: true,
+        roles: `${this.translate('roleTechnical', language as Language)} ${this.translate('conjunctionAnd', language as Language)} ${this.translate('roleAdministrative', language as Language)} ${this.translate('contactsSuffix', language as Language)}`
       },
       additionalNotes: '',
       senderName: 'Your Name', // Default sender details
@@ -636,17 +706,24 @@ const emailBuilder = {
     return formData as EmailFormData;
   },
 
-  // buildEnhancedEmailHTML - No changes needed, relies on buildEmailHTML
+  // buildEnhancedEmailHTML - Reverted to synchronous
   buildEnhancedEmailHTML: function(formData: EmailFormData, tenants: TenantInfo[] = [], theme: ThemeSettings | null = null): string {
+    // Call the now-synchronous buildEmailHTML
     const { html } = this.buildEmailHTML(formData, tenants, theme);
     return html;
   },
 
   /**
-   * Generates the content for an .eml file.
+   * Generates the content for an .eml file, potentially including a PDF attachment.
    */
-  generateEmlContent: function(formData: EmailFormData, htmlContent: string, plainTextContent: string): string {
-    const boundary = `----=_Part_${Math.random().toString(36).substring(2)}`;
+  generateEmlContent: async function(formData: EmailFormData, htmlContent: string, plainTextContent: string): Promise<string> {
+    // Fetch PDF details from storage
+    const pdfFilename = await StorageService.get<string>('pdfAttachmentFilename');
+    const pdfBase64 = await StorageService.get<string>('pdfAttachmentBase64');
+    const hasAttachment = pdfFilename && pdfBase64;
+
+    const boundaryAlternative = `----=_Part_Alternative_${Math.random().toString(36).substring(2)}`;
+    const boundaryMixed = hasAttachment ? `----=_Part_Mixed_${Math.random().toString(36).substring(2)}` : '';
 
     const formatRecipients = (emails: string | undefined): string => {
       if (!emails) return '';
@@ -678,27 +755,75 @@ const emailBuilder = {
       emlContent += `Cc: ${ccRecipients}\r\n`;
     }
     emlContent += `X-Unsent: 1\r\n`;
-    emlContent += `Content-Type: multipart/alternative; boundary="${boundary}"\r\n`;
-    emlContent += `\r\n`;
 
-    // Plain text part
-    emlContent += `--${boundary}\r\n`;
-    emlContent += `Content-Type: text/plain; charset=utf-8\r\n`;
-    emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`;
-    emlContent += `\r\n`;
-    emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`; // Basic QP encoding
-    emlContent += `\r\n`;
+    if (hasAttachment) {
+      // --- Multipart/Mixed Structure (with Attachment) ---
+      emlContent += `Content-Type: multipart/mixed; boundary="${boundaryMixed}"\r\n`;
+      emlContent += `\r\n`;
+      emlContent += `This is a multi-part message in MIME format.\r\n`; // Preamble
 
-    // HTML part
-    emlContent += `--${boundary}\r\n`;
-    emlContent += `Content-Type: text/html; charset=utf-8\r\n`;
-    emlContent += `Content-Transfer-Encoding: base64\r\n`;
-    emlContent += `\r\n`;
-    emlContent += `${base64Html}\r\n`;
-    emlContent += `\r\n`;
+      // --- Part 1: Alternative Text/HTML ---
+      emlContent += `--${boundaryMixed}\r\n`;
+      emlContent += `Content-Type: multipart/alternative; boundary="${boundaryAlternative}"\r\n`;
+      emlContent += `\r\n`;
 
-    // End boundary
-    emlContent += `--${boundary}--\r\n`;
+      // Plain text part (within alternative)
+      emlContent += `--${boundaryAlternative}\r\n`;
+      emlContent += `Content-Type: text/plain; charset=utf-8\r\n`;
+      emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`;
+      emlContent += `\r\n`;
+      emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`; // Basic QP encoding
+      emlContent += `\r\n`;
+
+      // HTML part (within alternative)
+      emlContent += `--${boundaryAlternative}\r\n`;
+      emlContent += `Content-Type: text/html; charset=utf-8\r\n`;
+      emlContent += `Content-Transfer-Encoding: base64\r\n`;
+      emlContent += `\r\n`;
+      emlContent += `${base64Html}\r\n`;
+      emlContent += `\r\n`;
+
+      // End alternative part
+      emlContent += `--${boundaryAlternative}--\r\n`;
+      emlContent += `\r\n`;
+
+      // --- Part 2: PDF Attachment ---
+      emlContent += `--${boundaryMixed}\r\n`;
+      emlContent += `Content-Type: application/pdf; name="${pdfFilename}"\r\n`;
+      emlContent += `Content-Transfer-Encoding: base64\r\n`;
+      emlContent += `Content-Disposition: attachment; filename="${pdfFilename}"\r\n`;
+      emlContent += `\r\n`;
+      // Add Base64 content in chunks if necessary, but for typical PDFs, one block is fine.
+      emlContent += `${pdfBase64}\r\n`;
+      emlContent += `\r\n`;
+
+      // End mixed part
+      emlContent += `--${boundaryMixed}--\r\n`;
+
+    } else {
+      // --- Multipart/Alternative Structure (No Attachment - Original Logic) ---
+      emlContent += `Content-Type: multipart/alternative; boundary="${boundaryAlternative}"\r\n`;
+      emlContent += `\r\n`;
+
+      // Plain text part
+      emlContent += `--${boundaryAlternative}\r\n`;
+      emlContent += `Content-Type: text/plain; charset=utf-8\r\n`;
+      emlContent += `Content-Transfer-Encoding: quoted-printable\r\n`;
+      emlContent += `\r\n`;
+      emlContent += `${plainTextContent.replace(/=/g, '=3D')}\r\n`; // Basic QP encoding
+      emlContent += `\r\n`;
+
+      // HTML part
+      emlContent += `--${boundaryAlternative}\r\n`;
+      emlContent += `Content-Type: text/html; charset=utf-8\r\n`;
+      emlContent += `Content-Transfer-Encoding: base64\r\n`;
+      emlContent += `\r\n`;
+      emlContent += `${base64Html}\r\n`;
+      emlContent += `\r\n`;
+
+      // End boundary
+      emlContent += `--${boundaryAlternative}--\r\n`;
+    }
 
     return emlContent;
   }

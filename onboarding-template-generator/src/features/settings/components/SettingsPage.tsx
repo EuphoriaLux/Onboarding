@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, ChangeEvent } from 'react'; // Import ChangeEvent
 import { StorageService } from '../../../services/storage';
 import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 import './SettingsPage.css'; // We'll create this CSS file later for styling
@@ -32,6 +32,11 @@ const SettingsPage: React.FC = () => {
   const [primaryColor, setPrimaryColor] = useState(DEFAULT_THEME.primaryColor);
   const [textColor, setTextColor] = useState(DEFAULT_THEME.textColor);
   const [backgroundColor, setBackgroundColor] = useState(DEFAULT_THEME.backgroundColor);
+  // State for PDF attachment
+  // const [customEmailTemplate, setCustomEmailTemplate] = useState(''); // Removed template state
+  const [pdfFilename, setPdfFilename] = useState<string | null>(null);
+  const [pdfBase64, setPdfBase64] = useState<string | null>(null);
+
 
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
@@ -42,9 +47,14 @@ const SettingsPage: React.FC = () => {
     setIsLoading(true);
     Promise.all([
       StorageService.get<AgentSettings>('agentSettings'),
-      StorageService.get<ThemeSettings>('themeSettings')
+      StorageService.get<ThemeSettings>('themeSettings'),
+      // Load only PDF settings
+      // StorageService.get<string>('customEmailTemplate'), // Removed template loading
+      StorageService.get<string>('pdfAttachmentFilename'),
+      StorageService.get<string>('pdfAttachmentBase64'),
     ])
-    .then(([agentSettings, themeSettings]) => {
+    // Update destructuring to match removed promise
+    .then(([agentSettings, themeSettings, loadedPdfFilename, loadedPdfBase64]) => {
       // Load Agent Settings
       if (agentSettings) {
         setAgentName(agentSettings.agentName || '');
@@ -65,8 +75,16 @@ const SettingsPage: React.FC = () => {
         // Fallback to defaults if no theme settings saved
         setPrimaryColor(DEFAULT_THEME.primaryColor);
         setTextColor(DEFAULT_THEME.textColor);
+        // Correctly use default background color in the else block
         setBackgroundColor(DEFAULT_THEME.backgroundColor);
       }
+      // Removed the redundant second 'else' block
+
+      // Load PDF settings only
+      // setCustomEmailTemplate(loadedTemplate || ''); // Removed template state update
+      setPdfFilename(loadedPdfFilename || null);
+      setPdfBase64(loadedPdfBase64 || null);
+
     })
     .catch(error => {
       console.error("Error loading settings:", error);
@@ -100,17 +118,22 @@ const SettingsPage: React.FC = () => {
       primaryColor,
       textColor,
       backgroundColor,
-    };
+        };
 
-    try {
-      // Save both settings objects
-      await Promise.all([
-        StorageService.set('agentSettings', agentSettingsToSave),
-        StorageService.set('themeSettings', themeSettingsToSave)
-      ]);
+        try {
+            // Save agent and theme settings first
+            await Promise.all([
+                StorageService.set('agentSettings', agentSettingsToSave),
+                StorageService.set('themeSettings', themeSettingsToSave),
+            ]);
 
-      // Optionally apply theme immediately after saving
-      // applyThemeColors(themeSettingsToSave); // Need to define and import this function
+            // Save PDF settings separately, ensuring nulls are converted to empty strings
+            await StorageService.set('pdfAttachmentFilename', pdfFilename || '');
+            // Only save base64 if filename exists to avoid storing large empty strings unnecessarily
+            await StorageService.set('pdfAttachmentBase64', pdfFilename ? (pdfBase64 || '') : '');
+
+            // Optionally apply theme immediately after saving
+            // applyThemeColors(themeSettingsToSave); // Need to define and import this function
 
       setSaveStatus('success');
       // Hide success message after a delay
@@ -133,7 +156,60 @@ const SettingsPage: React.FC = () => {
     primaryColor,
     textColor,
     backgroundColor,
+    // Update dependencies
+    // customEmailTemplate, // Removed template dependency
+    pdfFilename,
+    pdfBase64,
   ]);
+
+  // --- PDF File Handling ---
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file && file.type === 'application/pdf') {
+      const reader = new FileReader();
+      reader.onload = (loadEvent) => {
+        const base64String = loadEvent.target?.result as string;
+        // Remove the data URL prefix (e.g., "data:application/pdf;base64,")
+        const base64Content = base64String.split(',')[1];
+        if (base64Content) {
+          setPdfFilename(file.name);
+          setPdfBase64(base64Content);
+          setSaveStatus('idle'); // Reset save status if file changes
+        } else {
+          console.error("Error reading PDF file content.");
+          setPdfFilename(null);
+          setPdfBase64(null);
+        }
+      };
+      reader.onerror = (error) => {
+        console.error("Error reading file:", error);
+        setPdfFilename(null);
+        setPdfBase64(null);
+      };
+      reader.readAsDataURL(file); // Read as Data URL to get Base64
+    } else if (file) {
+      alert('Please select a valid PDF file.');
+      event.target.value = ''; // Clear the input
+      setPdfFilename(null);
+      setPdfBase64(null);
+    } else {
+        // No file selected or selection cancelled
+        // Optionally clear state if needed, or leave as is
+    }
+  };
+
+  const handleClearPdf = () => {
+    setPdfFilename(null);
+    setPdfBase64(null);
+    // Optionally clear the file input visually, though this is tricky
+    const fileInput = document.getElementById('pdfAttachment') as HTMLInputElement;
+    if (fileInput) {
+        fileInput.value = '';
+    }
+    setSaveStatus('idle'); // Reset save status
+  };
+  // --- End PDF File Handling ---
+
 
   if (isLoading) {
     return <div className="settings-loading">Loading settings...</div>;
@@ -261,6 +337,30 @@ const SettingsPage: React.FC = () => {
             onChange={(e) => setBackgroundColor(e.target.value)}
           />
           <span className="color-value">{backgroundColor}</span>
+        </div>
+
+        {/* --- Default PDF Attachment --- */}
+        <h3 className="settings-subtitle">Default PDF Attachment</h3>
+        <p>Add a default PDF attachment to the generated email drafts.</p>
+
+        <div className="form-group">
+            <label htmlFor="pdfAttachment">PDF File:</label>
+            <input
+                type="file"
+                id="pdfAttachment"
+                accept=".pdf"
+                onChange={handleFileChange}
+                style={{ display: 'block', marginBottom: '10px' }}
+            />
+            {pdfFilename && (
+                <div className="pdf-info">
+                    <span>Current file: {pdfFilename}</span>
+                    <button onClick={handleClearPdf} className="clear-pdf-button">
+                        Clear PDF
+                    </button>
+                </div>
+            )}
+            {!pdfFilename && <span>No PDF attached.</span>}
         </div>
 
 

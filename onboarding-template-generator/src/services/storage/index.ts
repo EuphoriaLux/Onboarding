@@ -14,7 +14,8 @@ export class StorageService {
   static set(key: string, value: any): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.set({ [key]: value }, () => {
+        // Use local storage instead of sync
+        chrome.storage.local.set({ [key]: value }, () => {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError);
           } else {
@@ -35,7 +36,8 @@ export class StorageService {
   static get<T>(key: string): Promise<T | undefined> {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.get(key, (result) => {
+        // Use local storage instead of sync
+        chrome.storage.local.get(key, (result) => {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError);
           } else {
@@ -56,7 +58,8 @@ export class StorageService {
   static getAll(keys: string[]): Promise<StorageData | undefined> {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.get(keys, (result) => {
+        // Use local storage instead of sync
+        chrome.storage.local.get(keys, (result) => {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError);
           } else {
@@ -77,7 +80,8 @@ export class StorageService {
   static remove(key: string): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.remove(key, () => {
+        // Use local storage instead of sync
+        chrome.storage.local.remove(key, () => {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError);
           } else {
@@ -98,7 +102,8 @@ export class StorageService {
   static clear(): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        chrome.storage.sync.clear(() => {
+        // Use local storage instead of sync
+        chrome.storage.local.clear(() => {
           if (chrome.runtime.lastError) {
             reject(chrome.runtime.lastError);
           } else {

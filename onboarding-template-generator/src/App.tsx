@@ -11,6 +11,7 @@ import { StorageService } from './services/storage'; // Adjusted path
 import { ThemeSettings, AgentSettings } from './types'; // Adjusted path, added AgentSettings
 import { supportTiers } from './features/supportTiers/data/supportTiers'; // Adjusted path
 import { generateMeetingSlots, formatSlot } from './features/emailBuilder/utils/dateSlotGenerator'; // Adjusted path
+import emailBuilder from './features/emailBuilder/utils/emailBuilder'; // Import emailBuilder to use translate
 import CollapsibleSection from './components/CollapsibleSection'; // Import moved component
 import './styles/App.css'; // Adjusted path
 
@@ -49,6 +50,11 @@ const App: React.FC = () => {
   // const [selectedSlotDay, setSelectedSlotDay] = useState<string | null>(null); // No longer needed for block selection
   const [includeMeetingSlots, setIncludeMeetingSlots] = useState(false); // State for the master toggle
 
+  // Calculate the 90-day deadline once
+  const deadlineDate = React.useMemo(() => {
+    const today = new Date();
+    return new Date(today.setDate(today.getDate() + 90));
+  }, []);
 
   // Fetch agent and theme settings on mount
   useEffect(() => {
@@ -182,6 +188,22 @@ const App: React.FC = () => {
     const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
     // --- End Automatic Subject ---
 
+    // --- Calculate Deadline ---
+    const today = new Date();
+    const deadlineDate = new Date(today.setDate(today.getDate() + 90));
+    // --- End Calculate Deadline ---
+
+    // --- Create temporary tenant list with calculated deadline ---
+    const tenantsWithDeadline = state.customerInfo.tenants.map(tenant => ({
+      ...tenant,
+      implementationDeadline: deadlineDate
+    }));
+    // --- End temporary tenant list ---
+
+    // --- Build translated roles string (adjectives only) ---
+    const translatedRoles = `${emailBuilder.translate('roleTechnical', language)} ${emailBuilder.translate('conjunctionAnd', language)} ${emailBuilder.translate('roleAdministrative', language)}`;
+    // --- End translated roles string ---
+
     // Create an EmailFormData object with all the collected data
     const emailData = {
       companyName: companyName,
@@ -201,7 +223,7 @@ const App: React.FC = () => {
       },
       authorizedContacts: {
          checked: true, // Assuming this section is always included if contacts exist
-         roles: 'Technical and Administrative contacts' // Example default
+         roles: translatedRoles // Use the translated string
       },
       additionalNotes: includeNotes ? additionalNotes : '',
       senderName: currentAgentName,
@@ -212,9 +234,16 @@ const App: React.FC = () => {
       language: language
     };
 
-    const completeEmailData = {...emailData, language};
-    setLocalEmailData(completeEmailData);
-    updateEmailData(emailData); // Update central state for persistence if needed
+    // Prepare data for preview, including the modified tenants list
+    const previewData = {
+      ...emailData,
+      tenants: tenantsWithDeadline // Use the list with calculated deadlines for preview
+    };
+
+    setLocalEmailData(previewData); // Pass data with calculated deadlines to preview state
+    // Note: We might not need to update the central emailData state here unless
+    // we want the calculated deadline persisted somewhere, which seems unlikely.
+    // updateEmailData(emailData);
     setShowEmailPreview(true);
   };
 
@@ -236,8 +265,8 @@ const App: React.FC = () => {
 
       {showEmailPreview && localEmailData ? (
         <EmailPreview
-          emailData={localEmailData}
-          tenants={state.customerInfo.tenants}
+          emailData={localEmailData} // This now contains the calculated deadline via the tenants array within it
+          tenants={localEmailData.tenants} // Pass the modified tenants list from localEmailData
           agentName={agentSettings?.agentName}
           agentTitle={agentSettings?.agentTitle}
           companyName={agentSettings?.companyName}
@@ -425,6 +454,7 @@ const App: React.FC = () => {
               tenants={state.customerInfo.tenants}
               selectedTier={state.customerInfo.selectedTier}
               onChange={updateTenants}
+              calculatedDeadline={deadlineDate} // Pass calculated deadline
             />
           </div>
 

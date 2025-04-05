@@ -63,6 +63,8 @@ const translations: Translations = {
   'meetingBlockAfternoon': '(Afternoon, 14:00-16:00)', // Re-add key for summarized afternoon block
   'meetingBlockBoth': '(Morning & Afternoon)', // Re-add key for summarized full day block
   'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
+  'meetingSlotsMorningHeader': 'Morning Slots', // Added for table header
+  'meetingSlotsAfternoonHeader': 'Afternoon Slots', // Added for table header
 
   // GDAP section
   'gdapIntro': 'Microsoft recommends to use Granular Delegated Admin Privileges (GDAP) for secure administrative access. We need to implement this by {deadline}. We require the "{roles}" role.', // Updated GDAP Intro, incorporated roles
@@ -79,6 +81,8 @@ const translations: Translations = {
   'rbacStep2': 'STEP 2: Update the tenant and run the following script', // Kept Step 2 Title
   'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console', // Kept Step 2 Instruction
   'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)', // Kept Script Header
+  'rbacOrUpdateIt': 'or update it:', // Added for RBAC step 1
+  'rbacScriptForTenantHeader': 'Script for Tenant: {companyName} (Domain: {tenantDomain})', // Added for RBAC step 2 multi-tenant
   'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.', // Kept Screenshot text
 
   // Conditional Access section
@@ -88,11 +92,19 @@ const translations: Translations = {
   'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
   'signInPolicy': 'Sign-in risk-based policies to prevent suspicious login attempts',
 
+  // Roles for contacts section
+  'roleTechnical': 'Technical',
+  'roleAdministrative': 'Administrative',
+  'conjunctionAnd': 'and',
+  'contactsSuffix': 'contacts',
+
   // Added for multi-tenant support
   'tenantInfoTitle': 'TENANT INFORMATION',
-  'tenantInfoIntro': 'Please review the details for the tenant(s) included in this onboarding:',
+  'tenantInfoIntro_singular': 'Please review the details for the tenant included in this onboarding:', // Added singular
+  'tenantInfoIntro': 'Please review the details for the tenants included in this onboarding:', // Kept as plural/general
   'noTenantInfo': '[NO TENANT INFORMATION PROVIDED]',
-  'gdapSpecificLinkInfo': 'For tenants where a specific GDAP link was provided, please use that link. The links are listed below:',
+  'gdapSpecificTenantDetailsHeader': 'Details for tenants with specific GDAP links:', // New key for more descriptive header
+  'gdapSpecificLinkInfo': 'For tenants where a specific GDAP link was provided, please use that link. The links are listed below:', // Keeping old key for potential compatibility, but won't be used in new logic
   'gdapDefaultLinkInfo': 'For other tenants without a specific link listed, the necessary GDAP approval link will be sent separately.', // Updated text
   'rbacInstructionMultiTenant': 'For tenants where Azure RBAC configuration is relevant (indicated in the Tenant Information section), please complete the following steps.', // Simplified instruction
   'rbacRelevantTenantsList': 'Relevant Tenants requiring RBAC configuration:', // Kept as is, list is still relevant

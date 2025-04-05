@@ -32,7 +32,7 @@ const translations: Translations = {
   'productsCoveredLabel': 'Abgedeckte Produkte', // Added
   'supportHoursLabel': 'Support-Zeiten', // Kept (text only)
   'severityLevelsLabel': 'Microsoft Schweregrade', // Updated Severity Label
-  'criticalLabel': 'Critical Situation (Crit Sit) Management', // Updated Critical Label
+  'criticalLabel': 'Management kritischer Situationen (Crit Sit)', // Updated Critical Label
   'supportRequestSubmissionLabel': 'Einreichung von Support-Anfragen', // Added
   'contactsLabel': 'Autorisierte Kundenkontakte', // Updated Contacts Label
   'tenantsLabel': 'Mandanten', // Updated Tenants Label Text
@@ -63,6 +63,8 @@ const translations: Translations = {
   'meetingBlockAfternoon': '(Nachmittag, 14:00-16:00)', // Re-add key for summarized afternoon block
   'meetingBlockBoth': '(Vormittag & Nachmittag)', // Re-add key for summarized full day block
   'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.', // Kept
+  'meetingSlotsMorningHeader': 'Vormittags-Termine', // Added for table header
+  'meetingSlotsAfternoonHeader': 'Nachmittags-Termine', // Added for table header
 
   // GDAP section
   'gdapIntro': 'Microsoft empfiehlt die Verwendung von Granular Delegated Admin Privileges (GDAP) für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren. Wir benötigen die Rolle "{roles}".', // Updated GDAP Intro, incorporated roles
@@ -77,8 +79,10 @@ const translations: Translations = {
   'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren', // Kept Step 1 Title
   'rbacStep1Source': 'Quelle:',
   'rbacStep2': 'SCHRITT 2: Den Tenant aktualisieren und das folgende Skript ausführen',
-  'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein',
+  'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein', // Kept Step 2 Instruction (Single Tenant)
   'rbacScriptHeader': 'PowerShell-Skript (In PowerShell-Konsole kopieren und einfügen)',
+  'rbacOrUpdateIt': 'oder aktualisieren Sie es:', // Added for RBAC step 1
+  'rbacScriptForTenantHeader': 'Skript für TENANT: {companyName} (Domäne: {tenantDomain})', // Added for RBAC step 2 multi-tenant
   'rbacScreenshot': 'Bitte senden Sie uns einen Screenshot des Ergebnisses des obigen Skripts oder teilen Sie uns mit, ob Sie lieber ein Teams-Meeting vereinbaren möchten, um diese Konfiguration gemeinsam durchzuführen.',
 
   // Conditional Access section
@@ -86,7 +90,26 @@ const translations: Translations = {
   'mfaPolicy': 'Anforderungen für Multi-Faktor-Authentifizierung (MFA) für alle Benutzer',
   'locationPolicy': 'Standortbasierte Zugriffsbeschränkungen',
   'devicePolicy': 'Gerätekonformitätsrichtlinien, um sicherzustellen, dass nur sichere Geräte auf Ihre Daten zugreifen können',
-  'signInPolicy': 'Risikobasierte Anmelderichtlinien zur Verhinderung verdächtiger Anmeldeversuche'
+  'signInPolicy': 'Risikobasierte Anmelderichtlinien zur Verhinderung verdächtiger Anmeldeversuche',
+
+  // Roles for contacts section
+  'roleTechnical': 'Technische',
+  'roleAdministrative': 'Administrative',
+  'conjunctionAnd': 'und',
+  'contactsSuffix': 'Kontakte',
+
+  // Added for multi-tenant support (Matching EN keys)
+  'tenantInfoTitle': 'TENANT NINFORMATIONEN', // Adjusted from 'TENANT-INFORMATIONEN'
+  'tenantInfoIntro_singular': 'Bitte überprüfen Sie die Details für den in diesem Onboarding enthaltenen TENANT:', // Added singular
+  'tenantInfoIntro': 'Bitte überprüfen Sie die Details für die in diesem Onboarding enthaltenen TENANT:', // Updated to be explicitly plural
+  'noTenantInfo': '[KEINE TENANT INFORMATIONEN ANGEGEBEN]',
+  'gdapSpecificTenantDetailsHeader': 'Details für Mandanten mit spezifischen GDAP-Links:', // New key
+  'gdapSpecificLinkInfo': 'Für TENANT, für die ein spezifischer GDAP-Link bereitgestellt wurde, verwenden Sie bitte diesen Link. Die Links sind unten aufgeführt:', // Keeping old key
+  'gdapDefaultLinkInfo': 'Für andere TENANT ohne spezifischen Link wird der erforderliche GDAP-Genehmigungslink separat gesendet.',
+  'rbacInstructionMultiTenant': 'Für TENANT, für die die Azure RBAC-Konfiguration relevant ist (angegeben im Abschnitt TENANTinformationen), führen Sie bitte die folgenden Schritte aus.',
+  'rbacRelevantTenantsList': 'Relevante TENANT, die eine RBAC-Konfiguration erfordern:', // Currently unused in template, but added for completeness
+  'rbacStep2InstructionMultiTenant': 'Führen Sie das entsprechende unten bereitgestellte, vorausgefüllte PowerShell-Skript für jeden relevanten TENANT aus, der im Abschnitt TENANT informationen aufgeführt ist.',
+  'gdapLinksSentSeparately': 'Der/die erforderliche(n) GDAP-Genehmigungslink(s) wird/werden in einer separaten Mitteilung gesendet.'
 };
 
 export default translations;

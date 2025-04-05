@@ -1,7 +1,7 @@
 // src/features/emailBuilder/templates/builders.tsx
 import React from 'react';
-import { Language } from '../utils/types'; // Assuming this is still needed, otherwise remove
-import { getTranslation } from '../utils/translationService'; // Assuming this is still needed, otherwise remove
+import { Language } from '../utils/types';
+import { getTranslation } from '../utils/translationService';
 import { ThemeSettings } from '../../../types';
 
 // --- Component Props Interfaces ---
@@ -25,6 +25,7 @@ interface ContactsTableProps {
   }>;
   theme: ThemeSettings;
   tierContactLimit: number;
+  language: Language; // Added language prop
 }
 
 interface ScriptBlockProps {
@@ -78,7 +79,8 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({ title, color, them
   );
 };
 
-export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, tierContactLimit }) => {
+export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, tierContactLimit, language }) => { // Added language prop
+  const translate = getTranslation; // Get translation function
   const textColor = theme.textColor || '#333';
   // Ensure white background for table elements
   const headerBgColor = '#FFFFFF'; // Force white header
@@ -97,13 +99,13 @@ export const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, theme, t
     <table width="100%" cellPadding="0" cellSpacing="0" border={0} style={tableStyle}>
       <thead>
         <tr style={{ backgroundColor: headerBgColor }}>
-          <th style={thNumStyle}>#</th>
-          <th style={thStyle}>First Name</th>
-          <th style={thStyle}>Last Name</th>
-          <th style={thStyle}>Office Phone</th>
-          <th style={thStyle}>Mobile Phone</th>
-          <th style={thStyle}>Email Address</th>
-          <th style={thStyle}>Job Title</th>
+          <th style={thNumStyle}>{translate('numberHeader', language)}</th>
+          <th style={thStyle}>{translate('firstNameHeader', language)}</th>
+          <th style={thStyle}>{translate('lastNameHeader', language)}</th>
+          <th style={thStyle}>{translate('officePhoneHeader', language)}</th>
+          <th style={thStyle}>{translate('mobilePhoneHeader', language)}</th>
+          <th style={thStyle}>{translate('emailHeader', language)}</th>
+          <th style={thStyle}>{translate('jobTitleHeader', language)}</th>
         </tr>
       </thead>
       <tbody>

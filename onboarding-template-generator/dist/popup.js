@@ -29966,7 +29966,7 @@ const translations = {
     'productsCoveredLabel': 'Abgedeckte Produkte', // Added
     'supportHoursLabel': 'Support-Zeiten', // Kept (text only)
     'severityLevelsLabel': 'Microsoft Schweregrade', // Updated Severity Label
-    'criticalLabel': 'Critical Situation (Crit Sit) Management', // Updated Critical Label
+    'criticalLabel': 'Management kritischer Situationen (Crit Sit)', // Updated Critical Label
     'supportRequestSubmissionLabel': 'Einreichung von Support-Anfragen', // Added
     'contactsLabel': 'Autorisierte Kundenkontakte', // Updated Contacts Label
     'tenantsLabel': 'Mandanten', // Updated Tenants Label Text
@@ -29994,6 +29994,8 @@ const translations = {
     'meetingBlockAfternoon': '(Nachmittag, 14:00-16:00)', // Re-add key for summarized afternoon block
     'meetingBlockBoth': '(Vormittag & Nachmittag)', // Re-add key for summarized full day block
     'meetingAttendees': 'Bitte stellen Sie sicher, dass die entsprechenden Teammitglieder an diesem Meeting teilnehmen können.', // Kept
+    'meetingSlotsMorningHeader': 'Vormittags-Termine', // Added for table header
+    'meetingSlotsAfternoonHeader': 'Nachmittags-Termine', // Added for table header
     // GDAP section
     'gdapIntro': 'Microsoft empfiehlt die Verwendung von Granular Delegated Admin Privileges (GDAP) für den sicheren administrativen Zugriff. Wir müssen dies bis zum {deadline} implementieren. Wir benötigen die Rolle "{roles}".', // Updated GDAP Intro, incorporated roles
     // Removed 'gdapRoles'
@@ -30006,15 +30008,34 @@ const translations = {
     'rbacStep1': 'SCHRITT 1: Azure PowerShell installieren', // Kept Step 1 Title
     'rbacStep1Source': 'Quelle:',
     'rbacStep2': 'SCHRITT 2: Den Tenant aktualisieren und das folgende Skript ausführen',
-    'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein',
+    'rbacStep2Instruction': 'Kopieren Sie dieses vollständige Skript und fügen Sie es in Ihre PowerShell-Konsole ein', // Kept Step 2 Instruction (Single Tenant)
     'rbacScriptHeader': 'PowerShell-Skript (In PowerShell-Konsole kopieren und einfügen)',
+    'rbacOrUpdateIt': 'oder aktualisieren Sie es:', // Added for RBAC step 1
+    'rbacScriptForTenantHeader': 'Skript für TENANT: {companyName} (Domäne: {tenantDomain})', // Added for RBAC step 2 multi-tenant
     'rbacScreenshot': 'Bitte senden Sie uns einen Screenshot des Ergebnisses des obigen Skripts oder teilen Sie uns mit, ob Sie lieber ein Teams-Meeting vereinbaren möchten, um diese Konfiguration gemeinsam durchzuführen.',
     // Conditional Access section
     'conditionalAccessIntro': 'Wir empfehlen die Implementierung der folgenden Sicherheitsrichtlinien für Ihre Umgebung:',
     'mfaPolicy': 'Anforderungen für Multi-Faktor-Authentifizierung (MFA) für alle Benutzer',
     'locationPolicy': 'Standortbasierte Zugriffsbeschränkungen',
     'devicePolicy': 'Gerätekonformitätsrichtlinien, um sicherzustellen, dass nur sichere Geräte auf Ihre Daten zugreifen können',
-    'signInPolicy': 'Risikobasierte Anmelderichtlinien zur Verhinderung verdächtiger Anmeldeversuche'
+    'signInPolicy': 'Risikobasierte Anmelderichtlinien zur Verhinderung verdächtiger Anmeldeversuche',
+    // Roles for contacts section
+    'roleTechnical': 'Technische',
+    'roleAdministrative': 'Administrative',
+    'conjunctionAnd': 'und',
+    'contactsSuffix': 'Kontakte',
+    // Added for multi-tenant support (Matching EN keys)
+    'tenantInfoTitle': 'TENANT NINFORMATIONEN', // Adjusted from 'TENANT-INFORMATIONEN'
+    'tenantInfoIntro_singular': 'Bitte überprüfen Sie die Details für den in diesem Onboarding enthaltenen TENANT:', // Added singular
+    'tenantInfoIntro': 'Bitte überprüfen Sie die Details für die in diesem Onboarding enthaltenen TENANT:', // Updated to be explicitly plural
+    'noTenantInfo': '[KEINE TENANT INFORMATIONEN ANGEGEBEN]',
+    'gdapSpecificTenantDetailsHeader': 'Details für Mandanten mit spezifischen GDAP-Links:', // New key
+    'gdapSpecificLinkInfo': 'Für TENANT, für die ein spezifischer GDAP-Link bereitgestellt wurde, verwenden Sie bitte diesen Link. Die Links sind unten aufgeführt:', // Keeping old key
+    'gdapDefaultLinkInfo': 'Für andere TENANT ohne spezifischen Link wird der erforderliche GDAP-Genehmigungslink separat gesendet.',
+    'rbacInstructionMultiTenant': 'Für TENANT, für die die Azure RBAC-Konfiguration relevant ist (angegeben im Abschnitt TENANTinformationen), führen Sie bitte die folgenden Schritte aus.',
+    'rbacRelevantTenantsList': 'Relevante TENANT, die eine RBAC-Konfiguration erfordern:', // Currently unused in template, but added for completeness
+    'rbacStep2InstructionMultiTenant': 'Führen Sie das entsprechende unten bereitgestellte, vorausgefüllte PowerShell-Skript für jeden relevanten TENANT aus, der im Abschnitt TENANT informationen aufgeführt ist.',
+    'gdapLinksSentSeparately': 'Der/die erforderliche(n) GDAP-Genehmigungslink(s) wird/werden in einer separaten Mitteilung gesendet.'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
 
@@ -30088,6 +30109,8 @@ const translations = {
     'meetingBlockAfternoon': '(Afternoon, 14:00-16:00)', // Re-add key for summarized afternoon block
     'meetingBlockBoth': '(Morning & Afternoon)', // Re-add key for summarized full day block
     'meetingAttendees': 'Please ensure the appropriate team members can attend this meeting.',
+    'meetingSlotsMorningHeader': 'Morning Slots', // Added for table header
+    'meetingSlotsAfternoonHeader': 'Afternoon Slots', // Added for table header
     // GDAP section
     'gdapIntro': 'Microsoft recommends to use Granular Delegated Admin Privileges (GDAP) for secure administrative access. We need to implement this by {deadline}. We require the "{roles}" role.', // Updated GDAP Intro, incorporated roles
     // Removed 'gdapRoles'
@@ -30102,6 +30125,8 @@ const translations = {
     'rbacStep2': 'STEP 2: Update the tenant and run the following script', // Kept Step 2 Title
     'rbacStep2Instruction': 'Copy and paste this complete script into your PowerShell console', // Kept Step 2 Instruction
     'rbacScriptHeader': 'PowerShell Script (Copy and paste into PowerShell console)', // Kept Script Header
+    'rbacOrUpdateIt': 'or update it:', // Added for RBAC step 1
+    'rbacScriptForTenantHeader': 'Script for Tenant: {companyName} (Domain: {tenantDomain})', // Added for RBAC step 2 multi-tenant
     'rbacScreenshot': 'Please send us a screenshot of the result of the above script or let us know if you prefer to schedule a Teams meeting to complete this configuration together.', // Kept Screenshot text
     // Conditional Access section
     'conditionalAccessIntro': 'We recommend implementing the following security policies for your environment:', // Kept CA Intro
@@ -30109,11 +30134,18 @@ const translations = {
     'locationPolicy': 'Location-based access restrictions',
     'devicePolicy': 'Device compliance policies to ensure only secure devices can access your data',
     'signInPolicy': 'Sign-in risk-based policies to prevent suspicious login attempts',
+    // Roles for contacts section
+    'roleTechnical': 'Technical',
+    'roleAdministrative': 'Administrative',
+    'conjunctionAnd': 'and',
+    'contactsSuffix': 'contacts',
     // Added for multi-tenant support
     'tenantInfoTitle': 'TENANT INFORMATION',
-    'tenantInfoIntro': 'Please review the details for the tenant(s) included in this onboarding:',
+    'tenantInfoIntro_singular': 'Please review the details for the tenant included in this onboarding:', // Added singular
+    'tenantInfoIntro': 'Please review the details for the tenants included in this onboarding:', // Kept as plural/general
     'noTenantInfo': '[NO TENANT INFORMATION PROVIDED]',
-    'gdapSpecificLinkInfo': 'For tenants where a specific GDAP link was provided, please use that link. The links are listed below:',
+    'gdapSpecificTenantDetailsHeader': 'Details for tenants with specific GDAP links:', // New key for more descriptive header
+    'gdapSpecificLinkInfo': 'For tenants where a specific GDAP link was provided, please use that link. The links are listed below:', // Keeping old key for potential compatibility, but won't be used in new logic
     'gdapDefaultLinkInfo': 'For other tenants without a specific link listed, the necessary GDAP approval link will be sent separately.', // Updated text
     'rbacInstructionMultiTenant': 'For tenants where Azure RBAC configuration is relevant (indicated in the Tenant Information section), please complete the following steps.', // Simplified instruction
     'rbacRelevantTenantsList': 'Relevant Tenants requiring RBAC configuration:', // Kept as is, list is still relevant
@@ -30173,7 +30205,7 @@ const translations = {
     'no': 'Non', // Kept
     // Contacts section
     'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft.', // Updated Contacts Intro
-    'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.', // Kept Contacts Roles Intro
+    'contactsRolesIntro': 'Nous recommandons de désigner des contacts pour les rôles suivants : {roles}.', // Modified phrasing
     'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :', // Kept Contacts Instruction
     // Removed 'contactsNote'
     // Table headers
@@ -30192,6 +30224,8 @@ const translations = {
     'meetingBlockAfternoon': '(Après-midi, 14:00-16:00)', // Re-add key for summarized afternoon block
     'meetingBlockBoth': '(Matin & Après-midi)', // Re-add key for summarized full day block
     'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.', // Kept
+    'meetingSlotsMorningHeader': 'Créneaux du Matin', // Added for table header
+    'meetingSlotsAfternoonHeader': 'Créneaux de l\'Après-midi', // Added for table header
     // GDAP section
     'gdapIntro': 'Microsoft recommande d\'utiliser les Privilèges d\'Administrateur Délégué Granulaire (GDAP) pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}. Nous demandons le rôle "{roles}".', // Updated GDAP Intro, incorporated roles
     // Removed 'gdapRoles'
@@ -30204,15 +30238,34 @@ const translations = {
     'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell', // Kept Step 1 Title
     'rbacStep1Source': 'Source :',
     'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
-    'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
+    'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell', // Kept Step 2 Instruction (Single Tenant)
     'rbacScriptHeader': 'Script PowerShell (Copier et coller dans la console PowerShell)',
+    'rbacOrUpdateIt': 'ou mettez-le à jour :', // Added for RBAC step 1
+    'rbacScriptForTenantHeader': 'Script pour le Tenant : {companyName} (Domaine : {tenantDomain})', // Added for RBAC step 2 multi-tenant
     'rbacScreenshot': 'Veuillez nous envoyer une capture d\'écran du résultat du script ci-dessus ou nous indiquer si vous préférez planifier une réunion Teams pour effectuer cette configuration ensemble.',
     // Conditional Access section
     'conditionalAccessIntro': 'Nous recommandons la mise en œuvre des politiques de sécurité suivantes pour votre environnement :',
     'mfaPolicy': 'Exigences d\'authentification multifacteur (MFA) pour tous les utilisateurs',
     'locationPolicy': 'Restrictions d\'accès basées sur la localisation',
     'devicePolicy': 'Politiques de conformité des appareils pour garantir que seuls les appareils sécurisés peuvent accéder à vos données',
-    'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes'
+    'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes',
+    // Roles for contacts section
+    'roleTechnical': 'techniques', // Lowercase, masc plural
+    'roleAdministrative': 'administratifs', // Lowercase, masc plural
+    'conjunctionAnd': 'et',
+    'contactsSuffix': '', // Removed suffix, noun moved to intro key
+    // Added for multi-tenant support (Matching EN keys)
+    'tenantInfoTitle': 'INFORMATIONS SUR LE TENANT', // Adjusted from 'INFORMATIONS DU TENANT'
+    'tenantInfoIntro_singular': 'Veuillez examiner les détails du tenant inclus dans cette intégration :', // Added singular
+    'tenantInfoIntro': 'Veuillez examiner les détails des tenants inclus dans cette intégration :', // Updated to be explicitly plural
+    'noTenantInfo': '[AUCUNE INFORMATION SUR LE TENANT FOURNIE]',
+    'gdapSpecificTenantDetailsHeader': 'Détails des tenants avec des liens GDAP spécifiques :', // New key
+    'gdapSpecificLinkInfo': 'Pour les tenants où un lien GDAP spécifique a été fourni, veuillez utiliser ce lien. Les liens sont listés ci-dessous :', // Keeping old key
+    'gdapDefaultLinkInfo': 'Pour les autres tenants sans lien spécifique listé, le lien d\'approbation GDAP nécessaire sera envoyé séparément.',
+    'rbacInstructionMultiTenant': 'Pour les tenants où la configuration Azure RBAC est pertinente (indiqué dans la section Informations sur le Tenant), veuillez suivre les étapes suivantes.',
+    'rbacRelevantTenantsList': 'Tenants pertinents nécessitant la configuration RBAC :', // Currently unused in template, but added for completeness
+    'rbacStep2InstructionMultiTenant': 'Exécutez le script PowerShell pré-rempli approprié fourni ci-dessous pour chaque tenant pertinent listé dans la section Informations sur le Tenant.',
+    'gdapLinksSentSeparately': 'Le(s) lien(s) d\'approbation GDAP nécessaire(s) sera/seront envoyé(s) dans une communication séparée.'
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
 
@@ -30424,7 +30477,8 @@ class StorageService {
     static set(key, value) {
         return new Promise((resolve, reject) => {
             try {
-                chrome.storage.sync.set({ [key]: value }, () => {
+                // Use local storage instead of sync
+                chrome.storage.local.set({ [key]: value }, () => {
                     if (chrome.runtime.lastError) {
                         reject(chrome.runtime.lastError);
                     }
@@ -30446,7 +30500,8 @@ class StorageService {
     static get(key) {
         return new Promise((resolve, reject) => {
             try {
-                chrome.storage.sync.get(key, (result) => {
+                // Use local storage instead of sync
+                chrome.storage.local.get(key, (result) => {
                     if (chrome.runtime.lastError) {
                         reject(chrome.runtime.lastError);
                     }
@@ -30468,7 +30523,8 @@ class StorageService {
     static getAll(keys) {
         return new Promise((resolve, reject) => {
             try {
-                chrome.storage.sync.get(keys, (result) => {
+                // Use local storage instead of sync
+                chrome.storage.local.get(keys, (result) => {
                     if (chrome.runtime.lastError) {
                         reject(chrome.runtime.lastError);
                     }
@@ -30490,7 +30546,8 @@ class StorageService {
     static remove(key) {
         return new Promise((resolve, reject) => {
             try {
-                chrome.storage.sync.remove(key, () => {
+                // Use local storage instead of sync
+                chrome.storage.local.remove(key, () => {
                     if (chrome.runtime.lastError) {
                         reject(chrome.runtime.lastError);
                     }
@@ -30512,7 +30569,8 @@ class StorageService {
     static clear() {
         return new Promise((resolve, reject) => {
             try {
-                chrome.storage.sync.clear(() => {
+                // Use local storage instead of sync
+                chrome.storage.local.clear(() => {
                     if (chrome.runtime.lastError) {
                         reject(chrome.runtime.lastError);
                     }

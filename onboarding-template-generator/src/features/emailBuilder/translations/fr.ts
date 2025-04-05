@@ -42,7 +42,7 @@ const translations: Translations = {
   
   // Contacts section
   'contactsIntro': 'Selon votre Plan de Support {tier}, vous pouvez désigner jusqu\'à {count} contacts autorisés pour votre organisation. Ces contacts seront autorisés à soumettre des demandes de support et à approuver les modifications administratives dans votre environnement Microsoft.', // Updated Contacts Intro
-  'contactsRolesIntro': 'Nous recommandons de désigner des personnes pour les rôles suivants : {roles}.', // Kept Contacts Roles Intro
+  'contactsRolesIntro': 'Nous recommandons de désigner des contacts pour les rôles suivants : {roles}.', // Modified phrasing
   'contactsInstruction': 'Veuillez compléter le tableau suivant avec les informations requises pour chaque contact :', // Kept Contacts Instruction
   // Removed 'contactsNote'
   
@@ -63,6 +63,8 @@ const translations: Translations = {
   'meetingBlockAfternoon': '(Après-midi, 14:00-16:00)', // Re-add key for summarized afternoon block
   'meetingBlockBoth': '(Matin & Après-midi)', // Re-add key for summarized full day block
   'meetingAttendees': 'Veuillez vous assurer que les membres appropriés de votre équipe peuvent assister à cette réunion.', // Kept
+  'meetingSlotsMorningHeader': 'Créneaux du Matin', // Added for table header
+  'meetingSlotsAfternoonHeader': 'Créneaux de l\'Après-midi', // Added for table header
 
   // GDAP section
   'gdapIntro': 'Microsoft recommande d\'utiliser les Privilèges d\'Administrateur Délégué Granulaire (GDAP) pour un accès administratif sécurisé. Nous devons mettre cela en œuvre d\'ici le {deadline}. Nous demandons le rôle "{roles}".', // Updated GDAP Intro, incorporated roles
@@ -77,16 +79,37 @@ const translations: Translations = {
   'rbacStep1': 'ÉTAPE 1 : Installation d\'Azure PowerShell', // Kept Step 1 Title
   'rbacStep1Source': 'Source :',
   'rbacStep2': 'ÉTAPE 2 : Mettez à jour le tenant et exécutez le script suivant',
-  'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell',
+  'rbacStep2Instruction': 'Copiez et collez ce script complet dans votre console PowerShell', // Kept Step 2 Instruction (Single Tenant)
   'rbacScriptHeader': 'Script PowerShell (Copier et coller dans la console PowerShell)',
+  'rbacOrUpdateIt': 'ou mettez-le à jour :', // Added for RBAC step 1
+  'rbacScriptForTenantHeader': 'Script pour le Tenant : {companyName} (Domaine : {tenantDomain})', // Added for RBAC step 2 multi-tenant
   'rbacScreenshot': 'Veuillez nous envoyer une capture d\'écran du résultat du script ci-dessus ou nous indiquer si vous préférez planifier une réunion Teams pour effectuer cette configuration ensemble.',
-  
+
   // Conditional Access section
   'conditionalAccessIntro': 'Nous recommandons la mise en œuvre des politiques de sécurité suivantes pour votre environnement :',
   'mfaPolicy': 'Exigences d\'authentification multifacteur (MFA) pour tous les utilisateurs',
   'locationPolicy': 'Restrictions d\'accès basées sur la localisation',
   'devicePolicy': 'Politiques de conformité des appareils pour garantir que seuls les appareils sécurisés peuvent accéder à vos données',
-  'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes'
+  'signInPolicy': 'Politiques basées sur le risque de connexion pour prévenir les tentatives de connexion suspectes',
+
+  // Roles for contacts section
+  'roleTechnical': 'techniques', // Lowercase, masc plural
+  'roleAdministrative': 'administratifs', // Lowercase, masc plural
+  'conjunctionAnd': 'et',
+  'contactsSuffix': '', // Removed suffix, noun moved to intro key
+
+  // Added for multi-tenant support (Matching EN keys)
+  'tenantInfoTitle': 'INFORMATIONS SUR LE TENANT', // Adjusted from 'INFORMATIONS DU TENANT'
+  'tenantInfoIntro_singular': 'Veuillez examiner les détails du tenant inclus dans cette intégration :', // Added singular
+  'tenantInfoIntro': 'Veuillez examiner les détails des tenants inclus dans cette intégration :', // Updated to be explicitly plural
+  'noTenantInfo': '[AUCUNE INFORMATION SUR LE TENANT FOURNIE]',
+  'gdapSpecificTenantDetailsHeader': 'Détails des tenants avec des liens GDAP spécifiques :', // New key
+  'gdapSpecificLinkInfo': 'Pour les tenants où un lien GDAP spécifique a été fourni, veuillez utiliser ce lien. Les liens sont listés ci-dessous :', // Keeping old key
+  'gdapDefaultLinkInfo': 'Pour les autres tenants sans lien spécifique listé, le lien d\'approbation GDAP nécessaire sera envoyé séparément.',
+  'rbacInstructionMultiTenant': 'Pour les tenants où la configuration Azure RBAC est pertinente (indiqué dans la section Informations sur le Tenant), veuillez suivre les étapes suivantes.',
+  'rbacRelevantTenantsList': 'Tenants pertinents nécessitant la configuration RBAC :', // Currently unused in template, but added for completeness
+  'rbacStep2InstructionMultiTenant': 'Exécutez le script PowerShell pré-rempli approprié fourni ci-dessous pour chaque tenant pertinent listé dans la section Informations sur le Tenant.',
+  'gdapLinksSentSeparately': 'Le(s) lien(s) d\'approbation GDAP nécessaire(s) sera/seront envoyé(s) dans une communication séparée.'
 };
 
 export default translations;

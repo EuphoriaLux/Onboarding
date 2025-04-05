@@ -9,9 +9,10 @@ interface TenantManagerProps {
   tenants: TenantInfo[]; // Use imported TenantInfo
   selectedTier: string;
   onChange: (tenants: TenantInfo[]) => void;
+  calculatedDeadline: Date; // Add prop for calculated deadline
 }
 
-const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange }) => {
+const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange, calculatedDeadline }) => { // Destructure new prop
   const tier = supportTiers[selectedTier];
 
   // Effect to adjust tenants when tier changes
@@ -150,20 +151,18 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
             {/* Configuration Section Starts Here */}
             <hr className="tenant-divider" /> {/* Optional visual divider */}
 
-            {/* Implementation Deadline Date Picker */}
+            {/* Display Calculated Deadline */}
             <div className="form-group">
-              <label htmlFor={`implementation-deadline-${index}`}>Implementation Deadline</label>
-              <DatePicker
-                id={`implementation-deadline-${index}`}
-                selected={tenant.implementationDeadline}
-                onChange={(date: Date | null) => handleTenantChange(index, 'implementationDeadline', date)}
-                dateFormat="yyyy-MM-dd"
-                placeholderText="YYYY-MM-DD"
-                className="form-control" // Add form-control class if needed for styling
-                isClearable // Allow clearing the date
+              <label htmlFor={`calculated-deadline-${index}`}>GDAP Implementation Deadline (Auto-calculated)</label>
+              <input
+                id={`calculated-deadline-${index}`} // Add ID
+                type="text"
+                value={calculatedDeadline.toLocaleDateString()} // Format the date
+                readOnly // Make it read-only
+                className="form-control" // Optional styling
               />
-              <small className="form-text">
-                Optional: Target date for implementation tasks.
+               <small className="form-text">
+                This date (90 days from today) will be used in the email template.
               </small>
             </div>
 

@@ -52,15 +52,18 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
   const language = (emailData.language || 'en') as Language;
 
   useEffect(() => {
-    // Generate HTML and Plain Text using emailBuilder.buildEmailHTML
-    const { html, plainText: generatedPlainText } = emailBuilder.buildEmailHTML(emailData, tenants, themeSettings);
+    // Reverted to synchronous generation
+    try {
+      // Generate HTML and Plain Text using emailBuilder.buildEmailHTML (now synchronous)
+      const { html, plainText: generatedPlainText } = emailBuilder.buildEmailHTML(emailData, tenants, themeSettings);
 
-    // Generate plain text using emailBuilder.buildEmailBody, passing tenants (This might be redundant now)
-    const text = emailBuilder.buildEmailBody(emailData, tenants);
-
-    setHtmlContent(html);
-    // Use the plain text generated alongside the HTML
-    setPlainText(generatedPlainText);
+      setHtmlContent(html);
+      setPlainText(generatedPlainText);
+    } catch (error) {
+        console.error("Error generating email preview content:", error);
+        setHtmlContent('<p>Error generating preview.</p>');
+        setPlainText('Error generating preview.');
+    }
     // Depend on emailData, tenants, and themeSettings
   }, [emailData, tenants, themeSettings]);
 
@@ -105,9 +108,11 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
     document.body.removeChild(element);
   };
 
-  const handleGenerateEml = () => {
+  const handleGenerateEml = async () => { // Make async
+    setEmlStatus('Generating .eml file...'); // Provide feedback
     try {
-      const emlContent = emailBuilder.generateEmlContent(emailData, htmlContent, plainText);
+      // Await the async function call
+      const emlContent = await emailBuilder.generateEmlContent(emailData, htmlContent, plainText);
       const blob = new Blob([emlContent], { type: 'message/rfc822' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
