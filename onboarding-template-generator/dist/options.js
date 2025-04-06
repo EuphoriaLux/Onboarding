@@ -784,6 +784,253 @@ h2.react-datepicker__current-month {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/features/roadmap/components/RoadmapPage.css":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/features/roadmap/components/RoadmapPage.css ***!
+  \***********************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* src/features/roadmap/components/RoadmapPage.css - Horizontal Timeline Styles */
+
+.roadmap-page-container {
+  padding: 24px;
+  margin: 20px auto;
+  background-color: var(--background-color);
+}
+
+.roadmap-page-container h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.roadmap-intro {
+  font-size: 16px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 60px; /* More space before timeline */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Timeline Container */
+.roadmap-timeline-container {
+  width: 100%;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  padding: 40px 0; /* Padding top/bottom for items */
+}
+
+/* The main timeline axis */
+.timeline {
+  position: relative;
+  display: flex; /* Arrange quarters horizontally */
+  min-width: -webkit-fill-available; /* Fallback for older browsers */
+  min-width: fit-content; /* Ensure it expands */
+  padding: 20px 0;
+  margin: 0 40px; /* Margins for start/end */
+}
+
+/* Draw the central line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--border-color);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* Section for each quarter */
+.timeline-quarter-section {
+  position: relative; /* For positioning marker and items */
+  display: flex;
+  flex-direction: column; /* Stack marker and items */
+  align-items: center; /* Center marker horizontally */
+  flex: 1; /* Allow sections to grow */
+  min-width: 250px; /* Minimum width per quarter */
+  padding: 0 20px; /* Spacing between quarters */
+  z-index: 2; /* Above the main line */
+}
+
+/* Marker on the timeline for the quarter */
+.timeline-marker {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  border: 3px solid var(--background-color); /* Make it pop */
+  top: -8px; /* Adjust to sit centered on the line */
+  z-index: 3; /* Above quarter section */
+}
+
+.quarter-label {
+  position: absolute;
+  bottom: 30px; /* Position label below the marker */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+  white-space: nowrap;
+  background-color: var(--background-lighter);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Container for items within a quarter */
+.timeline-items {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Small gap between items in the same quarter */
+}
+
+/* Individual roadmap item card */
+.timeline-item {
+  position: relative;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  padding: 12px 16px;
+  width: 100%; /* Take width of column */
+  box-shadow: var(--box-shadow-light);
+  /* Smoother, specific transition */
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+  z-index: 4; /* Above marker */
+  margin-top: 40px; /* Consistent spacing below timeline */
+}
+
+/* Remove alternating position styles */
+/* .timeline-item.item-pos-odd { ... } */
+/* .timeline-item.item-pos-even { ... } */
+
+
+.timeline-item:hover {
+  /* Subtle lift effect instead of scale */
+  transform: translateY(-4px);
+  box-shadow: var(--box-shadow);
+}
+
+.item-content h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.item-content p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.4;
+  margin-bottom: 28px; /* Ensure space for status badge */
+}
+
+/* Status Badge */
+.roadmap-item-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  border: 1px solid transparent; /* Base border */
+}
+
+/* Connector line from item to timeline */
+.item-connector {
+  position: absolute;
+  width: 2px;
+  background-color: var(--border-color);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Consistent connector pointing upwards */
+.item-connector {
+  height: 40px; /* Height from item top to timeline */
+  top: -40px; /* Position starts above the item */
+  /* Remove styles related to bottom positioning */
+}
+
+/* Remove connector styles specific to item-pos-even/odd */
+/* .timeline-item.item-pos-odd .item-connector { ... } */
+/* .timeline-item.item-pos-even .item-connector { ... } */
+
+
+/* Status-specific styling */
+.timeline-item.status-completed .roadmap-item-status {
+  background-color: var(--status-completed-bg);
+  color: var(--status-completed-text);
+  border-color: var(--status-completed-border);
+}
+.timeline-item.status-completed .item-connector {
+  background-color: var(--status-completed-border); /* Match status color */
+}
+
+
+.timeline-item.status-in-progress .roadmap-item-status {
+  background-color: var(--status-inprogress-bg);
+  color: var(--status-inprogress-text);
+  border-color: var(--status-inprogress-border);
+}
+.timeline-item.status-in-progress .item-connector {
+  background-color: var(--status-inprogress-border);
+}
+
+.timeline-item.status-planned .roadmap-item-status {
+  background-color: var(--status-planned-bg);
+  color: var(--status-planned-text);
+  border-color: var(--status-planned-border);
+}
+.timeline-item.status-planned .item-connector {
+  background-color: var(--status-planned-border);
+}
+
+/* Ensure status colors are defined */
+:root {
+  --status-completed-bg: #e6f4ea;
+  --status-completed-text: #1e8e3e;
+  --status-completed-border: #a8d5b9;
+
+  --status-inprogress-bg: #e8f0fe;
+  --status-inprogress-text: #1a73e8;
+  --status-inprogress-border: #adcaf7;
+
+  --status-planned-bg: #f3f4f6;
+  --status-planned-text: #5f6368;
+  --status-planned-border: #dadce0;
+}
+`, "",{"version":3,"sources":["webpack://./src/features/roadmap/components/RoadmapPage.css"],"names":[],"mappings":"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","sourcesContent":["/* src/features/roadmap/components/RoadmapPage.css - Horizontal Timeline Styles */\r\n\r\n.roadmap-page-container {\r\n  padding: 24px;\r\n  margin: 20px auto;\r\n  background-color: var(--background-color);\r\n}\r\n\r\n.roadmap-page-container h2 {\r\n  font-size: 26px;\r\n  font-weight: 700;\r\n  color: var(--primary-color);\r\n  text-align: center;\r\n  margin-bottom: 12px;\r\n}\r\n\r\n.roadmap-intro {\r\n  font-size: 16px;\r\n  color: var(--text-light);\r\n  text-align: center;\r\n  margin-bottom: 60px; /* More space before timeline */\r\n  max-width: 700px;\r\n  margin-left: auto;\r\n  margin-right: auto;\r\n}\r\n\r\n/* Timeline Container */\r\n.roadmap-timeline-container {\r\n  width: 100%;\r\n  overflow-x: auto; /* Allow horizontal scrolling if needed */\r\n  padding: 40px 0; /* Padding top/bottom for items */\r\n}\r\n\r\n/* The main timeline axis */\r\n.timeline {\r\n  position: relative;\r\n  display: flex; /* Arrange quarters horizontally */\r\n  min-width: -webkit-fill-available; /* Fallback for older browsers */\r\n  min-width: fit-content; /* Ensure it expands */\r\n  padding: 20px 0;\r\n  margin: 0 40px; /* Margins for start/end */\r\n}\r\n\r\n/* Draw the central line */\r\n.timeline::before {\r\n  content: '';\r\n  position: absolute;\r\n  top: 50%; /* Center vertically */\r\n  left: 0;\r\n  right: 0;\r\n  height: 4px;\r\n  background-color: var(--border-color);\r\n  transform: translateY(-50%);\r\n  z-index: 1;\r\n}\r\n\r\n/* Section for each quarter */\r\n.timeline-quarter-section {\r\n  position: relative; /* For positioning marker and items */\r\n  display: flex;\r\n  flex-direction: column; /* Stack marker and items */\r\n  align-items: center; /* Center marker horizontally */\r\n  flex: 1; /* Allow sections to grow */\r\n  min-width: 250px; /* Minimum width per quarter */\r\n  padding: 0 20px; /* Spacing between quarters */\r\n  z-index: 2; /* Above the main line */\r\n}\r\n\r\n/* Marker on the timeline for the quarter */\r\n.timeline-marker {\r\n  position: relative;\r\n  width: 20px;\r\n  height: 20px;\r\n  background-color: var(--primary-color);\r\n  border-radius: 50%;\r\n  border: 3px solid var(--background-color); /* Make it pop */\r\n  top: -8px; /* Adjust to sit centered on the line */\r\n  z-index: 3; /* Above quarter section */\r\n}\r\n\r\n.quarter-label {\r\n  position: absolute;\r\n  bottom: 30px; /* Position label below the marker */\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  font-size: 14px;\r\n  font-weight: 600;\r\n  color: var(--text-color);\r\n  white-space: nowrap;\r\n  background-color: var(--background-lighter);\r\n  padding: 2px 6px;\r\n  border-radius: 4px;\r\n}\r\n\r\n/* Container for items within a quarter */\r\n.timeline-items {\r\n  position: relative;\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: 10px; /* Small gap between items in the same quarter */\r\n}\r\n\r\n/* Individual roadmap item card */\r\n.timeline-item {\r\n  position: relative;\r\n  background-color: white;\r\n  border-radius: 6px;\r\n  border: 1px solid var(--border-light);\r\n  padding: 12px 16px;\r\n  width: 100%; /* Take width of column */\r\n  box-shadow: var(--box-shadow-light);\r\n  /* Smoother, specific transition */\r\n  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;\r\n  z-index: 4; /* Above marker */\r\n  margin-top: 40px; /* Consistent spacing below timeline */\r\n}\r\n\r\n/* Remove alternating position styles */\r\n/* .timeline-item.item-pos-odd { ... } */\r\n/* .timeline-item.item-pos-even { ... } */\r\n\r\n\r\n.timeline-item:hover {\r\n  /* Subtle lift effect instead of scale */\r\n  transform: translateY(-4px);\r\n  box-shadow: var(--box-shadow);\r\n}\r\n\r\n.item-content h4 {\r\n  font-size: 15px;\r\n  font-weight: 600;\r\n  color: var(--text-color);\r\n  margin-bottom: 6px;\r\n}\r\n\r\n.item-content p {\r\n  font-size: 13px;\r\n  color: var(--text-light);\r\n  line-height: 1.4;\r\n  margin-bottom: 28px; /* Ensure space for status badge */\r\n}\r\n\r\n/* Status Badge */\r\n.roadmap-item-status {\r\n  display: inline-block;\r\n  font-size: 11px;\r\n  font-weight: 500;\r\n  padding: 3px 8px;\r\n  border-radius: 10px;\r\n  position: absolute;\r\n  bottom: 8px;\r\n  right: 8px;\r\n  border: 1px solid transparent; /* Base border */\r\n}\r\n\r\n/* Connector line from item to timeline */\r\n.item-connector {\r\n  position: absolute;\r\n  width: 2px;\r\n  background-color: var(--border-color);\r\n  left: 50%;\r\n  transform: translateX(-50%);\r\n  z-index: 3;\r\n}\r\n\r\n/* Consistent connector pointing upwards */\r\n.item-connector {\r\n  height: 40px; /* Height from item top to timeline */\r\n  top: -40px; /* Position starts above the item */\r\n  /* Remove styles related to bottom positioning */\r\n}\r\n\r\n/* Remove connector styles specific to item-pos-even/odd */\r\n/* .timeline-item.item-pos-odd .item-connector { ... } */\r\n/* .timeline-item.item-pos-even .item-connector { ... } */\r\n\r\n\r\n/* Status-specific styling */\r\n.timeline-item.status-completed .roadmap-item-status {\r\n  background-color: var(--status-completed-bg);\r\n  color: var(--status-completed-text);\r\n  border-color: var(--status-completed-border);\r\n}\r\n.timeline-item.status-completed .item-connector {\r\n  background-color: var(--status-completed-border); /* Match status color */\r\n}\r\n\r\n\r\n.timeline-item.status-in-progress .roadmap-item-status {\r\n  background-color: var(--status-inprogress-bg);\r\n  color: var(--status-inprogress-text);\r\n  border-color: var(--status-inprogress-border);\r\n}\r\n.timeline-item.status-in-progress .item-connector {\r\n  background-color: var(--status-inprogress-border);\r\n}\r\n\r\n.timeline-item.status-planned .roadmap-item-status {\r\n  background-color: var(--status-planned-bg);\r\n  color: var(--status-planned-text);\r\n  border-color: var(--status-planned-border);\r\n}\r\n.timeline-item.status-planned .item-connector {\r\n  background-color: var(--status-planned-border);\r\n}\r\n\r\n/* Ensure status colors are defined */\r\n:root {\r\n  --status-completed-bg: #e6f4ea;\r\n  --status-completed-text: #1e8e3e;\r\n  --status-completed-border: #a8d5b9;\r\n\r\n  --status-inprogress-bg: #e8f0fe;\r\n  --status-inprogress-text: #1a73e8;\r\n  --status-inprogress-border: #adcaf7;\r\n\r\n  --status-planned-bg: #f3f4f6;\r\n  --status-planned-text: #5f6368;\r\n  --status-planned-border: #dadce0;\r\n}\r\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/features/settings/components/SettingsPage.css":
 /*!*************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/features/settings/components/SettingsPage.css ***!
@@ -2372,7 +2619,21 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/Homepage.css */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
-    margin-bottom: 40px;
+    /* Removed margin-bottom from grid, will be on section */
+  }
+
+  /* Feature Category Section */
+  .feature-category-section {
+    margin-bottom: 40px; /* Add margin between category sections */
+  }
+
+  .feature-category-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light); /* Optional: add a light border under category titles */
   }
   
   /* Feature Card */
@@ -2502,7 +2763,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/Homepage.css */
     max-width: 400px;
     margin-top: 16px;
   }
-  
+
   /* Homepage Footer */
   .homepage-footer {
     margin-top: auto;
@@ -2541,7 +2802,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/Homepage.css */
     .back-button {
       margin-right: 0;
     }
-  }`, "",{"version":3,"sources":["webpack://./src/styles/Homepage.css"],"names":[],"mappings":"AAAA,4BAA4B;;AAE5B,uBAAuB;AACvB;IACI,iBAAiB;IACjB,cAAc;IACd,kBAAkB;IAClB,iBAAiB;IACjB,aAAa;IACb,sBAAsB;EACxB;;EAEA,oBAAoB;EACpB;IACE,kBAAkB;IAClB,mBAAmB;IACnB,oBAAoB;IACpB,4CAA4C;EAC9C;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,2BAA2B;IAC3B,mBAAmB;EACrB;;EAEA;IACE,eAAe;IACf,wBAAwB;IACxB,gBAAgB;IAChB,cAAc;EAChB;;EAEA,kBAAkB;EAClB;IACE,aAAa;IACb,4DAA4D;IAC5D,SAAS;IACT,mBAAmB;EACrB;;EAEA,iBAAiB;EACjB;IACE,uBAAuB;IACvB,kBAAkB;IAClB,qCAAqC;IACrC,aAAa;IACb,aAAa;IACb,uBAAuB;IACvB,SAAS;IACT,eAAe;IACf,oCAAoC;IACpC,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;EAC/B;;EAEA;IACE,mCAAmC;IACnC,2BAA2B;EAC7B;;EAEA;IACE,YAAY;IACZ,mBAAmB;EACrB;;EAEA;IACE,6BAA6B;IAC7B,eAAe;EACjB;;EAEA;IACE,cAAc;EAChB;;EAEA;IACE,OAAO;EACT;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,wBAAwB;EAC1B;;EAEA;IACE,eAAe;IACf,wBAAwB;IACxB,gBAAgB;EAClB;;EAEA;IACE,qBAAqB;IACrB,mCAAmC;IACnC,YAAY;IACZ,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;EAClB;;EAEA,mDAAmD;EACnD;IACE,aAAa;IACb,sBAAsB;IACtB,iBAAiB;EACnB;;EAEA;IACE,aAAa;IACb,mBAAmB;IACnB,kBAAkB;IAClB,uBAAuB;IACvB,4CAA4C;IAC5C,mBAAmB;EACrB;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,SAAS;EACX;;EAEA;IACE,6BAA6B;IAC7B,YAAY;IACZ,2BAA2B;IAC3B,eAAe;IACf,eAAe;IACf,iBAAiB;IACjB,kBAAkB;IAClB,kBAAkB;IAClB,iCAAiC;EACnC;;EAEA;IACE,sCAAsC;EACxC;;EAEA,4BAA4B;EAC5B;IACE,aAAa;IACb,sBAAsB;IACtB,mBAAmB;IACnB,uBAAuB;IACvB,iBAAiB;IACjB,kBAAkB;IAClB,aAAa;IACb,2CAA2C;IAC3C,kBAAkB;IAClB,YAAY;EACd;;EAEA;IACE,aAAa;IACb,eAAe;IACf,mBAAmB;EACrB;;EAEA;IACE,kFAAkF;IAClF,eAAe;IACf,wBAAwB;IACxB,gBAAgB;IAChB,gBAAgB;EAClB;;EAEA,oBAAoB;EACpB;IACE,gBAAgB;IAChB,iBAAiB;IACjB,yCAAyC;IACzC,kBAAkB;IAClB,wBAAwB;IACxB,eAAe;EACjB;;EAEA;IACE,kBAAkB;EACpB;;EAEA,2BAA2B;EAC3B;IACE;MACE,kBAAkB;IACpB;;IAEA;MACE,eAAe;IACjB;;IAEA;MACE,0BAA0B;IAC5B;;IAEA;MACE,sBAAsB;MACtB,uBAAuB;MACvB,SAAS;MACT,aAAa;IACf;;IAEA;MACE,eAAe;IACjB;EACF","sourcesContent":["/* src/styles/Homepage.css */\r\n\r\n/* Homepage Container */\r\n.homepage-container {\r\n    max-width: 1200px;\r\n    margin: 0 auto;\r\n    padding: 40px 24px;\r\n    min-height: 100vh;\r\n    display: flex;\r\n    flex-direction: column;\r\n  }\r\n  \r\n  /* Homepage Header */\r\n  .homepage-header {\r\n    text-align: center;\r\n    margin-bottom: 40px;\r\n    padding-bottom: 24px;\r\n    border-bottom: 1px solid var(--border-color);\r\n  }\r\n  \r\n  .homepage-header h1 {\r\n    font-size: 32px;\r\n    font-weight: 700;\r\n    color: var(--primary-color);\r\n    margin-bottom: 16px;\r\n  }\r\n  \r\n  .homepage-header p {\r\n    font-size: 18px;\r\n    color: var(--text-light);\r\n    max-width: 600px;\r\n    margin: 0 auto;\r\n  }\r\n  \r\n  /* Features Grid */\r\n  .features-grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\r\n    gap: 24px;\r\n    margin-bottom: 40px;\r\n  }\r\n  \r\n  /* Feature Card */\r\n  .feature-card {\r\n    background-color: white;\r\n    border-radius: 8px;\r\n    border: 1px solid var(--border-color);\r\n    padding: 24px;\r\n    display: flex;\r\n    align-items: flex-start;\r\n    gap: 16px;\r\n    cursor: pointer;\r\n    transition: var(--transition-medium);\r\n    position: relative;\r\n    overflow: hidden;\r\n    box-shadow: var(--box-shadow);\r\n  }\r\n  \r\n  .feature-card:hover {\r\n    box-shadow: var(--box-shadow-hover);\r\n    transform: translateY(-4px);\r\n  }\r\n  \r\n  .feature-card.disabled {\r\n    opacity: 0.7;\r\n    cursor: not-allowed;\r\n  }\r\n  \r\n  .feature-card.disabled:hover {\r\n    box-shadow: var(--box-shadow);\r\n    transform: none;\r\n  }\r\n  \r\n  .feature-icon {\r\n    flex-shrink: 0;\r\n  }\r\n  \r\n  .feature-content {\r\n    flex: 1;\r\n  }\r\n  \r\n  .feature-content h3 {\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n    margin-bottom: 8px;\r\n    color: var(--text-color);\r\n  }\r\n  \r\n  .feature-content p {\r\n    font-size: 14px;\r\n    color: var(--text-light);\r\n    line-height: 1.5;\r\n  }\r\n  \r\n  .coming-soon-badge {\r\n    display: inline-block;\r\n    background-color: var(--text-light);\r\n    color: white;\r\n    font-size: 12px;\r\n    padding: 4px 8px;\r\n    border-radius: 4px;\r\n    margin-top: 12px;\r\n  }\r\n  \r\n  /* Feature Container (when a feature is selected) */\r\n  .feature-container {\r\n    display: flex;\r\n    flex-direction: column;\r\n    min-height: 100vh;\r\n  }\r\n  \r\n  .feature-header {\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 16px 24px;\r\n    background-color: white;\r\n    border-bottom: 1px solid var(--border-color);\r\n    margin-bottom: 24px;\r\n  }\r\n  \r\n  .feature-header h1 {\r\n    font-size: 24px;\r\n    font-weight: 600;\r\n    margin: 0;\r\n  }\r\n  \r\n  .back-button {\r\n    background-color: transparent;\r\n    border: none;\r\n    color: var(--primary-color);\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n    padding: 8px 16px;\r\n    margin-right: 16px;\r\n    border-radius: 4px;\r\n    transition: background-color 0.2s;\r\n  }\r\n  \r\n  .back-button:hover {\r\n    background-color: var(--primary-light);\r\n  }\r\n  \r\n  /* Coming Soon Placeholder */\r\n  .coming-soon {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: center;\r\n    min-height: 400px;\r\n    text-align: center;\r\n    padding: 40px;\r\n    background-color: var(--background-lighter);\r\n    border-radius: 8px;\r\n    margin: 40px;\r\n  }\r\n  \r\n  .coming-soon:before {\r\n    content: \"🚧\";\r\n    font-size: 64px;\r\n    margin-bottom: 24px;\r\n  }\r\n  \r\n  .coming-soon:after {\r\n    content: \"This feature is currently under development and will be available soon.\";\r\n    font-size: 18px;\r\n    color: var(--text-light);\r\n    max-width: 400px;\r\n    margin-top: 16px;\r\n  }\r\n  \r\n  /* Homepage Footer */\r\n  .homepage-footer {\r\n    margin-top: auto;\r\n    padding-top: 24px;\r\n    border-top: 1px solid var(--border-color);\r\n    text-align: center;\r\n    color: var(--text-light);\r\n    font-size: 14px;\r\n  }\r\n  \r\n  .homepage-footer p {\r\n    margin-bottom: 8px;\r\n  }\r\n  \r\n  /* Responsive Adjustments */\r\n  @media (max-width: 768px) {\r\n    .homepage-container {\r\n      padding: 24px 16px;\r\n    }\r\n    \r\n    .homepage-header h1 {\r\n      font-size: 28px;\r\n    }\r\n    \r\n    .features-grid {\r\n      grid-template-columns: 1fr;\r\n    }\r\n    \r\n    .feature-header {\r\n      flex-direction: column;\r\n      align-items: flex-start;\r\n      gap: 12px;\r\n      padding: 16px;\r\n    }\r\n    \r\n    .back-button {\r\n      margin-right: 0;\r\n    }\r\n  }"],"sourceRoot":""}]);
+  }
+`, "",{"version":3,"sources":["webpack://./src/styles/Homepage.css"],"names":[],"mappings":"AAAA,4BAA4B;;AAE5B,uBAAuB;AACvB;IACI,iBAAiB;IACjB,cAAc;IACd,kBAAkB;IAClB,iBAAiB;IACjB,aAAa;IACb,sBAAsB;EACxB;;EAEA,oBAAoB;EACpB;IACE,kBAAkB;IAClB,mBAAmB;IACnB,oBAAoB;IACpB,4CAA4C;EAC9C;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,2BAA2B;IAC3B,mBAAmB;EACrB;;EAEA;IACE,eAAe;IACf,wBAAwB;IACxB,gBAAgB;IAChB,cAAc;EAChB;;EAEA,kBAAkB;EAClB;IACE,aAAa;IACb,4DAA4D;IAC5D,SAAS;IACT,wDAAwD;EAC1D;;EAEA,6BAA6B;EAC7B;IACE,mBAAmB,EAAE,yCAAyC;EAChE;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,wBAAwB;IACxB,mBAAmB;IACnB,oBAAoB;IACpB,4CAA4C,EAAE,uDAAuD;EACvG;;EAEA,iBAAiB;EACjB;IACE,uBAAuB;IACvB,kBAAkB;IAClB,qCAAqC;IACrC,aAAa;IACb,aAAa;IACb,uBAAuB;IACvB,SAAS;IACT,eAAe;IACf,oCAAoC;IACpC,kBAAkB;IAClB,gBAAgB;IAChB,6BAA6B;EAC/B;;EAEA;IACE,mCAAmC;IACnC,2BAA2B;EAC7B;;EAEA;IACE,YAAY;IACZ,mBAAmB;EACrB;;EAEA;IACE,6BAA6B;IAC7B,eAAe;EACjB;;EAEA;IACE,cAAc;EAChB;;EAEA;IACE,OAAO;EACT;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,wBAAwB;EAC1B;;EAEA;IACE,eAAe;IACf,wBAAwB;IACxB,gBAAgB;EAClB;;EAEA;IACE,qBAAqB;IACrB,mCAAmC;IACnC,YAAY;IACZ,eAAe;IACf,gBAAgB;IAChB,kBAAkB;IAClB,gBAAgB;EAClB;;EAEA,mDAAmD;EACnD;IACE,aAAa;IACb,sBAAsB;IACtB,iBAAiB;EACnB;;EAEA;IACE,aAAa;IACb,mBAAmB;IACnB,kBAAkB;IAClB,uBAAuB;IACvB,4CAA4C;IAC5C,mBAAmB;EACrB;;EAEA;IACE,eAAe;IACf,gBAAgB;IAChB,SAAS;EACX;;EAEA;IACE,6BAA6B;IAC7B,YAAY;IACZ,2BAA2B;IAC3B,eAAe;IACf,eAAe;IACf,iBAAiB;IACjB,kBAAkB;IAClB,kBAAkB;IAClB,iCAAiC;EACnC;;EAEA;IACE,sCAAsC;EACxC;;EAEA,4BAA4B;EAC5B;IACE,aAAa;IACb,sBAAsB;IACtB,mBAAmB;IACnB,uBAAuB;IACvB,iBAAiB;IACjB,kBAAkB;IAClB,aAAa;IACb,2CAA2C;IAC3C,kBAAkB;IAClB,YAAY;EACd;;EAEA;IACE,aAAa;IACb,eAAe;IACf,mBAAmB;EACrB;;EAEA;IACE,kFAAkF;IAClF,eAAe;IACf,wBAAwB;IACxB,gBAAgB;IAChB,gBAAgB;EAClB;;EAEA,oBAAoB;EACpB;IACE,gBAAgB;IAChB,iBAAiB;IACjB,yCAAyC;IACzC,kBAAkB;IAClB,wBAAwB;IACxB,eAAe;EACjB;;EAEA;IACE,kBAAkB;EACpB;;EAEA,2BAA2B;EAC3B;IACE;MACE,kBAAkB;IACpB;;IAEA;MACE,eAAe;IACjB;;IAEA;MACE,0BAA0B;IAC5B;;IAEA;MACE,sBAAsB;MACtB,uBAAuB;MACvB,SAAS;MACT,aAAa;IACf;;IAEA;MACE,eAAe;IACjB;EACF","sourcesContent":["/* src/styles/Homepage.css */\r\n\r\n/* Homepage Container */\r\n.homepage-container {\r\n    max-width: 1200px;\r\n    margin: 0 auto;\r\n    padding: 40px 24px;\r\n    min-height: 100vh;\r\n    display: flex;\r\n    flex-direction: column;\r\n  }\r\n  \r\n  /* Homepage Header */\r\n  .homepage-header {\r\n    text-align: center;\r\n    margin-bottom: 40px;\r\n    padding-bottom: 24px;\r\n    border-bottom: 1px solid var(--border-color);\r\n  }\r\n  \r\n  .homepage-header h1 {\r\n    font-size: 32px;\r\n    font-weight: 700;\r\n    color: var(--primary-color);\r\n    margin-bottom: 16px;\r\n  }\r\n  \r\n  .homepage-header p {\r\n    font-size: 18px;\r\n    color: var(--text-light);\r\n    max-width: 600px;\r\n    margin: 0 auto;\r\n  }\r\n  \r\n  /* Features Grid */\r\n  .features-grid {\r\n    display: grid;\r\n    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));\r\n    gap: 24px;\r\n    /* Removed margin-bottom from grid, will be on section */\r\n  }\r\n\r\n  /* Feature Category Section */\r\n  .feature-category-section {\r\n    margin-bottom: 40px; /* Add margin between category sections */\r\n  }\r\n\r\n  .feature-category-section h2 {\r\n    font-size: 24px;\r\n    font-weight: 600;\r\n    color: var(--text-color);\r\n    margin-bottom: 20px;\r\n    padding-bottom: 10px;\r\n    border-bottom: 1px solid var(--border-light); /* Optional: add a light border under category titles */\r\n  }\r\n  \r\n  /* Feature Card */\r\n  .feature-card {\r\n    background-color: white;\r\n    border-radius: 8px;\r\n    border: 1px solid var(--border-color);\r\n    padding: 24px;\r\n    display: flex;\r\n    align-items: flex-start;\r\n    gap: 16px;\r\n    cursor: pointer;\r\n    transition: var(--transition-medium);\r\n    position: relative;\r\n    overflow: hidden;\r\n    box-shadow: var(--box-shadow);\r\n  }\r\n  \r\n  .feature-card:hover {\r\n    box-shadow: var(--box-shadow-hover);\r\n    transform: translateY(-4px);\r\n  }\r\n  \r\n  .feature-card.disabled {\r\n    opacity: 0.7;\r\n    cursor: not-allowed;\r\n  }\r\n  \r\n  .feature-card.disabled:hover {\r\n    box-shadow: var(--box-shadow);\r\n    transform: none;\r\n  }\r\n  \r\n  .feature-icon {\r\n    flex-shrink: 0;\r\n  }\r\n  \r\n  .feature-content {\r\n    flex: 1;\r\n  }\r\n  \r\n  .feature-content h3 {\r\n    font-size: 18px;\r\n    font-weight: 600;\r\n    margin-bottom: 8px;\r\n    color: var(--text-color);\r\n  }\r\n  \r\n  .feature-content p {\r\n    font-size: 14px;\r\n    color: var(--text-light);\r\n    line-height: 1.5;\r\n  }\r\n  \r\n  .coming-soon-badge {\r\n    display: inline-block;\r\n    background-color: var(--text-light);\r\n    color: white;\r\n    font-size: 12px;\r\n    padding: 4px 8px;\r\n    border-radius: 4px;\r\n    margin-top: 12px;\r\n  }\r\n  \r\n  /* Feature Container (when a feature is selected) */\r\n  .feature-container {\r\n    display: flex;\r\n    flex-direction: column;\r\n    min-height: 100vh;\r\n  }\r\n  \r\n  .feature-header {\r\n    display: flex;\r\n    align-items: center;\r\n    padding: 16px 24px;\r\n    background-color: white;\r\n    border-bottom: 1px solid var(--border-color);\r\n    margin-bottom: 24px;\r\n  }\r\n  \r\n  .feature-header h1 {\r\n    font-size: 24px;\r\n    font-weight: 600;\r\n    margin: 0;\r\n  }\r\n  \r\n  .back-button {\r\n    background-color: transparent;\r\n    border: none;\r\n    color: var(--primary-color);\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n    padding: 8px 16px;\r\n    margin-right: 16px;\r\n    border-radius: 4px;\r\n    transition: background-color 0.2s;\r\n  }\r\n  \r\n  .back-button:hover {\r\n    background-color: var(--primary-light);\r\n  }\r\n  \r\n  /* Coming Soon Placeholder */\r\n  .coming-soon {\r\n    display: flex;\r\n    flex-direction: column;\r\n    align-items: center;\r\n    justify-content: center;\r\n    min-height: 400px;\r\n    text-align: center;\r\n    padding: 40px;\r\n    background-color: var(--background-lighter);\r\n    border-radius: 8px;\r\n    margin: 40px;\r\n  }\r\n  \r\n  .coming-soon:before {\r\n    content: \"🚧\";\r\n    font-size: 64px;\r\n    margin-bottom: 24px;\r\n  }\r\n  \r\n  .coming-soon:after {\r\n    content: \"This feature is currently under development and will be available soon.\";\r\n    font-size: 18px;\r\n    color: var(--text-light);\r\n    max-width: 400px;\r\n    margin-top: 16px;\r\n  }\r\n\r\n  /* Homepage Footer */\r\n  .homepage-footer {\r\n    margin-top: auto;\r\n    padding-top: 24px;\r\n    border-top: 1px solid var(--border-color);\r\n    text-align: center;\r\n    color: var(--text-light);\r\n    font-size: 14px;\r\n  }\r\n  \r\n  .homepage-footer p {\r\n    margin-bottom: 8px;\r\n  }\r\n  \r\n  /* Responsive Adjustments */\r\n  @media (max-width: 768px) {\r\n    .homepage-container {\r\n      padding: 24px 16px;\r\n    }\r\n    \r\n    .homepage-header h1 {\r\n      font-size: 28px;\r\n    }\r\n    \r\n    .features-grid {\r\n      grid-template-columns: 1fr;\r\n    }\r\n    \r\n    .feature-header {\r\n      flex-direction: column;\r\n      align-items: flex-start;\r\n      gap: 12px;\r\n      padding: 16px;\r\n    }\r\n    \r\n    .back-button {\r\n      margin-right: 0;\r\n    }\r\n  }\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -51314,14 +51576,42 @@ const Homepage = () => {
     const { translate } = (0,_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_2__.useLanguage)();
     const { state } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__.useAppState)();
     const [activeFeature, setActiveFeature] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    // Sort features alphabetically by name, keeping Settings last
-    const sortedFeatures = _constants__WEBPACK_IMPORTED_MODULE_4__.features
-        .filter(f => f.id !== 'settings')
-        .sort((a, b) => a.name.localeCompare(b.name));
-    const settingsFeature = _constants__WEBPACK_IMPORTED_MODULE_4__.features.find(f => f.id === 'settings');
-    if (settingsFeature) {
-        sortedFeatures.push(settingsFeature);
-    }
+    // Group features by category
+    const groupedFeatures = _constants__WEBPACK_IMPORTED_MODULE_4__.features.reduce((acc, feature) => {
+        const category = feature.category || 'Other'; // Default category if none provided
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+        acc[category].push(feature);
+        // Sort features within the category alphabetically by name
+        acc[category].sort((a, b) => a.name.localeCompare(b.name));
+        return acc;
+    }, {});
+    // Define the desired order of categories
+    const categoryOrder = [
+        'Template & Email Tools',
+        'Calendar (.ics) Generators',
+        'Reporting & Assessment (Future)',
+        'Configuration', // Keep Settings/Configuration last
+        'Other' // Catch-all for uncategorized features
+    ];
+    // Sort categories based on the defined order
+    const sortedCategories = Object.keys(groupedFeatures).sort((a, b) => {
+        const indexA = categoryOrder.indexOf(a);
+        const indexB = categoryOrder.indexOf(b);
+        // If both categories are in the order list, sort by their index
+        if (indexA !== -1 && indexB !== -1) {
+            return indexA - indexB;
+        }
+        // If only A is in the list, it comes first
+        if (indexA !== -1)
+            return -1;
+        // If only B is in the list, it comes first
+        if (indexB !== -1)
+            return 1;
+        // Otherwise, sort alphabetically
+        return a.localeCompare(b);
+    });
     // Return to homepage
     const handleBackToHome = () => {
         setActiveFeature(null);
@@ -51335,7 +51625,7 @@ const Homepage = () => {
         }
     }
     // Render homepage with feature cards
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a tool to get started" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "features-grid", children: sortedFeatures.map((feature) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { className: `feature-card ${!feature.enabled ? 'disabled' : ''}`, onClick: () => feature.enabled && setActiveFeature(feature.id), disabled: !feature.enabled, "aria-label": feature.name, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "feature-icon", children: feature.icon }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: feature.name }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: feature.description }), !feature.enabled && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "coming-soon-badge", children: "Coming Soon" })] })] }, feature.id))) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Tools Extension v1.0.2" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "\u00A9 2025 Microsoft Corporation. All rights reserved." })] })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a tool to get started" })] }), sortedCategories.map((category) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-category-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: category }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "features-grid", children: groupedFeatures[category].map((feature) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { className: `feature-card ${!feature.enabled ? 'disabled' : ''}`, onClick: () => feature.enabled && setActiveFeature(feature.id), disabled: !feature.enabled, "aria-label": feature.name, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "feature-icon", children: feature.icon }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: feature.name }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: feature.description }), !feature.enabled && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "coming-soon-badge", children: "Coming Soon" })] })] }, feature.id))) })] }, category))), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Tools Extension v1.0.2" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "\u00A9 2025 Microsoft Corporation. All rights reserved." })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Homepage);
 
@@ -51358,13 +51648,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icsGenerator_components_OnCallDutyForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../icsGenerator/components/OnCallDutyForm */ "./src/features/icsGenerator/components/OnCallDutyForm.tsx");
 /* harmony import */ var _icsGenerator_components_VacationRequestForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../icsGenerator/components/VacationRequestForm */ "./src/features/icsGenerator/components/VacationRequestForm.tsx");
 /* harmony import */ var _icsGenerator_components_SupportRequestForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icsGenerator/components/SupportRequestForm */ "./src/features/icsGenerator/components/SupportRequestForm.tsx");
-/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/Icons */ "./src/components/Icons.tsx");
+/* harmony import */ var _roadmap_components_RoadmapPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../roadmap/components/RoadmapPage */ "./src/features/roadmap/components/RoadmapPage.tsx");
+/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/Icons */ "./src/components/Icons.tsx");
 
  // Adjusted path
 
 
 
 
+ // Import the new Roadmap component
+// Removed DeploymentGuide import
  // Adjusted path
 // Define available features
 const features = [
@@ -51372,58 +51665,75 @@ const features = [
         id: 'onboarding',
         name: 'Onboarding Template Generator',
         description: 'Create rich text onboarding templates for Microsoft support customers.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.OnboardingIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.OnboardingIcon, {}),
         component: _App__WEBPACK_IMPORTED_MODULE_1__["default"],
-        enabled: true
+        enabled: true,
+        category: 'Template & Email Tools'
     },
     {
         id: 'compliance',
         name: 'Compliance Assessment',
         description: 'Generate Microsoft compliance assessment reports and recommendations.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.ComplianceIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.ComplianceIcon, {}),
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
-        enabled: false
+        enabled: false,
+        category: 'Reporting & Assessment (Future)'
     },
     {
         id: 'reporting',
         name: 'Support Reporting',
         description: 'Create and export support usage reports and analytics.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.ReportingIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.ReportingIcon, {}),
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
-        enabled: false
+        enabled: false,
+        category: 'Reporting & Assessment (Future)'
     },
     {
         id: 'settings',
         name: 'Extension Settings',
         description: 'Configure extension preferences and defaults.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.SettingsIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.SettingsIcon, {}),
         component: _settings_components_SettingsPage__WEBPACK_IMPORTED_MODULE_2__["default"], // Use the actual component
-        enabled: true
+        enabled: true,
+        category: 'Configuration'
     },
+    {
+        id: 'roadmap',
+        name: 'Extension Roadmap',
+        description: 'View planned features and improvements for the extension.',
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.ReportingIcon, {}), // Using ReportingIcon for now
+        component: _roadmap_components_RoadmapPage__WEBPACK_IMPORTED_MODULE_6__["default"],
+        enabled: true,
+        category: 'Configuration' // Or maybe a new 'Information' category? Sticking with Configuration for now.
+    },
+    // Removed deploymentGuide feature entry
     // Add new ICS Generator Features
     {
         id: 'onCallDuty',
         name: 'On-Call Duty ICS Generator',
         description: 'Create an .ics file for on-call duty periods.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#E81123" }), // Red color for On-Call
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.CalendarIcon, { color: "#E81123" }), // Red color for On-Call
         component: _icsGenerator_components_OnCallDutyForm__WEBPACK_IMPORTED_MODULE_3__["default"],
-        enabled: true
+        enabled: true,
+        category: 'Calendar (.ics) Generators'
     },
     {
         id: 'vacationRequest',
         name: 'Vacation Request ICS Generator',
         description: 'Generate an .ics file for vacation requests.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#0078D4" }), // Blue color for Vacation
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.CalendarIcon, { color: "#0078D4" }), // Blue color for Vacation
         component: _icsGenerator_components_VacationRequestForm__WEBPACK_IMPORTED_MODULE_4__["default"],
-        enabled: true
+        enabled: true,
+        category: 'Calendar (.ics) Generators'
     },
     {
         id: 'supportRequest',
         name: 'Support Request ICS Generator',
         description: 'Generate an .ics file for support request entries.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_6__.CalendarIcon, { color: "#107C10" }), // Green color for Support
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.CalendarIcon, { color: "#107C10" }), // Green color for Support
         component: _icsGenerator_components_SupportRequestForm__WEBPACK_IMPORTED_MODULE_5__["default"],
-        enabled: true
+        enabled: true,
+        category: 'Calendar (.ics) Generators'
     },
 ];
 
@@ -51687,6 +51997,159 @@ const VacationRequestForm = () => {
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "ics-form-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Vacation Request" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Generate an .ics file for your vacation time." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "vacationStartDate", children: "Start Date & Time:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "datetime-local", id: "vacationStartDate", value: startDate, onChange: (e) => setStartDate(e.target.value), required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "vacationEndDate", children: "End Date & Time:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "datetime-local", id: "vacationEndDate", value: endDate, onChange: (e) => setEndDate(e.target.value), required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "vacationDescription", children: "Description:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "vacationDescription", value: description, onChange: (e) => setDescription(e.target.value), placeholder: "e.g., Annual Leave", required: true })] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "error-message", children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleGenerate, disabled: isGenerating, children: isGenerating ? 'Generating...' : 'Generate Vacation Request .ics' }) })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VacationRequestForm);
+
+
+/***/ }),
+
+/***/ "./src/features/roadmap/components/RoadmapPage.css":
+/*!*********************************************************!*\
+  !*** ./src/features/roadmap/components/RoadmapPage.css ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_RoadmapPage_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js!./RoadmapPage.css */ "./node_modules/css-loader/dist/cjs.js!./src/features/roadmap/components/RoadmapPage.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_RoadmapPage_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_RoadmapPage_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_RoadmapPage_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_RoadmapPage_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/features/roadmap/components/RoadmapPage.tsx":
+/*!*********************************************************!*\
+  !*** ./src/features/roadmap/components/RoadmapPage.tsx ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _RoadmapPage_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RoadmapPage.css */ "./src/features/roadmap/components/RoadmapPage.css");
+
+ // Import CSS for styling
+// Updated Roadmap Data for 2025
+const roadmapData = [
+    // --- Q1 2025 ---
+    {
+        id: 'onboarding-v1',
+        quarter: 'Q1 2025',
+        title: 'Onboarding Template Generator',
+        description: 'Core feature for generating rich text templates.',
+        status: 'Completed',
+    },
+    {
+        id: 'ics-gen-v1',
+        quarter: 'Q1 2025',
+        title: 'ICS Generators (On-Call, Vacation, Support)',
+        description: 'Tools to create calendar event files.',
+        status: 'Completed',
+    },
+    {
+        id: 'settings-v1',
+        quarter: 'Q1 2025',
+        title: 'Extension Settings Page',
+        description: 'Initial configuration options.',
+        status: 'Completed',
+    },
+    {
+        id: 'roadmap-v1',
+        quarter: 'Q1 2025', // Assuming roadmap feature completed in Q2
+        title: 'Roadmap Feature',
+        description: 'Display planned features and improvements within the extension.',
+        status: 'Completed',
+    },
+    // --- Q2 2025 ---
+    {
+        id: 'deployment-readiness-v1',
+        quarter: 'Q2 2025',
+        title: 'Enterprise Deployment Readiness',
+        description: 'Capability for enterprise deployment established via private store.',
+        status: 'Completed',
+    },
+    // --- Q3 2025 ---
+    {
+        id: 'azure-transfer-tool-v1',
+        quarter: 'Q3 2025',
+        title: 'Azure Transfer Tool (Planned)',
+        description: 'Tool to assist with Azure resource transfers or migrations (details TBD).',
+        status: 'Planned',
+    },
+    // --- Q4 2025 ---
+    {
+        id: 'azure-cost-optimization-v1',
+        quarter: 'Q4 2025',
+        title: 'Azure Cost Optimization (Planned)',
+        description: 'Features to help analyze or suggest Azure cost savings (details TBD).',
+        status: 'Planned',
+    },
+    // Add items for 2026+ here if needed
+];
+// Helper function to group items by quarter
+const groupItemsByQuarter = (items) => {
+    return items.reduce((acc, item) => {
+        const quarter = item.quarter;
+        if (!acc[quarter]) {
+            acc[quarter] = [];
+        }
+        acc[quarter].push(item);
+        return acc;
+    }, {});
+};
+const RoadmapPage = () => {
+    const groupedItems = groupItemsByQuarter(roadmapData);
+    // Define a sort order for quarters if needed, e.g., ["Q3 2025", "Q4 2025", "Q1 2026"]
+    const sortedQuarters = Object.keys(groupedItems).sort((a, b) => {
+        const [aQ, aY] = a.split(' ');
+        const [bQ, bY] = b.split(' ');
+        if (aY !== bY)
+            return parseInt(aY) - parseInt(bY);
+        return parseInt(aQ.substring(1)) - parseInt(bQ.substring(1));
+    });
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "roadmap-page-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Extension Roadmap" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "roadmap-intro", children: "Overview of planned features and improvements for the Microsoft Support Tools extension. Statuses are indicative and subject to change." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "roadmap-timeline-container", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "timeline", children: sortedQuarters.map((quarter, quarterIndex) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "timeline-quarter-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "timeline-marker", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "quarter-label", children: quarter }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "timeline-items", children: groupedItems[quarter].map((item, itemIndex) => (
+                                // Add alternating class for positioning above/below if needed by CSS
+                                (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `timeline-item status-${item.status.toLowerCase().replace(' ', '-')} item-pos-${itemIndex % 2 === 0 ? 'even' : 'odd'}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "item-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: item.title }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: item.description })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "roadmap-item-status", children: item.status }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "item-connector" })] }, item.id))) })] }, quarter))) }) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RoadmapPage);
 
 
 /***/ }),

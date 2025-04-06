@@ -1,0 +1,221 @@
+/* src/features/roadmap/components/RoadmapPage.css - Horizontal Timeline Styles */
+
+.roadmap-page-container {
+  padding: 24px;
+  margin: 20px auto;
+  background-color: var(--background-color);
+}
+
+.roadmap-page-container h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.roadmap-intro {
+  font-size: 16px;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 60px; /* More space before timeline */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Timeline Container */
+.roadmap-timeline-container {
+  width: 100%;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  padding: 40px 0; /* Padding top/bottom for items */
+}
+
+/* The main timeline axis */
+.timeline {
+  position: relative;
+  display: flex; /* Arrange quarters horizontally */
+  min-width: -webkit-fill-available; /* Fallback for older browsers */
+  min-width: fit-content; /* Ensure it expands */
+  padding: 20px 0;
+  margin: 0 40px; /* Margins for start/end */
+}
+
+/* Draw the central line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: var(--border-color);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* Section for each quarter */
+.timeline-quarter-section {
+  position: relative; /* For positioning marker and items */
+  display: flex;
+  flex-direction: column; /* Stack marker and items */
+  align-items: center; /* Center marker horizontally */
+  flex: 1; /* Allow sections to grow */
+  min-width: 250px; /* Minimum width per quarter */
+  padding: 0 20px; /* Spacing between quarters */
+  z-index: 2; /* Above the main line */
+}
+
+/* Marker on the timeline for the quarter */
+.timeline-marker {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  border: 3px solid var(--background-color); /* Make it pop */
+  top: -8px; /* Adjust to sit centered on the line */
+  z-index: 3; /* Above quarter section */
+}
+
+.quarter-label {
+  position: absolute;
+  bottom: 30px; /* Position label below the marker */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+  white-space: nowrap;
+  background-color: var(--background-lighter);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Container for items within a quarter */
+.timeline-items {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Small gap between items in the same quarter */
+}
+
+/* Individual roadmap item card */
+.timeline-item {
+  position: relative;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  padding: 12px 16px;
+  width: 100%; /* Take width of column */
+  box-shadow: var(--box-shadow-light);
+  /* Smoother, specific transition */
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
+  z-index: 4; /* Above marker */
+  margin-top: 40px; /* Consistent spacing below timeline */
+}
+
+/* Remove alternating position styles */
+/* .timeline-item.item-pos-odd { ... } */
+/* .timeline-item.item-pos-even { ... } */
+
+
+.timeline-item:hover {
+  /* Subtle lift effect instead of scale */
+  transform: translateY(-4px);
+  box-shadow: var(--box-shadow);
+}
+
+.item-content h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 6px;
+}
+
+.item-content p {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.4;
+  margin-bottom: 28px; /* Ensure space for status badge */
+}
+
+/* Status Badge */
+.roadmap-item-status {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 10px;
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  border: 1px solid transparent; /* Base border */
+}
+
+/* Connector line from item to timeline */
+.item-connector {
+  position: absolute;
+  width: 2px;
+  background-color: var(--border-color);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+/* Consistent connector pointing upwards */
+.item-connector {
+  height: 40px; /* Height from item top to timeline */
+  top: -40px; /* Position starts above the item */
+  /* Remove styles related to bottom positioning */
+}
+
+/* Remove connector styles specific to item-pos-even/odd */
+/* .timeline-item.item-pos-odd .item-connector { ... } */
+/* .timeline-item.item-pos-even .item-connector { ... } */
+
+
+/* Status-specific styling */
+.timeline-item.status-completed .roadmap-item-status {
+  background-color: var(--status-completed-bg);
+  color: var(--status-completed-text);
+  border-color: var(--status-completed-border);
+}
+.timeline-item.status-completed .item-connector {
+  background-color: var(--status-completed-border); /* Match status color */
+}
+
+
+.timeline-item.status-in-progress .roadmap-item-status {
+  background-color: var(--status-inprogress-bg);
+  color: var(--status-inprogress-text);
+  border-color: var(--status-inprogress-border);
+}
+.timeline-item.status-in-progress .item-connector {
+  background-color: var(--status-inprogress-border);
+}
+
+.timeline-item.status-planned .roadmap-item-status {
+  background-color: var(--status-planned-bg);
+  color: var(--status-planned-text);
+  border-color: var(--status-planned-border);
+}
+.timeline-item.status-planned .item-connector {
+  background-color: var(--status-planned-border);
+}
+
+/* Ensure status colors are defined */
+:root {
+  --status-completed-bg: #e6f4ea;
+  --status-completed-text: #1e8e3e;
+  --status-completed-border: #a8d5b9;
+
+  --status-inprogress-bg: #e8f0fe;
+  --status-inprogress-text: #1a73e8;
+  --status-inprogress-border: #adcaf7;
+
+  --status-planned-bg: #f3f4f6;
+  --status-planned-text: #5f6368;
+  --status-planned-border: #dadce0;
+}

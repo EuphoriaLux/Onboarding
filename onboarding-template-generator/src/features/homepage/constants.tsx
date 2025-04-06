@@ -4,6 +4,8 @@ import SettingsPage from '../settings/components/SettingsPage';
 import OnCallDutyForm from '../icsGenerator/components/OnCallDutyForm';
 import VacationRequestForm from '../icsGenerator/components/VacationRequestForm';
 import SupportRequestForm from '../icsGenerator/components/SupportRequestForm';
+import RoadmapPage from '../roadmap/components/RoadmapPage'; // Import the new Roadmap component
+// Removed DeploymentGuide import
 import {
   OnboardingIcon,
   ComplianceIcon,
@@ -20,6 +22,7 @@ export interface Feature {
   icon: React.ReactNode;
   component: React.ComponentType<any>;
   enabled: boolean;
+  category: string; // Add category field
 }
 
 // Define available features
@@ -30,7 +33,8 @@ export const features: Feature[] = [
     description: 'Create rich text onboarding templates for Microsoft support customers.',
     icon: <OnboardingIcon />,
     component: App,
-    enabled: true
+    enabled: true,
+    category: 'Template & Email Tools'
   },
   {
     id: 'compliance',
@@ -38,7 +42,8 @@ export const features: Feature[] = [
     description: 'Generate Microsoft compliance assessment reports and recommendations.',
     icon: <ComplianceIcon />,
     component: () => <div className="coming-soon">Coming Soon</div>,
-    enabled: false
+    enabled: false,
+    category: 'Reporting & Assessment (Future)'
   },
   {
     id: 'reporting',
@@ -46,7 +51,8 @@ export const features: Feature[] = [
     description: 'Create and export support usage reports and analytics.',
     icon: <ReportingIcon />,
     component: () => <div className="coming-soon">Coming Soon</div>,
-    enabled: false
+    enabled: false,
+    category: 'Reporting & Assessment (Future)'
   },
   {
     id: 'settings',
@@ -54,8 +60,19 @@ export const features: Feature[] = [
     description: 'Configure extension preferences and defaults.',
     icon: <SettingsIcon />,
     component: SettingsPage, // Use the actual component
-    enabled: true
+    enabled: true,
+    category: 'Configuration'
   },
+   {
+    id: 'roadmap',
+    name: 'Extension Roadmap',
+    description: 'View planned features and improvements for the extension.',
+    icon: <ReportingIcon />, // Using ReportingIcon for now
+    component: RoadmapPage,
+    enabled: true,
+    category: 'Configuration' // Or maybe a new 'Information' category? Sticking with Configuration for now.
+  },
+  // Removed deploymentGuide feature entry
   // Add new ICS Generator Features
   {
     id: 'onCallDuty',
@@ -63,7 +80,8 @@ export const features: Feature[] = [
     description: 'Create an .ics file for on-call duty periods.',
     icon: <CalendarIcon color="#E81123" />, // Red color for On-Call
     component: OnCallDutyForm,
-    enabled: true
+    enabled: true,
+    category: 'Calendar (.ics) Generators'
   },
   {
     id: 'vacationRequest',
@@ -71,7 +89,8 @@ export const features: Feature[] = [
     description: 'Generate an .ics file for vacation requests.',
     icon: <CalendarIcon color="#0078D4" />, // Blue color for Vacation
     component: VacationRequestForm,
-    enabled: true
+    enabled: true,
+    category: 'Calendar (.ics) Generators'
   },
   {
     id: 'supportRequest',
@@ -79,6 +98,7 @@ export const features: Feature[] = [
     description: 'Generate an .ics file for support request entries.',
     icon: <CalendarIcon color="#107C10" />, // Green color for Support
     component: SupportRequestForm,
-    enabled: true
+    enabled: true,
+    category: 'Calendar (.ics) Generators'
   },
 ];

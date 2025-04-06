@@ -37,7 +37,21 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 24px;
-    margin-bottom: 40px;
+    /* Removed margin-bottom from grid, will be on section */
+  }
+
+  /* Feature Category Section */
+  .feature-category-section {
+    margin-bottom: 40px; /* Add margin between category sections */
+  }
+
+  .feature-category-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light); /* Optional: add a light border under category titles */
   }
   
   /* Feature Card */
@@ -167,7 +181,7 @@
     max-width: 400px;
     margin-top: 16px;
   }
-  
+
   /* Homepage Footer */
   .homepage-footer {
     margin-top: auto;
