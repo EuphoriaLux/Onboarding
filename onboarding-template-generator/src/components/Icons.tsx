@@ -48,3 +48,32 @@ export const CalendarIcon = ({ color = "#757575" }) => ( // Default gray color
     {/* <path d="M20 23V29M17 26H23" stroke={color} strokeWidth="1.5" strokeLinecap="round"/> */}
   </svg>
 );
+
+// --- New Placeholder Icons ---
+
+// Placeholder for Azure Transfer Assist (using ComplianceIcon structure)
+export const AzureTransferIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="40" rx="8" fill="#0078D4" fillOpacity="0.1"/> {/* Blue base */}
+    <path d="M14 26L20 32L26 26M20 8V31M8 14H14M26 14H32" stroke="#0078D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/> {/* Arrows */}
+  </svg>
+);
+
+// Placeholder for Cost Optimization (using ReportingIcon structure)
+export const CostOptimizationIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="40" rx="8" fill="#D83B01" fillOpacity="0.1"/> {/* Orange base */}
+    <path d="M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10Z" stroke="#D83B01" strokeWidth="2"/>
+    <path d="M22 16V20H26M18 24V20H14" stroke="#D83B01" strokeWidth="2" strokeLinecap="round"/> {/* Dollar-like sign */}
+  </svg>
+);
+
+// Placeholder for Roadmap (using CalendarIcon structure)
+export const RoadmapIcon = () => (
+  <CalendarIcon color="#605E5C" /> // Reuse CalendarIcon with gray color
+);
+
+// Placeholder for Deployment (using SettingsIcon structure)
+export const DeploymentIcon = () => (
+  <SettingsIcon /> // Reuse SettingsIcon
+);

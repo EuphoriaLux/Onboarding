@@ -5,13 +5,17 @@ import OnCallDutyForm from '../icsGenerator/components/OnCallDutyForm';
 import VacationRequestForm from '../icsGenerator/components/VacationRequestForm';
 import SupportRequestForm from '../icsGenerator/components/SupportRequestForm';
 import RoadmapPage from '../roadmap/components/RoadmapPage'; // Import the new Roadmap component
-// Removed DeploymentGuide import
 import {
   OnboardingIcon,
-  ComplianceIcon,
-  ReportingIcon,
-  SettingsIcon,
-  CalendarIcon
+  ComplianceIcon, // Still used for Azure Transfer Assist placeholder
+  ReportingIcon,  // Still used for Support Reporting & Cost Optimization placeholders
+  SettingsIcon,   // Still used for Settings & Deployment Readiness placeholder
+  CalendarIcon,   // Still used for ICS & Roadmap placeholder
+  // Import new placeholder icons
+  AzureTransferIcon,
+  CostOptimizationIcon,
+  RoadmapIcon,
+  DeploymentIcon
 } from '../../components/Icons'; // Adjusted path
 
 // Feature type definition
@@ -37,13 +41,13 @@ export const features: Feature[] = [
     category: 'Template & Email Tools'
   },
   {
-    id: 'compliance',
-    name: 'Compliance Assessment',
-    description: 'Generate Microsoft compliance assessment reports and recommendations.',
-    icon: <ComplianceIcon />,
+    id: 'azure-transfer-assist',
+    name: 'Azure Transfer Assist tool',
+    description: 'Tool to assist with planning or executing Azure resource transfers.',
+    icon: <AzureTransferIcon />, // Use new placeholder
     component: () => <div className="coming-soon">Coming Soon</div>,
     enabled: false,
-    category: 'Reporting & Assessment (Future)'
+    category: 'Coming Soon Features'
   },
   {
     id: 'reporting',
@@ -52,7 +56,16 @@ export const features: Feature[] = [
     icon: <ReportingIcon />,
     component: () => <div className="coming-soon">Coming Soon</div>,
     enabled: false,
-    category: 'Reporting & Assessment (Future)'
+    category: 'Coming Soon Features' // Renamed Category
+  },
+  {
+    id: 'azure-cost-optimization',
+    name: 'Azure Cost Optimization',
+    description: 'Features to help analyze or suggest Azure cost savings.',
+    icon: <CostOptimizationIcon />, // Use new placeholder
+    component: () => <div className="coming-soon">Coming Soon</div>,
+    enabled: false,
+    category: 'Coming Soon Features'
   },
   {
     id: 'settings',
@@ -67,12 +80,20 @@ export const features: Feature[] = [
     id: 'roadmap',
     name: 'Extension Roadmap',
     description: 'View planned features and improvements for the extension.',
-    icon: <ReportingIcon />, // Using ReportingIcon for now
+    icon: <RoadmapIcon />, // Use new placeholder
     component: RoadmapPage,
     enabled: true,
-    category: 'Configuration' // Or maybe a new 'Information' category? Sticking with Configuration for now.
+    category: 'Configuration'
   },
-  // Removed deploymentGuide feature entry
+  {
+    id: 'deployment-readiness',
+    name: 'Enterprise Deployment Readiness',
+    description: 'Capability for enterprise deployment via private store.',
+    icon: <DeploymentIcon />, // Use new placeholder
+    component: () => <div className="coming-soon">Coming Soon</div>,
+    enabled: false,
+    category: 'Coming Soon Features'
+  },
   // Add new ICS Generator Features
   {
     id: 'onCallDuty',

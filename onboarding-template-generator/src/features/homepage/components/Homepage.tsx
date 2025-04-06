@@ -26,7 +26,7 @@ const Homepage: React.FC = () => {
   const categoryOrder = [
     'Template & Email Tools',
     'Calendar (.ics) Generators',
-    'Reporting & Assessment (Future)',
+    'Coming Soon Features', // Renamed category
     'Configuration', // Keep Settings/Configuration last
     'Other' // Catch-all for uncategorized features
   ];

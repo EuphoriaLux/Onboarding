@@ -10,7 +10,7 @@ interface RoadmapItem {
   status: 'Completed' | 'In Progress' | 'Planned'; // Possible statuses
 }
 
-// Updated Roadmap Data for 2025
+// Updated Roadmap Data reflecting constants.tsx
 const roadmapData: RoadmapItem[] = [
   // --- Q1 2025 ---
   {
@@ -34,38 +34,46 @@ const roadmapData: RoadmapItem[] = [
     description: 'Initial configuration options.',
     status: 'Completed',
   },
+  // --- Q2 2025 ---
+  // Moved 'deployment-readiness-v1' to Q3
   {
     id: 'roadmap-v1',
-    quarter: 'Q1 2025', // Assuming roadmap feature completed in Q2
+    quarter: 'Q2 2025',
     title: 'Roadmap Feature',
     description: 'Display planned features and improvements within the extension.',
-    status: 'Completed',
-  },
-  // --- Q2 2025 ---
-  {
-    id: 'deployment-readiness-v1',
-    quarter: 'Q2 2025',
-    title: 'Enterprise Deployment Readiness',
-    description: 'Capability for enterprise deployment established via private store.',
-    status: 'Completed',
+    status: 'Completed', // Marked as completed now
   },
   // --- Q3 2025 ---
   {
-    id: 'azure-transfer-tool-v1',
+    id: 'deployment-readiness-v1', // Moved from Q2
+    quarter: 'Q3 2025', // Updated Quarter
+    title: 'Enterprise Deployment Readiness',
+    description: 'Capability for enterprise deployment established via private store.',
+    status: 'Planned', // Updated Status
+  },
+  {
+    id: 'azure-transfer-assist-v1',
     quarter: 'Q3 2025',
-    title: 'Azure Transfer Tool (Planned)',
-    description: 'Tool to assist with Azure resource transfers or migrations (details TBD).',
+    title: 'Azure Transfer Assist tool (Planned)',
+    description: 'Tool to assist with planning or executing Azure resource transfers.',
     status: 'Planned',
   },
   // --- Q4 2025 ---
   {
-    id: 'azure-cost-optimization-v1',
+    id: 'reporting-v1', // Matches constants.tsx
     quarter: 'Q4 2025',
-    title: 'Azure Cost Optimization (Planned)',
-    description: 'Features to help analyze or suggest Azure cost savings (details TBD).',
+    title: 'Support Reporting (Planned)',
+    description: 'Create and export support usage reports and analytics.',
     status: 'Planned',
   },
-  // Add items for 2026+ here if needed
+  {
+    id: 'azure-cost-optimization-v1', // New ID
+    quarter: 'Q4 2025',
+    title: 'Azure Cost Optimization (Planned)', // New Title
+    description: 'Features to help analyze or suggest Azure cost savings.', // Description
+    status: 'Planned',
+  },
+  // Add future planned items beyond constants.tsx here if needed
 ];
 
 // Helper function to group items by quarter

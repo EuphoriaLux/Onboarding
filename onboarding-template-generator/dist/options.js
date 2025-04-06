@@ -48983,10 +48983,14 @@ const CollapsibleSection = ({ title, children, initialExpanded = false }) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AzureTransferIcon: () => (/* binding */ AzureTransferIcon),
 /* harmony export */   CalendarIcon: () => (/* binding */ CalendarIcon),
 /* harmony export */   ComplianceIcon: () => (/* binding */ ComplianceIcon),
+/* harmony export */   CostOptimizationIcon: () => (/* binding */ CostOptimizationIcon),
+/* harmony export */   DeploymentIcon: () => (/* binding */ DeploymentIcon),
 /* harmony export */   OnboardingIcon: () => (/* binding */ OnboardingIcon),
 /* harmony export */   ReportingIcon: () => (/* binding */ ReportingIcon),
+/* harmony export */   RoadmapIcon: () => (/* binding */ RoadmapIcon),
 /* harmony export */   SettingsIcon: () => (/* binding */ SettingsIcon)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -48998,6 +49002,17 @@ const SettingsIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.js
 // Placeholder Icons for new features (Simple Calendar Icons)
 const CalendarIcon = ({ color = "#757575" }) => ( // Default gray color
 (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: color, fillOpacity: "0.1" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M29 12H11C9.89543 12 9 12.8954 9 14V30C9 31.1046 9.89543 32 11 32H29C30.1046 32 31 31.1046 31 30V14C31 12.8954 30.1046 12 29 12Z", stroke: color, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M26 8V12M14 8V12M9 18H31", stroke: color, strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" })] }));
+// --- New Placeholder Icons ---
+// Placeholder for Azure Transfer Assist (using ComplianceIcon structure)
+const AzureTransferIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#0078D4", fillOpacity: "0.1" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M14 26L20 32L26 26M20 8V31M8 14H14M26 14H32", stroke: "#0078D4", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" }), " "] }));
+// Placeholder for Cost Optimization (using ReportingIcon structure)
+const CostOptimizationIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("svg", { width: "40", height: "40", viewBox: "0 0 40 40", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("rect", { width: "40", height: "40", rx: "8", fill: "#D83B01", fillOpacity: "0.1" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10Z", stroke: "#D83B01", strokeWidth: "2" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", { d: "M22 16V20H26M18 24V20H14", stroke: "#D83B01", strokeWidth: "2", strokeLinecap: "round" }), " "] }));
+// Placeholder for Roadmap (using CalendarIcon structure)
+const RoadmapIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(CalendarIcon, { color: "#605E5C" }) // Reuse CalendarIcon with gray color
+);
+// Placeholder for Deployment (using SettingsIcon structure)
+const DeploymentIcon = () => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(SettingsIcon, {}) // Reuse SettingsIcon
+);
 
 
 /***/ }),
@@ -51591,7 +51606,7 @@ const Homepage = () => {
     const categoryOrder = [
         'Template & Email Tools',
         'Calendar (.ics) Generators',
-        'Reporting & Assessment (Future)',
+        'Coming Soon Features', // Renamed category
         'Configuration', // Keep Settings/Configuration last
         'Other' // Catch-all for uncategorized features
     ];
@@ -51657,7 +51672,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
  // Import the new Roadmap component
-// Removed DeploymentGuide import
  // Adjusted path
 // Define available features
 const features = [
@@ -51671,13 +51685,13 @@ const features = [
         category: 'Template & Email Tools'
     },
     {
-        id: 'compliance',
-        name: 'Compliance Assessment',
-        description: 'Generate Microsoft compliance assessment reports and recommendations.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.ComplianceIcon, {}),
+        id: 'azure-transfer-assist',
+        name: 'Azure Transfer Assist tool',
+        description: 'Tool to assist with planning or executing Azure resource transfers.',
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.AzureTransferIcon, {}), // Use new placeholder
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false,
-        category: 'Reporting & Assessment (Future)'
+        category: 'Coming Soon Features'
     },
     {
         id: 'reporting',
@@ -51686,7 +51700,16 @@ const features = [
         icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.ReportingIcon, {}),
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false,
-        category: 'Reporting & Assessment (Future)'
+        category: 'Coming Soon Features' // Renamed Category
+    },
+    {
+        id: 'azure-cost-optimization',
+        name: 'Azure Cost Optimization',
+        description: 'Features to help analyze or suggest Azure cost savings.',
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.CostOptimizationIcon, {}), // Use new placeholder
+        component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
+        enabled: false,
+        category: 'Coming Soon Features'
     },
     {
         id: 'settings',
@@ -51701,12 +51724,20 @@ const features = [
         id: 'roadmap',
         name: 'Extension Roadmap',
         description: 'View planned features and improvements for the extension.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.ReportingIcon, {}), // Using ReportingIcon for now
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.RoadmapIcon, {}), // Use new placeholder
         component: _roadmap_components_RoadmapPage__WEBPACK_IMPORTED_MODULE_6__["default"],
         enabled: true,
-        category: 'Configuration' // Or maybe a new 'Information' category? Sticking with Configuration for now.
+        category: 'Configuration'
     },
-    // Removed deploymentGuide feature entry
+    {
+        id: 'deployment-readiness',
+        name: 'Enterprise Deployment Readiness',
+        description: 'Capability for enterprise deployment via private store.',
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_7__.DeploymentIcon, {}), // Use new placeholder
+        component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
+        enabled: false,
+        category: 'Coming Soon Features'
+    },
     // Add new ICS Generator Features
     {
         id: 'onCallDuty',
@@ -52067,7 +52098,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _RoadmapPage_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RoadmapPage.css */ "./src/features/roadmap/components/RoadmapPage.css");
 
  // Import CSS for styling
-// Updated Roadmap Data for 2025
+// Updated Roadmap Data reflecting constants.tsx
 const roadmapData = [
     // --- Q1 2025 ---
     {
@@ -52091,38 +52122,46 @@ const roadmapData = [
         description: 'Initial configuration options.',
         status: 'Completed',
     },
+    // --- Q2 2025 ---
+    // Moved 'deployment-readiness-v1' to Q3
     {
         id: 'roadmap-v1',
-        quarter: 'Q1 2025', // Assuming roadmap feature completed in Q2
+        quarter: 'Q2 2025',
         title: 'Roadmap Feature',
         description: 'Display planned features and improvements within the extension.',
-        status: 'Completed',
-    },
-    // --- Q2 2025 ---
-    {
-        id: 'deployment-readiness-v1',
-        quarter: 'Q2 2025',
-        title: 'Enterprise Deployment Readiness',
-        description: 'Capability for enterprise deployment established via private store.',
-        status: 'Completed',
+        status: 'Completed', // Marked as completed now
     },
     // --- Q3 2025 ---
     {
-        id: 'azure-transfer-tool-v1',
+        id: 'deployment-readiness-v1', // Moved from Q2
+        quarter: 'Q3 2025', // Updated Quarter
+        title: 'Enterprise Deployment Readiness',
+        description: 'Capability for enterprise deployment established via private store.',
+        status: 'Planned', // Updated Status
+    },
+    {
+        id: 'azure-transfer-assist-v1',
         quarter: 'Q3 2025',
-        title: 'Azure Transfer Tool (Planned)',
-        description: 'Tool to assist with Azure resource transfers or migrations (details TBD).',
+        title: 'Azure Transfer Assist tool (Planned)',
+        description: 'Tool to assist with planning or executing Azure resource transfers.',
         status: 'Planned',
     },
     // --- Q4 2025 ---
     {
-        id: 'azure-cost-optimization-v1',
+        id: 'reporting-v1', // Matches constants.tsx
         quarter: 'Q4 2025',
-        title: 'Azure Cost Optimization (Planned)',
-        description: 'Features to help analyze or suggest Azure cost savings (details TBD).',
+        title: 'Support Reporting (Planned)',
+        description: 'Create and export support usage reports and analytics.',
         status: 'Planned',
     },
-    // Add items for 2026+ here if needed
+    {
+        id: 'azure-cost-optimization-v1', // New ID
+        quarter: 'Q4 2025',
+        title: 'Azure Cost Optimization (Planned)', // New Title
+        description: 'Features to help analyze or suggest Azure cost savings.', // Description
+        status: 'Planned',
+    },
+    // Add future planned items beyond constants.tsx here if needed
 ];
 // Helper function to group items by quarter
 const groupItemsByQuarter = (items) => {
