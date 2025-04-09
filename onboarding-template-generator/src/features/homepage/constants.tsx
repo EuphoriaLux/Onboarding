@@ -5,6 +5,7 @@ import OnCallDutyForm from '../icsGenerator/components/OnCallDutyForm';
 import VacationRequestForm from '../icsGenerator/components/VacationRequestForm';
 import SupportRequestForm from '../icsGenerator/components/SupportRequestForm';
 import RoadmapPage from '../roadmap/components/RoadmapPage'; // Import the new Roadmap component
+import { SupportRequestViewer } from '../supportRequests'; // Import the new Azure tool
 import {
   OnboardingIcon,
   ComplianceIcon, // Still used for Azure Transfer Assist placeholder
@@ -16,6 +17,7 @@ import {
   CostOptimizationIcon,
   RoadmapIcon,
   DeploymentIcon
+  // ReportingIcon is already imported above
 } from '../../components/Icons'; // Adjusted path
 
 // Feature type definition
@@ -121,5 +123,15 @@ export const features: Feature[] = [
     component: SupportRequestForm,
     enabled: true,
     category: 'Calendar (.ics) Generators'
+  },
+  // Add the new Support Request Viewer feature
+  {
+    id: 'supportRequestViewer',
+    name: 'Support Requests Management Tool',
+    description: 'View support requests stored in Azure Blob Storage.',
+    icon: <ReportingIcon />, // Using ReportingIcon as placeholder
+    component: SupportRequestViewer,
+    enabled: true,
+    category: 'Azure Tools' // New category for Azure-related tools
   },
 ];
