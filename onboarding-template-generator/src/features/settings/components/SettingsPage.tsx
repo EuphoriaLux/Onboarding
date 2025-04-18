@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback, ChangeEvent } from 'react'; // Import ChangeEvent
+import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { StorageService } from '../../../services/storage';
-import { ThemeSettings } from '../../../types'; // Import ThemeSettings
-import './SettingsPage.css'; // We'll create this CSS file later for styling
+import { ThemeSettings } from '../../../types';
+import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
+import './SettingsPage.css';
 
 // Default theme colors (consider extracting from CSS or defining centrally)
 const DEFAULT_THEME: ThemeSettings = {
@@ -33,12 +34,15 @@ const SettingsPage: React.FC = () => {
   const [textColor, setTextColor] = useState(DEFAULT_THEME.textColor);
   const [backgroundColor, setBackgroundColor] = useState(DEFAULT_THEME.backgroundColor);
   // State for PDF attachment
-  // const [customEmailTemplate, setCustomEmailTemplate] = useState(''); // Removed template state
   const [pdfFilename, setPdfFilename] = useState<string | null>(null);
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
+  // Remove local state for toggle, use context instead
+  // const [showAlphaBeta, setShowAlphaBeta] = useState(false);
 
+  // Get state and update function from context
+  const { state: appState, updateShowAlphaBetaFeatures } = useAppState();
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // Keep local loading state for settings page
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
@@ -48,12 +52,11 @@ const SettingsPage: React.FC = () => {
     Promise.all([
       StorageService.get<AgentSettings>('agentSettings'),
       StorageService.get<ThemeSettings>('themeSettings'),
-      // Load only PDF settings
-      // StorageService.get<string>('customEmailTemplate'), // Removed template loading
+      // Load PDF settings
       StorageService.get<string>('pdfAttachmentFilename'),
       StorageService.get<string>('pdfAttachmentBase64'),
+      // No need to load showAlphaBetaFeatures here, context handles it
     ])
-    // Update destructuring to match removed promise
     .then(([agentSettings, themeSettings, loadedPdfFilename, loadedPdfBase64]) => {
       // Load Agent Settings
       if (agentSettings) {
@@ -85,6 +88,7 @@ const SettingsPage: React.FC = () => {
       setPdfFilename(loadedPdfFilename || null);
       setPdfBase64(loadedPdfBase64 || null);
 
+      // Context handles loading showAlphaBetaFeatures
     })
     .catch(error => {
       console.error("Error loading settings:", error);
@@ -118,19 +122,21 @@ const SettingsPage: React.FC = () => {
       primaryColor,
       textColor,
       backgroundColor,
-        };
+    };
 
-        try {
-            // Save agent and theme settings first
-            await Promise.all([
-                StorageService.set('agentSettings', agentSettingsToSave),
-                StorageService.set('themeSettings', themeSettingsToSave),
-            ]);
+    try {
+      // Save agent and theme settings
+      // Toggle state is saved immediately via context function, remove from here
+      await Promise.all([
+        StorageService.set('agentSettings', agentSettingsToSave),
+        StorageService.set('themeSettings', themeSettingsToSave),
+        // StorageService.set('showAlphaBetaFeatures', showAlphaBeta), // Removed
+      ]);
 
-            // Save PDF settings separately, ensuring nulls are converted to empty strings
-            await StorageService.set('pdfAttachmentFilename', pdfFilename || '');
-            // Only save base64 if filename exists to avoid storing large empty strings unnecessarily
-            await StorageService.set('pdfAttachmentBase64', pdfFilename ? (pdfBase64 || '') : '');
+      // Save PDF settings separately
+      await StorageService.set('pdfAttachmentFilename', pdfFilename || '');
+      // Only save base64 if filename exists to avoid storing large empty strings unnecessarily
+      await StorageService.set('pdfAttachmentBase64', pdfFilename ? (pdfBase64 || '') : '');
 
             // Optionally apply theme immediately after saving
             // applyThemeColors(themeSettingsToSave); // Need to define and import this function
@@ -156,10 +162,9 @@ const SettingsPage: React.FC = () => {
     primaryColor,
     textColor,
     backgroundColor,
-    // Update dependencies
-    // customEmailTemplate, // Removed template dependency
     pdfFilename,
     pdfBase64,
+    // showAlphaBeta, // Removed toggle state from dependencies
   ]);
 
   // --- PDF File Handling ---
@@ -361,6 +366,25 @@ const SettingsPage: React.FC = () => {
                 </div>
             )}
             {!pdfFilename && <span>No PDF attached.</span>}
+        </div>
+
+        {/* --- Experimental Features Toggle --- */}
+        <h3 className="settings-subtitle">Experimental Features</h3>
+        <p>Enable access to Alpha/Beta features currently under development.</p>
+        <div className="form-group toggle-group">
+          <label htmlFor="alphaBetaToggle" className="toggle-label">
+            Show Alpha/Beta Features:
+          </label>
+          <label className="switch">
+            <input
+              type="checkbox"
+              id="alphaBetaToggle"
+              checked={appState.showAlphaBetaFeatures} // Read from context state
+              onChange={(e) => updateShowAlphaBetaFeatures(e.target.checked)} // Call context update function
+            />
+            <span className="slider round"></span>
+          </label>
+          <span className="toggle-status">{appState.showAlphaBetaFeatures ? 'Enabled' : 'Disabled'}</span>
         </div>
 
 

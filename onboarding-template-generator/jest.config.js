@@ -16,7 +16,7 @@ module.exports = {
     '^@utils/(.*)$': '<rootDir>/src/utils/$1', // Added utils alias assuming it might be needed
   },
   setupFilesAfterEnv: [
-    // '<rootDir>/src/setupTests.ts' // Optional: if you need setup files (e.g., for testing library)
+    '<rootDir>/src/setupTests.ts' // Optional: if you need setup files (e.g., for testing library)
   ],
   // Add any other Jest configurations you need
 };

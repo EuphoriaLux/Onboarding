@@ -6,6 +6,7 @@ import VacationRequestForm from '../icsGenerator/components/VacationRequestForm'
 import SupportRequestForm from '../icsGenerator/components/SupportRequestForm';
 import RoadmapPage from '../roadmap/components/RoadmapPage'; // Import the new Roadmap component
 import { SupportRequestViewer } from '../supportRequests'; // Import the new Azure tool
+import CrmView from '../crm/components/CrmView'; // Import the CRM view component
 import {
   OnboardingIcon,
   ComplianceIcon, // Still used for Azure Transfer Assist placeholder
@@ -127,11 +128,21 @@ export const features: Feature[] = [
   // Add the new Support Request Viewer feature
   {
     id: 'supportRequestViewer',
-    name: 'Support Requests Management Tool',
-    description: 'View support requests stored in Azure Blob Storage.',
+    name: 'Support Requests Management (Alpha)', // Updated Name
+    description: 'View support requests stored in Azure Blob Storage (Alpha version).', // Updated Description
     icon: <ReportingIcon />, // Using ReportingIcon as placeholder
     component: SupportRequestViewer,
-    enabled: true,
-    category: 'Azure Tools' // New category for Azure-related tools
+    enabled: false, // Disabled as it's coming soon
+    category: 'Coming Soon Features' // Moved to Coming Soon
+  },
+  // Add the new CRM feature
+  {
+    id: 'crm',
+    name: 'Customer Management (CRM - Alpha)', // Updated Name
+    description: 'Manage customer records stored in Azure Blob Storage (Alpha version).', // Updated Description
+    icon: <ReportingIcon />, // Using ReportingIcon as placeholder, same as Support Viewer
+    component: CrmView,
+    enabled: false, // Disabled as it's coming soon
+    category: 'Coming Soon Features' // Moved to Coming Soon
   },
 ];

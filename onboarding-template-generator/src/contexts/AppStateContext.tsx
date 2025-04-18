@@ -26,6 +26,7 @@ interface AppState {
   customerInfo: CustomerInfo;
   emailData: EmailFormData | null;
   language: Language;
+  showAlphaBetaFeatures: boolean; // Add state for the toggle
 }
 
 interface AppStateContextType {
@@ -37,6 +38,7 @@ interface AppStateContextType {
   updateEmailData: (data: EmailFormData) => void;
   updateLanguage: (language: Language) => void;
   updateProposedSlots: (slots: Date[]) => void; // Add handler for slots
+  updateShowAlphaBetaFeatures: (value: boolean) => void; // Add handler for the toggle
   resetState: () => void;
 }
 
@@ -59,7 +61,8 @@ const defaultState: AppState = {
     }], 
   },
   emailData: null,
-  language: 'en'
+  language: 'en',
+  showAlphaBetaFeatures: false // Default value for the toggle
 };
 
 const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -71,8 +74,9 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   useEffect(() => {
     const loadState = async () => {
       try {
-        const savedState = await StorageService.getAll(['customerInfo', 'emailData', 'language']);
-        
+        // Include 'showAlphaBetaFeatures' in the keys to load
+        const savedState = await StorageService.getAll(['customerInfo', 'emailData', 'language', 'showAlphaBetaFeatures']);
+
         if (savedState) {
           const newState = { ...defaultState };
 
@@ -135,7 +139,12 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
           if (savedState.language) {
             newState.language = savedState.language;
           }
-          
+
+          // Load the toggle state
+          if (typeof savedState.showAlphaBetaFeatures === 'boolean') {
+            newState.showAlphaBetaFeatures = savedState.showAlphaBetaFeatures;
+          }
+
           setState(newState);
         }
       } catch (error) {
@@ -153,7 +162,9 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (state.emailData) {
       StorageService.set('emailData', state.emailData);
     }
-  }, [state]);
+    // Also save the toggle state whenever state changes
+    StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
+  }, [state]); // state dependency includes showAlphaBetaFeatures now
 
   // Handler functions
   const updateCustomerInfo = (field: string, value: any) => {
@@ -235,6 +246,16 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
+  // Handler for updating the Alpha/Beta toggle state
+  const updateShowAlphaBetaFeatures = (value: boolean) => {
+    setState(prevState => ({
+      ...prevState,
+      showAlphaBetaFeatures: value
+    }));
+    // Immediately save the change to storage
+    StorageService.set('showAlphaBetaFeatures', value);
+  };
+
   const resetState = () => {
     setState(defaultState);
     StorageService.clear();
@@ -249,7 +270,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       updateTier,
       updateEmailData,
       updateLanguage,
-      updateProposedSlots, // Add new handler to context value
+      updateProposedSlots,
+      updateShowAlphaBetaFeatures, // Add the new handler to the context value
       resetState
     }}>
       {children}

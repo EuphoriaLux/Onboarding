@@ -34,7 +34,11 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^29.5.14",
+    "@types/uuid": "^10.0.0",
     "copy-webpack-plugin": "^13.0.0",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
@@ -44,6 +48,7 @@
     "style-loader": "^4.0.0",
     "ts-jest": "^29.3.1",
     "ts-loader": "^9.5.2",
+    "uuid": "^11.1.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^6.0.1"
   }

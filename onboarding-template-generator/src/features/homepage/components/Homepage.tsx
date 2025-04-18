@@ -2,12 +2,12 @@
 // src/features/homepage/components/Homepage.tsx
 import React, { useState } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { useAppState } from '../../../contexts/AppStateContext';
+import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
 import { features, Feature } from '../constants'; // Import features and type
 
 const Homepage: React.FC = () => {
   const { translate } = useLanguage();
-  const { state } = useAppState();
+  const { state } = useAppState(); // Get the global state, including showAlphaBetaFeatures
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
 
   // Group features by category
@@ -84,24 +84,32 @@ const Homepage: React.FC = () => {
         <div key={category} className="feature-category-section">
           <h2>{category}</h2>
           <div className="features-grid">
-            {groupedFeatures[category].map((feature) => (
-              <button
-                key={feature.id}
-                className={`feature-card ${!feature.enabled ? 'disabled' : ''}`}
-                onClick={() => feature.enabled && setActiveFeature(feature.id)}
-                disabled={!feature.enabled} // Disable button if feature is not enabled
-                aria-label={feature.name} // Add aria-label for accessibility
-              >
-                <div className="feature-icon">
-                  {feature.icon}
-                </div>
-                <div className="feature-content">
-                  <h3>{feature.name}</h3>
-                  <p>{feature.description}</p>
-                  {!feature.enabled && <span className="coming-soon-badge">Coming Soon</span>}
-                </div>
-              </button>
-            ))}
+            {groupedFeatures[category].map((feature) => {
+              // Determine if the feature should be enabled based on its own flag OR the global toggle
+              const isFeatureEnabled = feature.enabled || (state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features');
+              // Determine if the "Coming Soon" badge should be shown
+              const showComingSoonBadge = !feature.enabled && !state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features';
+
+              return (
+                <button
+                  key={feature.id}
+                  className={`feature-card ${!isFeatureEnabled ? 'disabled' : ''}`}
+                  onClick={() => isFeatureEnabled && setActiveFeature(feature.id)}
+                  disabled={!isFeatureEnabled} // Disable button if not enabled by either condition
+                  aria-label={feature.name} // Add aria-label for accessibility
+                >
+                  <div className="feature-icon">
+                    {feature.icon}
+                  </div>
+                  {/* Removed duplicate icon and extra div */}
+                  <div className="feature-content">
+                    <h3>{feature.name}</h3>
+                    <p>{feature.description}</p>
+                    {showComingSoonBadge && <span className="coming-soon-badge">Coming Soon</span>}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
       ))}

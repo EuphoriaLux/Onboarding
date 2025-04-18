@@ -29709,7 +29709,8 @@ const defaultState = {
             }],
     },
     emailData: null,
-    language: 'en'
+    language: 'en',
+    showAlphaBetaFeatures: false // Default value for the toggle
 };
 const AppStateContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(undefined);
 const AppStateProvider = ({ children }) => {
@@ -29718,7 +29719,8 @@ const AppStateProvider = ({ children }) => {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         const loadState = () => __awaiter(void 0, void 0, void 0, function* () {
             try {
-                const savedState = yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.getAll(['customerInfo', 'emailData', 'language']);
+                // Include 'showAlphaBetaFeatures' in the keys to load
+                const savedState = yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.getAll(['customerInfo', 'emailData', 'language', 'showAlphaBetaFeatures']);
                 if (savedState) {
                     const newState = Object.assign({}, defaultState);
                     if (savedState.customerInfo) {
@@ -29769,6 +29771,10 @@ const AppStateProvider = ({ children }) => {
                     if (savedState.language) {
                         newState.language = savedState.language;
                     }
+                    // Load the toggle state
+                    if (typeof savedState.showAlphaBetaFeatures === 'boolean') {
+                        newState.showAlphaBetaFeatures = savedState.showAlphaBetaFeatures;
+                    }
                     setState(newState);
                 }
             }
@@ -29785,7 +29791,9 @@ const AppStateProvider = ({ children }) => {
         if (state.emailData) {
             _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('emailData', state.emailData);
         }
-    }, [state]);
+        // Also save the toggle state whenever state changes
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
+    }, [state]); // state dependency includes showAlphaBetaFeatures now
     // Handler functions
     const updateCustomerInfo = (field, value) => {
         setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { [field]: value }) })));
@@ -29821,6 +29829,12 @@ const AppStateProvider = ({ children }) => {
     const updateLanguage = (language) => {
         setState(prevState => (Object.assign(Object.assign({}, prevState), { language })));
     };
+    // Handler for updating the Alpha/Beta toggle state
+    const updateShowAlphaBetaFeatures = (value) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { showAlphaBetaFeatures: value })));
+        // Immediately save the change to storage
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('showAlphaBetaFeatures', value);
+    };
     const resetState = () => {
         setState(defaultState);
         _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.clear();
@@ -29833,7 +29847,8 @@ const AppStateProvider = ({ children }) => {
             updateTier,
             updateEmailData,
             updateLanguage,
-            updateProposedSlots, // Add new handler to context value
+            updateProposedSlots,
+            updateShowAlphaBetaFeatures, // Add the new handler to the context value
             resetState
         }, children: children }));
 };

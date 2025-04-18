@@ -59,9 +59,10 @@ const roadmapData: RoadmapItem[] = [
     status: 'Planned',
   },
   // --- Q4 2025 ---
+  // --- Q1 2026 --- // Moved Support Reporting here
   {
     id: 'reporting-v1', // Matches constants.tsx
-    quarter: 'Q4 2025',
+    quarter: 'Q1 2026', // Updated Quarter
     title: 'Support Reporting (Planned)',
     description: 'Create and export support usage reports and analytics.',
     status: 'Planned',
@@ -71,6 +72,21 @@ const roadmapData: RoadmapItem[] = [
     quarter: 'Q4 2025',
     title: 'Azure Cost Optimization (Planned)', // New Title
     description: 'Features to help analyze or suggest Azure cost savings.', // Description
+    status: 'Planned',
+  },
+  {
+    id: 'crm-v1-alpha', // New unique ID
+    quarter: 'Q4 2025',
+    title: 'CRM Integration (Alpha)',
+    description: 'Basic customer relationship management features (Alpha version).',
+    status: 'Planned',
+  },
+  // Moved Support Requests Management to Q4 2025
+  {
+    id: 'support-requests-mgmt-v1-alpha', // New unique ID
+    quarter: 'Q4 2025', // Updated Quarter
+    title: 'Support Requests Management (Alpha)',
+    description: 'Tool for viewing and managing support requests via Azure (Alpha version).',
     status: 'Planned',
   },
   // Add future planned items beyond constants.tsx here if needed

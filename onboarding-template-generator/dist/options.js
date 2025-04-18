@@ -84434,6 +84434,177 @@ function __rewriteRelativeImportExtension(path, preserveJsx) {
 
 /***/ }),
 
+/***/ "./node_modules/uuid/dist/esm-browser/native.js":
+/*!******************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/native.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({ randomUUID });
+
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/regex.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/regex.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (/^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/i);
+
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/rng.js":
+/*!***************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/rng.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ rng)
+/* harmony export */ });
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+    if (!getRandomValues) {
+        if (typeof crypto === 'undefined' || !crypto.getRandomValues) {
+            throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+        }
+        getRandomValues = crypto.getRandomValues.bind(crypto);
+    }
+    return getRandomValues(rnds8);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/stringify.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/stringify.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   unsafeStringify: () => (/* binding */ unsafeStringify)
+/* harmony export */ });
+/* harmony import */ var _validate_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validate.js */ "./node_modules/uuid/dist/esm-browser/validate.js");
+
+const byteToHex = [];
+for (let i = 0; i < 256; ++i) {
+    byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+function unsafeStringify(arr, offset = 0) {
+    return (byteToHex[arr[offset + 0]] +
+        byteToHex[arr[offset + 1]] +
+        byteToHex[arr[offset + 2]] +
+        byteToHex[arr[offset + 3]] +
+        '-' +
+        byteToHex[arr[offset + 4]] +
+        byteToHex[arr[offset + 5]] +
+        '-' +
+        byteToHex[arr[offset + 6]] +
+        byteToHex[arr[offset + 7]] +
+        '-' +
+        byteToHex[arr[offset + 8]] +
+        byteToHex[arr[offset + 9]] +
+        '-' +
+        byteToHex[arr[offset + 10]] +
+        byteToHex[arr[offset + 11]] +
+        byteToHex[arr[offset + 12]] +
+        byteToHex[arr[offset + 13]] +
+        byteToHex[arr[offset + 14]] +
+        byteToHex[arr[offset + 15]]).toLowerCase();
+}
+function stringify(arr, offset = 0) {
+    const uuid = unsafeStringify(arr, offset);
+    if (!(0,_validate_js__WEBPACK_IMPORTED_MODULE_0__["default"])(uuid)) {
+        throw TypeError('Stringified UUID is invalid');
+    }
+    return uuid;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (stringify);
+
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/v4.js":
+/*!**************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/v4.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _native_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./native.js */ "./node_modules/uuid/dist/esm-browser/native.js");
+/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rng.js */ "./node_modules/uuid/dist/esm-browser/rng.js");
+/* harmony import */ var _stringify_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./stringify.js */ "./node_modules/uuid/dist/esm-browser/stringify.js");
+
+
+
+function v4(options, buf, offset) {
+    if (_native_js__WEBPACK_IMPORTED_MODULE_0__["default"].randomUUID && !buf && !options) {
+        return _native_js__WEBPACK_IMPORTED_MODULE_0__["default"].randomUUID();
+    }
+    options = options || {};
+    const rnds = options.random ?? options.rng?.() ?? (0,_rng_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
+    if (rnds.length < 16) {
+        throw new Error('Random bytes length must be >= 16');
+    }
+    rnds[6] = (rnds[6] & 0x0f) | 0x40;
+    rnds[8] = (rnds[8] & 0x3f) | 0x80;
+    if (buf) {
+        offset = offset || 0;
+        if (offset < 0 || offset + 16 > buf.length) {
+            throw new RangeError(`UUID byte range ${offset}:${offset + 15} is out of buffer bounds`);
+        }
+        for (let i = 0; i < 16; ++i) {
+            buf[offset + i] = rnds[i];
+        }
+        return buf;
+    }
+    return (0,_stringify_js__WEBPACK_IMPORTED_MODULE_2__.unsafeStringify)(rnds);
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (v4);
+
+
+/***/ }),
+
+/***/ "./node_modules/uuid/dist/esm-browser/validate.js":
+/*!********************************************************!*\
+  !*** ./node_modules/uuid/dist/esm-browser/validate.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _regex_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./regex.js */ "./node_modules/uuid/dist/esm-browser/regex.js");
+
+function validate(uuid) {
+    return typeof uuid === 'string' && _regex_js__WEBPACK_IMPORTED_MODULE_0__["default"].test(uuid);
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (validate);
+
+
+/***/ }),
+
 /***/ "./src/App.tsx":
 /*!*********************!*\
   !*** ./src/App.tsx ***!
@@ -84834,7 +85005,8 @@ const defaultState = {
             }],
     },
     emailData: null,
-    language: 'en'
+    language: 'en',
+    showAlphaBetaFeatures: false // Default value for the toggle
 };
 const AppStateContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.createContext)(undefined);
 const AppStateProvider = ({ children }) => {
@@ -84843,7 +85015,8 @@ const AppStateProvider = ({ children }) => {
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
         const loadState = () => __awaiter(void 0, void 0, void 0, function* () {
             try {
-                const savedState = yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.getAll(['customerInfo', 'emailData', 'language']);
+                // Include 'showAlphaBetaFeatures' in the keys to load
+                const savedState = yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.getAll(['customerInfo', 'emailData', 'language', 'showAlphaBetaFeatures']);
                 if (savedState) {
                     const newState = Object.assign({}, defaultState);
                     if (savedState.customerInfo) {
@@ -84894,6 +85067,10 @@ const AppStateProvider = ({ children }) => {
                     if (savedState.language) {
                         newState.language = savedState.language;
                     }
+                    // Load the toggle state
+                    if (typeof savedState.showAlphaBetaFeatures === 'boolean') {
+                        newState.showAlphaBetaFeatures = savedState.showAlphaBetaFeatures;
+                    }
                     setState(newState);
                 }
             }
@@ -84910,7 +85087,9 @@ const AppStateProvider = ({ children }) => {
         if (state.emailData) {
             _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('emailData', state.emailData);
         }
-    }, [state]);
+        // Also save the toggle state whenever state changes
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
+    }, [state]); // state dependency includes showAlphaBetaFeatures now
     // Handler functions
     const updateCustomerInfo = (field, value) => {
         setState(prevState => (Object.assign(Object.assign({}, prevState), { customerInfo: Object.assign(Object.assign({}, prevState.customerInfo), { [field]: value }) })));
@@ -84946,6 +85125,12 @@ const AppStateProvider = ({ children }) => {
     const updateLanguage = (language) => {
         setState(prevState => (Object.assign(Object.assign({}, prevState), { language })));
     };
+    // Handler for updating the Alpha/Beta toggle state
+    const updateShowAlphaBetaFeatures = (value) => {
+        setState(prevState => (Object.assign(Object.assign({}, prevState), { showAlphaBetaFeatures: value })));
+        // Immediately save the change to storage
+        _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('showAlphaBetaFeatures', value);
+    };
     const resetState = () => {
         setState(defaultState);
         _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.clear();
@@ -84958,7 +85143,8 @@ const AppStateProvider = ({ children }) => {
             updateTier,
             updateEmailData,
             updateLanguage,
-            updateProposedSlots, // Add new handler to context value
+            updateProposedSlots,
+            updateShowAlphaBetaFeatures, // Add the new handler to the context value
             resetState
         }, children: children }));
 };
@@ -85150,6 +85336,664 @@ __webpack_require__.r(__webpack_exports__);
  * Contact management related type definitions
  */
 
+
+
+/***/ }),
+
+/***/ "./src/features/crm/components/CrmView.tsx":
+/*!*************************************************!*\
+  !*** ./src/features/crm/components/CrmView.tsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _CustomerList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CustomerList */ "./src/features/crm/components/CustomerList.tsx");
+/* harmony import */ var _CustomerForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CustomerForm */ "./src/features/crm/components/CustomerForm.tsx");
+
+// onboarding-template-generator/src/features/crm/components/CrmView.tsx
+
+
+
+// import useCrm from '../hooks/useCrm'; // Keep commented for now
+const CrmView = () => {
+    // State
+    const [selectedCustomerId, setSelectedCustomerId] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [showCreateForm, setShowCreateForm] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [listRefreshTrigger, setListRefreshTrigger] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0); // To force list refresh
+    // Handlers
+    const handleSelectCustomer = (id) => {
+        setSelectedCustomerId(id);
+        setShowCreateForm(false);
+    };
+    const handleShowCreate = () => {
+        setSelectedCustomerId(null);
+        setShowCreateForm(true);
+    };
+    const handleCloseForm = () => {
+        setSelectedCustomerId(null);
+        setShowCreateForm(false);
+    };
+    // Callback for successful save/update/delete to refresh list and close form
+    const handleSaveSuccess = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((savedCustomerId) => {
+        console.log("CrmView: Save successful for", savedCustomerId);
+        setListRefreshTrigger(prev => prev + 1); // Increment trigger to refresh list
+        setSelectedCustomerId(savedCustomerId); // Select the saved/updated customer
+        setShowCreateForm(false); // Close create form if it was open
+    }, []);
+    const handleDeleteSuccess = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)(() => {
+        console.log("CrmView: Delete successful");
+        setListRefreshTrigger(prev => prev + 1); // Refresh list
+        setSelectedCustomerId(null); // Deselect customer
+        setShowCreateForm(false); // Ensure form is closed
+    }, []);
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { padding: '1rem' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Management" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleShowCreate, disabled: showCreateForm, children: "Add New Customer" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { display: 'flex', marginTop: '1rem', gap: '1rem' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { flex: 1, border: '1px solid #ccc', padding: '0.5rem', maxHeight: '70vh', overflowY: 'auto' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Customer List" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CustomerList__WEBPACK_IMPORTED_MODULE_2__["default"], { onSelectCustomer: handleSelectCustomer, refreshTrigger: listRefreshTrigger })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { flex: 2, border: '1px solid #ccc', padding: '0.5rem' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: "Details / Form" }), showCreateForm && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Create New Customer" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CustomerForm__WEBPACK_IMPORTED_MODULE_3__["default"], { onSaveSuccess: handleSaveSuccess, onCancel: handleCloseForm })] })), selectedCustomerId && !showCreateForm && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Edit Customer" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CustomerForm__WEBPACK_IMPORTED_MODULE_3__["default"], { customerId: selectedCustomerId, onSaveSuccess: handleSaveSuccess, onDeleteSuccess: handleDeleteSuccess, onCancel: handleCloseForm })] })), !showCreateForm && !selectedCustomerId && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a customer from the list or click \"Add New Customer\"." }))] })] })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CrmView);
+
+
+/***/ }),
+
+/***/ "./src/features/crm/components/CustomerForm.tsx":
+/*!******************************************************!*\
+  !*** ./src/features/crm/components/CustomerForm.tsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/crmDataService */ "./src/features/crm/services/crmDataService.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../types */ "./src/features/crm/types/index.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+// onboarding-template-generator/src/features/crm/components/CustomerForm.tsx
+
+
+
+// Initial empty state for creating a new customer
+const initialCustomerState = {
+    name: '',
+    internalName: '', // Add internalName
+    email: '',
+    phone: '',
+    company: '',
+    status: _types__WEBPACK_IMPORTED_MODULE_3__.CustomerStatus.LEAD, // Default status
+    tenantIds: [], // Add tenantIds
+    parentId: '', // Add parentId
+    notes: [],
+};
+const CustomerForm = ({ customerId, onSaveSuccess, onDeleteSuccess, onCancel, }) => {
+    var _a, _b;
+    const [customer, setCustomer] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(initialCustomerState);
+    // Separate state for the tenant IDs textarea content
+    const [tenantIdsString, setTenantIdsString] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [newNote, setNewNote] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('');
+    const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [isSaving, setIsSaving] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [isDeleting, setIsDeleting] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const isEditMode = Boolean(customerId);
+    // Fetch customer data if in edit mode
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        if (isEditMode && customerId) {
+            const fetchCustomer = () => __awaiter(void 0, void 0, void 0, function* () {
+                setIsLoading(true);
+                setError(null);
+                console.log(`CustomerForm: Fetching customer ${customerId}...`);
+                try {
+                    const fetchedCustomer = yield _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__.getCustomer(customerId);
+                    if (fetchedCustomer) {
+                        setCustomer(fetchedCustomer);
+                        // Format tenantIds array into a string for the textarea
+                        setTenantIdsString((fetchedCustomer.tenantIds || []).join('\n'));
+                        console.log(`CustomerForm: Customer ${customerId} fetched successfully.`);
+                    }
+                    else {
+                        setError(`Customer with ID ${customerId} not found.`);
+                        console.warn(`CustomerForm: Customer ${customerId} not found.`);
+                    }
+                }
+                catch (err) {
+                    console.error(`CustomerForm: Error fetching customer ${customerId}:`, err);
+                    setError(err instanceof Error ? err.message : 'Failed to load customer data.');
+                }
+                finally {
+                    setIsLoading(false);
+                }
+            });
+            fetchCustomer();
+        }
+        else {
+            // Reset to initial state if switching to create mode or customerId becomes null
+            setCustomer(initialCustomerState);
+            setTenantIdsString(''); // Reset tenant IDs string as well
+            setError(null);
+            setIsLoading(false);
+        }
+    }, [customerId, isEditMode]);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setCustomer((prev) => (Object.assign(Object.assign({}, prev), { [name]: value })));
+    };
+    const handleAddNote = () => {
+        if (newNote.trim()) {
+            const note = {
+                text: newNote.trim(),
+                timestamp: new Date().toISOString(),
+                // author: 'Current User' // TODO: Get current user info if available
+            };
+            setCustomer((prev) => (Object.assign(Object.assign({}, prev), { notes: [...(prev.notes || []), note] })));
+            setNewNote('');
+        }
+    };
+    const handleSave = () => __awaiter(void 0, void 0, void 0, function* () {
+        setError(null);
+        setIsSaving(true);
+        try {
+            // Parse tenantIdsString into array before saving
+            const tenantIds = tenantIdsString
+                .split('\n')
+                .map(id => id.trim())
+                .filter(id => id); // Remove empty strings
+            // Prepare the complete customer data object to save
+            const customerDataToSave = Object.assign(Object.assign({}, customer), { tenantIds: tenantIds });
+            let savedCustomer;
+            if (isEditMode) {
+                console.log(`CustomerForm: Updating customer ${customerId}...`);
+                // Ensure required fields for update are present
+                if (!customerDataToSave.id || !customerDataToSave._etag) {
+                    throw new Error("Cannot update customer: ID or ETag missing.");
+                }
+                // Pass the full object including parsed tenantIds
+                savedCustomer = yield _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__.updateCustomer(customerDataToSave);
+                console.log(`CustomerForm: Customer ${customerId} updated successfully.`);
+            }
+            else {
+                console.log("CustomerForm: Creating new customer...");
+                // Ensure required fields for create are present
+                if (!customerDataToSave.name) {
+                    throw new Error("Cannot create customer: Name is required.");
+                }
+                // Construct the object with definite types for required fields
+                // to match Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | '_etag'>
+                const dataToCreate = {
+                    name: customerDataToSave.name, // Known to be string due to check above
+                    notes: customerDataToSave.notes || [], // Ensure notes is CustomerNote[]
+                    // Include other optional fields from customerDataToSave
+                    internalName: customerDataToSave.internalName,
+                    email: customerDataToSave.email,
+                    phone: customerDataToSave.phone,
+                    company: customerDataToSave.company,
+                    status: customerDataToSave.status,
+                    tenantIds: customerDataToSave.tenantIds, // Already processed
+                    parentId: customerDataToSave.parentId,
+                };
+                savedCustomer = yield _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__.createCustomer(dataToCreate);
+                console.log(`CustomerForm: Customer created successfully with ID ${savedCustomer.id}.`);
+            }
+            onSaveSuccess(savedCustomer.id); // Notify parent of success
+        }
+        catch (err) {
+            console.error("CustomerForm: Error saving customer:", err);
+            setError(err instanceof Error ? err.message : 'Failed to save customer data.');
+        }
+        finally {
+            setIsSaving(false);
+        }
+    });
+    const handleDelete = () => __awaiter(void 0, void 0, void 0, function* () {
+        if (!isEditMode || !customer.id || !customer._etag) {
+            setError("Cannot delete: Customer ID or ETag missing.");
+            return;
+        }
+        if (!window.confirm(`Are you sure you want to delete customer "${customer.name}"? This cannot be undone.`)) {
+            return;
+        }
+        setError(null);
+        setIsDeleting(true);
+        try {
+            console.log(`CustomerForm: Deleting customer ${customer.id}...`);
+            yield _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__.deleteCustomer(customer.id, customer._etag);
+            console.log(`CustomerForm: Customer ${customer.id} deleted successfully.`);
+            if (onDeleteSuccess) {
+                onDeleteSuccess(); // Notify parent
+            }
+        }
+        catch (err) {
+            console.error(`CustomerForm: Error deleting customer ${customer.id}:`, err);
+            setError(err instanceof Error ? err.message : 'Failed to delete customer.');
+        }
+        finally {
+            setIsDeleting(false);
+        }
+    });
+    if (isLoading) {
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Loading customer details..." });
+    }
+    // Render form fields
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { onSubmit: (e) => { e.preventDefault(); handleSave(); }, children: [error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { style: { color: 'red' }, children: ["Error: ", error] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-name", children: "Name: *" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "customer-name", name: "name", value: customer.name || '', onChange: handleInputChange, required: true, disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-internalName", children: "Internal Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "customer-internalName", name: "internalName", value: customer.internalName || '', onChange: handleInputChange, disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-email", children: "Email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "customer-email", name: "email", value: customer.email || '', onChange: handleInputChange, disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-phone", children: "Phone:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "tel", id: "customer-phone", name: "phone", value: customer.phone || '', onChange: handleInputChange, disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-company", children: "Company:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "customer-company", name: "company", value: customer.company || '', onChange: handleInputChange, disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-status", children: "Status:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("select", { id: "customer-status", name: "status", value: customer.status || _types__WEBPACK_IMPORTED_MODULE_3__.CustomerStatus.LEAD, onChange: handleInputChange, disabled: isSaving || isDeleting, children: Object.values(_types__WEBPACK_IMPORTED_MODULE_3__.CustomerStatus).map(status => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: status, children: status }, status))) })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-tenantIds", children: "Tenant IDs (one per line):" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "customer-tenantIds", name: "tenantIdsString" // Bind to the temporary string state
+                        , value: tenantIdsString, onChange: (e) => setTenantIdsString(e.target.value), rows: 3, style: { width: '95%' }, placeholder: "Enter each Tenant ID on a new line", disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "customer-parentId", children: "Parent Customer ID:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "customer-parentId", name: "parentId", value: customer.parentId || '', onChange: handleInputChange, placeholder: "Enter ID of parent company if applicable", disabled: isSaving || isDeleting })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Notes" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { style: { maxHeight: '150px', overflowY: 'auto', border: '1px solid #ccc', marginBottom: '0.5rem', padding: '0.5rem' }, children: (((_a = customer.notes) === null || _a === void 0 ? void 0 : _a.length) || 0) === 0 ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "No notes yet." })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", { children: (_b = customer.notes) === null || _b === void 0 ? void 0 : _b.map((note, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("small", { children: [new Date(note.timestamp).toLocaleString(), note.author ? ` by ${note.author}` : '', ":"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { style: { margin: '0 0 0.5rem 0' }, children: note.text })] }, index))) })) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "customer-new-note", "aria-label": "New Note" // Added aria-label for accessibility
+                        , placeholder: "Add a new note...", value: newNote, onChange: (e) => setNewNote(e.target.value), rows: 3, style: { width: '95%', marginBottom: '0.5rem' }, disabled: isSaving || isDeleting }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", onClick: handleAddNote, disabled: !newNote.trim() || isSaving || isDeleting, children: "Add Note" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "submit", disabled: isSaving || isDeleting || isLoading, children: isSaving ? 'Saving...' : (isEditMode ? 'Update Customer' : 'Create Customer') }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", onClick: onCancel, disabled: isSaving || isDeleting, style: { marginLeft: '0.5rem' }, children: "Cancel" }), isEditMode && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", onClick: handleDelete, disabled: isSaving || isDeleting || isLoading, style: { marginLeft: '1rem', color: 'red' }, children: isDeleting ? 'Deleting...' : 'Delete Customer' }))] }), isEditMode && customer.updatedAt && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("small", { children: ["Last updated: ", new Date(customer.updatedAt).toLocaleString(), " (ETag: ", customer._etag, ")"] }) }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomerForm);
+
+
+/***/ }),
+
+/***/ "./src/features/crm/components/CustomerList.tsx":
+/*!******************************************************!*\
+  !*** ./src/features/crm/components/CustomerList.tsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/crmDataService */ "./src/features/crm/services/crmDataService.ts");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+// onboarding-template-generator/src/features/crm/components/CustomerList.tsx
+
+
+const CustomerList = ({ onSelectCustomer, refreshTrigger = 0 }) => {
+    const [customers, setCustomers] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
+    const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const fetchCustomers = () => __awaiter(void 0, void 0, void 0, function* () {
+            setIsLoading(true);
+            setError(null);
+            try {
+                console.log("CustomerList: Fetching customers...");
+                const customerList = yield _services_crmDataService__WEBPACK_IMPORTED_MODULE_2__.listCustomers();
+                // Sort by name for consistent display
+                customerList.sort((a, b) => a.name.localeCompare(b.name));
+                setCustomers(customerList);
+                console.log("CustomerList: Customers fetched successfully.", customerList.length);
+            }
+            catch (err) {
+                console.error("CustomerList: Error fetching customers:", err);
+                setError(err instanceof Error ? err.message : 'An unknown error occurred while fetching customers.');
+            }
+            finally {
+                setIsLoading(false);
+            }
+        });
+        fetchCustomers();
+    }, [refreshTrigger]); // Re-fetch when refreshTrigger changes
+    if (isLoading) {
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Loading customers..." });
+    }
+    if (error) {
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { style: { color: 'red' }, children: ["Error: ", error] });
+    }
+    if (customers.length === 0) {
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "No customers found." });
+    }
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("ul", { style: { listStyle: 'none', padding: 0, margin: 0 }, children: customers.map((customer) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { onClick: () => onSelectCustomer(customer.id), style: {
+                padding: '0.5rem',
+                borderBottom: '1px solid #eee',
+                cursor: 'pointer',
+            }, onMouseEnter: (e) => (e.currentTarget.style.backgroundColor = '#f0f0f0'), onMouseLeave: (e) => (e.currentTarget.style.backgroundColor = 'transparent'), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: customer.internalName || customer.name }), customer.internalName && customer.name !== customer.internalName && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { style: { fontSize: '0.8em', marginLeft: '5px', color: '#666' }, children: ["(", customer.name, ")"] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("br", {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("small", { children: ["ID: ", customer.id] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("br", {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("small", { children: ["Updated: ", new Date(customer.updatedAt).toLocaleString()] })] }, customer.id))) }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomerList);
+
+
+/***/ }),
+
+/***/ "./src/features/crm/services/crmDataService.ts":
+/*!*****************************************************!*\
+  !*** ./src/features/crm/services/crmDataService.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createCustomer: () => (/* binding */ createCustomer),
+/* harmony export */   deleteCustomer: () => (/* binding */ deleteCustomer),
+/* harmony export */   getCustomer: () => (/* binding */ getCustomer),
+/* harmony export */   listCustomers: () => (/* binding */ listCustomers),
+/* harmony export */   updateCustomer: () => (/* binding */ updateCustomer)
+/* harmony export */ });
+/* harmony import */ var _azure_storage_blob__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @azure/storage-blob */ "./node_modules/@azure/storage-blob/dist-esm/storage-blob/src/BlobServiceClient.js");
+/* harmony import */ var _azure_storage_blob__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @azure/storage-blob */ "./node_modules/@azure/core-rest-pipeline/dist/browser/index.js");
+/* harmony import */ var _supportRequests_services_authService__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportRequests/services/authService */ "./src/features/supportRequests/services/authService.ts");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/v4.js");
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __asyncValues = (undefined && undefined.__asyncValues) || function (o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+};
+var __rest = (undefined && undefined.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+
+ // Adjust path as needed
+ // For generating unique IDs
+// --- Configuration ---
+// Re-use storage account from supportRequests, but use a dedicated container for CRM
+const STORAGE_ACCOUNT_NAME = 'powerupticketstorage';
+const CRM_CONTAINER_NAME = 'crm-data'; // Dedicated container for CRM data
+const STORAGE_ACCOUNT_URL = `https://${STORAGE_ACCOUNT_NAME}.blob.core.windows.net`;
+// --- Helper Functions ---
+/**
+ * Creates a simple TokenCredential object from a provided access token.
+ * (Adapted from blobStorageService.ts)
+ */
+const createTokenCredential = (accessToken) => {
+    return {
+        getToken: () => __awaiter(void 0, void 0, void 0, function* () {
+            return ({
+                token: accessToken,
+                expiresOnTimestamp: Date.now() + 60 * 60 * 1000, // Assume valid for 1 hour
+            });
+        }),
+    };
+};
+/**
+ * Helper to get the ContainerClient, ensuring authentication.
+ */
+const getContainerClient = () => __awaiter(void 0, void 0, void 0, function* () {
+    const accessToken = yield _supportRequests_services_authService__WEBPACK_IMPORTED_MODULE_0__.getAccessTokenForScopes(_supportRequests_services_authService__WEBPACK_IMPORTED_MODULE_0__.STORAGE_SCOPES);
+    if (!accessToken) {
+        throw new Error('Authentication failed: Could not retrieve access token for storage.');
+    }
+    const tokenCredential = createTokenCredential(accessToken);
+    const blobServiceClient = new _azure_storage_blob__WEBPACK_IMPORTED_MODULE_1__.BlobServiceClient(STORAGE_ACCOUNT_URL, tokenCredential);
+    return blobServiceClient.getContainerClient(CRM_CONTAINER_NAME);
+});
+// --- Service Functions ---
+/**
+ * Lists basic information about customers (blobs) in the CRM container, including internal name.
+ * TODO: Implement pagination or filtering for large datasets.
+ */
+const listCustomers = () => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, e_1, _b, _c;
+    var _d, _e, _f;
+    try {
+        const containerClient = yield getContainerClient();
+        const customers = [];
+        console.log(`Listing blobs in CRM container: ${CRM_CONTAINER_NAME}`);
+        try {
+            for (var _g = true, _h = __asyncValues(containerClient.listBlobsFlat({ includeMetadata: true, includeVersions: false })), _j; _j = yield _h.next(), _a = _j.done, !_a; _g = true) {
+                _c = _j.value;
+                _g = false;
+                const blob = _c;
+                // Extract ID from name (assuming format customer-<id>.json)
+                const idMatch = blob.name.match(/^customer-(.+)\.json$/);
+                const id = idMatch ? idMatch[1] : blob.name; // Fallback to full name if pattern fails
+                // Attempt to get name and internalName from metadata if available
+                const displayName = ((_d = blob.metadata) === null || _d === void 0 ? void 0 : _d.customerName) || id; // Fallback to ID if name missing
+                const internalName = (_e = blob.metadata) === null || _e === void 0 ? void 0 : _e.internalName; // Will be undefined if not set
+                customers.push({
+                    id: id,
+                    name: displayName,
+                    internalName: internalName, // Add internalName
+                    updatedAt: ((_f = blob.properties.lastModified) === null || _f === void 0 ? void 0 : _f.toISOString()) || new Date(0).toISOString(),
+                });
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (!_g && !_a && (_b = _h.return)) yield _b.call(_h);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        console.log(`Found ${customers.length} customer blobs.`);
+        return customers;
+    }
+    catch (error) {
+        console.error('Error listing customer blobs:', error);
+        // Handle specific errors (e.g., auth failure)
+        if (error instanceof Error && error.message.includes('Authentication failed')) {
+            throw error; // Re-throw auth errors clearly
+        }
+        throw new Error(`Failed to list customers: ${error instanceof Error ? error.message : String(error)}`);
+    }
+});
+/**
+ * Downloads and parses the content of a specific customer blob, including its ETag.
+ * @param customerId The unique ID of the customer (used to construct blob name).
+ * @returns The parsed Customer object (with _etag) or null if not found.
+ */
+const getCustomer = (customerId) => __awaiter(void 0, void 0, void 0, function* () {
+    const blobName = `customer-${customerId}.json`;
+    try {
+        const containerClient = yield getContainerClient();
+        const blobClient = containerClient.getBlobClient(blobName);
+        console.log(`Fetching properties for blob: ${blobName}`);
+        const properties = yield blobClient.getProperties(); // Needed for ETag
+        console.log(`Downloading blob: ${blobName}`);
+        // Use download() which returns a Blob, compatible with browsers
+        const downloadBlockBlobResponse = yield blobClient.download();
+        if (!downloadBlockBlobResponse.blobBody) {
+            throw new Error(`Failed to download blob body for ${blobName}.`);
+        }
+        // Read the Blob content as text (await the promise first)
+        const blob = yield downloadBlockBlobResponse.blobBody;
+        const content = yield blob.text();
+        console.log(`Parsing blob content: ${blobName}`);
+        const customerData = JSON.parse(content);
+        // Add the ETag to the returned object for concurrency control
+        customerData._etag = properties.etag;
+        console.log(`Successfully fetched and parsed customer: ${customerData.id}, ETag: ${customerData._etag}`);
+        return customerData;
+    }
+    catch (error) {
+        if (error instanceof _azure_storage_blob__WEBPACK_IMPORTED_MODULE_2__.RestError && error.statusCode === 404) {
+            console.warn(`Customer blob not found: ${blobName}`);
+            return null; // Return null if blob doesn't exist
+        }
+        console.error(`Error getting customer blob "${blobName}":`, error);
+        if (error instanceof Error && error.message.includes('Authentication failed')) {
+            throw error;
+        }
+        else if (error instanceof SyntaxError) {
+            console.error(`Failed to parse JSON content for blob: ${blobName}`);
+            throw new Error(`Failed to parse customer data for ${blobName}.`);
+        }
+        throw new Error(`Failed to get customer ${customerId}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+});
+/**
+ * Creates a new customer record as a JSON blob.
+ * @param customerData The initial customer data (ID will be generated if missing).
+ * @returns The created Customer object with its ID and initial ETag.
+ */
+const createCustomer = (customerData) => __awaiter(void 0, void 0, void 0, function* () {
+    const newId = (0,uuid__WEBPACK_IMPORTED_MODULE_3__["default"])();
+    const now = new Date().toISOString();
+    const customerToSave = Object.assign(Object.assign({}, customerData), { id: newId, createdAt: now, updatedAt: now, notes: customerData.notes || [] });
+    const blobName = `customer-${newId}.json`;
+    const content = JSON.stringify(customerToSave, null, 2);
+    try {
+        const containerClient = yield getContainerClient();
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        console.log(`Creating blob: ${blobName}`);
+        // Ensure optional arrays are initialized if not provided
+        customerToSave.tenantIds = customerToSave.tenantIds || [];
+        const uploadResponse = yield blockBlobClient.upload(content, content.length, {
+            blobHTTPHeaders: { blobContentType: 'application/json' },
+            // Include internalName in metadata (ensure it's a string)
+            metadata: {
+                customerName: customerToSave.name || '', // Ensure name is not undefined
+                internalName: customerToSave.internalName || '' // Ensure internalName is not undefined
+            },
+            // Conditions: ifNoneMatch: '*' ensures we don't overwrite if it somehow exists
+            conditions: { ifNoneMatch: '*' }
+        });
+        console.log(`Successfully created customer: ${newId}, ETag: ${uploadResponse.etag}`);
+        // Return the full customer object including the new ETag
+        return Object.assign(Object.assign({}, customerToSave), { _etag: uploadResponse.etag });
+    }
+    catch (error) {
+        console.error(`Error creating customer blob "${blobName}":`, error);
+        if (error instanceof _azure_storage_blob__WEBPACK_IMPORTED_MODULE_2__.RestError && error.statusCode === 412) {
+            console.error(`Concurrency conflict: Customer ${newId} already exists.`);
+            throw new Error(`Customer with ID ${newId} already exists.`);
+        }
+        if (error instanceof Error && error.message.includes('Authentication failed')) {
+            throw error;
+        }
+        throw new Error(`Failed to create customer: ${error instanceof Error ? error.message : String(error)}`);
+    }
+});
+/**
+ * Updates an existing customer record, using ETag for concurrency control.
+ * @param customerData The complete customer data to save (must include id and _etag).
+ * @returns The updated Customer object with the new ETag.
+ * @throws Error if ETag does not match (concurrency conflict).
+ */
+const updateCustomer = (customerData) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!customerData.id || !customerData._etag) {
+        throw new Error('Customer ID and ETag (_etag) are required for updates.');
+    }
+    const blobName = `customer-${customerData.id}.json`;
+    const etag = customerData._etag; // The ETag from when the data was fetched
+    // Prepare data for saving (update timestamp, remove internal _etag field before stringify)
+    const now = new Date().toISOString();
+    const _a = Object.assign(Object.assign({}, customerData), { updatedAt: now }), { _etag } = _a, dataToSave = __rest(_a, ["_etag"]);
+    const content = JSON.stringify(dataToSave, null, 2);
+    try {
+        const containerClient = yield getContainerClient();
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        console.log(`Updating blob: ${blobName} with ETag: ${etag}`);
+        // Ensure optional arrays are initialized if not provided before saving
+        dataToSave.tenantIds = dataToSave.tenantIds || [];
+        const uploadResponse = yield blockBlobClient.upload(content, content.length, {
+            blobHTTPHeaders: { blobContentType: 'application/json' },
+            // Update metadata including internalName (ensure it's a string)
+            metadata: {
+                customerName: dataToSave.name || '', // Ensure name is not undefined
+                internalName: dataToSave.internalName || '' // Ensure internalName is not undefined
+            },
+            conditions: { ifMatch: etag } // *** Optimistic concurrency check ***
+        });
+        console.log(`Successfully updated customer: ${customerData.id}, New ETag: ${uploadResponse.etag}`);
+        // Return the updated customer object with the new ETag
+        return Object.assign(Object.assign({}, dataToSave), { _etag: uploadResponse.etag });
+    }
+    catch (error) {
+        if (error instanceof _azure_storage_blob__WEBPACK_IMPORTED_MODULE_2__.RestError && error.statusCode === 412) {
+            console.warn(`Concurrency conflict updating blob: ${blobName}. ETag mismatch.`);
+            throw new Error('Concurrency conflict: The customer data has been modified by someone else. Please refresh and try again.');
+        }
+        console.error(`Error updating customer blob "${blobName}":`, error);
+        if (error instanceof Error && error.message.includes('Authentication failed')) {
+            throw error;
+        }
+        throw new Error(`Failed to update customer ${customerData.id}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+});
+/**
+ * Deletes a customer record, using ETag for concurrency control.
+ * @param customerId The ID of the customer to delete.
+ * @param etag The ETag of the customer record to ensure it hasn't changed.
+ */
+const deleteCustomer = (customerId, etag) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!customerId || !etag) {
+        throw new Error('Customer ID and ETag are required for deletion.');
+    }
+    const blobName = `customer-${customerId}.json`;
+    try {
+        const containerClient = yield getContainerClient();
+        const blobClient = containerClient.getBlobClient(blobName);
+        console.log(`Deleting blob: ${blobName} with ETag: ${etag}`);
+        yield blobClient.delete({
+            conditions: { ifMatch: etag } // *** Optimistic concurrency check ***
+        });
+        console.log(`Successfully deleted customer: ${customerId}`);
+    }
+    catch (error) {
+        if (error instanceof _azure_storage_blob__WEBPACK_IMPORTED_MODULE_2__.RestError && error.statusCode === 412) {
+            console.warn(`Concurrency conflict deleting blob: ${blobName}. ETag mismatch.`);
+            throw new Error('Concurrency conflict: The customer data has been modified since you loaded it. Please refresh and try again.');
+        }
+        if (error instanceof _azure_storage_blob__WEBPACK_IMPORTED_MODULE_2__.RestError && error.statusCode === 404) {
+            console.warn(`Attempted to delete non-existent blob: ${blobName}`);
+            // Depending on requirements, this might not be an error (idempotency)
+            return; // Or throw new Error(`Customer ${customerId} not found.`);
+        }
+        console.error(`Error deleting customer blob "${blobName}":`, error);
+        if (error instanceof Error && error.message.includes('Authentication failed')) {
+            throw error;
+        }
+        throw new Error(`Failed to delete customer ${customerId}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+});
+
+
+/***/ }),
+
+/***/ "./src/features/crm/types/index.ts":
+/*!*****************************************!*\
+  !*** ./src/features/crm/types/index.ts ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CustomerStatus: () => (/* binding */ CustomerStatus)
+/* harmony export */ });
+// Optional: Define possible statuses
+var CustomerStatus;
+(function (CustomerStatus) {
+    CustomerStatus["LEAD"] = "Lead";
+    CustomerStatus["PROSPECT"] = "Prospect";
+    CustomerStatus["ACTIVE"] = "Active";
+    CustomerStatus["INACTIVE"] = "Inactive";
+    CustomerStatus["ON_HOLD"] = "On Hold";
+})(CustomerStatus || (CustomerStatus = {}));
 
 
 /***/ }),
@@ -87333,11 +88177,11 @@ __webpack_require__.r(__webpack_exports__);
 // src/features/homepage/components/Homepage.tsx
 
 
-
+ // Import useAppState
  // Import features and type
 const Homepage = () => {
     const { translate } = (0,_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_2__.useLanguage)();
-    const { state } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__.useAppState)();
+    const { state } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__.useAppState)(); // Get the global state, including showAlphaBetaFeatures
     const [activeFeature, setActiveFeature] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     // Group features by category
     const groupedFeatures = _constants__WEBPACK_IMPORTED_MODULE_4__.features.reduce((acc, feature) => {
@@ -87388,7 +88232,13 @@ const Homepage = () => {
         }
     }
     // Render homepage with feature cards
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a tool to get started" })] }), sortedCategories.map((category) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-category-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: category }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "features-grid", children: groupedFeatures[category].map((feature) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { className: `feature-card ${!feature.enabled ? 'disabled' : ''}`, onClick: () => feature.enabled && setActiveFeature(feature.id), disabled: !feature.enabled, "aria-label": feature.name, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "feature-icon", children: feature.icon }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: feature.name }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: feature.description }), !feature.enabled && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "coming-soon-badge", children: "Coming Soon" })] })] }, feature.id))) })] }, category))), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Tools Extension v1.0.2" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "\u00A9 2025 Microsoft Corporation. All rights reserved." })] })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a tool to get started" })] }), sortedCategories.map((category) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-category-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: category }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "features-grid", children: groupedFeatures[category].map((feature) => {
+                            // Determine if the feature should be enabled based on its own flag OR the global toggle
+                            const isFeatureEnabled = feature.enabled || (state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features');
+                            // Determine if the "Coming Soon" badge should be shown
+                            const showComingSoonBadge = !feature.enabled && !state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features';
+                            return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", { className: `feature-card ${!isFeatureEnabled ? 'disabled' : ''}`, onClick: () => isFeatureEnabled && setActiveFeature(feature.id), disabled: !isFeatureEnabled, "aria-label": feature.name, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "feature-icon", children: feature.icon }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: feature.name }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: feature.description }), showComingSoonBadge && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "coming-soon-badge", children: "Coming Soon" })] })] }, feature.id));
+                        }) })] }, category))), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-footer", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Microsoft Support Tools Extension v1.0.2" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "\u00A9 2025 Microsoft Corporation. All rights reserved." })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Homepage);
 
@@ -87413,7 +88263,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icsGenerator_components_SupportRequestForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../icsGenerator/components/SupportRequestForm */ "./src/features/icsGenerator/components/SupportRequestForm.tsx");
 /* harmony import */ var _roadmap_components_RoadmapPage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../roadmap/components/RoadmapPage */ "./src/features/roadmap/components/RoadmapPage.tsx");
 /* harmony import */ var _supportRequests__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../supportRequests */ "./src/features/supportRequests/index.ts");
-/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/Icons */ "./src/components/Icons.tsx");
+/* harmony import */ var _crm_components_CrmView__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../crm/components/CrmView */ "./src/features/crm/components/CrmView.tsx");
+/* harmony import */ var _components_Icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/Icons */ "./src/components/Icons.tsx");
 
  // Adjusted path
 
@@ -87422,6 +88273,7 @@ __webpack_require__.r(__webpack_exports__);
 
  // Import the new Roadmap component
  // Import the new Azure tool
+ // Import the CRM view component
  // Adjusted path
 // Define available features
 const features = [
@@ -87429,7 +88281,7 @@ const features = [
         id: 'onboarding',
         name: 'Onboarding Template Generator',
         description: 'Create rich text onboarding templates for Microsoft support customers.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.OnboardingIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.OnboardingIcon, {}),
         component: _App__WEBPACK_IMPORTED_MODULE_1__["default"],
         enabled: true,
         category: 'Template & Email Tools'
@@ -87438,7 +88290,7 @@ const features = [
         id: 'azure-transfer-assist',
         name: 'Azure Transfer Assist tool',
         description: 'Tool to assist with planning or executing Azure resource transfers.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.AzureTransferIcon, {}), // Use new placeholder
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.AzureTransferIcon, {}), // Use new placeholder
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false,
         category: 'Coming Soon Features'
@@ -87447,7 +88299,7 @@ const features = [
         id: 'reporting',
         name: 'Support Reporting',
         description: 'Create and export support usage reports and analytics.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.ReportingIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.ReportingIcon, {}),
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false,
         category: 'Coming Soon Features' // Renamed Category
@@ -87456,7 +88308,7 @@ const features = [
         id: 'azure-cost-optimization',
         name: 'Azure Cost Optimization',
         description: 'Features to help analyze or suggest Azure cost savings.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.CostOptimizationIcon, {}), // Use new placeholder
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.CostOptimizationIcon, {}), // Use new placeholder
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false,
         category: 'Coming Soon Features'
@@ -87465,7 +88317,7 @@ const features = [
         id: 'settings',
         name: 'Extension Settings',
         description: 'Configure extension preferences and defaults.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.SettingsIcon, {}),
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.SettingsIcon, {}),
         component: _settings_components_SettingsPage__WEBPACK_IMPORTED_MODULE_2__["default"], // Use the actual component
         enabled: true,
         category: 'Configuration'
@@ -87474,7 +88326,7 @@ const features = [
         id: 'roadmap',
         name: 'Extension Roadmap',
         description: 'View planned features and improvements for the extension.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.RoadmapIcon, {}), // Use new placeholder
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.RoadmapIcon, {}), // Use new placeholder
         component: _roadmap_components_RoadmapPage__WEBPACK_IMPORTED_MODULE_6__["default"],
         enabled: true,
         category: 'Configuration'
@@ -87483,7 +88335,7 @@ const features = [
         id: 'deployment-readiness',
         name: 'Enterprise Deployment Readiness',
         description: 'Capability for enterprise deployment via private store.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.DeploymentIcon, {}), // Use new placeholder
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.DeploymentIcon, {}), // Use new placeholder
         component: () => (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "coming-soon", children: "Coming Soon" }),
         enabled: false,
         category: 'Coming Soon Features'
@@ -87493,7 +88345,7 @@ const features = [
         id: 'onCallDuty',
         name: 'On-Call Duty ICS Generator',
         description: 'Create an .ics file for on-call duty periods.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.CalendarIcon, { color: "#E81123" }), // Red color for On-Call
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.CalendarIcon, { color: "#E81123" }), // Red color for On-Call
         component: _icsGenerator_components_OnCallDutyForm__WEBPACK_IMPORTED_MODULE_3__["default"],
         enabled: true,
         category: 'Calendar (.ics) Generators'
@@ -87502,7 +88354,7 @@ const features = [
         id: 'vacationRequest',
         name: 'Vacation Request ICS Generator',
         description: 'Generate an .ics file for vacation requests.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.CalendarIcon, { color: "#0078D4" }), // Blue color for Vacation
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.CalendarIcon, { color: "#0078D4" }), // Blue color for Vacation
         component: _icsGenerator_components_VacationRequestForm__WEBPACK_IMPORTED_MODULE_4__["default"],
         enabled: true,
         category: 'Calendar (.ics) Generators'
@@ -87511,7 +88363,7 @@ const features = [
         id: 'supportRequest',
         name: 'Support Request ICS Generator',
         description: 'Generate an .ics file for support request entries.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.CalendarIcon, { color: "#107C10" }), // Green color for Support
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.CalendarIcon, { color: "#107C10" }), // Green color for Support
         component: _icsGenerator_components_SupportRequestForm__WEBPACK_IMPORTED_MODULE_5__["default"],
         enabled: true,
         category: 'Calendar (.ics) Generators'
@@ -87519,12 +88371,22 @@ const features = [
     // Add the new Support Request Viewer feature
     {
         id: 'supportRequestViewer',
-        name: 'Support Requests Management Tool',
-        description: 'View support requests stored in Azure Blob Storage.',
-        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_8__.ReportingIcon, {}), // Using ReportingIcon as placeholder
+        name: 'Support Requests Management (Alpha)', // Updated Name
+        description: 'View support requests stored in Azure Blob Storage (Alpha version).', // Updated Description
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.ReportingIcon, {}), // Using ReportingIcon as placeholder
         component: _supportRequests__WEBPACK_IMPORTED_MODULE_7__.SupportRequestViewer,
-        enabled: true,
-        category: 'Azure Tools' // New category for Azure-related tools
+        enabled: false, // Disabled as it's coming soon
+        category: 'Coming Soon Features' // Moved to Coming Soon
+    },
+    // Add the new CRM feature
+    {
+        id: 'crm',
+        name: 'Customer Management (CRM - Alpha)', // Updated Name
+        description: 'Manage customer records stored in Azure Blob Storage (Alpha version).', // Updated Description
+        icon: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Icons__WEBPACK_IMPORTED_MODULE_9__.ReportingIcon, {}), // Using ReportingIcon as placeholder, same as Support Viewer
+        component: _crm_components_CrmView__WEBPACK_IMPORTED_MODULE_8__["default"],
+        enabled: false, // Disabled as it's coming soon
+        category: 'Coming Soon Features' // Moved to Coming Soon
     },
 ];
 
@@ -87907,9 +88769,10 @@ const roadmapData = [
         status: 'Planned',
     },
     // --- Q4 2025 ---
+    // --- Q1 2026 --- // Moved Support Reporting here
     {
         id: 'reporting-v1', // Matches constants.tsx
-        quarter: 'Q4 2025',
+        quarter: 'Q1 2026', // Updated Quarter
         title: 'Support Reporting (Planned)',
         description: 'Create and export support usage reports and analytics.',
         status: 'Planned',
@@ -87919,6 +88782,21 @@ const roadmapData = [
         quarter: 'Q4 2025',
         title: 'Azure Cost Optimization (Planned)', // New Title
         description: 'Features to help analyze or suggest Azure cost savings.', // Description
+        status: 'Planned',
+    },
+    {
+        id: 'crm-v1-alpha', // New unique ID
+        quarter: 'Q4 2025',
+        title: 'CRM Integration (Alpha)',
+        description: 'Basic customer relationship management features (Alpha version).',
+        status: 'Planned',
+    },
+    // Moved Support Requests Management to Q4 2025
+    {
+        id: 'support-requests-mgmt-v1-alpha', // New unique ID
+        quarter: 'Q4 2025', // Updated Quarter
+        title: 'Support Requests Management (Alpha)',
+        description: 'Tool for viewing and managing support requests via Azure (Alpha version).',
         status: 'Planned',
     },
     // Add future planned items beyond constants.tsx here if needed
@@ -88019,7 +88897,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/storage */ "./src/services/storage/index.ts");
-/* harmony import */ var _SettingsPage_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SettingsPage.css */ "./src/features/settings/components/SettingsPage.css");
+/* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
+/* harmony import */ var _SettingsPage_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SettingsPage.css */ "./src/features/settings/components/SettingsPage.css");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -88030,9 +88909,10 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 
- // Import ChangeEvent
 
- // We'll create this CSS file later for styling
+
+ // Import useAppState
+
 // Default theme colors (consider extracting from CSS or defining centrally)
 const DEFAULT_THEME = {
     primaryColor: '#0078d4',
@@ -88052,10 +88932,13 @@ const SettingsPage = () => {
     const [textColor, setTextColor] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(DEFAULT_THEME.textColor);
     const [backgroundColor, setBackgroundColor] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(DEFAULT_THEME.backgroundColor);
     // State for PDF attachment
-    // const [customEmailTemplate, setCustomEmailTemplate] = useState(''); // Removed template state
     const [pdfFilename, setPdfFilename] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
     const [pdfBase64, setPdfBase64] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
-    const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true);
+    // Remove local state for toggle, use context instead
+    // const [showAlphaBeta, setShowAlphaBeta] = useState(false);
+    // Get state and update function from context
+    const { state: appState, updateShowAlphaBetaFeatures } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__.useAppState)();
+    const [isLoading, setIsLoading] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true); // Keep local loading state for settings page
     const [isSaving, setIsSaving] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [saveStatus, setSaveStatus] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('idle');
     // Load settings on component mount
@@ -88064,12 +88947,11 @@ const SettingsPage = () => {
         Promise.all([
             _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.get('agentSettings'),
             _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.get('themeSettings'),
-            // Load only PDF settings
-            // StorageService.get<string>('customEmailTemplate'), // Removed template loading
+            // Load PDF settings
             _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.get('pdfAttachmentFilename'),
             _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.get('pdfAttachmentBase64'),
+            // No need to load showAlphaBetaFeatures here, context handles it
         ])
-            // Update destructuring to match removed promise
             .then(([agentSettings, themeSettings, loadedPdfFilename, loadedPdfBase64]) => {
             // Load Agent Settings
             if (agentSettings) {
@@ -88099,6 +88981,7 @@ const SettingsPage = () => {
             // setCustomEmailTemplate(loadedTemplate || ''); // Removed template state update
             setPdfFilename(loadedPdfFilename || null);
             setPdfBase64(loadedPdfBase64 || null);
+            // Context handles loading showAlphaBetaFeatures
         })
             .catch(error => {
             console.error("Error loading settings:", error);
@@ -88131,12 +89014,14 @@ const SettingsPage = () => {
             backgroundColor,
         };
         try {
-            // Save agent and theme settings first
+            // Save agent and theme settings
+            // Toggle state is saved immediately via context function, remove from here
             yield Promise.all([
                 _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('agentSettings', agentSettingsToSave),
                 _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('themeSettings', themeSettingsToSave),
+                // StorageService.set('showAlphaBetaFeatures', showAlphaBeta), // Removed
             ]);
-            // Save PDF settings separately, ensuring nulls are converted to empty strings
+            // Save PDF settings separately
             yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('pdfAttachmentFilename', pdfFilename || '');
             // Only save base64 if filename exists to avoid storing large empty strings unnecessarily
             yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('pdfAttachmentBase64', pdfFilename ? (pdfBase64 || '') : '');
@@ -88165,10 +89050,9 @@ const SettingsPage = () => {
         primaryColor,
         textColor,
         backgroundColor,
-        // Update dependencies
-        // customEmailTemplate, // Removed template dependency
         pdfFilename,
         pdfBase64,
+        // showAlphaBeta, // Removed toggle state from dependencies
     ]);
     // --- PDF File Handling ---
     const handleFileChange = (event) => {
@@ -88224,7 +89108,7 @@ const SettingsPage = () => {
     if (isLoading) {
         return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "settings-loading", children: "Loading settings..." });
     }
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "settings-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Agent Configuration" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure the details used in the email signature." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "settings-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentName", children: "Agent Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "agentName", value: agentName, onChange: (e) => setAgentName(e.target.value), placeholder: "e.g., Jane Doe" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentTitle", children: "Agent Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "agentTitle", value: agentTitle, onChange: (e) => setAgentTitle(e.target.value), placeholder: "e.g., Support Engineer" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "companyName", children: "Company Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "companyName", value: companyName, onChange: (e) => setCompanyName(e.target.value), placeholder: "e.g., Microsoft" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentEmail", children: "Agent Email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "agentEmail", value: agentEmail, onChange: (e) => setAgentEmail(e.target.value), placeholder: "e.g., jane.doe@microsoft.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "ICS Recipient Emails" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure the default recipients for generated .ics files (comma-separated)." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "onCallRecipients", children: "On-Call Duty Recipients:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "onCallRecipients", value: onCallRecipients, onChange: (e) => setOnCallRecipients(e.target.value), placeholder: "e.g., team1@example.com, manager@example.com", rows: 3 })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "vacationRecipients", children: "Vacation Request Recipients:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "vacationRecipients", value: vacationRecipients, onChange: (e) => setVacationRecipients(e.target.value), placeholder: "e.g., hr@example.com, team-calendar@example.com", rows: 3 })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "supportRecipients", children: "Support Request Recipients:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "supportRecipients", value: supportRecipients, onChange: (e) => setSupportRecipients(e.target.value), placeholder: "e.g., support-leads@example.com", rows: 3 })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "Theme Customization" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Customize the main colors of the extension." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group color-picker-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "primaryColor", children: "Primary Color:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "color", id: "primaryColor", value: primaryColor, onChange: (e) => setPrimaryColor(e.target.value) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "color-value", children: primaryColor })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group color-picker-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "textColor", children: "Text Color:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "color", id: "textColor", value: textColor, onChange: (e) => setTextColor(e.target.value) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "color-value", children: textColor })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group color-picker-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "backgroundColor", children: "Background Color:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "color", id: "backgroundColor", value: backgroundColor, onChange: (e) => setBackgroundColor(e.target.value) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "color-value", children: backgroundColor })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "Default PDF Attachment" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Add a default PDF attachment to the generated email drafts." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "pdfAttachment", children: "PDF File:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "file", id: "pdfAttachment", accept: ".pdf", onChange: handleFileChange, style: { display: 'block', marginBottom: '10px' } }), pdfFilename && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "pdf-info", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { children: ["Current file: ", pdfFilename] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleClearPdf, className: "clear-pdf-button", children: "Clear PDF" })] })), !pdfFilename && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { children: "No PDF attached." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleSave, disabled: isSaving, children: isSaving ? 'Saving...' : 'Save All Settings' }), saveStatus === 'success' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "save-status success", children: "Settings saved!" }), saveStatus === 'error' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "save-status error", children: "Error saving settings." })] })] })] }));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "settings-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Agent Configuration" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure the details used in the email signature." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "settings-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentName", children: "Agent Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "agentName", value: agentName, onChange: (e) => setAgentName(e.target.value), placeholder: "e.g., Jane Doe" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentTitle", children: "Agent Title:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "agentTitle", value: agentTitle, onChange: (e) => setAgentTitle(e.target.value), placeholder: "e.g., Support Engineer" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "companyName", children: "Company Name:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "text", id: "companyName", value: companyName, onChange: (e) => setCompanyName(e.target.value), placeholder: "e.g., Microsoft" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "agentEmail", children: "Agent Email:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "email", id: "agentEmail", value: agentEmail, onChange: (e) => setAgentEmail(e.target.value), placeholder: "e.g., jane.doe@microsoft.com" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "ICS Recipient Emails" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Configure the default recipients for generated .ics files (comma-separated)." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "onCallRecipients", children: "On-Call Duty Recipients:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "onCallRecipients", value: onCallRecipients, onChange: (e) => setOnCallRecipients(e.target.value), placeholder: "e.g., team1@example.com, manager@example.com", rows: 3 })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "vacationRecipients", children: "Vacation Request Recipients:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "vacationRecipients", value: vacationRecipients, onChange: (e) => setVacationRecipients(e.target.value), placeholder: "e.g., hr@example.com, team-calendar@example.com", rows: 3 })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "supportRecipients", children: "Support Request Recipients:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "supportRecipients", value: supportRecipients, onChange: (e) => setSupportRecipients(e.target.value), placeholder: "e.g., support-leads@example.com", rows: 3 })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "Theme Customization" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Customize the main colors of the extension." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group color-picker-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "primaryColor", children: "Primary Color:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "color", id: "primaryColor", value: primaryColor, onChange: (e) => setPrimaryColor(e.target.value) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "color-value", children: primaryColor })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group color-picker-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "textColor", children: "Text Color:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "color", id: "textColor", value: textColor, onChange: (e) => setTextColor(e.target.value) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "color-value", children: textColor })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group color-picker-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "backgroundColor", children: "Background Color:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "color", id: "backgroundColor", value: backgroundColor, onChange: (e) => setBackgroundColor(e.target.value) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "color-value", children: backgroundColor })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "Default PDF Attachment" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Add a default PDF attachment to the generated email drafts." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "pdfAttachment", children: "PDF File:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "file", id: "pdfAttachment", accept: ".pdf", onChange: handleFileChange, style: { display: 'block', marginBottom: '10px' } }), pdfFilename && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "pdf-info", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { children: ["Current file: ", pdfFilename] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleClearPdf, className: "clear-pdf-button", children: "Clear PDF" })] })), !pdfFilename && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { children: "No PDF attached." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { className: "settings-subtitle", children: "Experimental Features" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Enable access to Alpha/Beta features currently under development." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group toggle-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "alphaBetaToggle", className: "toggle-label", children: "Show Alpha/Beta Features:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { className: "switch", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "alphaBetaToggle", checked: appState.showAlphaBetaFeatures, onChange: (e) => updateShowAlphaBetaFeatures(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "slider round" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "toggle-status", children: appState.showAlphaBetaFeatures ? 'Enabled' : 'Disabled' })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-actions", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleSave, disabled: isSaving, children: isSaving ? 'Saving...' : 'Save All Settings' }), saveStatus === 'success' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "save-status success", children: "Settings saved!" }), saveStatus === 'error' && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { className: "save-status error", children: "Error saving settings." })] })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SettingsPage);
 
