@@ -61,22 +61,8 @@
 }
 
 .form-actions button {
-  padding: 10px 20px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.form-actions button:hover:not(:disabled) {
-  background-color: #005a9e;
-}
-
-.form-actions button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  composes: btn btn-primary from global;
+  min-width: 120px;
 }
 
 .save-status {

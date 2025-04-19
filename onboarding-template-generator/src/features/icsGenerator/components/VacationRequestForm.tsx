@@ -90,8 +90,12 @@ const VacationRequestForm: React.FC = () => {
             {error && <p className="error-message">{error}</p>}
 
             <div className="form-actions">
-                <button onClick={handleGenerate} disabled={isGenerating}>
-                    {isGenerating ? 'Generating...' : 'Generate Vacation Request .ics'}
+                <button 
+                  className="btn btn-primary"
+                  onClick={handleGenerate} 
+                  disabled={isGenerating}
+                >
+                  {isGenerating ? 'Generating...' : 'Generate Vacation Request .ics'}
                 </button>
             </div>
         </div>

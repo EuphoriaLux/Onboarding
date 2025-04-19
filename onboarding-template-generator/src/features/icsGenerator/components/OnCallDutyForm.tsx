@@ -73,8 +73,12 @@ const OnCallDutyForm: React.FC = () => {
             {error && <p className="error-message">{error}</p>}
 
             <div className="form-actions">
-                <button onClick={handleGenerate} disabled={isGenerating}>
-                    {isGenerating ? 'Generating...' : 'Generate .ics File'}
+                <button 
+                  className="btn btn-primary"
+                  onClick={handleGenerate} 
+                  disabled={isGenerating}
+                >
+                  {isGenerating ? 'Generating...' : 'Generate .ics File'}
                 </button>
             </div>
         </div>

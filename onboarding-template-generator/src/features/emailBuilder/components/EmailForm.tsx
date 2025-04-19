@@ -315,7 +315,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="btn-preview">Preview Email</button>
+          <button type="submit" className="btn btn-primary">Preview Email</button>
         </div>
       </form>
     </div>
