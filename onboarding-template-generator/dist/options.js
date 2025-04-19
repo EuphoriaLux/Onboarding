@@ -35908,7 +35908,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* src/features/settings/components/Se
 
 .form-actions button {
   padding: 10px 20px;
-  background-color: #0078D4;
   color: white;
   border: none;
   border-radius: 4px;
@@ -35939,7 +35938,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* src/features/settings/components/Se
 .save-status.error {
   color: #d83b01; /* Red */
 }
-`, "",{"version":3,"sources":["webpack://./src/features/settings/components/SettingsPage.css"],"names":[],"mappings":"AAAA,sDAAsD;;AAEtD;EACE,aAAa;EACb,yBAAyB;EACzB,kBAAkB;EAClB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,WAAW;EACX,6BAA6B;EAC7B,oBAAoB;AACtB;;AAEA;EACE,mBAAmB;EACnB,WAAW;EACX,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,kBAAkB;EAClB,WAAW;AACb;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,cAAc;EACd,kBAAkB;EAClB,gBAAgB;EAChB,WAAW;EACX,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,kBAAkB;EAClB,sBAAsB,EAAE,mEAAmE;EAC3F,eAAe;AACjB;;AAEA;EACE,qBAAqB;EACrB,aAAa;EACb,4CAA4C;AAC9C;;AAEA;EACE,gBAAgB;EAChB,aAAa;EACb,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;EAClB,yBAAyB;EACzB,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,eAAe;EACf,sCAAsC;AACxC;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,cAAc,EAAE,UAAU;AAC5B;;AAEA;EACE,cAAc,EAAE,QAAQ;AAC1B","sourcesContent":["/* src/features/settings/components/SettingsPage.css */\r\n\r\n.settings-page {\r\n  padding: 20px;\r\n  background-color: #f9f9f9;\r\n  border-radius: 8px;\r\n  margin: 20px 0;\r\n}\r\n\r\n.settings-page h2 {\r\n  margin-top: 0;\r\n  margin-bottom: 10px;\r\n  color: #333;\r\n  border-bottom: 1px solid #eee;\r\n  padding-bottom: 10px;\r\n}\r\n\r\n.settings-page p {\r\n  margin-bottom: 20px;\r\n  color: #555;\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-loading {\r\n  padding: 40px;\r\n  text-align: center;\r\n  color: #666;\r\n}\r\n\r\n.settings-form .form-group {\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.settings-form label {\r\n  display: block;\r\n  margin-bottom: 5px;\r\n  font-weight: 600;\r\n  color: #444;\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-form input[type=\"text\"] {\r\n  width: 100%;\r\n  padding: 10px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box; /* Include padding and border in element's total width and height */\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-form input[type=\"text\"]:focus {\r\n  border-color: #0078D4;\r\n  outline: none;\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.3);\r\n}\r\n\r\n.form-actions {\r\n  margin-top: 25px;\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n.form-actions button {\r\n  padding: 10px 20px;\r\n  background-color: #0078D4;\r\n  color: white;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  transition: background-color 0.2s ease;\r\n}\r\n\r\n.form-actions button:hover:not(:disabled) {\r\n  background-color: #005a9e;\r\n}\r\n\r\n.form-actions button:disabled {\r\n  background-color: #ccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.save-status {\r\n  margin-left: 15px;\r\n  font-size: 14px;\r\n  font-weight: 600;\r\n}\r\n\r\n.save-status.success {\r\n  color: #107c10; /* Green */\r\n}\r\n\r\n.save-status.error {\r\n  color: #d83b01; /* Red */\r\n}\r\n"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/features/settings/components/SettingsPage.css"],"names":[],"mappings":"AAAA,sDAAsD;;AAEtD;EACE,aAAa;EACb,yBAAyB;EACzB,kBAAkB;EAClB,cAAc;AAChB;;AAEA;EACE,aAAa;EACb,mBAAmB;EACnB,WAAW;EACX,6BAA6B;EAC7B,oBAAoB;AACtB;;AAEA;EACE,mBAAmB;EACnB,WAAW;EACX,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,kBAAkB;EAClB,WAAW;AACb;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,cAAc;EACd,kBAAkB;EAClB,gBAAgB;EAChB,WAAW;EACX,eAAe;AACjB;;AAEA;EACE,WAAW;EACX,aAAa;EACb,sBAAsB;EACtB,kBAAkB;EAClB,sBAAsB,EAAE,mEAAmE;EAC3F,eAAe;AACjB;;AAEA;EACE,qBAAqB;EACrB,aAAa;EACb,4CAA4C;AAC9C;;AAEA;EACE,gBAAgB;EAChB,aAAa;EACb,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;EAClB,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,eAAe;EACf,sCAAsC;AACxC;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,sBAAsB;EACtB,mBAAmB;AACrB;;AAEA;EACE,iBAAiB;EACjB,eAAe;EACf,gBAAgB;AAClB;;AAEA;EACE,cAAc,EAAE,UAAU;AAC5B;;AAEA;EACE,cAAc,EAAE,QAAQ;AAC1B","sourcesContent":["/* src/features/settings/components/SettingsPage.css */\r\n\r\n.settings-page {\r\n  padding: 20px;\r\n  background-color: #f9f9f9;\r\n  border-radius: 8px;\r\n  margin: 20px 0;\r\n}\r\n\r\n.settings-page h2 {\r\n  margin-top: 0;\r\n  margin-bottom: 10px;\r\n  color: #333;\r\n  border-bottom: 1px solid #eee;\r\n  padding-bottom: 10px;\r\n}\r\n\r\n.settings-page p {\r\n  margin-bottom: 20px;\r\n  color: #555;\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-loading {\r\n  padding: 40px;\r\n  text-align: center;\r\n  color: #666;\r\n}\r\n\r\n.settings-form .form-group {\r\n  margin-bottom: 15px;\r\n}\r\n\r\n.settings-form label {\r\n  display: block;\r\n  margin-bottom: 5px;\r\n  font-weight: 600;\r\n  color: #444;\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-form input[type=\"text\"] {\r\n  width: 100%;\r\n  padding: 10px;\r\n  border: 1px solid #ccc;\r\n  border-radius: 4px;\r\n  box-sizing: border-box; /* Include padding and border in element's total width and height */\r\n  font-size: 14px;\r\n}\r\n\r\n.settings-form input[type=\"text\"]:focus {\r\n  border-color: #0078D4;\r\n  outline: none;\r\n  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.3);\r\n}\r\n\r\n.form-actions {\r\n  margin-top: 25px;\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n.form-actions button {\r\n  padding: 10px 20px;\r\n  color: white;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  font-size: 14px;\r\n  transition: background-color 0.2s ease;\r\n}\r\n\r\n.form-actions button:hover:not(:disabled) {\r\n  background-color: #005a9e;\r\n}\r\n\r\n.form-actions button:disabled {\r\n  background-color: #ccc;\r\n  cursor: not-allowed;\r\n}\r\n\r\n.save-status {\r\n  margin-left: 15px;\r\n  font-size: 14px;\r\n  font-weight: 600;\r\n}\r\n\r\n.save-status.success {\r\n  color: #107c10; /* Green */\r\n}\r\n\r\n.save-status.error {\r\n  color: #d83b01; /* Red */\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -84738,19 +84737,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _features_supportTiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/supportTiers */ "./src/features/supportTiers/index.ts");
-/* harmony import */ var _features_contacts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/contacts */ "./src/features/contacts/index.ts");
-/* harmony import */ var _features_tenants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/tenants */ "./src/features/tenants/index.ts");
+/* harmony import */ var _features_emailBuilder_supportTiers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./features/emailBuilder/supportTiers */ "./src/features/emailBuilder/supportTiers/index.ts");
+/* harmony import */ var _features_emailBuilder_contacts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./features/emailBuilder/contacts */ "./src/features/emailBuilder/contacts/index.ts");
+/* harmony import */ var _features_emailBuilder_tenants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./features/emailBuilder/tenants */ "./src/features/emailBuilder/tenants/index.ts");
 /* harmony import */ var _features_emailBuilder__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./features/emailBuilder */ "./src/features/emailBuilder/index.ts");
 /* harmony import */ var _components_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/LanguageSelector */ "./src/components/LanguageSelector.tsx");
 /* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
 /* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/storage */ "./src/services/storage/index.ts");
-/* harmony import */ var _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./features/supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
+/* harmony import */ var _features_emailBuilder_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./features/emailBuilder/supportTiers/data/supportTiers */ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts");
 /* harmony import */ var _features_emailBuilder_utils_dateSlotGenerator__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./features/emailBuilder/utils/dateSlotGenerator */ "./src/features/emailBuilder/utils/dateSlotGenerator.ts");
 /* harmony import */ var _features_emailBuilder_utils_emailBuilder__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./features/emailBuilder/utils/emailBuilder */ "./src/features/emailBuilder/utils/emailBuilder.ts");
 /* harmony import */ var _components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/CollapsibleSection */ "./src/components/CollapsibleSection.tsx");
-/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
+/* harmony import */ var _utils_themeUtils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./utils/themeUtils */ "./src/utils/themeUtils.ts");
+/* harmony import */ var _styles_App_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./styles/App.css */ "./src/styles/App.css");
 
 // src/App.tsx - Moved from features/common/components
  // Added useEffect
@@ -84766,6 +84766,7 @@ __webpack_require__.r(__webpack_exports__);
  // Adjusted path
  // Import emailBuilder to use translate
  // Import moved component
+ // Import theme utility
  // Adjusted path
 // AgentSettings interface moved to src/types/index.ts
 /**
@@ -84805,6 +84806,7 @@ const App = () => {
             .then(([agentData, themeData]) => {
             setAgentSettings(agentData || { agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
             setThemeSettings(themeData || null);
+            (0,_utils_themeUtils__WEBPACK_IMPORTED_MODULE_14__.applyThemeColors)(themeData || null); // Apply theme colors on load
         })
             .catch(error => {
             console.error("Error loading settings in App:", error);
@@ -84908,7 +84910,7 @@ const App = () => {
         const currentCompanyName = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName) || 'Microsoft Partner Support';
         const currentAgentEmail = (agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail) || '';
         // --- Automatic Subject Line ---
-        const tierName = ((_a = _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__.supportTiers[state.customerInfo.selectedTier]) === null || _a === void 0 ? void 0 : _a.name) || 'Support';
+        const tierName = ((_a = _features_emailBuilder_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_10__.supportTiers[state.customerInfo.selectedTier]) === null || _a === void 0 ? void 0 : _a.name) || 'Support';
         const companyName = ((_b = state.customerInfo.tenants[0]) === null || _b === void 0 ? void 0 : _b.companyName) || 'Customer';
         const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
         // --- End Automatic Subject ---
@@ -84966,7 +84968,7 @@ const App = () => {
     };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container onboarding-container", children: [!showEmailPreview && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "language-option", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_LanguageSelector__WEBPACK_IMPORTED_MODULE_6__["default"], { selectedLanguage: language, onChange: setLanguage }) })), showEmailPreview && localEmailData ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_emailBuilder__WEBPACK_IMPORTED_MODULE_5__.EmailPreview, { emailData: localEmailData, tenants: localEmailData.tenants, agentName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentName, agentTitle: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentTitle, companyName: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.companyName, agentEmail: agentSettings === null || agentSettings === void 0 ? void 0 : agentSettings.agentEmail, 
                 // Correctly pass flags including includeMeetingSlots
-                flags: { includeConditionalAccess, includeNotes, includeMeetingSlots }, additionalNotes: includeNotes ? additionalNotes : undefined, themeSettings: themeSettings, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section meeting-slots-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section-header-with-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Propose Meeting Slots" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container inline-label master-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeMeetingSlots", checked: includeMeetingSlots, onChange: (e) => handleIncludeMeetingSlotsToggle(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeMeetingSlots", children: "Include Meeting Proposal" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Select potential 30-minute slots for the onboarding call (Tuesdays/Thursdays, 10-12 & 14-16). Use the toggle above to include/exclude this section in the email and select/deselect all slots." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-day-columns-container", children: [" ", availableDays.length > 0 ? (availableDays.map((dayKey) => {
+                flags: { includeConditionalAccess, includeNotes, includeMeetingSlots }, additionalNotes: includeNotes ? additionalNotes : undefined, themeSettings: themeSettings, onBackToEdit: handleBackToEdit })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "comprehensive-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "generator-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Onboarding Template Generator" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Create customized onboarding emails for new support customers" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-recipients-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Recipients" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "to-field", children: "To:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "to-field", type: "email", value: emailRecipients.to, onChange: (e) => handleEmailRecipientsChange('to', e.target.value), placeholder: "recipient@example.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "cc-field", children: "Cc:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "cc-field", type: "email", value: emailRecipients.cc, onChange: (e) => handleEmailRecipientsChange('cc', e.target.value), placeholder: "cc@example.com" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Use semicolons (;) to separate multiple addresses." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tier-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_emailBuilder_supportTiers__WEBPACK_IMPORTED_MODULE_2__.TierSelector, { selectedTier: state.customerInfo.selectedTier, onChange: updateTier }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section customer-info-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Customer Contact Information" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-name", children: "Primary Contact Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-name", type: "text", value: state.customerInfo.contactName, onChange: (e) => updateCustomerInfo('contactName', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "contact-email", children: "Primary Contact Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "contact-email", type: "email", value: state.customerInfo.contactEmail, onChange: (e) => updateCustomerInfo('contactEmail', e.target.value), placeholder: "email@company.com", required: true, disabled: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This is synchronized with the email recipient above" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section meeting-slots-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "section-header-with-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Propose Meeting Slots" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container inline-label master-toggle", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeMeetingSlots", checked: includeMeetingSlots, onChange: (e) => handleIncludeMeetingSlotsToggle(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeMeetingSlots", children: "Include Meeting Proposal" })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Select potential 30-minute slots for the onboarding call (Tuesdays/Thursdays, 10-12 & 14-16). Use the toggle above to include/exclude this section in the email and select/deselect all slots." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "slot-day-columns-container", children: [" ", availableDays.length > 0 ? (availableDays.map((dayKey) => {
                                         var _a, _b;
                                         const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse YYYY-MM-DD as UTC
                                         const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
@@ -84982,7 +84984,7 @@ const App = () => {
                                                         const timeLabel = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false }) + ' - ' + new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
                                                         return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container slot-checkbox", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: slotId, checked: isChecked, onChange: (e) => handleSlotChange(slot, e.target.checked), disabled: !includeMeetingSlots }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: slotId, children: timeLabel })] }, slotId));
                                                     }) })] }, dayKey));
-                                    })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "No available slots found in the coming weeks." }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants, calculatedDeadline: deadlineDate }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_13__["default"], { title: "Conditional Access", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeConditionalAccess", checked: includeConditionalAccess, onChange: (e) => setIncludeConditionalAccess(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeConditionalAccess", children: "Include Conditional Access Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_13__["default"], { title: "Additional Notes", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeNotes", checked: includeNotes, onChange: (e) => setIncludeNotes(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeNotes", children: "Include Additional Notes Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4, value: additionalNotes, onChange: (e) => setAdditionalNotes(e.target.value) })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending. Agent details are configured in Extension Settings." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, disabled: !agentSettings, children: agentSettings ? 'Preview Email' : 'Loading Settings...' }) })] })] }))] }));
+                                    })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "No available slots found in the coming weeks." }))] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section contacts-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_emailBuilder_contacts__WEBPACK_IMPORTED_MODULE_3__.ContactsForm, { contacts: state.customerInfo.authorizedContacts, selectedTier: state.customerInfo.selectedTier, onChange: updateContacts }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-section tenant-section", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_emailBuilder_tenants__WEBPACK_IMPORTED_MODULE_4__.TenantManager, { tenants: state.customerInfo.tenants, selectedTier: state.customerInfo.selectedTier, onChange: updateTenants, calculatedDeadline: deadlineDate }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section onboarding-components-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Onboarding Components" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Configure the detailed sections to include in your onboarding email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_13__["default"], { title: "Conditional Access", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeConditionalAccess", checked: includeConditionalAccess, onChange: (e) => setIncludeConditionalAccess(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeConditionalAccess", children: "Include Conditional Access Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { children: "Policies to Implement:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "inline-checks", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caMfa", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caMfa", children: "MFA Requirements" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caLocation", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caLocation", children: "Location-Based Access" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caDevice", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caDevice", children: "Device Compliance" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "checkbox-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "caSignIn", defaultChecked: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "caSignIn", children: "Sign-in Risk Policies" })] })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_CollapsibleSection__WEBPACK_IMPORTED_MODULE_13__["default"], { title: "Additional Notes", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: "includeNotes", checked: includeNotes, onChange: (e) => setIncludeNotes(e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "includeNotes", children: "Include Additional Notes Section" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "additional-notes", children: "Notes or Instructions:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", { id: "additional-notes", placeholder: "Any additional information for the client...", rows: 4, value: additionalNotes, onChange: (e) => setAdditionalNotes(e.target.value) })] })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-section email-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Email Preview & Generate" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { className: "section-description", children: "Preview the email template and generate it for sending. Agent details are configured in Extension Settings." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "form-actions", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "btn-preview", onClick: handlePreviewEmail, disabled: !agentSettings, children: agentSettings ? 'Preview Email' : 'Loading Settings...' }) })] })] }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -85134,7 +85136,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/storage */ "./src/services/storage/index.ts");
-/* harmony import */ var _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
+/* harmony import */ var _features_emailBuilder_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/emailBuilder/supportTiers/data/supportTiers */ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -85148,7 +85150,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 // src/contexts/AppStateContext.tsx
 
 
- // Import supportTiers
+ // Adjusted path // Import supportTiers
 const defaultState = {
     customerInfo: {
         contactName: '',
@@ -85270,7 +85272,7 @@ const AppStateProvider = ({ children }) => {
     const updateTier = (tier) => {
         var _a;
         // Get the contact limit for the new tier
-        const newTierLimit = (_a = _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__.supportTiers[tier]) === null || _a === void 0 ? void 0 : _a.authorizedContacts;
+        const newTierLimit = (_a = _features_emailBuilder_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__.supportTiers[tier]) === null || _a === void 0 ? void 0 : _a.authorizedContacts;
         setState(prevState => {
             let updatedContacts = prevState.customerInfo.authorizedContacts;
             // Check if the limit is defined and if the current contacts exceed it
@@ -85397,108 +85399,6 @@ const useLanguage = () => {
     }
     return context;
 };
-
-
-/***/ }),
-
-/***/ "./src/features/contacts/components/ContactsForm.tsx":
-/*!***********************************************************!*\
-  !*** ./src/features/contacts/components/ContactsForm.tsx ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/features/contacts/data/supportTiers.ts");
-
-
-const ContactsForm = ({ contacts, selectedTier, onChange }) => {
-    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers[selectedTier];
-    const handleContactChange = (index, field, value) => {
-        const updatedContacts = [...contacts];
-        updatedContacts[index] = Object.assign(Object.assign({}, updatedContacts[index]), { [field]: value });
-        // --- DEBUGGING START ---
-        console.log(`ContactsForm: Updating index ${index}, field ${field} to "${value}". New contacts array:`, JSON.stringify(updatedContacts));
-        // --- DEBUGGING END ---
-        onChange(updatedContacts);
-    };
-    const addContact = () => {
-        if (contacts.length < tier.authorizedContacts) {
-            onChange([...contacts, { name: '', email: '', phone: '' }]);
-        }
-    };
-    const removeContact = (index) => {
-        const updatedContacts = [...contacts];
-        updatedContacts.splice(index, 1);
-        onChange(updatedContacts);
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contacts-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["2. Authorized Customer Contacts (", contacts.length, "/", tier.authorizedContacts, ")"] }), contacts.map((contact, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-card", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Contact #", index + 1] }), contacts.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeContact(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-name-${index}`, children: "Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-name-${index}`, type: "text", value: contact.name, onChange: (e) => handleContactChange(index, 'name', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-email-${index}`, children: "Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-email-${index}`, type: "email", value: contact.email, onChange: (e) => handleContactChange(index, 'email', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-phone-${index}`, children: "Phone" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-phone-${index}`, type: "tel", value: contact.phone, onChange: (e) => handleContactChange(index, 'phone', e.target.value), placeholder: "+1 (123) 456-7890" })] })] })] }, index))), contacts.length < tier.authorizedContacts && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addContact, children: "Add Contact" }))] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContactsForm);
-
-
-/***/ }),
-
-/***/ "./src/features/contacts/data/supportTiers.ts":
-/*!****************************************************!*\
-  !*** ./src/features/contacts/data/supportTiers.ts ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   supportTiers: () => (/* reexport safe */ _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers)
-/* harmony export */ });
-/* harmony import */ var _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
-// src/features/contacts/data/supportTiers.ts
-// Re-export the support tiers from the main location
-
-
-
-/***/ }),
-
-/***/ "./src/features/contacts/index.ts":
-/*!****************************************!*\
-  !*** ./src/features/contacts/index.ts ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ContactsForm: () => (/* reexport safe */ _components_ContactsForm__WEBPACK_IMPORTED_MODULE_0__["default"])
-/* harmony export */ });
-/* harmony import */ var _components_ContactsForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ContactsForm */ "./src/features/contacts/components/ContactsForm.tsx");
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./src/features/contacts/types/index.ts");
-// src/features/contacts/index.ts
-/**
- * Contacts Management Feature
- * Exports components, hooks, and utilities for managing authorized contacts
- */
-// Re-export components
-
-// Re-export types
-
-// Add any feature-specific hooks here
-// Example: export { useContacts } from './hooks/useContacts';
-
-
-/***/ }),
-
-/***/ "./src/features/contacts/types/index.ts":
-/*!**********************************************!*\
-  !*** ./src/features/contacts/types/index.ts ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// src/features/contacts/types/index.ts
-/**
- * Contact management related type definitions
- */
-
 
 
 /***/ }),
@@ -86468,6 +86368,108 @@ const OutlookInstructions = ({ onClose }) => {
 
 /***/ }),
 
+/***/ "./src/features/emailBuilder/contacts/components/ContactsForm.tsx":
+/*!************************************************************************!*\
+  !*** ./src/features/emailBuilder/contacts/components/ContactsForm.tsx ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/features/emailBuilder/contacts/data/supportTiers.ts");
+
+
+const ContactsForm = ({ contacts, selectedTier, onChange }) => {
+    const tier = _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers[selectedTier];
+    const handleContactChange = (index, field, value) => {
+        const updatedContacts = [...contacts];
+        updatedContacts[index] = Object.assign(Object.assign({}, updatedContacts[index]), { [field]: value });
+        // --- DEBUGGING START ---
+        console.log(`ContactsForm: Updating index ${index}, field ${field} to "${value}". New contacts array:`, JSON.stringify(updatedContacts));
+        // --- DEBUGGING END ---
+        onChange(updatedContacts);
+    };
+    const addContact = () => {
+        if (contacts.length < tier.authorizedContacts) {
+            onChange([...contacts, { name: '', email: '', phone: '' }]);
+        }
+    };
+    const removeContact = (index) => {
+        const updatedContacts = [...contacts];
+        updatedContacts.splice(index, 1);
+        onChange(updatedContacts);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contacts-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["2. Authorized Customer Contacts (", contacts.length, "/", tier.authorizedContacts, ")"] }), contacts.map((contact, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-card", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Contact #", index + 1] }), contacts.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeContact(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "contact-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-name-${index}`, children: "Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-name-${index}`, type: "text", value: contact.name, onChange: (e) => handleContactChange(index, 'name', e.target.value), placeholder: "Full Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-email-${index}`, children: "Email" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-email-${index}`, type: "email", value: contact.email, onChange: (e) => handleContactChange(index, 'email', e.target.value), placeholder: "email@company.com", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `contact-phone-${index}`, children: "Phone" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `contact-phone-${index}`, type: "tel", value: contact.phone, onChange: (e) => handleContactChange(index, 'phone', e.target.value), placeholder: "+1 (123) 456-7890" })] })] })] }, index))), contacts.length < tier.authorizedContacts && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addContact, children: "Add Contact" }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContactsForm);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/contacts/data/supportTiers.ts":
+/*!*****************************************************************!*\
+  !*** ./src/features/emailBuilder/contacts/data/supportTiers.ts ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   supportTiers: () => (/* reexport safe */ _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__.supportTiers)
+/* harmony export */ });
+/* harmony import */ var _supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportTiers/data/supportTiers */ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts");
+// src/features/contacts/data/supportTiers.ts
+// Re-export the support tiers from the main location
+
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/contacts/index.ts":
+/*!*****************************************************!*\
+  !*** ./src/features/emailBuilder/contacts/index.ts ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ContactsForm: () => (/* reexport safe */ _components_ContactsForm__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _components_ContactsForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ContactsForm */ "./src/features/emailBuilder/contacts/components/ContactsForm.tsx");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./types */ "./src/features/emailBuilder/contacts/types/index.ts");
+// src/features/contacts/index.ts
+/**
+ * Contacts Management Feature
+ * Exports components, hooks, and utilities for managing authorized contacts
+ */
+// Re-export components
+
+// Re-export types
+
+// Add any feature-specific hooks here
+// Example: export { useContacts } from './hooks/useContacts';
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/contacts/types/index.ts":
+/*!***********************************************************!*\
+  !*** ./src/features/emailBuilder/contacts/types/index.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// src/features/contacts/types/index.ts
+/**
+ * Contact management related type definitions
+ */
+
+
+
+/***/ }),
+
 /***/ "./src/features/emailBuilder/index.ts":
 /*!********************************************!*\
   !*** ./src/features/emailBuilder/index.ts ***!
@@ -86506,6 +86508,228 @@ __webpack_require__.r(__webpack_exports__);
 // Templates
 
 // Types
+
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/supportTiers/components/TierSelector.tsx":
+/*!****************************************************************************!*\
+  !*** ./src/features/emailBuilder/supportTiers/components/TierSelector.tsx ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts");
+
+
+const TierSelector = ({ selectedTier, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tier-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "1. Support Tier Selection" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tier-cards", children: Object.entries(_data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers).map(([key, tier]) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tier-card ${selectedTier === key ? 'selected' : ''}`, style: {
+                        borderColor: tier.color,
+                        backgroundColor: selectedTier === key ? `${tier.color}20` : 'transparent'
+                    }, onClick: () => onChange(key), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tier-header", style: { backgroundColor: tier.color }, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: tier.name }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tier-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: tier.description }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Support Hours:" }), " ", tier.supportHours] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Critical Situation:" }), " ", tier.criticalSituation ? 'Yes' : 'No'] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Tenants:" }), " ", tier.tenants] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Authorized Contacts:" }), " ", tier.authorizedContacts] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Support Requests:" }), " ", tier.supportRequestsIncluded] })] })] })] }, key))) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TierSelector);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/supportTiers/constants.ts":
+/*!*************************************************************!*\
+  !*** ./src/features/emailBuilder/supportTiers/constants.ts ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
+/* harmony export */ });
+/**
+ * Support tier definitions
+ */
+const supportTiers = {
+    bronze: {
+        name: "Bronze Support",
+        color: "#cd7f32",
+        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
+        criticalSituation: false,
+        supportHours: "8 x 5",
+        supportRequestSubmission: "Email",
+        tenants: 1,
+        authorizedContacts: 2,
+        supportRequestsIncluded: "Pay As You Go",
+        products: ["Microsoft Azure", "Microsoft 365"],
+        severityLevels: "Level B or C",
+        supportProvider: "Microsoft Premier Support"
+    },
+    silver: {
+        name: "Silver Support",
+        color: "#C0C0C0",
+        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 2,
+        authorizedContacts: 6,
+        supportRequestsIncluded: 12,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support"
+    },
+    gold: {
+        name: "Gold Support",
+        color: "#FFD700",
+        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 6,
+        authorizedContacts: 12,
+        supportRequestsIncluded: 36,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support"
+    },
+    platinum: {
+        name: "Platinum Support",
+        color: "#E5E4E2",
+        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 100,
+        authorizedContacts: 100,
+        supportRequestsIncluded: 100,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support"
+    }
+};
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts":
+/*!*********************************************************************!*\
+  !*** ./src/features/emailBuilder/supportTiers/data/supportTiers.ts ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
+/* harmony export */ });
+/**
+ * Support tier definitions
+ */
+const supportTiers = {
+    bronze: {
+        name: "Bronze Support",
+        color: "#cd7f32",
+        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
+        criticalSituation: false,
+        supportHours: "8 x 5",
+        supportRequestSubmission: "Email",
+        tenants: 1,
+        authorizedContacts: 2,
+        supportRequestsIncluded: "Pay As You Go",
+        products: ["Microsoft Azure", "Microsoft 365"],
+        severityLevels: "Level B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    },
+    silver: {
+        name: "Silver Support",
+        color: "#C0C0C0",
+        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 2,
+        authorizedContacts: 6,
+        supportRequestsIncluded: 12,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    },
+    gold: {
+        name: "Gold Support",
+        color: "#FFD700",
+        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 6,
+        authorizedContacts: 12,
+        supportRequestsIncluded: 36,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    },
+    platinum: {
+        name: "Platinum Support",
+        color: "#E5E4E2",
+        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 100,
+        authorizedContacts: 100,
+        supportRequestsIncluded: 100,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    }
+};
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/supportTiers/index.ts":
+/*!*********************************************************!*\
+  !*** ./src/features/emailBuilder/supportTiers/index.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TierSelector: () => (/* reexport safe */ _components_TierSelector__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   supportTiers: () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_1__.supportTiers)
+/* harmony export */ });
+/* harmony import */ var _components_TierSelector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/TierSelector */ "./src/features/emailBuilder/supportTiers/components/TierSelector.tsx");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/features/emailBuilder/supportTiers/constants.ts");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "./src/features/emailBuilder/supportTiers/types/index.ts");
+// src/features/supportTiers/index.ts
+/**
+ * Support Tiers Feature
+ * Exports components, constants, and utilities for managing support tiers
+ */
+// Re-export components
+
+// Re-export constants
+
+// Re-export types
+
+// Add any feature-specific hooks here
+// Example: export { useTierSelector } from './hooks/useTierSelector';
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/supportTiers/types/index.ts":
+/*!***************************************************************!*\
+  !*** ./src/features/emailBuilder/supportTiers/types/index.ts ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// src/features/supportTiers/types/index.ts
+/**
+ * Support tier related type definitions
+ */
 
 
 
@@ -86701,6 +86925,150 @@ __webpack_require__.r(__webpack_exports__);
 // they would need to be imported and exported explicitly, possibly with aliases.
 // For now, we assume only the themed versions from builders.tsx are required by emailBuilder.ts
 // Note: formatters.ts might need separate handling if its functions are still used.
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/tenants/components/TenantForm.tsx":
+/*!*********************************************************************!*\
+  !*** ./src/features/emailBuilder/tenants/components/TenantForm.tsx ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+const TenantForm = ({ tenantId, companyName, gdapLink, onChange }) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "company-name", children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "company-name", type: "text", value: companyName, onChange: (e) => onChange('companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "tenant-id", children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "tenant-id", type: "text", value: tenantId, onChange: (e) => onChange('tenantId', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-link", children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-link", type: "url" // Use URL type for better validation
+                        , value: gdapLink || '', onChange: (e) => onChange('gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantForm);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/tenants/components/TenantManager.tsx":
+/*!************************************************************************!*\
+  !*** ./src/features/emailBuilder/tenants/components/TenantManager.tsx ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-datepicker/dist/react-datepicker.css */ "./node_modules/react-datepicker/dist/react-datepicker.css");
+/* harmony import */ var _supportTiers_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../supportTiers/constants */ "./src/features/emailBuilder/supportTiers/constants.ts");
+
+// src/components/TenantManager.tsx
+ // Import useEffect
+ // Import DatePicker CSS
+ // Corrected relative path
+const TenantManager = ({ tenants, selectedTier, onChange, calculatedDeadline }) => {
+    const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_3__.supportTiers[selectedTier];
+    // Effect to adjust tenants when tier changes
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const currentTier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_3__.supportTiers[selectedTier];
+        const tenantLimit = currentTier.tenants;
+        if (tenants.length > tenantLimit) {
+            // If current tenants exceed the new limit, truncate the array
+            const updatedTenants = tenants.slice(0, tenantLimit);
+            onChange(updatedTenants);
+        }
+        // Dependencies: run when selectedTier changes or the onChange function reference changes
+        // It's generally safe to include tenants array too, though it might cause extra runs if not memoized upstream
+    }, [selectedTier, tenants, onChange]);
+    // Handle tenant field changes, including Date and boolean types
+    const handleTenantChange = (index, field, value) => {
+        const updatedTenants = tenants.map((tenant, i) => {
+            if (i === index) {
+                // Handle potential null value for DatePicker when cleared
+                const newValue = field === 'implementationDeadline' && value === null ? null : value;
+                return Object.assign(Object.assign({}, tenant), { [field]: newValue });
+            }
+            return tenant;
+        });
+        onChange(updatedTenants);
+    };
+    // Add a new tenant, initializing new flags
+    const addTenant = () => {
+        if (tenants.length < tier.tenants) {
+            // Initialize tenantDomain, msDomain, deadline, hasAzure
+            onChange([...tenants, {
+                    id: '',
+                    companyName: '',
+                    tenantDomain: '',
+                    microsoftTenantDomain: '', // Initialize MS Domain
+                    implementationDeadline: null,
+                    hasAzure: false, // Default to false
+                    // Removed includeRbacScript initialization
+                    gdapLink: ''
+                }]);
+        }
+    };
+    // Remove a tenant
+    const removeTenant = (index) => {
+        const updatedTenants = [...tenants];
+        updatedTenants.splice(index, 1);
+        onChange(updatedTenants);
+    };
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-domain-${index}`, children: "Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-domain-${index}`, type: "text", value: tenant.tenantDomain, onChange: (e) => handleTenantChange(index, 'tenantDomain', e.target.value), placeholder: "contoso.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The primary domain name (e.g., contoso.onmicrosoft.com)." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `gdap-link-${index}`, children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `gdap-link-${index}`, type: "url", value: tenant.gdapLink || '', onChange: (e) => handleTenantChange(index, 'gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("hr", { className: "tenant-divider" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `calculated-deadline-${index}`, children: "GDAP Implementation Deadline (Auto-calculated)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `calculated-deadline-${index}`, type: "text", value: calculatedDeadline.toLocaleDateString(), readOnly // Make it read-only
+                                        : true, className: "form-control" // Optional styling
+                                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This date (90 days from today) will be used in the email template." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `ms-tenant-domain-${index}`, children: "Microsoft Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `ms-tenant-domain-${index}`, type: "text", value: tenant.microsoftTenantDomain, onChange: (e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value), placeholder: "yourcompany.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The `.onmicrosoft.com` domain, needed for the RBAC script." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `has-azure-${index}`, checked: tenant.hasAzure, onChange: (e) => handleTenantChange(index, 'hasAzure', e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `has-azure-${index}`, children: "Azure RBAC Relevant?" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Check if Azure RBAC configuration is needed for this tenant." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }, index))), tenants.length < tier.tenants && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addTenant, children: "Add Tenant" }))] }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantManager);
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/tenants/index.ts":
+/*!****************************************************!*\
+  !*** ./src/features/emailBuilder/tenants/index.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TenantForm: () => (/* reexport safe */ _components_TenantForm__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   TenantManager: () => (/* reexport safe */ _components_TenantManager__WEBPACK_IMPORTED_MODULE_1__["default"])
+/* harmony export */ });
+/* harmony import */ var _components_TenantForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/TenantForm */ "./src/features/emailBuilder/tenants/components/TenantForm.tsx");
+/* harmony import */ var _components_TenantManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/TenantManager */ "./src/features/emailBuilder/tenants/components/TenantManager.tsx");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "./src/features/emailBuilder/tenants/types/index.ts");
+// src/features/tenants/index.ts
+/**
+ * Tenant Management Feature
+ * Exports components, hooks, and utilities for managing tenant information
+ */
+// Re-export components
+
+
+// Re-export types
+
+// Add any feature-specific hooks here
+// Example: export { useTenants } from './hooks/useTenants';
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/tenants/types/index.ts":
+/*!**********************************************************!*\
+  !*** ./src/features/emailBuilder/tenants/types/index.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// src/features/tenants/types/index.ts
+/**
+ * Tenant management related type definitions
+ */
+
 
 
 /***/ }),
@@ -87485,7 +87853,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../supportTiers/constants */ "./src/features/supportTiers/constants.ts");
+/* harmony import */ var _supportTiers_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../supportTiers/constants */ "./src/features/emailBuilder/supportTiers/constants.ts");
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/storage */ "./src/services/storage/index.ts");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
@@ -87502,7 +87870,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
     });
 };
 // src/features/emailBuilder/utils/emailBuilder.ts
-
+ // Adjusted path
  // Import StorageService
  // Single React import
  // Single ReactDOMServer import
@@ -89097,7 +89465,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/storage */ "./src/services/storage/index.ts");
 /* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
-/* harmony import */ var _SettingsPage_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./SettingsPage.css */ "./src/features/settings/components/SettingsPage.css");
+/* harmony import */ var _utils_themeUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/themeUtils */ "./src/utils/themeUtils.ts");
+/* harmony import */ var _SettingsPage_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SettingsPage.css */ "./src/features/settings/components/SettingsPage.css");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -89111,6 +89480,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
  // Import useAppState
+ // Import theme utility
 
 // Default theme colors (consider extracting from CSS or defining centrally)
 const DEFAULT_THEME = {
@@ -89224,8 +89594,8 @@ const SettingsPage = () => {
             yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('pdfAttachmentFilename', pdfFilename || '');
             // Only save base64 if filename exists to avoid storing large empty strings unnecessarily
             yield _services_storage__WEBPACK_IMPORTED_MODULE_2__.StorageService.set('pdfAttachmentBase64', pdfFilename ? (pdfBase64 || '') : '');
-            // Optionally apply theme immediately after saving
-            // applyThemeColors(themeSettingsToSave); // Need to define and import this function
+            // Apply theme immediately after saving
+            (0,_utils_themeUtils__WEBPACK_IMPORTED_MODULE_4__.applyThemeColors)(themeSettingsToSave);
             setSaveStatus('success');
             // Hide success message after a delay
             setTimeout(() => setSaveStatus('idle'), 3000);
@@ -90416,372 +90786,6 @@ const uploadRequest = (requestData, accessToken) => __awaiter(void 0, void 0, vo
 //     readableStream.on("error", reject);
 //   });
 // }
-
-
-/***/ }),
-
-/***/ "./src/features/supportTiers/components/TierSelector.tsx":
-/*!***************************************************************!*\
-  !*** ./src/features/supportTiers/components/TierSelector.tsx ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _data_supportTiers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
-
-
-const TierSelector = ({ selectedTier, onChange }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tier-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "1. Support Tier Selection" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tier-cards", children: Object.entries(_data_supportTiers__WEBPACK_IMPORTED_MODULE_1__.supportTiers).map(([key, tier]) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tier-card ${selectedTier === key ? 'selected' : ''}`, style: {
-                        borderColor: tier.color,
-                        backgroundColor: selectedTier === key ? `${tier.color}20` : 'transparent'
-                    }, onClick: () => onChange(key), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "tier-header", style: { backgroundColor: tier.color }, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", { children: tier.name }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tier-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: tier.description }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("ul", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Support Hours:" }), " ", tier.supportHours] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Critical Situation:" }), " ", tier.criticalSituation ? 'Yes' : 'No'] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Tenants:" }), " ", tier.tenants] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Authorized Contacts:" }), " ", tier.authorizedContacts] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Support Requests:" }), " ", tier.supportRequestsIncluded] })] })] })] }, key))) })] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TierSelector);
-
-
-/***/ }),
-
-/***/ "./src/features/supportTiers/constants.ts":
-/*!************************************************!*\
-  !*** ./src/features/supportTiers/constants.ts ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
-/* harmony export */ });
-/**
- * Support tier definitions
- */
-const supportTiers = {
-    bronze: {
-        name: "Bronze Support",
-        color: "#cd7f32",
-        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
-        criticalSituation: false,
-        supportHours: "8 x 5",
-        supportRequestSubmission: "Email",
-        tenants: 1,
-        authorizedContacts: 2,
-        supportRequestsIncluded: "Pay As You Go",
-        products: ["Microsoft Azure", "Microsoft 365"],
-        severityLevels: "Level B or C",
-        supportProvider: "Microsoft Premier Support"
-    },
-    silver: {
-        name: "Silver Support",
-        color: "#C0C0C0",
-        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 2,
-        authorizedContacts: 6,
-        supportRequestsIncluded: 12,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support"
-    },
-    gold: {
-        name: "Gold Support",
-        color: "#FFD700",
-        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 6,
-        authorizedContacts: 12,
-        supportRequestsIncluded: 36,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support"
-    },
-    platinum: {
-        name: "Platinum Support",
-        color: "#E5E4E2",
-        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 100,
-        authorizedContacts: 100,
-        supportRequestsIncluded: 100,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support"
-    }
-};
-
-
-/***/ }),
-
-/***/ "./src/features/supportTiers/data/supportTiers.ts":
-/*!********************************************************!*\
-  !*** ./src/features/supportTiers/data/supportTiers.ts ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
-/* harmony export */ });
-/**
- * Support tier definitions
- */
-const supportTiers = {
-    bronze: {
-        name: "Bronze Support",
-        color: "#cd7f32",
-        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
-        criticalSituation: false,
-        supportHours: "8 x 5",
-        supportRequestSubmission: "Email",
-        tenants: 1,
-        authorizedContacts: 2,
-        supportRequestsIncluded: "Pay As You Go",
-        products: ["Microsoft Azure", "Microsoft 365"],
-        severityLevels: "Level B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    },
-    silver: {
-        name: "Silver Support",
-        color: "#C0C0C0",
-        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 2,
-        authorizedContacts: 6,
-        supportRequestsIncluded: 12,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    },
-    gold: {
-        name: "Gold Support",
-        color: "#FFD700",
-        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 6,
-        authorizedContacts: 12,
-        supportRequestsIncluded: 36,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    },
-    platinum: {
-        name: "Platinum Support",
-        color: "#E5E4E2",
-        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 100,
-        authorizedContacts: 100,
-        supportRequestsIncluded: 100,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    }
-};
-
-
-/***/ }),
-
-/***/ "./src/features/supportTiers/index.ts":
-/*!********************************************!*\
-  !*** ./src/features/supportTiers/index.ts ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   TierSelector: () => (/* reexport safe */ _components_TierSelector__WEBPACK_IMPORTED_MODULE_0__["default"]),
-/* harmony export */   supportTiers: () => (/* reexport safe */ _constants__WEBPACK_IMPORTED_MODULE_1__.supportTiers)
-/* harmony export */ });
-/* harmony import */ var _components_TierSelector__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/TierSelector */ "./src/features/supportTiers/components/TierSelector.tsx");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/features/supportTiers/constants.ts");
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "./src/features/supportTiers/types/index.ts");
-// src/features/supportTiers/index.ts
-/**
- * Support Tiers Feature
- * Exports components, constants, and utilities for managing support tiers
- */
-// Re-export components
-
-// Re-export constants
-
-// Re-export types
-
-// Add any feature-specific hooks here
-// Example: export { useTierSelector } from './hooks/useTierSelector';
-
-
-/***/ }),
-
-/***/ "./src/features/supportTiers/types/index.ts":
-/*!**************************************************!*\
-  !*** ./src/features/supportTiers/types/index.ts ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// src/features/supportTiers/types/index.ts
-/**
- * Support tier related type definitions
- */
-
-
-
-/***/ }),
-
-/***/ "./src/features/tenants/components/TenantForm.tsx":
-/*!********************************************************!*\
-  !*** ./src/features/tenants/components/TenantForm.tsx ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-const TenantForm = ({ tenantId, companyName, gdapLink, onChange }) => {
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-form", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "company-name", children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "company-name", type: "text", value: companyName, onChange: (e) => onChange('companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "tenant-id", children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "tenant-id", type: "text", value: tenantId, onChange: (e) => onChange('tenantId', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "gdap-link", children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: "gdap-link", type: "url" // Use URL type for better validation
-                        , value: gdapLink || '', onChange: (e) => onChange('gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantForm);
-
-
-/***/ }),
-
-/***/ "./src/features/tenants/components/TenantManager.tsx":
-/*!***********************************************************!*\
-  !*** ./src/features/tenants/components/TenantManager.tsx ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_datepicker_dist_react_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-datepicker/dist/react-datepicker.css */ "./node_modules/react-datepicker/dist/react-datepicker.css");
-/* harmony import */ var _supportTiers_constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../supportTiers/constants */ "./src/features/supportTiers/constants.ts");
-
-// src/components/TenantManager.tsx
- // Import useEffect
- // Import DatePicker CSS
- // Corrected import path
-const TenantManager = ({ tenants, selectedTier, onChange, calculatedDeadline }) => {
-    const tier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_3__.supportTiers[selectedTier];
-    // Effect to adjust tenants when tier changes
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        const currentTier = _supportTiers_constants__WEBPACK_IMPORTED_MODULE_3__.supportTiers[selectedTier];
-        const tenantLimit = currentTier.tenants;
-        if (tenants.length > tenantLimit) {
-            // If current tenants exceed the new limit, truncate the array
-            const updatedTenants = tenants.slice(0, tenantLimit);
-            onChange(updatedTenants);
-        }
-        // Dependencies: run when selectedTier changes or the onChange function reference changes
-        // It's generally safe to include tenants array too, though it might cause extra runs if not memoized upstream
-    }, [selectedTier, tenants, onChange]);
-    // Handle tenant field changes, including Date and boolean types
-    const handleTenantChange = (index, field, value) => {
-        const updatedTenants = tenants.map((tenant, i) => {
-            if (i === index) {
-                // Handle potential null value for DatePicker when cleared
-                const newValue = field === 'implementationDeadline' && value === null ? null : value;
-                return Object.assign(Object.assign({}, tenant), { [field]: newValue });
-            }
-            return tenant;
-        });
-        onChange(updatedTenants);
-    };
-    // Add a new tenant, initializing new flags
-    const addTenant = () => {
-        if (tenants.length < tier.tenants) {
-            // Initialize tenantDomain, msDomain, deadline, hasAzure
-            onChange([...tenants, {
-                    id: '',
-                    companyName: '',
-                    tenantDomain: '',
-                    microsoftTenantDomain: '', // Initialize MS Domain
-                    implementationDeadline: null,
-                    hasAzure: false, // Default to false
-                    // Removed includeRbacScript initialization
-                    gdapLink: ''
-                }]);
-        }
-    };
-    // Remove a tenant
-    const removeTenant = (index) => {
-        const updatedTenants = [...tenants];
-        updatedTenants.splice(index, 1);
-        onChange(updatedTenants);
-    };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-manager", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", { children: ["3. Tenant Information ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("span", { className: "tenant-limit", children: ["(", tenants.length, "/", tier.tenants, ")"] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { className: "section-description", children: ["Your ", tier.name, " allows for up to ", tier.tenants, " tenant", tier.tenants !== 1 ? 's' : '', ". Please provide the information for each tenant you want to include."] }), tenants.map((tenant, index) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: `tenant-card ${selectedTier}`, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", { children: ["Tenant #", index + 1] }), tenants.length > 1 && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "remove-button", onClick: () => removeTenant(index), children: "Remove" }))] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "tenant-fields", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `company-name-${index}`, children: "Company Name" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `company-name-${index}`, type: "text", value: tenant.companyName, onChange: (e) => handleTenantChange(index, 'companyName', e.target.value), placeholder: "Company Name", required: true })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-domain-${index}`, children: "Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-domain-${index}`, type: "text", value: tenant.tenantDomain, onChange: (e) => handleTenantChange(index, 'tenantDomain', e.target.value), placeholder: "contoso.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The primary domain name (e.g., contoso.onmicrosoft.com)." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `tenant-id-${index}`, children: "Microsoft Tenant ID" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `tenant-id-${index}`, type: "text", value: tenant.id, onChange: (e) => handleTenantChange(index, 'id', e.target.value), placeholder: "00000000-0000-0000-0000-000000000000", pattern: "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Format: 00000000-0000-0000-0000-000000000000" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `gdap-link-${index}`, children: "Tenant-Specific GDAP Link (Optional)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `gdap-link-${index}`, type: "url", value: tenant.gdapLink || '', onChange: (e) => handleTenantChange(index, 'gdapLink', e.target.value), placeholder: "https://partner.microsoft.com/..." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "If provided, this link will be used for this tenant. Otherwise, a default link will be used." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("hr", { className: "tenant-divider" }), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `calculated-deadline-${index}`, children: "GDAP Implementation Deadline (Auto-calculated)" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `calculated-deadline-${index}`, type: "text", value: calculatedDeadline.toLocaleDateString(), readOnly // Make it read-only
-                                        : true, className: "form-control" // Optional styling
-                                     }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "This date (90 days from today) will be used in the email template." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `ms-tenant-domain-${index}`, children: "Microsoft Tenant Domain" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { id: `ms-tenant-domain-${index}`, type: "text", value: tenant.microsoftTenantDomain, onChange: (e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value), placeholder: "yourcompany.onmicrosoft.com", required: true }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "The `.onmicrosoft.com` domain, needed for the RBAC script." })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "form-group checkbox-container inline-label", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "checkbox", id: `has-azure-${index}`, checked: tenant.hasAzure, onChange: (e) => handleTenantChange(index, 'hasAzure', e.target.checked) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: `has-azure-${index}`, children: "Azure RBAC Relevant?" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("small", { className: "form-text", children: "Check if Azure RBAC configuration is needed for this tenant." })] })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "info-box", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", { children: "Note:" }), " The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps."] }) })] }, index))), tenants.length < tier.tenants && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { type: "button", className: "add-button", onClick: addTenant, children: "Add Tenant" }))] }));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TenantManager);
-
-
-/***/ }),
-
-/***/ "./src/features/tenants/index.ts":
-/*!***************************************!*\
-  !*** ./src/features/tenants/index.ts ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   TenantForm: () => (/* reexport safe */ _components_TenantForm__WEBPACK_IMPORTED_MODULE_0__["default"]),
-/* harmony export */   TenantManager: () => (/* reexport safe */ _components_TenantManager__WEBPACK_IMPORTED_MODULE_1__["default"])
-/* harmony export */ });
-/* harmony import */ var _components_TenantForm__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/TenantForm */ "./src/features/tenants/components/TenantForm.tsx");
-/* harmony import */ var _components_TenantManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/TenantManager */ "./src/features/tenants/components/TenantManager.tsx");
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./types */ "./src/features/tenants/types/index.ts");
-// src/features/tenants/index.ts
-/**
- * Tenant Management Feature
- * Exports components, hooks, and utilities for managing tenant information
- */
-// Re-export components
-
-
-// Re-export types
-
-// Add any feature-specific hooks here
-// Example: export { useTenants } from './hooks/useTenants';
-
-
-/***/ }),
-
-/***/ "./src/features/tenants/types/index.ts":
-/*!*********************************************!*\
-  !*** ./src/features/tenants/types/index.ts ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-// src/features/tenants/types/index.ts
-/**
- * Tenant management related type definitions
- */
-
 
 
 /***/ }),

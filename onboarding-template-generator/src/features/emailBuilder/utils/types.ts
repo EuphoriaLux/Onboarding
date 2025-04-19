@@ -1,5 +1,5 @@
 // src/features/emailBuilder/utils/types.ts
-import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
+import { TenantInfo } from '../tenants/types'; // Corrected relative path
 
 /**
  * Email form data interface defining the structure for email templates

@@ -5,8 +5,8 @@
 import { useState, useEffect } from 'react';
 import { supportTiers } from '../constants';
 import { SupportTierKey } from '../types';
-import { Contact } from '../../contacts/types';
-import { TenantInfo } from '../../tenants/types';
+import { Contact } from '../../contacts/types'; // Corrected relative path
+import { TenantInfo } from '../../tenants/types'; // Corrected relative path
 
 interface UseTierSelectorProps {
   initialTier?: SupportTierKey;

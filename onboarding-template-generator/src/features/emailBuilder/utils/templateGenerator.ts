@@ -1,8 +1,8 @@
 // src/features/emailBuilder/utils/templateGenerator.ts
-import { supportTiers } from '../../supportTiers/data/supportTiers'; // Updated import path
+import { supportTiers } from '../supportTiers/data/supportTiers'; // Adjusted path
 import { CustomerInfo } from './types';
-import { SupportTier } from '../../supportTiers/types'; // Corrected import path for SupportTier
-import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
+import { SupportTier } from '../supportTiers/types'; // Adjusted path
+import { TenantInfo } from '../tenants/types'; // Adjusted path
 import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 
 // --- Constants ---

@@ -1,8 +1,8 @@
-// src/components/TenantManager.tsx
+      // src/components/TenantManager.tsx
 import React, { useEffect } from 'react'; // Import useEffect
 import DatePicker from 'react-datepicker'; // Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
-import { supportTiers } from '../../supportTiers/constants'; // Corrected import path
+import { supportTiers } from '../../supportTiers/constants'; // Corrected relative path
 import { TenantInfo } from '../types'; // Import updated TenantInfo type
 
 interface TenantManagerProps {

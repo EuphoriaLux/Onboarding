@@ -1,18 +1,19 @@
 // src/App.tsx - Moved from features/common/components
 import React, { useState, useEffect } from 'react'; // Added useEffect
-import { TierSelector } from './features/supportTiers'; // Adjusted path
-import { ContactsForm } from './features/contacts'; // Adjusted path
-import { TenantManager } from './features/tenants'; // Adjusted path
+import { TierSelector } from './features/emailBuilder/supportTiers'; // Adjusted path
+import { ContactsForm } from './features/emailBuilder/contacts'; // Adjusted path
+import { TenantManager } from './features/emailBuilder/tenants'; // Adjusted path
 import { EmailForm, EmailPreview } from './features/emailBuilder'; // Adjusted path
 import LanguageSelector from './components/LanguageSelector'; // Adjusted path
 import { useAppState } from './contexts/AppStateContext'; // Adjusted path
 import { useLanguage } from './contexts/LanguageContext'; // Adjusted path
 import { StorageService } from './services/storage'; // Adjusted path
 import { ThemeSettings, AgentSettings } from './types'; // Adjusted path, added AgentSettings
-import { supportTiers } from './features/supportTiers/data/supportTiers'; // Adjusted path
+import { supportTiers } from './features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path
 import { generateMeetingSlots, formatSlot } from './features/emailBuilder/utils/dateSlotGenerator'; // Adjusted path
 import emailBuilder from './features/emailBuilder/utils/emailBuilder'; // Import emailBuilder to use translate
 import CollapsibleSection from './components/CollapsibleSection'; // Import moved component
+import { applyThemeColors } from './utils/themeUtils'; // Import theme utility
 import './styles/App.css'; // Adjusted path
 
 // AgentSettings interface moved to src/types/index.ts
@@ -65,6 +66,7 @@ const App: React.FC = () => {
     .then(([agentData, themeData]) => {
       setAgentSettings(agentData || { agentName: '', agentTitle: '', companyName: '', agentEmail: '' });
       setThemeSettings(themeData || null);
+      applyThemeColors(themeData || null); // Apply theme colors on load
     })
     .catch(error => {
       console.error("Error loading settings in App:", error);

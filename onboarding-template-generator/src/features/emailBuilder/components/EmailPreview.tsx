@@ -1,7 +1,7 @@
 // src/features/emailBuilder/components/EmailPreview.tsx
 import React, { useState, useEffect } from 'react';
 import { EmailFormData, Language, CustomerInfo } from '../utils/types';
-import { TenantInfo } from '../../tenants/types'; // Import TenantInfo
+import { TenantInfo } from '../tenants/types'; // Corrected relative path
 import { ThemeSettings } from '../../../types'; // Import ThemeSettings
 // Remove generateTemplate import, use emailBuilder for HTML
 import emailBuilder from '../utils/emailBuilder';

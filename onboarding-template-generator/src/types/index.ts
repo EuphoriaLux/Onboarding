@@ -5,9 +5,9 @@
  */
 
 // Re-export types from feature modules that are used globally
-export * from '../features/supportTiers/types';
-export * from '../features/tenants/types';
-export * from '../features/contacts/types';
+export * from '../features/emailBuilder/supportTiers/types'; // Adjusted path
+export * from '../features/emailBuilder/tenants/types'; // Adjusted path
+export * from '../features/emailBuilder/contacts/types'; // Adjusted path
 export * from '../features/emailBuilder/utils/types';
 
 /**

@@ -1,7 +1,7 @@
 // src/features/emailBuilder/utils/emailBuilder.ts
-import { supportTiers } from '../../supportTiers/constants';
+import { supportTiers } from '../supportTiers/constants'; // Adjusted path
 import { CustomerInfo, EmailFormData, Language } from './types';
-import { TenantInfo } from '../../tenants/types';
+import { TenantInfo } from '../tenants/types'; // Adjusted path
 import { ThemeSettings } from '../../../types';
 import { StorageService } from '../../../services/storage'; // Import StorageService
 import React from 'react'; // Single React import

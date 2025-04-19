@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import emailBuilder from '../features/emailBuilder/utils/emailBuilder'; // Adjusted path
 import { CustomerInfo } from '../features/emailBuilder/utils/types'; // Adjusted path
-import { supportTiers } from '../features/supportTiers/constants'; // Adjusted path
+import { supportTiers } from '../features/emailBuilder/supportTiers/constants'; // Adjusted path
 // Import createContactsTable directly
 import { createContactsTable } from '../features/emailBuilder/utils/components'; // Adjusted path
 

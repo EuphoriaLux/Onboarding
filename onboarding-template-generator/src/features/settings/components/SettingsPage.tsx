@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import { StorageService } from '../../../services/storage';
 import { ThemeSettings } from '../../../types';
 import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
+import { applyThemeColors } from '../../../utils/themeUtils'; // Import theme utility
 import './SettingsPage.css';
 
 // Default theme colors (consider extracting from CSS or defining centrally)
@@ -138,8 +139,8 @@ const SettingsPage: React.FC = () => {
       // Only save base64 if filename exists to avoid storing large empty strings unnecessarily
       await StorageService.set('pdfAttachmentBase64', pdfFilename ? (pdfBase64 || '') : '');
 
-            // Optionally apply theme immediately after saving
-            // applyThemeColors(themeSettingsToSave); // Need to define and import this function
+      // Apply theme immediately after saving
+      applyThemeColors(themeSettingsToSave);
 
       setSaveStatus('success');
       // Hide success message after a delay

@@ -29675,7 +29675,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _services_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/storage */ "./src/services/storage/index.ts");
-/* harmony import */ var _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/supportTiers/data/supportTiers */ "./src/features/supportTiers/data/supportTiers.ts");
+/* harmony import */ var _features_emailBuilder_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/emailBuilder/supportTiers/data/supportTiers */ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts");
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -29689,7 +29689,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 // src/contexts/AppStateContext.tsx
 
 
- // Import supportTiers
+ // Adjusted path // Import supportTiers
 const defaultState = {
     customerInfo: {
         contactName: '',
@@ -29811,7 +29811,7 @@ const AppStateProvider = ({ children }) => {
     const updateTier = (tier) => {
         var _a;
         // Get the contact limit for the new tier
-        const newTierLimit = (_a = _features_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__.supportTiers[tier]) === null || _a === void 0 ? void 0 : _a.authorizedContacts;
+        const newTierLimit = (_a = _features_emailBuilder_supportTiers_data_supportTiers__WEBPACK_IMPORTED_MODULE_3__.supportTiers[tier]) === null || _a === void 0 ? void 0 : _a.authorizedContacts;
         setState(prevState => {
             let updatedContacts = prevState.customerInfo.authorizedContacts;
             // Check if the limit is defined and if the current contacts exceed it
@@ -29937,6 +29937,81 @@ const useLanguage = () => {
         throw new Error('useLanguage must be used within a LanguageProvider');
     }
     return context;
+};
+
+
+/***/ }),
+
+/***/ "./src/features/emailBuilder/supportTiers/data/supportTiers.ts":
+/*!*********************************************************************!*\
+  !*** ./src/features/emailBuilder/supportTiers/data/supportTiers.ts ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
+/* harmony export */ });
+/**
+ * Support tier definitions
+ */
+const supportTiers = {
+    bronze: {
+        name: "Bronze Support",
+        color: "#cd7f32",
+        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
+        criticalSituation: false,
+        supportHours: "8 x 5",
+        supportRequestSubmission: "Email",
+        tenants: 1,
+        authorizedContacts: 2,
+        supportRequestsIncluded: "Pay As You Go",
+        products: ["Microsoft Azure", "Microsoft 365"],
+        severityLevels: "Level B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    },
+    silver: {
+        name: "Silver Support",
+        color: "#C0C0C0",
+        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 2,
+        authorizedContacts: 6,
+        supportRequestsIncluded: 12,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    },
+    gold: {
+        name: "Gold Support",
+        color: "#FFD700",
+        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 6,
+        authorizedContacts: 12,
+        supportRequestsIncluded: 36,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    },
+    platinum: {
+        name: "Platinum Support",
+        color: "#E5E4E2",
+        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
+        criticalSituation: true,
+        supportHours: "24 x 7 x 365",
+        supportRequestSubmission: "Dedicated phone number or Email",
+        tenants: 100,
+        authorizedContacts: 100,
+        supportRequestsIncluded: 100,
+        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
+        severityLevels: "Level A, B or C",
+        supportProvider: "Microsoft Premier Support" // Added field
+    }
 };
 
 
@@ -30312,81 +30387,6 @@ const translations = {
     de: _de__WEBPACK_IMPORTED_MODULE_2__["default"]
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (translations);
-
-
-/***/ }),
-
-/***/ "./src/features/supportTiers/data/supportTiers.ts":
-/*!********************************************************!*\
-  !*** ./src/features/supportTiers/data/supportTiers.ts ***!
-  \********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   supportTiers: () => (/* binding */ supportTiers)
-/* harmony export */ });
-/**
- * Support tier definitions
- */
-const supportTiers = {
-    bronze: {
-        name: "Bronze Support",
-        color: "#cd7f32",
-        description: "Basic support availability for non-urgent cases for cloud products. No Critical Situation coverage.",
-        criticalSituation: false,
-        supportHours: "8 x 5",
-        supportRequestSubmission: "Email",
-        tenants: 1,
-        authorizedContacts: 2,
-        supportRequestsIncluded: "Pay As You Go",
-        products: ["Microsoft Azure", "Microsoft 365"],
-        severityLevels: "Level B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    },
-    silver: {
-        name: "Silver Support",
-        color: "#C0C0C0",
-        description: "Full product coverage with Critical Situation Support. Ideal for those with occasional support requests who need Crit Sit coverage.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 2,
-        authorizedContacts: 6,
-        supportRequestsIncluded: 12,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    },
-    gold: {
-        name: "Gold Support",
-        color: "#FFD700",
-        description: "Three times the included cases and tenants. Double the customer contacts. Suited for complex organizational structures.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 6,
-        authorizedContacts: 12,
-        supportRequestsIncluded: 36,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    },
-    platinum: {
-        name: "Platinum Support",
-        color: "#E5E4E2",
-        description: "Ideal for very complex organizational structures with highest number of tenants, contacts and support requests.",
-        criticalSituation: true,
-        supportHours: "24 x 7 x 365",
-        supportRequestSubmission: "Dedicated phone number or Email",
-        tenants: 100,
-        authorizedContacts: 100,
-        supportRequestsIncluded: 100,
-        products: ["Microsoft Azure", "Microsoft 365", "Microsoft Dynamics 365", "Microsoft Software on-premises"],
-        severityLevels: "Level A, B or C",
-        supportProvider: "Microsoft Premier Support" // Added field
-    }
-};
 
 
 /***/ }),
