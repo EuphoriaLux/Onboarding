@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'; // Import useCallback
 import { useAuth } from '../hooks/useAuth';
 import { useSupportRequests } from '../hooks/useSupportRequests'; // Keep this hook
-import { AzureLogin } from './AzureLogin';
 import { RequestList } from './RequestList';
 import { RequestView } from './RequestView';
 import { CreateRequestForm } from './CreateRequestForm'; // Import the new form
@@ -36,7 +35,6 @@ export const SupportRequestViewer: React.FC = () => {
     // <SupportRequestsProvider>
     <div style={{ padding: '15px' }}>
       <h2>Support Request Management Tool</h2>
-      <AzureLogin />
 
       {/* Only show list, view, and create form if authenticated */}
       {isAuthenticated && !isAuthLoading && (
@@ -59,7 +57,6 @@ export const SupportRequestViewer: React.FC = () => {
 };
 
 // Export all components from the feature index for easier imports elsewhere
-export * from './AzureLogin';
 export * from './RequestList';
 export * from './RequestView';
 export * from './CreateRequestForm'; // Export the new form

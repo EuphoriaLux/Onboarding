@@ -1,0 +1,106 @@
+/* ========== Tier Selector Styles ========== */
+.tier-selector {
+  margin-bottom: 20px;
+}
+
+.tier-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.tier-card {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: var(--box-shadow);
+}
+
+.tier-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--box-shadow-hover);
+}
+
+.tier-card.selected {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Bronze tier */
+.tier-card[style*="border-color: #cd7f32"].selected {
+  background-color: var(--bronze-light) !important;
+}
+
+/* Silver tier */
+.tier-card[style*="border-color: #C0C0C0"].selected {
+  background-color: var(--silver-light) !important;
+}
+
+/* Gold tier */
+.tier-card[style*="border-color: #FFD700"].selected {
+  background-color: var(--gold-light) !important;
+}
+
+/* Platinum tier */
+.tier-card[style*="border-color: #E5E4E2"].selected {
+  background-color: var(--platinum-light) !important;
+}
+
+.tier-header {
+  padding: 14px;
+  text-align: center;
+  color: white;
+}
+
+.tier-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.tier-content {
+  padding: 16px;
+  font-size: 13px;
+}
+
+.tier-content p {
+  margin-bottom: 12px;
+  min-height: auto;
+  line-height: 1.4;
+}
+
+.tier-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.tier-content li {
+  margin-bottom: 8px;
+  font-size: 13px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.tier-content li::before {
+  content: "•";
+  position: absolute;
+  left: 6px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .tier-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .tier-cards {
+    grid-template-columns: 1fr;
+  }
+}

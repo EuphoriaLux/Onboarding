@@ -37604,6 +37604,126 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/Homepage.css */
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/styles/Navbar.css":
+/*!*********************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/styles/Navbar.css ***!
+  \*********************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `/* src/styles/Navbar.css */
+
+.app-navbar {
+  /* Use CSS variables for theme awareness */
+  background-color: var(--background-light, #f8f9fa); /* Default to light grey */
+  padding: 8px 16px;
+  /* Use a border color that contrasts with the background */
+  border-bottom: 1px solid var(--border-color, #dee2e6); /* Add a border variable or calculate */
+  margin-bottom: 1rem;
+}
+
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: var(--text-color, #323130); /* Use text color variable */
+}
+
+.navbar-auth {
+  display: flex;
+  align-items: center;
+}
+
+/* Styles for the SVG login button */
+.login-button-svg {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-block; /* Allows setting height/width */
+  vertical-align: middle; /* Align with text if needed */
+}
+
+.login-button-svg:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.login-button-svg img {
+  display: block; /* Remove extra space below image */
+  height: 32px; /* Adjust height as needed */
+  width: auto; /* Maintain aspect ratio */
+}
+
+/* Styles for the authenticated state */
+.auth-info {
+  display: flex;
+  align-items: center;
+  color: var(--text-color, #323130); /* Use text color variable */
+}
+
+.auth-info p {
+  margin: 0 10px 0 0;
+  font-size: 0.9em;
+}
+
+.logout-button {
+  /* Style the logout button to match theme */
+  background-color: var(--primary-color, #0078d4);
+  color: white; /* Assuming white text on primary color */
+  border: none;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover:not(:disabled) {
+  /* Slightly darker shade for hover */
+  filter: brightness(90%);
+}
+
+.logout-button:disabled {
+  background-color: #ccc; /* Grey out when disabled */
+  cursor: not-allowed;
+}
+
+/* Hide the default loading/error messages from AzureLogin if needed, */
+/* or style them according to the theme */
+.navbar-auth > p { /* Target loading/error paragraphs directly inside navbar-auth */
+   color: var(--text-color, #323130);
+   font-size: 0.9em;
+   margin: 0 10px 0 0;
+}
+
+.navbar-auth > p[style*="color: red"] { /* Target error message specifically */
+   color: #d9534f; /* Use a specific error color */
+}
+`, "",{"version":3,"sources":["webpack://./src/styles/Navbar.css"],"names":[],"mappings":"AAAA,0BAA0B;;AAE1B;EACE,0CAA0C;EAC1C,kDAAkD,EAAE,0BAA0B;EAC9E,iBAAiB;EACjB,0DAA0D;EAC1D,qDAAqD,EAAE,uCAAuC;EAC9F,mBAAmB;AACrB;;AAEA;EACE,aAAa;EACb,8BAA8B;EAC9B,mBAAmB;EACnB,WAAW;AACb;;AAEA;EACE,iBAAiB;EACjB,iCAAiC,EAAE,4BAA4B;AACjE;;AAEA;EACE,aAAa;EACb,mBAAmB;AACrB;;AAEA,oCAAoC;AACpC;EACE,gBAAgB;EAChB,YAAY;EACZ,UAAU;EACV,eAAe;EACf,qBAAqB,EAAE,gCAAgC;EACvD,sBAAsB,EAAE,8BAA8B;AACxD;;AAEA;EACE,mBAAmB;EACnB,YAAY;AACd;;AAEA;EACE,cAAc,EAAE,mCAAmC;EACnD,YAAY,EAAE,4BAA4B;EAC1C,WAAW,EAAE,0BAA0B;AACzC;;AAEA,uCAAuC;AACvC;EACE,aAAa;EACb,mBAAmB;EACnB,iCAAiC,EAAE,4BAA4B;AACjE;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;AAClB;;AAEA;EACE,2CAA2C;EAC3C,+CAA+C;EAC/C,YAAY,EAAE,yCAAyC;EACvD,YAAY;EACZ,iBAAiB;EACjB,kBAAkB;EAClB,eAAe;EACf,gBAAgB;EAChB,sCAAsC;AACxC;;AAEA;EACE,oCAAoC;EACpC,uBAAuB;AACzB;;AAEA;EACE,sBAAsB,EAAE,2BAA2B;EACnD,mBAAmB;AACrB;;AAEA,uEAAuE;AACvE,yCAAyC;AACzC,mBAAmB,gEAAgE;GAChF,iCAAiC;GACjC,gBAAgB;GAChB,kBAAkB;AACrB;;AAEA,wCAAwC,sCAAsC;GAC3E,cAAc,EAAE,+BAA+B;AAClD","sourcesContent":["/* src/styles/Navbar.css */\r\n\r\n.app-navbar {\r\n  /* Use CSS variables for theme awareness */\r\n  background-color: var(--background-light, #f8f9fa); /* Default to light grey */\r\n  padding: 8px 16px;\r\n  /* Use a border color that contrasts with the background */\r\n  border-bottom: 1px solid var(--border-color, #dee2e6); /* Add a border variable or calculate */\r\n  margin-bottom: 1rem;\r\n}\r\n\r\n.navbar-content {\r\n  display: flex;\r\n  justify-content: space-between;\r\n  align-items: center;\r\n  width: 100%;\r\n}\r\n\r\n.navbar-brand {\r\n  font-weight: bold;\r\n  color: var(--text-color, #323130); /* Use text color variable */\r\n}\r\n\r\n.navbar-auth {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n/* Styles for the SVG login button */\r\n.login-button-svg {\r\n  background: none;\r\n  border: none;\r\n  padding: 0;\r\n  cursor: pointer;\r\n  display: inline-block; /* Allows setting height/width */\r\n  vertical-align: middle; /* Align with text if needed */\r\n}\r\n\r\n.login-button-svg:disabled {\r\n  cursor: not-allowed;\r\n  opacity: 0.6;\r\n}\r\n\r\n.login-button-svg img {\r\n  display: block; /* Remove extra space below image */\r\n  height: 32px; /* Adjust height as needed */\r\n  width: auto; /* Maintain aspect ratio */\r\n}\r\n\r\n/* Styles for the authenticated state */\r\n.auth-info {\r\n  display: flex;\r\n  align-items: center;\r\n  color: var(--text-color, #323130); /* Use text color variable */\r\n}\r\n\r\n.auth-info p {\r\n  margin: 0 10px 0 0;\r\n  font-size: 0.9em;\r\n}\r\n\r\n.logout-button {\r\n  /* Style the logout button to match theme */\r\n  background-color: var(--primary-color, #0078d4);\r\n  color: white; /* Assuming white text on primary color */\r\n  border: none;\r\n  padding: 4px 10px;\r\n  border-radius: 3px;\r\n  cursor: pointer;\r\n  font-size: 0.9em;\r\n  transition: background-color 0.2s ease;\r\n}\r\n\r\n.logout-button:hover:not(:disabled) {\r\n  /* Slightly darker shade for hover */\r\n  filter: brightness(90%);\r\n}\r\n\r\n.logout-button:disabled {\r\n  background-color: #ccc; /* Grey out when disabled */\r\n  cursor: not-allowed;\r\n}\r\n\r\n/* Hide the default loading/error messages from AzureLogin if needed, */\r\n/* or style them according to the theme */\r\n.navbar-auth > p { /* Target loading/error paragraphs directly inside navbar-auth */\r\n   color: var(--text-color, #323130);\r\n   font-size: 0.9em;\r\n   margin: 0 10px 0 0;\r\n}\r\n\r\n.navbar-auth > p[style*=\"color: red\"] { /* Target error message specifically */\r\n   color: #d9534f; /* Use a specific error color */\r\n}\r\n"],"sourceRoot":""}]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/runtime/api.js":
 /*!*****************************************************!*\
   !*** ./node_modules/css-loader/dist/runtime/api.js ***!
@@ -84869,6 +84989,26 @@ const App = () => {
 
 /***/ }),
 
+/***/ "./src/assets/ms-symbollockup_signin_dark.svg":
+/*!****************************************************!*\
+  !*** ./src/assets/ms-symbollockup_signin_dark.svg ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "bf2cff4d4d0d60f5deca.svg";
+
+/***/ }),
+
+/***/ "./src/assets/ms-symbollockup_signin_light.svg":
+/*!*****************************************************!*\
+  !*** ./src/assets/ms-symbollockup_signin_light.svg ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "e2f600a8cb97ce3efe4d.svg";
+
+/***/ }),
+
 /***/ "./src/components/CollapsibleSection.tsx":
 /*!***********************************************!*\
   !*** ./src/components/CollapsibleSection.tsx ***!
@@ -84952,6 +85092,29 @@ const LanguageSelector = ({ selectedLanguage, onChange }) => {
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "language-selector", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", { htmlFor: "language-select", children: "Template Language:" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("select", { id: "language-select", value: selectedLanguage, onChange: (e) => onChange(e.target.value), className: "language-select", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "en", children: "English" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "fr", children: "Fran\u00E7ais" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("option", { value: "de", children: "Deutsch" })] })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LanguageSelector);
+
+
+/***/ }),
+
+/***/ "./src/components/Navbar.tsx":
+/*!***********************************!*\
+  !*** ./src/components/Navbar.tsx ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _features_supportRequests_components_AzureLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../features/supportRequests/components/AzureLogin */ "./src/features/supportRequests/components/AzureLogin.tsx");
+
+// Import AzureLogin from its location within the supportRequests feature
+
+const Navbar = () => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("nav", { className: "app-navbar", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "navbar-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "navbar-brand" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "navbar-auth", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_features_supportRequests_components_AzureLogin__WEBPACK_IMPORTED_MODULE_1__.AzureLogin, {}) })] }) }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Navbar);
 
 
 /***/ }),
@@ -88171,20 +88334,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../contexts/LanguageContext */ "./src/contexts/LanguageContext.tsx");
 /* harmony import */ var _contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../contexts/AppStateContext */ "./src/contexts/AppStateContext.tsx");
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../constants */ "./src/features/homepage/constants.tsx");
+/* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/Navbar */ "./src/components/Navbar.tsx");
+/* harmony import */ var _styles_Navbar_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../styles/Navbar.css */ "./src/styles/Navbar.css");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../constants */ "./src/features/homepage/constants.tsx");
 
 // src/features/homepage/components/Homepage.tsx
-// src/features/homepage/components/Homepage.tsx
-
+ // Import useEffect
 
  // Import useAppState
+ // Import the Navbar
+ // Import Navbar styles
  // Import features and type
 const Homepage = () => {
     const { translate } = (0,_contexts_LanguageContext__WEBPACK_IMPORTED_MODULE_2__.useLanguage)();
     const { state } = (0,_contexts_AppStateContext__WEBPACK_IMPORTED_MODULE_3__.useAppState)(); // Get the global state, including showAlphaBetaFeatures
     const [activeFeature, setActiveFeature] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    // Effect for keyboard and mouse navigation back to home
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        const handleKeyDown = (event) => {
+            // Check if Alt key is pressed and ArrowLeft key
+            if (event.altKey && event.key === 'ArrowLeft') {
+                // Check if a feature is currently active (not on the main dashboard)
+                if (activeFeature !== null) {
+                    event.preventDefault(); // Prevent default browser back navigation
+                    setActiveFeature(null); // Navigate back to the homepage dashboard
+                }
+            }
+            // Note: Alt + ArrowRight is not handled here as there's no "forward" concept in this component's state
+        };
+        const handleMouseUp = (event) => {
+            // Check if the "Back" mouse button (typically button 3) was pressed
+            if (event.button === 3) {
+                // Check if a feature is currently active (not on the main dashboard)
+                if (activeFeature !== null) {
+                    event.preventDefault(); // Prevent default browser back navigation
+                    setActiveFeature(null); // Navigate back to the homepage dashboard
+                }
+            }
+            // Note: Forward mouse button (button 4) is not handled due to lack of forward history state
+        };
+        // Add event listeners when the component mounts
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('mouseup', handleMouseUp); // Listen for mouse button releases
+        // Remove event listeners when the component unmounts
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [activeFeature]); // Dependency array includes activeFeature to ensure checks inside handlers use the latest state
     // Group features by category
-    const groupedFeatures = _constants__WEBPACK_IMPORTED_MODULE_4__.features.reduce((acc, feature) => {
+    const groupedFeatures = _constants__WEBPACK_IMPORTED_MODULE_6__.features.reduce((acc, feature) => {
         const category = feature.category || 'Other'; // Default category if none provided
         if (!acc[category]) {
             acc[category] = [];
@@ -88225,14 +88424,14 @@ const Homepage = () => {
     };
     // Render active feature if selected
     if (activeFeature) {
-        const feature = _constants__WEBPACK_IMPORTED_MODULE_4__.features.find(f => f.id === activeFeature);
+        const feature = _constants__WEBPACK_IMPORTED_MODULE_6__.features.find(f => f.id === activeFeature);
         if (feature) {
             const FeatureComponent = feature.component;
             return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "back-button", onClick: handleBackToHome, children: "\u2190 Back to Home" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: feature.name })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FeatureComponent, {})] }));
         }
     }
     // Render homepage with feature cards
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a tool to get started" })] }), sortedCategories.map((category) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-category-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: category }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "features-grid", children: groupedFeatures[category].map((feature) => {
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Navbar__WEBPACK_IMPORTED_MODULE_4__["default"], {}), " ", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "homepage-header", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", { children: "Microsoft Support Tools" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Select a tool to get started" })] }), sortedCategories.map((category) => ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "feature-category-section", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: category }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "features-grid", children: groupedFeatures[category].map((feature) => {
                             // Determine if the feature should be enabled based on its own flag OR the global toggle
                             const isFeatureEnabled = feature.enabled || (state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features');
                             // Determine if the "Coming Soon" badge should be shown
@@ -89126,15 +89325,80 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   AzureLogin: () => (/* binding */ AzureLogin)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var _hooks_useAuth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useAuth */ "./src/features/supportRequests/hooks/useAuth.ts");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _hooks_useAuth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useAuth */ "./src/features/supportRequests/hooks/useAuth.ts");
+/* harmony import */ var _assets_ms_symbollockup_signin_light_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../assets/ms-symbollockup_signin_light.svg */ "./src/assets/ms-symbollockup_signin_light.svg");
+/* harmony import */ var _assets_ms_symbollockup_signin_dark_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../assets/ms-symbollockup_signin_dark.svg */ "./src/assets/ms-symbollockup_signin_dark.svg");
 
 
+
+// Import SVG assets (adjust path as needed)
+
+
+// Helper function to calculate luminance (0 = black, 1 = white)
+const getLuminance = (hexColor) => {
+    try {
+        // Remove # if present
+        hexColor = hexColor.startsWith('#') ? hexColor.slice(1) : hexColor;
+        // Handle shorthand hex (e.g., #03F -> #0033FF)
+        if (hexColor.length === 3) {
+            hexColor = hexColor.split('').map(char => char + char).join('');
+        }
+        // Convert hex to RGB
+        const r = parseInt(hexColor.substring(0, 2), 16);
+        const g = parseInt(hexColor.substring(2, 4), 16);
+        const b = parseInt(hexColor.substring(4, 6), 16);
+        // Apply luminance formula (standard sRGB)
+        const a = [r, g, b].map(v => {
+            v /= 255;
+            return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+        });
+        return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+    }
+    catch (e) {
+        console.error("Error calculating luminance for color:", hexColor, e);
+        return 0.5; // Default to a mid-range luminance on error
+    }
+};
 const AzureLogin = () => {
-    // Use userInfo instead of account
-    const { isAuthenticated, userInfo, isLoading, error, login, logout } = (0,_hooks_useAuth__WEBPACK_IMPORTED_MODULE_1__.useAuth)();
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { padding: '10px', borderBottom: '1px solid #ccc', marginBottom: '10px' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "Azure Authentication" }), isLoading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Loading authentication status..." }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { style: { color: 'red' }, children: ["Authentication Error: ", error.message] }), " ", !isLoading && ( // Show content even if there's an error, just display the error message
-            (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: isAuthenticated && userInfo ? ( // Check for userInfo
-                (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: ["Signed in as: ", userInfo.name || userInfo.username] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: logout, disabled: isLoading, children: "Logout" })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "Not signed in." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: login, disabled: isLoading, children: "Login with Azure AD" })] })) }))] }));
+    const { isAuthenticated, userInfo, isLoading, error, login, logout } = (0,_hooks_useAuth__WEBPACK_IMPORTED_MODULE_2__.useAuth)();
+    const [themeMode, setThemeMode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('light'); // Default to light
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+        // Check theme on mount
+        const checkTheme = () => {
+            try {
+                const rootStyle = window.getComputedStyle(document.documentElement);
+                const bgColor = rootStyle.getPropertyValue('--background-light').trim();
+                if (bgColor) {
+                    const luminance = getLuminance(bgColor);
+                    setThemeMode(luminance > 0.5 ? 'light' : 'dark');
+                }
+                else {
+                    // Fallback if CSS variable is not set - check prefers-color-scheme
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        setThemeMode('dark');
+                    }
+                    else {
+                        setThemeMode('light');
+                    }
+                }
+            }
+            catch (e) {
+                console.error("Error detecting theme:", e);
+                // Default to light theme on error
+                setThemeMode('light');
+            }
+        };
+        checkTheme();
+        // Optional: Listen for changes if the theme can change dynamically without a page reload
+        // This might require a more robust mechanism like a MutationObserver or a dedicated theme context
+        // For now, we just check on mount.
+    }, []); // Empty dependency array means this runs once on mount
+    const loginButtonImage = themeMode === 'light' ? _assets_ms_symbollockup_signin_light_svg__WEBPACK_IMPORTED_MODULE_3__ : _assets_ms_symbollockup_signin_dark_svg__WEBPACK_IMPORTED_MODULE_4__;
+    return (
+    // Removed the outer div with padding/border, styling will be handled by Navbar.css
+    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [isLoading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { style: { color: 'var(--text-color)' }, children: "Loading..." }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { style: { color: 'red' }, children: ["Error: ", error.message] }), !isLoading && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: isAuthenticated && userInfo ? ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "auth-info", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { style: { color: 'var(--text-color)', marginRight: '10px' }, children: userInfo.name || userInfo.username }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: logout, disabled: isLoading, className: "logout-button", children: "Logout" })] })) : ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: login, disabled: isLoading, className: "login-button-svg", "aria-label": "Login with Microsoft", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: loginButtonImage, alt: "Sign in with Microsoft" }) })) }))] }));
 };
 
 
@@ -89296,10 +89560,9 @@ const RequestView = () => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AzureLogin: () => (/* reexport safe */ _AzureLogin__WEBPACK_IMPORTED_MODULE_4__.AzureLogin),
-/* harmony export */   CreateRequestForm: () => (/* reexport safe */ _CreateRequestForm__WEBPACK_IMPORTED_MODULE_7__.CreateRequestForm),
-/* harmony export */   RequestList: () => (/* reexport safe */ _RequestList__WEBPACK_IMPORTED_MODULE_5__.RequestList),
-/* harmony export */   RequestView: () => (/* reexport safe */ _RequestView__WEBPACK_IMPORTED_MODULE_6__.RequestView),
+/* harmony export */   CreateRequestForm: () => (/* reexport safe */ _CreateRequestForm__WEBPACK_IMPORTED_MODULE_6__.CreateRequestForm),
+/* harmony export */   RequestList: () => (/* reexport safe */ _RequestList__WEBPACK_IMPORTED_MODULE_4__.RequestList),
+/* harmony export */   RequestView: () => (/* reexport safe */ _RequestView__WEBPACK_IMPORTED_MODULE_5__.RequestView),
 /* harmony export */   SupportRequestViewer: () => (/* binding */ SupportRequestViewer)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -89307,15 +89570,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _hooks_useAuth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/useAuth */ "./src/features/supportRequests/hooks/useAuth.ts");
 /* harmony import */ var _hooks_useSupportRequests__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useSupportRequests */ "./src/features/supportRequests/hooks/useSupportRequests.ts");
-/* harmony import */ var _AzureLogin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AzureLogin */ "./src/features/supportRequests/components/AzureLogin.tsx");
-/* harmony import */ var _RequestList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./RequestList */ "./src/features/supportRequests/components/RequestList.tsx");
-/* harmony import */ var _RequestView__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./RequestView */ "./src/features/supportRequests/components/RequestView.tsx");
-/* harmony import */ var _CreateRequestForm__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CreateRequestForm */ "./src/features/supportRequests/components/CreateRequestForm.tsx");
+/* harmony import */ var _RequestList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RequestList */ "./src/features/supportRequests/components/RequestList.tsx");
+/* harmony import */ var _RequestView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./RequestView */ "./src/features/supportRequests/components/RequestView.tsx");
+/* harmony import */ var _CreateRequestForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./CreateRequestForm */ "./src/features/supportRequests/components/CreateRequestForm.tsx");
 
  // Import useCallback
 
  // Keep this hook
-
 
 
  // Import the new form
@@ -89343,12 +89604,11 @@ const SupportRequestViewer = () => {
     return (
     // Optional: Wrap with a Provider if Context API is used
     // <SupportRequestsProvider>
-    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { padding: '15px' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Support Request Management Tool" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_AzureLogin__WEBPACK_IMPORTED_MODULE_4__.AzureLogin, {}), isAuthenticated && !isAuthLoading && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RequestList__WEBPACK_IMPORTED_MODULE_5__.RequestList, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RequestView__WEBPACK_IMPORTED_MODULE_6__.RequestView, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CreateRequestForm__WEBPACK_IMPORTED_MODULE_7__.CreateRequestForm, { onTicketCreated: handleTicketCreated }), " "] })), !isAuthenticated && !isAuthLoading && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { style: { marginTop: '20px', fontStyle: 'italic' }, children: "Please log in with Azure AD to view support requests." }))] })
+    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { style: { padding: '15px' }, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Support Request Management Tool" }), isAuthenticated && !isAuthLoading && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RequestList__WEBPACK_IMPORTED_MODULE_4__.RequestList, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RequestView__WEBPACK_IMPORTED_MODULE_5__.RequestView, {}), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CreateRequestForm__WEBPACK_IMPORTED_MODULE_6__.CreateRequestForm, { onTicketCreated: handleTicketCreated }), " "] })), !isAuthenticated && !isAuthLoading && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { style: { marginTop: '20px', fontStyle: 'italic' }, children: "Please log in with Azure AD to view support requests." }))] })
     // </SupportRequestsProvider>
     );
 };
 // Export all components from the feature index for easier imports elsewhere
-
 
 
  // Export the new form
@@ -91025,6 +91285,58 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/styles/Navbar.css":
+/*!*******************************!*\
+  !*** ./src/styles/Navbar.css ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_Navbar_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js!./Navbar.css */ "./node_modules/css-loader/dist/cjs.js!./src/styles/Navbar.css");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_Navbar_css__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_Navbar_css__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_Navbar_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_Navbar_css__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/utils/themeUtils.ts":
 /*!*********************************!*\
   !*** ./src/utils/themeUtils.ts ***!
@@ -91127,6 +91439,18 @@ const applyThemeColors = (settings) => {
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -91150,6 +91474,29 @@ const applyThemeColors = (settings) => {
 /******/ 			if (!module.children) module.children = [];
 /******/ 			return module;
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/publicPath */
+/******/ 	(() => {
+/******/ 		var scriptUrl;
+/******/ 		if (__webpack_require__.g.importScripts) scriptUrl = __webpack_require__.g.location + "";
+/******/ 		var document = __webpack_require__.g.document;
+/******/ 		if (!scriptUrl && document) {
+/******/ 			if (document.currentScript && document.currentScript.tagName.toUpperCase() === 'SCRIPT')
+/******/ 				scriptUrl = document.currentScript.src;
+/******/ 			if (!scriptUrl) {
+/******/ 				var scripts = document.getElementsByTagName("script");
+/******/ 				if(scripts.length) {
+/******/ 					var i = scripts.length - 1;
+/******/ 					while (i > -1 && (!scriptUrl || !/^http(s?):/.test(scriptUrl))) scriptUrl = scripts[i--].src;
+/******/ 				}
+/******/ 			}
+/******/ 		}
+/******/ 		// When supporting browsers where an automatic publicPath is not supported you must specify an output.publicPath manually via configuration
+/******/ 		// or pass an empty string ("") and set the __webpack_public_path__ variable from your code to use your own logic.
+/******/ 		if (!scriptUrl) throw new Error("Automatic publicPath is not supported in this browser");
+/******/ 		scriptUrl = scriptUrl.replace(/^blob:/, "").replace(/#.*$/, "").replace(/\?.*$/, "").replace(/\/[^\/]+$/, "/");
+/******/ 		__webpack_require__.p = scriptUrl;
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/nonce */

@@ -1,14 +1,52 @@
 // src/features/homepage/components/Homepage.tsx
-// src/features/homepage/components/Homepage.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useEffect
 import { useLanguage } from '../../../contexts/LanguageContext';
 import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
+import Navbar from '../../../components/Navbar'; // Import the Navbar
+import '../../../styles/Navbar.css'; // Import Navbar styles
 import { features, Feature } from '../constants'; // Import features and type
 
 const Homepage: React.FC = () => {
   const { translate } = useLanguage();
   const { state } = useAppState(); // Get the global state, including showAlphaBetaFeatures
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
+
+  // Effect for keyboard and mouse navigation back to home
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Check if Alt key is pressed and ArrowLeft key
+      if (event.altKey && event.key === 'ArrowLeft') {
+        // Check if a feature is currently active (not on the main dashboard)
+        if (activeFeature !== null) {
+          event.preventDefault(); // Prevent default browser back navigation
+          setActiveFeature(null); // Navigate back to the homepage dashboard
+        }
+      }
+      // Note: Alt + ArrowRight is not handled here as there's no "forward" concept in this component's state
+    };
+
+    const handleMouseUp = (event: MouseEvent) => {
+      // Check if the "Back" mouse button (typically button 3) was pressed
+      if (event.button === 3) {
+        // Check if a feature is currently active (not on the main dashboard)
+        if (activeFeature !== null) {
+          event.preventDefault(); // Prevent default browser back navigation
+          setActiveFeature(null); // Navigate back to the homepage dashboard
+        }
+      }
+      // Note: Forward mouse button (button 4) is not handled due to lack of forward history state
+    };
+
+    // Add event listeners when the component mounts
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('mouseup', handleMouseUp); // Listen for mouse button releases
+
+    // Remove event listeners when the component unmounts
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [activeFeature]); // Dependency array includes activeFeature to ensure checks inside handlers use the latest state
 
   // Group features by category
   const groupedFeatures = features.reduce((acc, feature) => {
@@ -74,6 +112,7 @@ const Homepage: React.FC = () => {
   // Render homepage with feature cards
   return (
     <div className="homepage-container">
+      <Navbar /> {/* Add the Navbar component here */}
       <div className="homepage-header">
         <h1>Microsoft Support Tools</h1>
         <p>Select a tool to get started</p>
