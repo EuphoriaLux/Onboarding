@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react'; // Import useCallback
+import React, { useCallback } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useSupportRequests } from '../hooks/useSupportRequests'; // Keep this hook
+import { useSupportRequests } from '../hooks/useSupportRequests';
+import './SupportRequestViewer.css';
 import { RequestList } from './RequestList';
 import { RequestView } from './RequestView';
 import { CreateRequestForm } from './CreateRequestForm'; // Import the new form
@@ -33,7 +34,7 @@ export const SupportRequestViewer: React.FC = () => {
   return (
     // Optional: Wrap with a Provider if Context API is used
     // <SupportRequestsProvider>
-    <div style={{ padding: '15px' }}>
+    <div className="support-viewer-container">
       <h2>Support Request Management Tool</h2>
 
       {/* Only show list, view, and create form if authenticated */}
@@ -47,7 +48,7 @@ export const SupportRequestViewer: React.FC = () => {
 
       {/* Show message if not authenticated and not loading */}
       {!isAuthenticated && !isAuthLoading && (
-        <p style={{ marginTop: '20px', fontStyle: 'italic' }}>
+        <p className="support-viewer-auth-message">
           Please log in with Azure AD to view support requests.
         </p>
       )}

@@ -1,6 +1,8 @@
 // src/App.tsx - Moved from features/common/components
-import React, { useState, useEffect } from 'react'; // Added useEffect
-import { TierSelector } from './features/emailBuilder/supportTiers'; // Adjusted path
+import React, { useState, useEffect } from 'react';
+import { TierSelector } from './features/emailBuilder/supportTiers';
+import EmailRecipientsForm from './components/EmailRecipientsForm';
+import { EmailRecipient } from './types/AppTypes';
 import { ContactsForm } from './features/emailBuilder/contacts'; // Adjusted path
 import { TenantManager } from './features/emailBuilder/tenants'; // Adjusted path
 import { EmailForm, EmailPreview } from './features/emailBuilder'; // Adjusted path
@@ -10,7 +12,8 @@ import { useLanguage } from './contexts/LanguageContext'; // Adjusted path
 import { StorageService } from './services/storage'; // Adjusted path
 import { ThemeSettings, AgentSettings } from './types'; // Adjusted path, added AgentSettings
 import { supportTiers } from './features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path
-import { generateMeetingSlots, formatSlot } from './features/emailBuilder/utils/dateSlotGenerator'; // Adjusted path
+import { generateMeetingSlots } from './utils/slotUtils';
+import MeetingSlotSelector from './components/MeetingSlotSelector';
 import emailBuilder from './features/emailBuilder/utils/emailBuilder'; // Import emailBuilder to use translate
 import CollapsibleSection from './components/CollapsibleSection'; // Import moved component
 import { applyThemeColors } from './utils/themeUtils'; // Import theme utility
@@ -39,7 +42,7 @@ const App: React.FC = () => {
   const [localEmailData, setLocalEmailData] = useState<any>(null); // Consider using a more specific type
   const [agentSettings, setAgentSettings] = useState<AgentSettings | null>(null); // State for agent settings
   const [themeSettings, setThemeSettings] = useState<ThemeSettings | null>(null); // State for theme settings
-  const [emailRecipients, setEmailRecipients] = useState({
+  const [emailRecipients, setEmailRecipients] = useState<EmailRecipient>({
     to: state.customerInfo.contactEmail || '',
     cc: '',
     subject: ''
@@ -78,69 +81,6 @@ const App: React.FC = () => {
   // Generate available slots (memoize to avoid regeneration on every render)
   const availableSlots = React.useMemo(() => generateMeetingSlots(2), []);
 
-  // Handle meeting slot selection change (for individual slots - needed by block change handler)
-  const handleSlotChange = (slot: Date, isChecked: boolean) => {
-    const currentSlots = state.customerInfo.proposedSlots || [];
-    let updatedSlots: Date[];
-
-    if (isChecked) {
-      if (!currentSlots.some(s => s.getTime() === slot.getTime())) {
-        updatedSlots = [...currentSlots, slot];
-      } else {
-        updatedSlots = currentSlots;
-      }
-    } else {
-      updatedSlots = currentSlots.filter(s => s.getTime() !== slot.getTime());
-    }
-    updatedSlots.sort((a, b) => a.getTime() - b.getTime());
-    updateProposedSlots(updatedSlots);
-  };
-
-  // Handler for selecting/deselecting morning/afternoon blocks by toggling individual slots
-  const handleTimeBlockChange = (dayKey: string, block: 'morning' | 'afternoon', isSelected: boolean) => {
-    const slotsForDay = slotsByDay[dayKey] || [];
-    let blockSlots: Date[] = [];
-
-    if (block === 'morning') {
-      blockSlots = slotsForDay.filter(slot => slot.getHours() >= 10 && slot.getHours() < 12);
-    } else { // afternoon
-      blockSlots = slotsForDay.filter(slot => slot.getHours() >= 14 && slot.getHours() < 16);
-    }
-
-    // Update the state based on the block selection
-    const currentSlots = state.customerInfo.proposedSlots || [];
-    let updatedSlots: Date[];
-
-    if (isSelected) {
-      // Add block slots, avoiding duplicates
-      const slotsToAdd = blockSlots.filter(bs => !currentSlots.some(cs => cs.getTime() === bs.getTime()));
-      updatedSlots = [...currentSlots, ...slotsToAdd];
-    } else {
-      // Remove block slots
-      const blockSlotTimes = blockSlots.map(s => s.getTime());
-      updatedSlots = currentSlots.filter(cs => !blockSlotTimes.includes(cs.getTime()));
-    }
-
-    updatedSlots.sort((a, b) => a.getTime() - b.getTime());
-    updateProposedSlots(updatedSlots);
-  };
-
-
-  // Group available slots by day (YYYY-MM-DD)
-  const slotsByDay = React.useMemo(() => {
-    const grouped: { [key: string]: Date[] } = {};
-    availableSlots.forEach(slot => {
-      const dayKey = slot.toISOString().split('T')[0];
-      if (!grouped[dayKey]) {
-        grouped[dayKey] = [];
-      }
-      grouped[dayKey].push(slot);
-    });
-    return grouped;
-  }, [availableSlots]);
-
-  // Get unique days for day selection
-  const availableDays = React.useMemo(() => Object.keys(slotsByDay).sort(), [slotsByDay]);
 
   // Handler for the master meeting slots toggle
   const handleIncludeMeetingSlotsToggle = (isChecked: boolean) => {
@@ -287,32 +227,11 @@ const App: React.FC = () => {
           </div>
 
           {/* 1. Email Recipients & Subject */}
-          <div className="form-section email-recipients-section">
-            <h2>Email Recipients</h2>
-            <div className="form-group">
-              <label htmlFor="to-field">To:</label>
-              <input
-                id="to-field"
-                type="email"
-                value={emailRecipients.to}
-                onChange={(e) => handleEmailRecipientsChange('to', e.target.value)}
-                placeholder="recipient@example.com"
-                required
-              />
-              <small className="form-text">Use semicolons (;) to separate multiple addresses.</small>
-            </div>
-            <div className="form-group">
-              <label htmlFor="cc-field">Cc:</label>
-              <input
-                id="cc-field"
-                type="email"
-                value={emailRecipients.cc}
-                onChange={(e) => handleEmailRecipientsChange('cc', e.target.value)}
-                placeholder="cc@example.com"
-              />
-              <small className="form-text">Use semicolons (;) to separate multiple addresses.</small>
-            </div>
-          </div>
+          <EmailRecipientsForm
+            recipients={emailRecipients}
+            onRecipientChange={handleEmailRecipientsChange}
+            onCustomerEmailChange={(email) => updateCustomerInfo('contactEmail', email)}
+          />
 
           {/* 2. Support Tier Selection */}
           <div className="form-section tier-section">
@@ -351,94 +270,15 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          {/* UPDATED: Proposed Meeting Slots Section - Block + Individual */}
-          <div className="form-section meeting-slots-section">
-            <div className="section-header-with-toggle">
-              <h2>Propose Meeting Slots</h2>
-              <div className="checkbox-container inline-label master-toggle">
-                <input
-                  type="checkbox"
-                  id="includeMeetingSlots"
-                  checked={includeMeetingSlots}
-                  onChange={(e) => handleIncludeMeetingSlotsToggle(e.target.checked)}
-                />
-                <label htmlFor="includeMeetingSlots">Include Meeting Proposal</label>
-              </div>
-            </div>
-            <p className="section-description">Select potential 30-minute slots for the onboarding call (Tuesdays/Thursdays, 10-12 & 14-16). Use the toggle above to include/exclude this section in the email and select/deselect all slots.</p>
-
-            <div className="slot-day-columns-container"> {/* Container for horizontal columns */}
-              {availableDays.length > 0 ? (
-                availableDays.map((dayKey) => {
-                    const dayDate = new Date(dayKey + 'T00:00:00Z'); // Parse YYYY-MM-DD as UTC
-                    const dayLabel = dayDate.toLocaleDateString(language, { weekday: 'long', month: 'long', day: 'numeric' });
-                    const morningSlots = slotsByDay[dayKey]?.filter(s => s.getHours() >= 10 && s.getHours() < 12) || [];
-                    const afternoonSlots = slotsByDay[dayKey]?.filter(s => s.getHours() >= 14 && s.getHours() < 16) || [];
-
-                    // Determine if morning/afternoon blocks are fully selected
-                    const isMorningSelected = morningSlots.length > 0 && morningSlots.every(ms => state.customerInfo.proposedSlots?.some(ps => ps.getTime() === ms.getTime()));
-                    const isAfternoonSelected = afternoonSlots.length > 0 && afternoonSlots.every(as => state.customerInfo.proposedSlots?.some(ps => ps.getTime() === as.getTime()));
-
-                    return (
-                      <div key={dayKey} className="slot-day-column"> {/* Column for each day */}
-                        <h4 className="slot-day-header">{dayLabel}</h4>
-                        {/* Block Selectors */}
-                        <div className="slot-block-group">
-                          {morningSlots.length > 0 && (
-                            <div className="checkbox-container slot-block-checkbox">
-                              <input
-                                type="checkbox"
-                                id={`morning-${dayKey}`}
-                                checked={isMorningSelected}
-                                onChange={(e) => handleTimeBlockChange(dayKey, 'morning', e.target.checked)}
-                                disabled={!includeMeetingSlots}
-                              />
-                              <label htmlFor={`morning-${dayKey}`}>Morning (10:00-12:00)</label>
-                            </div>
-                          )}
-                          {afternoonSlots.length > 0 && (
-                            <div className="checkbox-container slot-block-checkbox">
-                              <input
-                                type="checkbox"
-                                id={`afternoon-${dayKey}`}
-                                checked={isAfternoonSelected}
-                                onChange={(e) => handleTimeBlockChange(dayKey, 'afternoon', e.target.checked)}
-                                disabled={!includeMeetingSlots}
-                              />
-                              <label htmlFor={`afternoon-${dayKey}`}>Afternoon (14:00-16:00)</label>
-                            </div>
-                          )}
-                        </div>
-                        {/* Divider */}
-                        {(morningSlots.length > 0 || afternoonSlots.length > 0) && <hr className="slot-divider" />}
-                        {/* Individual Slots */}
-                        <div className="slot-checkbox-group vertical">
-                          {slotsByDay[dayKey].map((slot) => {
-                            const slotId = `slot-${slot.toISOString()}`;
-                            const isChecked = state.customerInfo.proposedSlots?.some(s => s.getTime() === slot.getTime()) || false;
-                            const timeLabel = slot.toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false }) + ' - ' + new Date(slot.getTime() + 30 * 60000).toLocaleTimeString(language, { hour: '2-digit', minute: '2-digit', hour12: false });
-                            return (
-                              <div key={slotId} className="checkbox-container slot-checkbox">
-                                <input
-                                  type="checkbox"
-                                  id={slotId}
-                                  checked={isChecked}
-                                  onChange={(e) => handleSlotChange(slot, e.target.checked)}
-                                  disabled={!includeMeetingSlots}
-                                />
-                                <label htmlFor={slotId}>{timeLabel}</label>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p>No available slots found in the coming weeks.</p>
-                )}
-              </div>
-          </div>
+          {/* UPDATED: Proposed Meeting Slots Section */}
+          <MeetingSlotSelector
+            availableSlots={availableSlots}
+            selectedSlots={state.customerInfo.proposedSlots || []}
+            includeMeetingSlots={includeMeetingSlots}
+            language={language}
+            onIncludeToggle={handleIncludeMeetingSlotsToggle}
+            onSlotsChange={updateProposedSlots}
+          />
 
 
           {/* 4. Authorized Contacts */}

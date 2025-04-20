@@ -26,9 +26,8 @@ module.exports = (env, argv) => {
     devtool: isProduction ? 'source-map' : 'cheap-module-source-map', // Use source-map for prod, cheap-module-source-map for dev
     entry: {
       popup: './src/popup.tsx',
-    options: './src/options.tsx',
-    background: './src/background.ts'
-  },
+      options: './src/options.tsx'
+    },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
@@ -53,8 +52,16 @@ module.exports = (env, argv) => {
       {
         test: /\.css$/,
         use: [
-          isProduction ? MiniCssExtractPlugin.loader : 'style-loader', // Use MiniCssExtractPlugin in production
-          'css-loader'
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                auto: true,
+                localIdentName: '[name]__[local]--[hash:base64:5]'
+              }
+            }
+          }
         ]
       },
       {
@@ -77,10 +84,9 @@ module.exports = (env, argv) => {
     new CopyWebpackPlugin({
       patterns: copyPatterns
     }),
-    // Add MiniCssExtractPlugin only in production
-    ...(isProduction ? [new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css', // Use contenthash for cache busting
-      chunkFilename: '[id].[contenthash].css',
-    })] : [])
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    })
   ]
 }};
