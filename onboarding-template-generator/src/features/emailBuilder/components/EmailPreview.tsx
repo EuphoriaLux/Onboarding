@@ -194,70 +194,91 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
     }
   };
 
+  // Base button style
+  const buttonBaseStyle = "inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800";
+  const primaryButtonBaseStyle = "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-offset-gray-800";
+
+
   return (
-    <div className="email-preview-container">
+    // Container styling
+    <div className="p-6 space-y-6 max-w-7xl mx-auto"> {/* Increased max-width */}
       {showInstructions && <OutlookInstructions onClose={closeInstructions} />}
-      <h2>Email Preview <span className="language-badge">{languageDisplay()}</span></h2>
-      
-      <div className="preview-actions">
-        <div className="view-toggle">
-          <button 
-            className={viewMode === 'html' ? 'active' : ''} 
+      {/* Title with language badge */}
+      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-3">
+        Email Preview
+        <span className="px-2.5 py-0.5 bg-gray-100 text-gray-800 text-xs font-medium rounded-full dark:bg-gray-700 dark:text-gray-300">{languageDisplay()}</span>
+      </h2>
+
+      {/* Actions section */}
+      <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+        {/* View toggle buttons */}
+        <div className="flex space-x-2">
+          <button
+            className={`${buttonBaseStyle} ${viewMode === 'html' ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300' : ''}`}
             onClick={() => setViewMode('html')}
           >
             HTML View
           </button>
-          <button 
-            className={viewMode === 'text' ? 'active' : ''} 
+          <button
+            className={`${buttonBaseStyle} ${viewMode === 'text' ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300' : ''}`}
             onClick={() => setViewMode('text')}
           >
             Plain Text View
           </button>
         </div>
-        
-        <div className="action-buttons">
-          <button 
+
+        {/* Action buttons row */}
+        <div className="flex flex-wrap gap-3 items-center">
+          {/* Tooltip styling might need JS or a library for complex behavior, basic hover shown */}
+          <button
             onClick={() => handleCopyToClipboard(viewMode)}
-            className="tooltip"
+            className={`${primaryButtonBaseStyle} relative group`} // Added relative group for tooltip
           >
-            Copy {viewMode === 'html' ? 'HTML' : 'Text'} to Clipboard
-            {viewMode === 'html' && 
-              <span className="tooltip-text">Enhanced formatting for Outlook</span>
+            Copy {viewMode === 'html' ? 'HTML' : 'Text'}
+            {viewMode === 'html' &&
+              <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none dark:bg-gray-200 dark:text-gray-800">
+                Enhanced formatting for Outlook
+              </span>
             }
           </button>
-          <button onClick={handleDownloadHTML}>Download HTML</button>
-          <button onClick={handleGenerateEml}>Generate Outlook Draft (.eml)</button> {/* New Button */}
-          <button onClick={handleOpenInOutlook}>Open in Email Client</button>
-          <button onClick={onBackToEdit}>Back to Edit</button>
+          <button onClick={handleDownloadHTML} className={buttonBaseStyle}>Download HTML</button>
+          <button onClick={handleGenerateEml} className={buttonBaseStyle}>Generate Outlook Draft (.eml)</button>
+          <button onClick={handleOpenInOutlook} className={buttonBaseStyle}>Open in Email Client</button>
+          <button onClick={onBackToEdit} className={`${buttonBaseStyle} bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-400`}>Back to Edit</button>
         </div>
-        
-        {copySuccess && <div className="copy-success">{copySuccess}</div>}
-        {emlStatus && <div className="eml-status">{emlStatus}</div>} {/* EML Status Message */}
+
+        {/* Status messages */}
+        {copySuccess && <div className="mt-2 text-sm font-medium text-green-600 dark:text-green-400">{copySuccess}</div>}
+        {emlStatus && <div className="mt-2 text-sm font-medium text-blue-600 dark:text-blue-400">{emlStatus}</div>}
       </div>
-      
-      <div className="preview-content">
-        <div className="preview-header">
-          <div className="preview-recipient">
-            <strong>To:</strong> {emailData.to}
-            {emailData.cc && <>, <strong>Cc:</strong> {emailData.cc}</>}
+
+      {/* Preview content area */}
+      <div className="border border-gray-200 rounded-lg dark:border-gray-700 overflow-hidden">
+        {/* Preview header */}
+        <div className="p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300 space-y-1">
+          <div>
+            <strong className="font-semibold text-gray-900 dark:text-gray-100">To:</strong> {emailData.to}
+            {emailData.cc && <><br /><strong className="font-semibold text-gray-900 dark:text-gray-100">Cc:</strong> {emailData.cc}</>}
           </div>
-          <div className="preview-subject">
-            <strong>Subject:</strong> {emailData.subject}
+          <div>
+            <strong className="font-semibold text-gray-900 dark:text-gray-100">Subject:</strong> {emailData.subject}
           </div>
-          <div className="preview-date">
-            <strong>Date:</strong> {emailData.currentDate}
+          <div>
+            <strong className="font-semibold text-gray-900 dark:text-gray-100">Date:</strong> {emailData.currentDate}
           </div>
        </div>
 
-       <div className="preview-body" style={{ width: '100%', overflowX: 'hidden' }}> {/* Added overflow-x hidden */}
+       {/* Preview body - replace inline styles with Tailwind */}
+       <div className="w-full overflow-x-hidden bg-white">
          {viewMode === 'html' ? (
            <iframe
                srcDoc={htmlContent}
                title="Email Preview"
-               style={{ width: '100%', height: '600px', border: '1px solid #ddd', backgroundColor: '#FFFFFF', overflow: 'auto' }} // Added overflow: auto
+               className="w-full h-[600px] border-0 overflow-auto" // Use Tailwind classes
              />
            ) : (
-            <pre className="text-preview">{plainText}</pre>
+             // Style plain text preview
+            <pre className="p-4 text-sm text-gray-800 whitespace-pre-wrap break-words overflow-auto h-[600px]">{plainText}</pre>
           )}
         </div>
       </div>

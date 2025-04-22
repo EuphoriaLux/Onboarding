@@ -110,21 +110,32 @@ const EmailForm: React.FC<EmailFormProps> = ({
   };
 
   return (
-    <div className="email-form-container">
-      <h2>Email Template Generator</h2>
-      <p className="info-text">
+    // Replace custom container class with Tailwind padding and max-width
+    <div className="p-6 space-y-6 max-w-4xl mx-auto">
+      {/* Title styling */}
+      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 border-b pb-2">Email Template Generator</h2>
+      {/* Info text styling */}
+      <p className="text-sm text-gray-600 dark:text-gray-400">
         Customize this email template to send to your client as part of the onboarding process.
-        <span className="language-indicator"> Current language: <strong>{languageDisplay()}</strong></span>
+        {/* Language indicator styling */}
+        <span className="ml-4 px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full dark:bg-blue-900 dark:text-blue-300"> Current language: <strong>{languageDisplay()}</strong></span>
       </p>
 
-      <form onSubmit={handleSubmit}>
-        <div className="section">
-          <h3>Email Recipients</h3>
-          <div className="form-group">
-            <label htmlFor="to">To:</label>
+      {/* Add spacing between form elements */}
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {/* Section styling: border, padding, rounded corners */}
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+          {/* Section title styling */}
+          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Email Recipients</h3>
+          {/* Form group styling: margin-bottom */}
+          <div className="mb-4">
+            {/* Label styling */}
+            <label htmlFor="to" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">To:</label>
+            {/* Input styling using @tailwindcss/forms plugin defaults + custom focus */}
             <input
               type="email"
               id="to"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.to}
               onChange={(e) => handleInputChange('to', e.target.value)}
               placeholder="recipient@example.com"
@@ -132,22 +143,24 @@ const EmailForm: React.FC<EmailFormProps> = ({
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="cc">Cc:</label>
+          <div className="mb-4">
+            <label htmlFor="cc" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cc:</label>
             <input
               type="email"
               id="cc"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.cc || ''}
               onChange={(e) => handleInputChange('cc', e.target.value)}
               placeholder="cc@example.com"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="subject">Subject:</label>
+          <div className="mb-4">
+            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subject:</label>
             <input
               type="text"
               id="subject"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.subject || ''}
               onChange={(e) => handleInputChange('subject', e.target.value)}
               placeholder="Email subject"
@@ -155,66 +168,73 @@ const EmailForm: React.FC<EmailFormProps> = ({
           </div>
         </div>
 
-        {/* Rest of the component remains the same */}
-        {/* ... */}
+        {/* Section styling */}
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Onboarding Components</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Select the components to include in your onboarding email:</p>
 
-        <div className="section">
-          <h3>Onboarding Components</h3>
-          <p>Select the components to include in your onboarding email:</p>
-
-          {/* GDAP Section Removed */}
-          {/* RBAC Section Removed */}
-
-          <div className="checkbox-group">
-            <div className="checkbox-container">
+          {/* Checkbox group styling */}
+          <div className="space-y-4">
+            {/* Checkbox container styling */}
+            <div className="flex items-center">
+              {/* Checkbox styling using @tailwindcss/forms */}
               <input
                 type="checkbox"
                 id="conditionalAccess"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
                 checked={emailData.conditionalAccess.checked}
                 onChange={() => handleCheckboxToggle('conditionalAccess', 'checked')}
               />
-              <label htmlFor="conditionalAccess">Conditional Access</label>
+              {/* Label styling */}
+              <label htmlFor="conditionalAccess" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">Conditional Access</label>
             </div>
             {emailData.conditionalAccess.checked && (
-              <div className="nested-options">
-                <div className="form-group">
-                  <label>Policies to Implement:</label>
-                  <div className="inline-checks">
-                    <div className="checkbox-container">
+              // Nested options styling: padding, margin, border
+              <div className="ml-6 pl-4 border-l border-gray-200 dark:border-gray-600 space-y-3">
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Policies to Implement:</label>
+                  {/* Inline checks container */}
+                  <div className="space-y-2">
+                    {/* Checkbox container styling */}
+                    <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="caMfa"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
                         checked={emailData.conditionalAccess.mfa}
                         onChange={() => handleCheckboxToggle('conditionalAccess', 'mfa')}
                       />
-                      <label htmlFor="caMfa">MFA Requirements</label>
+                      <label htmlFor="caMfa" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">MFA Requirements</label>
                     </div>
-                    <div className="checkbox-container">
+                    <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="caLocation"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
                         checked={emailData.conditionalAccess.location}
                         onChange={() => handleCheckboxToggle('conditionalAccess', 'location')}
                       />
-                      <label htmlFor="caLocation">Location-Based Access</label>
+                      <label htmlFor="caLocation" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">Location-Based Access</label>
                     </div>
-                    <div className="checkbox-container">
+                    <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="caDevice"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
                         checked={emailData.conditionalAccess.device}
                         onChange={() => handleCheckboxToggle('conditionalAccess', 'device')}
                       />
-                      <label htmlFor="caDevice">Device Compliance</label>
+                      <label htmlFor="caDevice" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">Device Compliance</label>
                     </div>
-                    <div className="checkbox-container">
+                    <div className="flex items-center">
                       <input
                         type="checkbox"
                         id="caSignIn"
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
                         checked={emailData.conditionalAccess.signIn}
                         onChange={() => handleCheckboxToggle('conditionalAccess', 'signIn')}
                       />
-                      <label htmlFor="caSignIn">Sign-in Risk Policies</label>
+                      <label htmlFor="caSignIn" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">Sign-in Risk Policies</label>
                     </div>
                   </div>
                 </div>
@@ -222,23 +242,27 @@ const EmailForm: React.FC<EmailFormProps> = ({
             )}
           </div>
 
-          <div className="checkbox-group">
-            <div className="checkbox-container">
+          {/* Checkbox group styling */}
+          <div className="space-y-4">
+             {/* Checkbox container styling */}
+            <div className="flex items-center">
               <input
                 type="checkbox"
                 id="authorizedContacts"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
                 checked={emailData.authorizedContacts.checked}
                 onChange={() => handleCheckboxToggle('authorizedContacts', 'checked')}
               />
-              <label htmlFor="authorizedContacts">Authorized Contacts Table</label>
+              <label htmlFor="authorizedContacts" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">Authorized Contacts Table</label>
             </div>
             {emailData.authorizedContacts.checked && (
-              <div className="nested-options">
-                <div className="form-group">
-                  <label htmlFor="contactsRoles">Recommended Contact Roles:</label>
+              <div className="ml-6 pl-4 border-l border-gray-200 dark:border-gray-600 space-y-3">
+                <div className="mb-4">
+                  <label htmlFor="contactsRoles" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Recommended Contact Roles:</label>
                   <input
                     type="text"
                     id="contactsRoles"
+                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
                     value={emailData.authorizedContacts.roles}
                     onChange={(e) => handleNestedChange('authorizedContacts', 'roles', e.target.value)}
                     placeholder="e.g., Technical Contact, Billing Contact"
@@ -249,14 +273,16 @@ const EmailForm: React.FC<EmailFormProps> = ({
           </div>
         </div>
 
-        <div className="section">
-          <h3>Additional Information</h3>
-          {/* Removed single date input - replaced by slot selection in App.tsx */}
+        {/* Section styling */}
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Additional Information</h3>
 
-          <div className="form-group">
-            <label htmlFor="additionalNotes">Additional Notes or Instructions:</label>
+          <div className="mb-4">
+            <label htmlFor="additionalNotes" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Additional Notes or Instructions:</label>
+            {/* Textarea styling */}
             <textarea
               id="additionalNotes"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.additionalNotes || ''}
               onChange={(e) => handleInputChange('additionalNotes', e.target.value)}
               placeholder="Any additional information for the client..."
@@ -265,13 +291,15 @@ const EmailForm: React.FC<EmailFormProps> = ({
           </div>
         </div>
 
-        <div className="section">
-          <h3>Sender Information</h3>
-          <div className="form-group">
-            <label htmlFor="senderName">Your Name:</label>
+        {/* Section styling */}
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+          <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Sender Information</h3>
+          <div className="mb-4">
+            <label htmlFor="senderName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name:</label>
             <input
               type="text"
               id="senderName"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.senderName}
               onChange={(e) => handleInputChange('senderName', e.target.value)}
               placeholder="Your full name"
@@ -279,22 +307,24 @@ const EmailForm: React.FC<EmailFormProps> = ({
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="senderTitle">Your Title:</label>
+          <div className="mb-4">
+            <label htmlFor="senderTitle" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Title:</label>
             <input
               type="text"
               id="senderTitle"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.senderTitle}
               onChange={(e) => handleInputChange('senderTitle', e.target.value)}
               placeholder="Your job title"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="senderCompany">Your Company:</label>
+          <div className="mb-4">
+            <label htmlFor="senderCompany" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Company:</label>
             <input
               type="text"
               id="senderCompany"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.senderCompany}
               onChange={(e) => handleInputChange('senderCompany', e.target.value)}
               placeholder="Your company name"
@@ -302,11 +332,12 @@ const EmailForm: React.FC<EmailFormProps> = ({
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="senderContact">Your Contact Info:</label>
+          <div className="mb-4">
+            <label htmlFor="senderContact" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Contact Info:</label>
             <input
               type="text"
               id="senderContact"
+              className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
               value={emailData.senderContact || ''}
               onChange={(e) => handleInputChange('senderContact', e.target.value)}
               placeholder="Phone number or additional contact info"
@@ -314,8 +345,15 @@ const EmailForm: React.FC<EmailFormProps> = ({
           </div>
         </div>
 
-        <div className="form-actions">
-          <button type="submit" className="btn btn-primary">Preview Email</button>
+        {/* Form actions styling */}
+        <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+          {/* Button styling */}
+          <button
+            type="submit"
+            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-offset-gray-800"
+          >
+            Preview Email
+          </button>
         </div>
       </form>
     </div>

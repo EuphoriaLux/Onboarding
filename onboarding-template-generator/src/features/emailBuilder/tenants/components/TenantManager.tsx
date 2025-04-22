@@ -1,4 +1,3 @@
-      // src/components/TenantManager.tsx
 import React, { useEffect } from 'react'; // Import useEffect
 import DatePicker from 'react-datepicker'; // Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
@@ -65,154 +64,180 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
     onChange(updatedTenants);
   };
 
+  // Base button style (can be moved to a shared location later)
+  const buttonBaseStyle = "inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 shadow-sm text-xs font-medium rounded text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800";
+  const primaryButtonBaseStyle = "inline-flex items-center px-3 py-1.5 border border-transparent shadow-sm text-xs font-medium rounded text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-offset-gray-800";
+
   return (
-    <div className="tenant-manager">
-      <h2>3. Tenant Information <span className="tenant-limit">({tenants.length}/{tier.tenants})</span></h2>
-      <p className="section-description">
+    // Container with spacing
+    <div className="space-y-6">
+      {/* Section title with tenant count */}
+      <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+        3. Tenant Information <span className="text-sm text-gray-500 dark:text-gray-400">({tenants.length}/{tier.tenants})</span>
+      </h2>
+      {/* Section description */}
+      <p className="text-sm text-gray-600 dark:text-gray-400">
         Your {tier.name} allows for up to {tier.tenants} tenant{tier.tenants !== 1 ? 's' : ''}.
         Please provide the information for each tenant you want to include.
       </p>
-      
-      {tenants.map((tenant, index) => (
-        <div key={index} className={`tenant-card ${selectedTier}`}>
-          <div className="tenant-header">
-            <h3>Tenant #{index + 1}</h3>
-            {tenants.length > 1 && (
-              <button 
-                type="button" 
-                className="remove-button"
-                onClick={() => removeTenant(index)}
-              >
-                Remove
-              </button>
-            )}
+
+      {/* Tenant cards */}
+      <div className="space-y-4">
+        {tenants.map((tenant, index) => (
+          // Tenant card styling
+          <div key={index} className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+            {/* Tenant header with remove button */}
+            <div className="flex justify-between items-center mb-3 pb-2 border-b border-gray-200 dark:border-gray-600">
+              <h3 className="text-md font-medium text-gray-700 dark:text-gray-300">Tenant #{index + 1}</h3>
+              {tenants.length > 1 && (
+                <button
+                  type="button"
+                  className={buttonBaseStyle}
+                  onClick={() => removeTenant(index)}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+
+            {/* Tenant fields */}
+            <div className="space-y-3">
+              {/* Form group: Company Name */}
+              <div>
+                <label htmlFor={`company-name-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Company Name</label>
+                <input
+                  id={`company-name-${index}`}
+                  type="text"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+                  value={tenant.companyName}
+                  onChange={(e) => handleTenantChange(index, 'companyName', e.target.value)}
+                  placeholder="Company Name"
+                  required
+                />
+              </div>
+
+              {/* Form group: Tenant Domain */}
+              <div>
+                <label htmlFor={`tenant-domain-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Tenant Domain</label>
+                <input
+                  id={`tenant-domain-${index}`}
+                  type="text"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+                  value={tenant.tenantDomain}
+                  onChange={(e) => handleTenantChange(index, 'tenantDomain', e.target.value)}
+                  placeholder="contoso.onmicrosoft.com"
+                  required
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  The `.onmicrosoft.com` domain, needed for the RBAC script.
+                </p>
+              </div>
+
+              {/* Form group: Tenant ID */}
+              <div>
+                <label htmlFor={`tenant-id-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Microsoft Tenant ID</label>
+                <input
+                  id={`tenant-id-${index}`}
+                  type="text"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+                  value={tenant.id}
+                  onChange={(e) => handleTenantChange(index, 'id', e.target.value)}
+                  placeholder="00000000-0000-0000-0000-000000000000"
+                  pattern="^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  Format: 00000000-0000-0000-0000-000000000000
+                </p>
+              </div>
+
+              {/* Form group: GDAP Link */}
+              <div>
+                <label htmlFor={`gdap-link-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Tenant-Specific GDAP Link (Optional)</label>
+                <input
+                  id={`gdap-link-${index}`}
+                  type="url"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+                  value={tenant.gdapLink || ''}
+                  onChange={(e) => handleTenantChange(index, 'gdapLink', e.target.value)}
+                  placeholder="https://partner.microsoft.com/..."
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  If provided, this link will be used for this tenant. Otherwise, a default link will be used.
+                </p>
+              </div>
+
+              {/* Configuration Section Starts Here */}
+              <hr className="border-gray-200 dark:border-gray-700" /> {/* Optional visual divider */}
+
+              {/* Display Calculated Deadline */}
+              <div>
+                <label htmlFor={`calculated-deadline-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">GDAP Implementation Deadline (Auto-calculated)</label>
+                <input
+                  id={`calculated-deadline-${index}`} // Add ID
+                  type="text"
+                  value={calculatedDeadline.toLocaleDateString()} // Format the date
+                  readOnly // Make it read-only
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600" // Optional styling
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  This date (90 days from today) will be used in the email template.
+                </p>
+              </div>
+
+              {/* Moved Microsoft Tenant Domain Input Down */}
+              <div>
+                <label htmlFor={`ms-tenant-domain-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Microsoft Tenant Domain</label>
+                <input
+                  id={`ms-tenant-domain-${index}`}
+                  type="text"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+                  value={tenant.microsoftTenantDomain}
+                  onChange={(e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value)}
+                  placeholder="yourcompany.onmicrosoft.com"
+                  required
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  The `.onmicrosoft.com` domain, needed for the RBAC script.
+                </p>
+              </div>
+
+              {/* Has Azure Checkbox */}
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  id={`has-azure-${index}`}
+                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-indigo-600 dark:ring-offset-gray-800"
+                  checked={tenant.hasAzure}
+                  onChange={(e) => handleTenantChange(index, 'hasAzure', e.target.checked)}
+                />
+                <label htmlFor={`has-azure-${index}`} className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Azure RBAC Relevant?</label>
+                <p className="ml-2 text-xs text-gray-500 dark:text-gray-400">Check if Azure RBAC configuration is needed for this tenant.</p>
+              </div>
+
+              {/* Removed Include RBAC Script Checkbox */}
+            </div>
+
+            {/* Info box styling */}
+            <div className="bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700 rounded-md p-3 text-sm text-blue-700 dark:text-blue-300">
+              <p className="font-semibold">
+                Note: The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps.
+              </p>
+            </div>
           </div>
-          
-          <div className="tenant-fields">
-            <div className="form-group">
-              <label htmlFor={`company-name-${index}`}>Company Name</label>
-              <input
-                id={`company-name-${index}`}
-                type="text"
-                value={tenant.companyName}
-                onChange={(e) => handleTenantChange(index, 'companyName', e.target.value)}
-                placeholder="Company Name"
-                required
-              />
-            </div>
+        ))}
+      </div>
 
-            {/* Add Tenant Domain Input */}
-            <div className="form-group">
-              <label htmlFor={`tenant-domain-${index}`}>Tenant Domain</label>
-              <input
-                id={`tenant-domain-${index}`}
-                type="text"
-                value={tenant.tenantDomain}
-                onChange={(e) => handleTenantChange(index, 'tenantDomain', e.target.value)}
-                placeholder="contoso.onmicrosoft.com"
-                required
-              />
-              <small className="form-text">
-                The primary domain name (e.g., contoso.onmicrosoft.com).
-              </small>
-            </div>
-
-            {/* Moved Tenant ID Up */}
-            <div className="form-group">
-              <label htmlFor={`tenant-id-${index}`}>Microsoft Tenant ID</label>
-              <input
-                id={`tenant-id-${index}`}
-                type="text"
-                value={tenant.id}
-                onChange={(e) => handleTenantChange(index, 'id', e.target.value)}
-                placeholder="00000000-0000-0000-0000-000000000000"
-                pattern="^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-              />
-              <small className="form-text">
-                Format: 00000000-0000-0000-0000-000000000000
-              </small>
-            </div>
-            
-            {/* Moved GDAP Link Input Up */}
-            <div className="form-group">
-              <label htmlFor={`gdap-link-${index}`}>Tenant-Specific GDAP Link (Optional)</label>
-              <input
-                id={`gdap-link-${index}`}
-                type="url"
-                value={tenant.gdapLink || ''}
-                onChange={(e) => handleTenantChange(index, 'gdapLink', e.target.value)}
-                placeholder="https://partner.microsoft.com/..."
-              />
-              <small className="form-text">
-                If provided, this link will be used for this tenant. Otherwise, a default link will be used.
-              </small>
-            </div>
-
-            {/* Configuration Section Starts Here */}
-            <hr className="tenant-divider" /> {/* Optional visual divider */}
-
-            {/* Display Calculated Deadline */}
-            <div className="form-group">
-              <label htmlFor={`calculated-deadline-${index}`}>GDAP Implementation Deadline (Auto-calculated)</label>
-              <input
-                id={`calculated-deadline-${index}`} // Add ID
-                type="text"
-                value={calculatedDeadline.toLocaleDateString()} // Format the date
-                readOnly // Make it read-only
-                className="form-control" // Optional styling
-              />
-               <small className="form-text">
-                This date (90 days from today) will be used in the email template.
-              </small>
-            </div>
-
-            {/* Moved Microsoft Tenant Domain Input Down */}
-            <div className="form-group">
-              <label htmlFor={`ms-tenant-domain-${index}`}>Microsoft Tenant Domain</label>
-              <input
-                id={`ms-tenant-domain-${index}`}
-                type="text"
-                value={tenant.microsoftTenantDomain}
-                onChange={(e) => handleTenantChange(index, 'microsoftTenantDomain', e.target.value)}
-                placeholder="yourcompany.onmicrosoft.com"
-                required 
-              />
-              <small className="form-text">
-                The `.onmicrosoft.com` domain, needed for the RBAC script.
-              </small>
-            </div>
-
-            {/* Has Azure Checkbox */}
-            <div className="form-group checkbox-container inline-label">
-              <input
-                type="checkbox"
-                id={`has-azure-${index}`}
-                checked={tenant.hasAzure}
-                onChange={(e) => handleTenantChange(index, 'hasAzure', e.target.checked)}
-              />
-              <label htmlFor={`has-azure-${index}`}>Azure RBAC Relevant?</label>
-              <small className="form-text">Check if Azure RBAC configuration is needed for this tenant.</small>
-            </div>
-
-            {/* Removed Include RBAC Script Checkbox */}
-          </div>
-          
-          <div className="info-box">
-            <p>
-              <strong>Note:</strong> The tenant ID will be used in the GDAP link acceptance and RBAC role establishment steps.
-            </p>
-          </div>
-        </div>
-      ))}
-      
+      {/* Add tenant button styling */}
       {tenants.length < tier.tenants && (
-        <button 
-          type="button" 
-          className="add-button"
-          onClick={addTenant}
-        >
-          Add Tenant
-        </button>
+        <div className="mt-4">
+          <button
+            type="button"
+            className={primaryButtonBaseStyle}
+            onClick={addTenant}
+          >
+            Add Tenant
+          </button>
+        </div>
       )}
     </div>
   );

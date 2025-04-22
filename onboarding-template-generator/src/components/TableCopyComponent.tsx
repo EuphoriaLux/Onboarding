@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import emailBuilder from '../features/emailBuilder/utils/emailBuilder'; // Adjusted path
 import { CustomerInfo } from '../features/emailBuilder/utils/types'; // Adjusted path
-import { supportTiers } from '../features/emailBuilder/supportTiers/constants'; // Adjusted path
-// Import createContactsTable directly
-import { createContactsTable } from '../features/emailBuilder/utils/components'; // Adjusted path
+import { supportTiers } from '../features/emailBuilder/supportTiers/data/supportTiers';
+// Import table creation function
+import { createImprovedContactsTable } from '../features/emailBuilder/utils/components';
 
 interface TableCopyComponentProps {
   customerInfo: CustomerInfo;
@@ -20,7 +20,7 @@ const TableCopyComponent: React.FC<TableCopyComponentProps> = ({ customerInfo })
       const tier = supportTiers[customerInfo.selectedTier];
       
       // Generate the contacts table HTML using the imported function directly
-      const tableHtml = createContactsTable(tier.authorizedContacts);
+      const tableHtml = createImprovedContactsTable(tier.authorizedContacts);
       
       // Copy to clipboard
       // Note: We're using the browser's built-in clipboard API here
@@ -59,25 +59,30 @@ const TableCopyComponent: React.FC<TableCopyComponentProps> = ({ customerInfo })
   const tier = supportTiers[customerInfo.selectedTier];
   
   return (
-    <div className="contacts-table-container">
-      <h3>Contacts Table for {tier.name} Support Plan</h3>
-      <p>Your plan allows for {tier.authorizedContacts} authorized contacts.</p>
-      
-      <button 
-        className="copy-button"
+    // Container with spacing
+    <div className="space-y-4">
+      {/* Title with plan info */}
+      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Contacts Table for {tier.name} Support Plan</h3>
+      <p className="text-sm text-gray-600 dark:text-gray-400">Your plan allows for {tier.authorizedContacts} authorized contacts.</p>
+
+      {/* Copy button styling */}
+      <button
+        className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:bg-indigo-500 dark:hover:bg-indigo-600 dark:focus:ring-offset-gray-800"
         onClick={handleCopyContactsTable}
       >
         Copy Contacts Table to Clipboard
       </button>
-      
+
+      {/* Copy status message */}
       {copyStatus && (
-        <div className="copy-status">{copyStatus}</div>
+        <div className="text-sm text-green-600 dark:text-green-400">{copyStatus}</div>
       )}
-      
-      <div className="preview-container">
-        <h4>Preview:</h4>
-        <div dangerouslySetInnerHTML={{ 
-          __html: createContactsTable(tier.authorizedContacts) 
+
+      {/* Preview container styling */}
+      <div className="border border-gray-200 rounded-lg dark:border-gray-700 p-4">
+        <h4 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">Preview:</h4>
+        <div dangerouslySetInnerHTML={{
+          __html: createImprovedContactsTable(tier.authorizedContacts)
         }} />
       </div>
     </div>

@@ -9,16 +9,21 @@ const CollapsibleSection: React.FC<{
   const [isExpanded, setIsExpanded] = useState(initialExpanded);
 
   return (
-    <div className="form-section collapsible-section">
+    // Container with spacing and border
+    <div className="mb-4 border border-gray-200 rounded-lg dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+      {/* Header with toggle button */}
       <div
-        className={`collapsible-header ${isExpanded ? 'expanded' : ''}`}
+        className="flex justify-between items-center p-3 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <h3>{title}</h3>
-        <span className="toggle-icon">{isExpanded ? '−' : '+'}</span>
+        {/* Title styling */}
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">{title}</h3>
+        {/* Toggle icon styling */}
+        <span className="text-gray-500 dark:text-gray-400">{isExpanded ? '−' : '+'}</span>
       </div>
+      {/* Collapsible content area */}
       {isExpanded && (
-        <div className="collapsible-content">
+        <div className="p-4">
           {children}
         </div>
       )}
