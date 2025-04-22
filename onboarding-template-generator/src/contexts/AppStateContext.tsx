@@ -26,7 +26,8 @@ interface AppState {
   customerInfo: CustomerInfo;
   emailData: EmailFormData | null;
   language: Language;
-  showAlphaBetaFeatures: boolean; // Add state for the toggle
+  showAlphaBetaFeatures: boolean;
+  darkMode: boolean;
 }
 
 interface AppStateContextType {
@@ -37,8 +38,9 @@ interface AppStateContextType {
   updateTier: (tier: string) => void;
   updateEmailData: (data: EmailFormData) => void;
   updateLanguage: (language: Language) => void;
-  updateProposedSlots: (slots: Date[]) => void; // Add handler for slots
-  updateShowAlphaBetaFeatures: (value: boolean) => void; // Add handler for the toggle
+  updateProposedSlots: (slots: Date[]) => void;
+  updateShowAlphaBetaFeatures: (value: boolean) => void;
+  toggleDarkMode: () => void;
   resetState: () => void;
 }
 
@@ -62,7 +64,8 @@ const defaultState: AppState = {
   },
   emailData: null,
   language: 'en',
-  showAlphaBetaFeatures: false // Default value for the toggle
+  showAlphaBetaFeatures: false,
+  darkMode: false // Default to light mode
 };
 
 const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -74,8 +77,13 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   useEffect(() => {
     const loadState = async () => {
       try {
-        // Include 'showAlphaBetaFeatures' in the keys to load
-        const savedState = await StorageService.getAll(['customerInfo', 'emailData', 'language', 'showAlphaBetaFeatures']);
+        const savedState = await StorageService.getAll([
+          'customerInfo', 
+          'emailData', 
+          'language', 
+          'showAlphaBetaFeatures',
+          'darkMode'
+        ]);
 
         if (savedState) {
           const newState = { ...defaultState };
@@ -140,9 +148,19 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             newState.language = savedState.language;
           }
 
-          // Load the toggle state
+          // Load the toggle states
           if (typeof savedState.showAlphaBetaFeatures === 'boolean') {
             newState.showAlphaBetaFeatures = savedState.showAlphaBetaFeatures;
+          }
+          if (typeof savedState.darkMode === 'boolean') {
+            newState.darkMode = savedState.darkMode;
+          }
+
+          // Apply the theme class based on the loaded state BEFORE setting the state
+          if (newState.darkMode) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
           }
 
           setState(newState);
@@ -162,9 +180,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (state.emailData) {
       StorageService.set('emailData', state.emailData);
     }
-    // Also save the toggle state whenever state changes
+    // Save toggle states
     StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
-  }, [state]); // state dependency includes showAlphaBetaFeatures now
+    StorageService.set('darkMode', state.darkMode);
+  }, [state]);
 
   // Handler functions
   const updateCustomerInfo = (field: string, value: any) => {
@@ -252,8 +271,23 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       ...prevState,
       showAlphaBetaFeatures: value
     }));
-    // Immediately save the change to storage
     StorageService.set('showAlphaBetaFeatures', value);
+  };
+
+  const toggleDarkMode = () => {
+    setState(prevState => {
+      const newDarkMode = !prevState.darkMode;
+      // Update document class for Tailwind dark mode
+      if (newDarkMode) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      return {
+        ...prevState,
+        darkMode: newDarkMode
+      };
+    });
   };
 
   const resetState = () => {
@@ -271,7 +305,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       updateEmailData,
       updateLanguage,
       updateProposedSlots,
-      updateShowAlphaBetaFeatures, // Add the new handler to the context value
+      updateShowAlphaBetaFeatures,
+      toggleDarkMode,
       resetState
     }}>
       {children}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './RoadmapPage.css'; // Import CSS for styling
+
 
 // Define the structure for a roadmap item
 interface RoadmapItem {
@@ -116,33 +116,56 @@ const RoadmapPage: React.FC = () => {
 
 
   return (
-    <div className="roadmap-page-container">
-      <h2>Extension Roadmap</h2>
-      <p className="roadmap-intro">
+    <div className="p-6 mx-auto max-w-7xl bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+      <h2 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-3">Extension Roadmap</h2>
+      <p className="text-gray-600 dark:text-gray-300 text-center mb-12 max-w-3xl mx-auto">
         Overview of planned features and improvements for the Microsoft Support Tools extension. Statuses are indicative and subject to change.
       </p>
 
       {/* Horizontal Timeline Structure */}
-      <div className="roadmap-timeline-container">
-        <div className="timeline">
-          {/* Iterate through sorted quarters to create timeline sections */}
+      <div className="w-full overflow-x-auto py-10">
+        <div className="relative flex min-w-fit px-10">
+          {/* Timeline line */}
+          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700 transform -translate-y-1/2"></div>
+          
           {sortedQuarters.map((quarter, quarterIndex) => (
-            <div key={quarter} className="timeline-quarter-section">
-              <div className="timeline-marker">
-                <span className="quarter-label">{quarter}</span>
-              </div>
-              <div className="timeline-items">
-                {/* Map items within this quarter */}
-                {groupedItems[quarter].map((item, itemIndex) => (
-                  // Add alternating class for positioning above/below if needed by CSS
-                  <div key={item.id} className={`timeline-item status-${item.status.toLowerCase().replace(' ', '-')} item-pos-${itemIndex % 2 === 0 ? 'even' : 'odd'}`}>
+            <div key={quarter} className="relative flex flex-col items-center flex-1 min-w-[250px] px-5 z-10">
+              {/* Timeline marker */}
+              <div className="relative w-5 h-5 bg-blue-500 dark:bg-blue-400 rounded-full border-4 border-white dark:border-gray-800 -mt-2 z-20"></div>
+              
+              {/* Quarter label */}
+              <span className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                {quarter}
+              </span>
+
+              {/* Timeline items */}
+              <div className="w-full flex flex-col gap-3 mt-10">
+                {groupedItems[quarter].map((item) => (
+                  <div 
+                    key={item.id} 
+                    className={`relative bg-white dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600 p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 ${
+                      item.status === 'Completed' ? 'border-green-200 dark:border-green-800' : 
+                      item.status === 'In Progress' ? 'border-blue-200 dark:border-blue-800' : 
+                      'border-gray-200 dark:border-gray-600'
+                    }`}
+                  >
                     <div className="item-content">
-                      <h4>{item.title}</h4>
-                      <p>{item.description}</p>
+                      <h4 className="text-gray-800 dark:text-gray-200 font-medium mb-1">{item.title}</h4>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">{item.description}</p>
                     </div>
-                    <span className="roadmap-item-status">{item.status}</span>
-                    {/* Optional: Add a connector line/arrow via CSS */}
-                    <div className="item-connector"></div>
+                    <span className={`absolute bottom-2 right-2 text-xs font-medium px-2 py-1 rounded-full ${
+                      item.status === 'Completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
+                      item.status === 'In Progress' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
+                      'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
+                    }`}>
+                      {item.status}
+                    </span>
+                    {/* Connector line */}
+                    <div className={`absolute top-0 left-1/2 w-0.5 h-10 -translate-y-full transform -translate-x-1/2 ${
+                      item.status === 'Completed' ? 'bg-green-300 dark:bg-green-600' :
+                      item.status === 'In Progress' ? 'bg-blue-300 dark:bg-blue-600' :
+                      'bg-gray-300 dark:bg-gray-600'
+                    }`}></div>
                   </div>
                 ))}
               </div>
@@ -150,8 +173,6 @@ const RoadmapPage: React.FC = () => {
           ))}
         </div>
       </div>
-      {/* End of Horizontal Timeline Structure */}
-
     </div>
   );
 };

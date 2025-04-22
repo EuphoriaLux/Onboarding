@@ -3,7 +3,7 @@ import { StorageService } from '../../../services/storage';
 import { ThemeSettings } from '../../../types';
 import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
 import { applyThemeColors } from '../../../utils/themeUtils'; // Import theme utility
-import './SettingsPage.css';
+
 
 // Default theme colors (consider extracting from CSS or defining centrally)
 const DEFAULT_THEME: ThemeSettings = {
@@ -218,162 +218,170 @@ const SettingsPage: React.FC = () => {
 
 
   if (isLoading) {
-    return <div className="settings-loading">Loading settings...</div>;
+  return <div className="py-10 text-center text-gray-600">Loading settings...</div>;
   }
 
   return (
-    <div className="settings-page">
-      <h2>Agent Configuration</h2>
-      <p>Configure the details used in the email signature.</p>
+    <div className="p-5 bg-gray-50 dark:bg-gray-800 rounded-lg my-5">
+      <h2 className="mt-0 mb-2 text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 pb-2">Agent Configuration</h2>
+      <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Configure the details used in the email signature.</p>
 
       <div className="settings-form">
-        <div className="form-group">
-          <label htmlFor="agentName">Agent Name:</label>
+        <div className="mb-4">
+          <label htmlFor="agentName" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Agent Name:</label>
           <input
             type="text"
             id="agentName"
             value={agentName}
             onChange={(e) => setAgentName(e.target.value)}
             placeholder="e.g., Jane Doe"
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="agentTitle">Agent Title:</label>
+        <div className="mb-4">
+          <label htmlFor="agentTitle" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Agent Title:</label>
           <input
             type="text"
             id="agentTitle"
             value={agentTitle}
             onChange={(e) => setAgentTitle(e.target.value)}
             placeholder="e.g., Support Engineer"
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="companyName">Company Name:</label>
+        <div className="mb-4">
+          <label htmlFor="companyName" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Company Name:</label>
           <input
             type="text"
             id="companyName"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="e.g., Microsoft"
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="agentEmail">Agent Email:</label>
+        <div className="mb-4">
+          <label htmlFor="agentEmail" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Agent Email:</label>
           <input
             type="email"
             id="agentEmail"
             value={agentEmail}
             onChange={(e) => setAgentEmail(e.target.value)}
             placeholder="e.g., jane.doe@microsoft.com"
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
         {/* --- Recipient Settings --- */}
-        <h3 className="settings-subtitle">ICS Recipient Emails</h3>
-        <p>Configure the default recipients for generated .ics files (comma-separated).</p>
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">ICS Recipient Emails</h3>
+        <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Configure the default recipients for generated .ics files (comma-separated).</p>
 
-        <div className="form-group">
-          <label htmlFor="onCallRecipients">On-Call Duty Recipients:</label>
+        <div className="mb-4">
+          <label htmlFor="onCallRecipients" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">On-Call Duty Recipients:</label>
           <textarea
             id="onCallRecipients"
             value={onCallRecipients}
             onChange={(e) => setOnCallRecipients(e.target.value)}
             placeholder="e.g., team1@example.com, manager@example.com"
             rows={3}
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="vacationRecipients">Vacation Request Recipients:</label>
+        <div className="mb-4">
+          <label htmlFor="vacationRecipients" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Vacation Request Recipients:</label>
           <textarea
             id="vacationRecipients"
             value={vacationRecipients}
             onChange={(e) => setVacationRecipients(e.target.value)}
             placeholder="e.g., hr@example.com, team-calendar@example.com"
             rows={3}
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="supportRecipients">Support Request Recipients:</label>
+        <div className="mb-4">
+          <label htmlFor="supportRecipients" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Support Request Recipients:</label>
           <textarea
             id="supportRecipients"
             value={supportRecipients}
             onChange={(e) => setSupportRecipients(e.target.value)}
             placeholder="e.g., support-leads@example.com"
             rows={3}
+            className="w-full px-2 py-1 border border-gray-300 dark:border-gray-600 rounded-md text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-300 placeholder-gray-500 dark:placeholder-gray-400"
           />
         </div>
 
         {/* --- Theme Customization --- */}
-        <h3 className="settings-subtitle">Theme Customization</h3>
-        <p>Customize the main colors of the extension.</p>
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Theme Customization</h3>
+        <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Customize the main colors of the extension.</p>
 
-        <div className="form-group color-picker-group">
-          <label htmlFor="primaryColor">Primary Color:</label>
+        <div className="mb-4">
+          <label htmlFor="primaryColor" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Primary Color:</label>
           <input
             type="color"
             id="primaryColor"
             value={primaryColor}
             onChange={(e) => setPrimaryColor(e.target.value)}
           />
-          <span className="color-value">{primaryColor}</span>
+          <span className="ml-4 text-sm font-semibold text-gray-700 dark:text-gray-300">{primaryColor}</span>
         </div>
 
-        <div className="form-group color-picker-group">
-          <label htmlFor="textColor">Text Color:</label>
+        <div className="mb-4">
+          <label htmlFor="textColor" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Text Color:</label>
           <input
             type="color"
             id="textColor"
             value={textColor}
             onChange={(e) => setTextColor(e.target.value)}
           />
-          <span className="color-value">{textColor}</span>
+          <span className="ml-4 text-sm font-semibold text-gray-700 dark:text-gray-300">{textColor}</span>
         </div>
 
-        <div className="form-group color-picker-group">
-          <label htmlFor="backgroundColor">Background Color:</label>
+        <div className="mb-4">
+          <label htmlFor="backgroundColor" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Background Color:</label>
           <input
             type="color"
             id="backgroundColor"
             value={backgroundColor}
             onChange={(e) => setBackgroundColor(e.target.value)}
           />
-          <span className="color-value">{backgroundColor}</span>
+          <span className="ml-4 text-sm font-semibold text-gray-700 dark:text-gray-300">{backgroundColor}</span>
         </div>
 
         {/* --- Default PDF Attachment --- */}
-        <h3 className="settings-subtitle">Default PDF Attachment</h3>
-        <p>Add a default PDF attachment to the generated email drafts.</p>
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Default PDF Attachment</h3>
+        <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Add a default PDF attachment to the generated email drafts.</p>
 
-        <div className="form-group">
-            <label htmlFor="pdfAttachment">PDF File:</label>
+        <div className="mb-4">
+            <label htmlFor="pdfAttachment" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">PDF File:</label>
             <input
                 type="file"
                 id="pdfAttachment"
                 accept=".pdf"
                 onChange={handleFileChange}
                 style={{ display: 'block', marginBottom: '10px' }}
+                className="text-gray-700 dark:text-gray-300" // Added text color for dark mode
             />
             {pdfFilename && (
-                <div className="pdf-info">
+                <div className="pdf-info text-gray-700 dark:text-gray-300"> {/* Added text color */}
                     <span>Current file: {pdfFilename}</span>
-                    <button onClick={handleClearPdf} className="clear-pdf-button">
+                    <button onClick={handleClearPdf} className="clear-pdf-button ml-2 text-red-600 dark:text-red-400 hover:underline"> {/* Added styling */}
                         Clear PDF
                     </button>
                 </div>
             )}
-            {!pdfFilename && <span>No PDF attached.</span>}
+            {!pdfFilename && <span className="text-gray-700 dark:text-gray-300">No PDF attached.</span>} {/* Added text color */}
         </div>
 
         {/* --- Experimental Features Toggle --- */}
-        <h3 className="settings-subtitle">Experimental Features</h3>
-        <p>Enable access to Alpha/Beta features currently under development.</p>
-        <div className="form-group toggle-group">
-          <label htmlFor="alphaBetaToggle" className="toggle-label">
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Experimental Features</h3>
+        <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Enable access to Alpha/Beta features currently under development.</p>
+        <div className="mb-4">
+          <label htmlFor="alphaBetaToggle" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">
             Show Alpha/Beta Features:
           </label>
           <label className="switch">
@@ -385,16 +393,16 @@ const SettingsPage: React.FC = () => {
             />
             <span className="slider round"></span>
           </label>
-          <span className="toggle-status">{appState.showAlphaBetaFeatures ? 'Enabled' : 'Disabled'}</span>
+          <span className="ml-4 text-sm font-semibold text-gray-700 dark:text-gray-300">{appState.showAlphaBetaFeatures ? 'Enabled' : 'Disabled'}</span>
         </div>
 
 
-        <div className="form-actions">
-          <button onClick={handleSave} disabled={isSaving}>
+        <div className="mt-6 flex items-center">
+          <button onClick={handleSave} disabled={isSaving} className="bg-blue-500 dark:bg-blue-600 text-white px-4 py-2 rounded-md min-w-[120px] hover:bg-blue-700 dark:hover:bg-blue-500 disabled:opacity-50">
             {isSaving ? 'Saving...' : 'Save All Settings'}
           </button>
-          {saveStatus === 'success' && <span className="save-status success">Settings saved!</span>}
-          {saveStatus === 'error' && <span className="save-status error">Error saving settings.</span>}
+          {saveStatus === 'success' && <span className="ml-4 text-sm font-semibold text-green-700 dark:text-green-400">Settings saved!</span>}
+          {saveStatus === 'error' && <span className="ml-4 text-sm font-semibold text-red-700 dark:text-red-400">Error saving settings.</span>}
         </div>
       </div>
     </div>
