@@ -5,19 +5,9 @@
   "description": "Microsoft Support Onboarding Template Generator - Create customized onboarding emails with meeting scheduling, tenant details, and support plan information",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqSRRVsb1c0S9XNAm829M5JY9X/FR4BklRZ/N3nZiX3h7Dg+Ab9p7NDjTEHRd0csOMIVUT7FwORHYPqqGGlCj4zjhrgc+k2aUX+awMuNFc270wPagBRrrQhgQzzXLpP3qoTUy26NbKzZ596CAqNCuANhqo2TmEk7PaIKcVtK11iE3p4WxNYVOS2nNfw21yDUXv2J9wZYO4H21jEEHvfjG0O877YVhPi/YU1eL/bq0tvNA4CXtKp25E148EFQlhEFfOVsCjI/OHgDlEzUBzblS3OGqfWEAjuxtbN2G10tEUd6D7870p/cXmrFSL2EJpWnGrAN9+JB+CxQG5Z8ixbHVYwIDAQAB",
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": {
-      "16": "assets/icon16.svg",
-      "48": "assets/icon48.svg",
-      "128": "assets/icon128.svg"
-    }
+    "default_popup": "src/popup.html"
   },
-  "icons": {
-    "16": "assets/icon16.svg",
-    "48": "assets/icon48.svg",
-    "128": "assets/icon128.svg"
-  },
-  "options_page": "options.html",
+  "options_page": "src/options.html",
   "permissions": [
     "clipboardWrite",
     "storage",
@@ -26,8 +16,7 @@
   "host_permissions": [
     "*://powerupticketstorage.blob.core.windows.net/*"
   ],
-
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self'; font-src 'self';"
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self';"
   }
 }

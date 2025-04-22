@@ -1,160 +1,154 @@
-// src/features/homepage/components/Homepage.tsx
-import React, { useState, useEffect } from 'react'; // Import useEffect
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
-import Navbar from '../../../components/Navbar'; // Import the Navbar
-import '../../../styles/Navbar.css'; // Import Navbar styles
-import { features, Feature } from '../constants'; // Import features and type
+import { useAppState } from '../../../contexts/AppStateContext';
+import Navbar from '../../../components/Navbar';
+import { features, Feature } from '../constants';
 
 const Homepage: React.FC = () => {
   const { translate } = useLanguage();
-  const { state } = useAppState(); // Get the global state, including showAlphaBetaFeatures
+  const { state } = useAppState();
   const [activeFeature, setActiveFeature] = useState<string | null>(null);
 
-  // Effect for keyboard and mouse navigation back to home
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Check if Alt key is pressed and ArrowLeft key
-      if (event.altKey && event.key === 'ArrowLeft') {
-        // Check if a feature is currently active (not on the main dashboard)
-        if (activeFeature !== null) {
-          event.preventDefault(); // Prevent default browser back navigation
-          setActiveFeature(null); // Navigate back to the homepage dashboard
-        }
+      if (event.altKey && event.key === 'ArrowLeft' && activeFeature !== null) {
+        event.preventDefault();
+        setActiveFeature(null);
       }
-      // Note: Alt + ArrowRight is not handled here as there's no "forward" concept in this component's state
     };
 
     const handleMouseUp = (event: MouseEvent) => {
-      // Check if the "Back" mouse button (typically button 3) was pressed
-      if (event.button === 3) {
-        // Check if a feature is currently active (not on the main dashboard)
-        if (activeFeature !== null) {
-          event.preventDefault(); // Prevent default browser back navigation
-          setActiveFeature(null); // Navigate back to the homepage dashboard
-        }
+      if (event.button === 3 && activeFeature !== null) {
+        event.preventDefault();
+        setActiveFeature(null);
       }
-      // Note: Forward mouse button (button 4) is not handled due to lack of forward history state
     };
 
-    // Add event listeners when the component mounts
     window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('mouseup', handleMouseUp); // Listen for mouse button releases
+    window.addEventListener('mouseup', handleMouseUp);
 
-    // Remove event listeners when the component unmounts
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [activeFeature]); // Dependency array includes activeFeature to ensure checks inside handlers use the latest state
+  }, [activeFeature]);
 
-  // Group features by category
   const groupedFeatures = features.reduce((acc, feature) => {
-    const category = feature.category || 'Other'; // Default category if none provided
-    if (!acc[category]) {
-      acc[category] = [];
-    }
+    const category = feature.category || 'Other';
+    if (!acc[category]) acc[category] = [];
     acc[category].push(feature);
-    // Sort features within the category alphabetically by name
     acc[category].sort((a, b) => a.name.localeCompare(b.name));
     return acc;
   }, {} as Record<string, Feature[]>);
 
-  // Define the desired order of categories
   const categoryOrder = [
     'Template & Email Tools',
     'Calendar (.ics) Generators',
-    'Coming Soon Features', // Renamed category
-    'Configuration', // Keep Settings/Configuration last
-    'Other' // Catch-all for uncategorized features
+    'Coming Soon Features',
+    'Configuration',
+    'Other'
   ];
 
-  // Sort categories based on the defined order
   const sortedCategories = Object.keys(groupedFeatures).sort((a, b) => {
     const indexA = categoryOrder.indexOf(a);
     const indexB = categoryOrder.indexOf(b);
-    // If both categories are in the order list, sort by their index
-    if (indexA !== -1 && indexB !== -1) {
-      return indexA - indexB;
-    }
-    // If only A is in the list, it comes first
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
     if (indexA !== -1) return -1;
-    // If only B is in the list, it comes first
     if (indexB !== -1) return 1;
-    // Otherwise, sort alphabetically
     return a.localeCompare(b);
   });
 
-  // Return to homepage
-  const handleBackToHome = () => {
-    setActiveFeature(null);
-  };
+  const handleBackToHome = () => setActiveFeature(null);
 
-  // Render active feature if selected
   if (activeFeature) {
     const feature = features.find(f => f.id === activeFeature);
     if (feature) {
       const FeatureComponent = feature.component;
       return (
-        <div className="feature-container">
-          <div className="feature-header">
-            <button className="back-button" onClick={handleBackToHome}>
+        <div className="flex flex-col min-h-screen">
+          <div className="flex items-center px-6 py-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <button 
+              className="bg-transparent text-blue-600 dark:text-blue-400 text-base px-4 py-2 rounded hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
+              onClick={handleBackToHome}
+            >
               ← Back to Home
             </button>
-            <h1>{feature.name}</h1>
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white ml-4">
+              {feature.name}
+            </h1>
           </div>
-          <FeatureComponent />
+          <div className="flex-1 p-6">
+            <FeatureComponent />
+          </div>
         </div>
       );
     }
   }
 
-  // Render homepage with feature cards
   return (
-    <div className="homepage-container">
-      <Navbar /> {/* Add the Navbar component here */}
-      <div className="homepage-header">
-        <h1>Microsoft Support Tools</h1>
-        <p>Select a tool to get started</p>
+    // Ensure the main container allows its children to grow
+    <div className="w-full px-4 sm:px-6 py-10 min-h-screen flex flex-col items-center"> {/* Center items */}
+      <Navbar />
+      {/* Center the header content, ensure it doesn't exceed max width */}
+      <div className="text-center mb-10 pb-6 border-b border-gray-200 dark:border-gray-700 w-full max-w-4xl">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Microsoft Support Tools</h1>
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Select a tool to get started</p>
       </div>
 
-      {/* Render features grouped by category */}
+      {/* Container for categories, ensure it takes appropriate width */}
       {sortedCategories.map((category) => (
-        <div key={category} className="feature-category-section">
-          <h2>{category}</h2>
-          <div className="features-grid">
+        <div key={category} className="mb-10 w-full max-w-6xl"> {/* Set max-width here */}
+          {/* Sticky header for category */}
+          <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm py-4 mb-6 border-b border-gray-200 dark:border-gray-700"> {/* Increased mb */}
+            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white"> {/* Adjusted font weight */}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent"> {/* Changed gradient */}
+                {category}
+              </span>
+            </h2>
+          </div>
+          {/* Grid container - ensure it's using the grid display */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"> {/* Removed w-full, max-w, mx-auto as parent handles width */}
             {groupedFeatures[category].map((feature) => {
-              // Determine if the feature should be enabled based on its own flag OR the global toggle
               const isFeatureEnabled = feature.enabled || (state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features');
-              // Determine if the "Coming Soon" badge should be shown
               const showComingSoonBadge = !feature.enabled && !state.showAlphaBetaFeatures && feature.category === 'Coming Soon Features';
 
+              // Card is now the direct grid item
               return (
-                <button
+                <div
                   key={feature.id}
-                  className={`feature-card ${!isFeatureEnabled ? 'disabled' : ''}`}
+                  className={`group flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow-sm transition-all duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700
+                    ${!isFeatureEnabled ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer hover:shadow-md hover:-translate-y-1'}`}
                   onClick={() => isFeatureEnabled && setActiveFeature(feature.id)}
-                  disabled={!isFeatureEnabled} // Disable button if not enabled by either condition
-                  aria-label={feature.name} // Add aria-label for accessibility
+                  aria-label={feature.name}
                 >
-                  <div className="feature-icon">
+                  {/* Icon with hover effect */}
+                  <div className="flex-shrink-0 mb-4 transition-transform duration-300 ease-in-out group-hover:scale-105"> {/* Increased margin-bottom */}
                     {feature.icon}
                   </div>
-                  {/* Removed duplicate icon and extra div */}
-                  <div className="feature-content">
-                    <h3>{feature.name}</h3>
-                    <p>{feature.description}</p>
-                    {showComingSoonBadge && <span className="coming-soon-badge">Coming Soon</span>}
+                  {/* Text content area */}
+                  <div className="flex flex-col flex-grow gap-2"> {/* Use flex-grow to push badge down */}
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{feature.name}</h3> {/* Increased font-weight */}
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 transition-colors duration-200 flex-grow"> {/* Added flex-grow here too */}
+                      {feature.description}
+                    </p>
                   </div>
-                </button>
+                  {/* Coming Soon Badge */}
+                  {showComingSoonBadge && (
+                    <div className="mt-4 pt-2"> {/* Adjusted margin */}
+                      <span className="inline-block bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-medium"> {/* Changed badge style */}
+                        Coming Soon
+                      </span>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
         </div>
       ))}
 
-      <div className="homepage-footer">
-        <p>Microsoft Support Tools Extension v1.0.2</p>
+      <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+        <p className="mb-1">Microsoft Support Tools Extension v1.0.2</p>
         <p>© 2025 Microsoft Corporation. All rights reserved.</p>
       </div>
     </div>

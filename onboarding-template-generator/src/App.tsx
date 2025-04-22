@@ -17,7 +17,7 @@ import MeetingSlotSelector from './components/MeetingSlotSelector';
 import emailBuilder from './features/emailBuilder/utils/emailBuilder'; // Import emailBuilder to use translate
 import CollapsibleSection from './components/CollapsibleSection'; // Import moved component
 import { applyThemeColors } from './utils/themeUtils'; // Import theme utility
-import './styles/App.css'; // Adjusted path
+import './styles/tailwind.css';
 
 // AgentSettings interface moved to src/types/index.ts
 
@@ -195,7 +195,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="app-container onboarding-container">
+    <div className="p-6 max-w-6xl mx-auto bg-white dark:bg-gray-800 min-h-screen">
       {!showEmailPreview && (
         <div className="language-option">
           <LanguageSelector

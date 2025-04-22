@@ -3,7 +3,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { AppStateProvider } from './contexts/AppStateContext';
 import { LanguageProvider } from './contexts/LanguageContext';
-import './styles/App.css';
+import './styles/tailwind.css';
 
 const Popup: React.FC = () => {
   const openOptions = () => {
@@ -11,10 +11,13 @@ const Popup: React.FC = () => {
   };
 
   return (
-    <div className="popup-container">
-      <h2>Microsoft Support Tools</h2>
-      <p>Click below to open the tools dashboard</p>
-      <button className="primary-button" onClick={openOptions}>
+    <div className="p-4 w-64 bg-white dark:bg-gray-800">
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Microsoft Support Tools</h2>
+      <p className="text-gray-600 dark:text-gray-300 mb-4">Click below to open the tools dashboard</p>
+      <button 
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
+        onClick={openOptions}
+      >
         Open Dashboard
       </button>
     </div>

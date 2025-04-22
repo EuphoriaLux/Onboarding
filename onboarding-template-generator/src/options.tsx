@@ -7,8 +7,7 @@ import { Homepage } from './features/homepage';
 import { StorageService } from './services/storage'; // Import StorageService
 import { ThemeSettings } from './types'; // Import ThemeSettings
 import { applyThemeColors } from './utils/themeUtils'; // Import applyThemeColors
-import './styles/App.css';
-import './styles/Homepage.css';
+import './styles/tailwind.css';
 
 // Component to handle theme loading
 const OptionsApp: React.FC = () => {

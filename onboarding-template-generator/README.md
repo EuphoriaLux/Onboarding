@@ -1,110 +1,109 @@
-# Microsoft Support Onboarding Template Generator
+# Microsoft Support Tools - Chrome Extension
 
-A Chrome extension that generates rich text onboarding templates for Microsoft support customers, designed to streamline the customer onboarding process.
+A Chrome extension providing a dashboard of tools designed to assist Microsoft Support engineers and related roles. It includes features for generating onboarding email templates, managing CRM data (alpha), generating `.ics` calendar files, viewing support requests, and more.
+
+## Overview
+
+This extension serves as a central hub for various utilities commonly used in Microsoft support workflows. The main interface is accessed via the extension's options page, which presents a dashboard of available tools.
 
 ## Features
 
-- Support tier selection (Bronze, Silver, Gold, Platinum)
-- Collection of customer information
-- Authorized contact management based on tier limits
-- Microsoft Tenant ID definition
-- Rich text template generation
-- Copy to clipboard functionality with HTML formatting preserved
-- Template preview before copying
-- Data persistence using Chrome storage API
+*   **Homepage Dashboard:** Central navigation page displaying available tools categorized for easy access.
+*   **Onboarding Template Generator:** Creates customized rich text onboarding emails including:
+    *   Support tier selection (Bronze, Silver, Gold, Platinum - *Note: Tiers might need updating based on current offerings*)
+    *   Customer information collection
+    *   Authorized contact management
+    *   Microsoft Tenant ID input
+    *   Template preview
+    *   Copy to clipboard (HTML format)
+*   **.ICS File Generators:**
+    *   On-Call Duty periods
+    *   Support Request entries
+    *   Vacation Requests
+*   **CRM Management (Alpha):** Basic functionality to manage customer records stored in Azure Blob Storage.
+*   **Support Request Viewer (Alpha):** View support requests, potentially integrating with Azure Blob Storage and requiring Azure AD login.
+*   **Settings:** Configuration options for the extension (e.g., theme, feature flags).
+*   **Roadmap:** Visual timeline of planned features and their status.
+*   **Multi-language Support:** Includes translations for English, French, and German.
+*   **Theming:** Supports light and dark modes.
 
-## Installation for Development
+*(Note: Some features listed, like CRM and Support Request Viewer, might be in early alpha/beta stages based on code structure.)*
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/onboarding-template-generator.git
-   cd onboarding-template-generator
-   ```
+## Tech Stack
 
-2. Install the dependencies:
-   ```
-   npm install
-   ```
+This extension is built using modern web technologies:
 
-3. Build the extension:
-   ```
-   npm run build
-   ```
+*   **Framework:** React (`^19.0.0`)
+*   **Language:** TypeScript (`^5.8.2`)
+*   **Build Tool:** Vite (`^6.3.2`)
+*   **Extension Plugin:** `@crxjs/vite-plugin` (`^2.0.0-beta.23`)
+*   **Styling:** Tailwind CSS (`^3.4.3`) with PostCSS (`^8.5.3`) and Autoprefixer (`^10.4.21`)
+*   **UI Components:** Includes custom components and `react-datepicker` (`^8.2.1`)
+*   **Azure Integration:** Uses `@azure/msal-browser` (`^4.10.0`) for authentication and `@azure/storage-blob` (`^12.27.0`) for storage (in specific features).
 
-4. Load the extension in Chrome:
-   - Open Chrome and navigate to `chrome://extensions/`
-   - Enable "Developer mode" (toggle in the top right)
-   - Click "Load unpacked" and select the `dist` folder from your project directory
+## Development Setup
 
-## Usage
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd onboarding-template-generator
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Run the development server:**
+    ```bash
+    npm start
+    ```
+    This will start Vite in watch mode. Load the extension in Chrome using the `dist` directory (see next step). Changes will trigger rebuilds, but you may need to manually reload the extension in `chrome://extensions`.
 
-1. Click on the extension icon in Chrome to open the popup
-2. Select the appropriate support tier (Bronze, Silver, Gold, or Platinum)
-3. Enter customer and contact information
-4. Enter tenant ID if available
-5. Add authorized contacts (up to the limit based on the selected tier)
-6. Preview the template using the "Show Preview" button
-7. Generate and copy the template to clipboard using the "Generate & Copy to Clipboard" button
-8. Paste the formatted template into Outlook or any rich text editor
+4.  **Load the extension in Chrome:**
+    *   Open Chrome and navigate to `chrome://extensions/`
+    *   Enable "Developer mode" (toggle in the top right).
+    *   Click "Load unpacked".
+    *   Select the `onboarding-template-generator/dist` folder from your project directory.
 
-## Development
+## Building for Production
 
-### Project Structure
+To create an optimized production build:
+
+```bash
+npm run build
+```
+
+This will generate the production-ready files in the `dist` directory.
+
+## Project Structure (Simplified)
 
 ```
 onboarding-template-generator/
+├── dist/                 # Build output directory (loaded into Chrome)
 ├── src/
-│   ├── assets/           # Icons and static resources
-│   ├── components/       # React components
-│   │   ├── App.tsx
-│   │   ├── OnboardingTemplateGenerator.tsx
-│   │   ├── TierSelector.tsx
-│   │   ├── ContactsForm.tsx
-│   │   ├── TenantForm.tsx
-│   │   └── TemplatePreview.tsx
-│   ├── data/             # Static data
-│   │   └── supportTiers.ts
-│   ├── styles/           # CSS styles
-│   │   └── App.css
-│   ├── utils/            # Utility functions
-│   │   ├── clipboardUtils.ts
-│   │   └── templateGenerator.ts
-│   ├── types/            # TypeScript type definitions
-│   │   └── index.ts
-│   ├── popup.tsx         # Extension popup entry point
-│   ├── popup.html        # Extension popup HTML
-│   ├── background.ts     # Background script
+│   ├── assets/           # Static assets (icons, images - currently unused in manifest)
+│   ├── components/       # Shared React components (Navbar, Icons, etc.)
+│   ├── contexts/         # React Context providers (AppState, Language)
+│   ├── features/         # Core feature modules (Homepage, EmailBuilder, CRM, etc.)
+│   │   └── [featureName]/
+│   │       ├── components/ # Components specific to the feature
+│   │       ├── hooks/      # Hooks specific to the feature
+│   │       ├── services/   # Services specific to the feature
+│   │       └── types/      # Types specific to the feature
+│   ├── services/         # Shared services (i18n, storage, etc.)
+│   ├── styles/           # Global styles (tailwind.css)
+│   ├── types/            # Shared TypeScript types
+│   ├── utils/            # Shared utility functions
+│   ├── options.html      # Options page HTML template
+│   ├── options.tsx       # Options page entry point (renders Homepage)
+│   ├── popup.html        # Popup page HTML template
+│   ├── popup.tsx         # Popup page entry point
 │   └── manifest.json     # Extension manifest
-├── webpack.config.js     # Webpack configuration
+├── postcss.config.mjs    # PostCSS configuration (for Tailwind)
+├── tailwind.config.js    # Tailwind CSS configuration
+├── vite.config.js        # Vite build configuration
 ├── tsconfig.json         # TypeScript configuration
-├── package.json          # NPM dependencies
-└── README.md             # Documentation
+├── package.json          # Project dependencies and scripts
+└── README.md             # This file
 ```
 
-### Development Commands
-
-- `npm start`: Start development mode with watch
-- `npm run build`: Build the extension
-- `npm run build:dev`: Build the extension in development mode
-- `npm run build:prod`: Build the extension in production mode
-
-## Template Structure
-
-The generated template includes:
-
-1. Introduction and meeting request
-2. Support tier details (hours, contacts, tenants, etc.)
-3. Authorized contacts list
-4. Tenant ID section
-5. GDAP link acceptance instructions
-6. RBAC role establishment with PowerShell script
-7. Service provider acceptance in conditional access policy
-
-## Future Enhancements
-
-- Add more customization options for templates
-- Implement template saving and management
-- Add direct integration with Outlook
-- Support for multiple languages
-- Theme customization options
-- Template versioning
+*(Note: Some configuration files like `webpack.config.js` might still be present but are no longer used after switching to Vite.)*

@@ -56,12 +56,15 @@ module.exports = (env, argv) => {
           {
             loader: 'css-loader',
             options: {
-              modules: {
-                auto: true,
-                localIdentName: '[name]__[local]--[hash:base64:5]'
-              }
+              importLoaders: 1
+              // Removed CSS Modules configuration entirely
+              // modules: {
+              //   auto: (resourcePath) => !resourcePath.includes('tailwind.css'),
+              //   localIdentName: '[name]__[local]--[hash:base64:5]'
+              // }
             }
-          }
+          },
+          'postcss-loader'
         ]
       },
       {

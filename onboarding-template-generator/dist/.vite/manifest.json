@@ -1,0 +1,52 @@
+{
+  "../../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-B0pwO2aj.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_tailwind-wdPH0TX6.js": {
+    "file": "assets/tailwind-wdPH0TX6.js",
+    "name": "tailwind",
+    "css": [
+      "assets/tailwind-y3UtXJJ-.css"
+    ]
+  },
+  "_tailwind-y3UtXJJ-.css": {
+    "file": "assets/tailwind-y3UtXJJ-.css",
+    "src": "_tailwind-y3UtXJJ-.css"
+  },
+  "src/assets/ms-symbollockup_signin_dark.svg": {
+    "file": "assets/ms-symbollockup_signin_dark-BLaB1Mw_.svg",
+    "src": "src/assets/ms-symbollockup_signin_dark.svg"
+  },
+  "src/assets/ms-symbollockup_signin_light.svg": {
+    "file": "assets/ms-symbollockup_signin_light-C1F8axpE.svg",
+    "src": "src/assets/ms-symbollockup_signin_light.svg"
+  },
+  "src/options.html": {
+    "file": "assets/options.html-DoRAL5Jr.js",
+    "name": "options.html",
+    "src": "src/options.html",
+    "isEntry": true,
+    "imports": [
+      "_tailwind-wdPH0TX6.js"
+    ],
+    "css": [
+      "assets/options--ohKkjAC.css"
+    ],
+    "assets": [
+      "assets/ms-symbollockup_signin_light-C1F8axpE.svg",
+      "assets/ms-symbollockup_signin_dark-BLaB1Mw_.svg"
+    ]
+  },
+  "src/popup.html": {
+    "file": "assets/popup.html-C0rl54Ax.js",
+    "name": "popup.html",
+    "src": "src/popup.html",
+    "isEntry": true,
+    "imports": [
+      "_tailwind-wdPH0TX6.js"
+    ]
+  }
+}
