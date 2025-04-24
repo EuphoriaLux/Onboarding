@@ -241,36 +241,43 @@ const App: React.FC = () => {
             />
           </div>
 
-          {/* 3. Customer Contact Information */}
-          <div className="form-section customer-info-section">
-            <h2>Customer Contact Information</h2>
-            <div className="form-group">
-              <label htmlFor="contact-name">Primary Contact Name</label>
-              <input
-                id="contact-name"
-                type="text"
-                value={state.customerInfo.contactName}
-                onChange={(e) => updateCustomerInfo('contactName', e.target.value)}
-                placeholder="Full Name"
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="contact-email">Primary Contact Email</label>
-              <input
-                id="contact-email"
-                type="email"
-                value={state.customerInfo.contactEmail}
-                onChange={(e) => updateCustomerInfo('contactEmail', e.target.value)}
-                placeholder="email@company.com"
-                required
-                disabled={true}
-              />
-              <small className="form-text">This is synchronized with the email recipient above</small>
+          {/* 3. Customer Contact Information - Refactored with Tailwind */}
+          <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
+            <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Customer Contact Information</h3>
+            {/* Use grid for layout consistency */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Full Name Field */}
+              <div className="mb-2 md:mb-0">
+                <label htmlFor="contact-name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+                  value={state.customerInfo.contactName}
+                  onChange={(e) => updateCustomerInfo('contactName', e.target.value)}
+                  placeholder="Full Name"
+                  required
+                />
+              </div>
+              {/* Email Field */}
+              <div className="mb-2 md:mb-0">
+                <label htmlFor="contact-email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">email@company.com</label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600 disabled:opacity-50" // Added disabled style
+                  value={state.customerInfo.contactEmail}
+                  onChange={(e) => updateCustomerInfo('contactEmail', e.target.value)}
+                  placeholder="email@company.com"
+                  required
+                  disabled={true}
+                />
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">This is synchronized with the email recipient above</p> {/* Changed small to p */}
+              </div>
             </div>
           </div>
 
-          {/* UPDATED: Proposed Meeting Slots Section */}
+          {/* 4. Proposed Meeting Slots Section */}
           <MeetingSlotSelector
             availableSlots={availableSlots}
             selectedSlots={state.customerInfo.proposedSlots || []}

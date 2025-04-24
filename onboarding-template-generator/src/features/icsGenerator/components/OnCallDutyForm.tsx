@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { IcsService } from '../../../services/icsService';
-import FormField from '../../../components/FormField';
 
 const OnCallDutyForm: React.FC = () => {
   const [startDate, setStartDate] = useState('');
@@ -46,25 +45,35 @@ const OnCallDutyForm: React.FC = () => {
       <h3 className="text-xl font-semibold mb-4 dark:text-gray-100">On-Call Duty Availability Request</h3>
       <p className="mb-4 dark:text-gray-400">Generate an .ics file to block your calendar for on-call duty.</p>
 
-      <FormField
-        label="Start Date & Time:"
-        id="onCallStartDate"
-        type="datetime-local"
-        value={startDate}
-        onChange={(e) => setStartDate(e.target.value)}
-        required
-      />
+      <div className="mb-4">
+        <label htmlFor="onCallStartDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          Start Date & Time:
+        </label>
+        <input
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+          id="onCallStartDate"
+          type="datetime-local"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          required
+        />
+      </div>
 
-      <FormField
-        label="End Date & Time:"
-        id="onCallEndDate"
-        type="datetime-local"
-        value={endDate}
-        onChange={(e) => setEndDate(e.target.value)}
-        required
-      />
+      <div className="mb-4">
+        <label htmlFor="onCallEndDate" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+          End Date & Time:
+        </label>
+        <input
+          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
+          id="onCallEndDate"
+          type="datetime-local"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          required
+        />
+      </div>
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {error && <p className="text-red-500 dark:text-red-400 text-sm">{error}</p>}
 
       <div className="mt-4">
         <button

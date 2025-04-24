@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+type Status = 'Completed' | 'In Progress' | 'Planned';
 
 // Define the structure for a roadmap item
 interface RoadmapItem {
@@ -35,6 +36,13 @@ const roadmapData: RoadmapItem[] = [
     status: 'Completed',
   },
   // --- Q2 2025 ---
+  {
+    id: 'engage-services-v1',
+    quarter: 'Q2 2025',
+    title: 'Microsoft Engage Services Integration',
+    description: 'Integrate Microsoft Engage Services into the extension.',
+    status: 'Planned',
+  },
   // Moved 'deployment-readiness-v1' to Q3
   {
     id: 'roadmap-v1',
@@ -45,7 +53,7 @@ const roadmapData: RoadmapItem[] = [
   },
   // --- Q3 2025 ---
   {
-    id: 'deployment-readiness-v1', // Moved from Q2
+    id: 'deployment-readiness-v1',
     quarter: 'Q3 2025', // Updated Quarter
     title: 'Enterprise Deployment Readiness',
     description: 'Capability for enterprise deployment established via private store.',
@@ -104,7 +112,22 @@ const groupItemsByQuarter = (items: RoadmapItem[]) => {
   }, {} as Record<string, RoadmapItem[]>);
 };
 
+const getStatusColor = (status: Status) => {
+  switch (status) {
+    case 'Completed':
+      return 'bg-green-500 text-white';
+    case 'In Progress':
+      return 'bg-blue-500 text-white';
+    case 'Planned':
+      return 'bg-yellow-500 text-white';
+    default:
+      return 'bg-gray-500 text-white';
+  }
+};
+
 const RoadmapPage: React.FC = () => {
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+
   const groupedItems = groupItemsByQuarter(roadmapData);
   // Define a sort order for quarters if needed, e.g., ["Q3 2025", "Q4 2025", "Q1 2026"]
   const sortedQuarters = Object.keys(groupedItems).sort((a, b) => {
@@ -124,50 +147,69 @@ const RoadmapPage: React.FC = () => {
 
       {/* Horizontal Timeline Structure */}
       <div className="w-full overflow-x-auto py-10">
-        <div className="relative flex min-w-fit px-10">
+        <div className="relative flex md:flex-row min-w-fit px-10">
           {/* Timeline line */}
           <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700 transform -translate-y-1/2"></div>
           
           {sortedQuarters.map((quarter, quarterIndex) => (
-            <div key={quarter} className="relative flex flex-col items-center flex-1 min-w-[250px] px-5 z-10">
+            <div key={quarter} className="relative flex flex-col items-start flex-1 md:min-w-[200px] px-5 z-10">
               {/* Timeline marker */}
               <div className="relative w-5 h-5 bg-blue-500 dark:bg-blue-400 rounded-full border-4 border-white dark:border-gray-800 -mt-2 z-20"></div>
               
               {/* Quarter label */}
-              <span className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+              <span className="absolute top-0 left-1/2 transform -translate-x-1/2 text-lg font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
                 {quarter}
               </span>
 
               {/* Timeline items */}
-              <div className="w-full flex flex-col gap-3 mt-10">
-                {groupedItems[quarter].map((item) => (
-                  <div 
-                    key={item.id} 
-                    className={`relative bg-white dark:bg-gray-700 rounded-md border border-gray-200 dark:border-gray-600 p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 ${
-                      item.status === 'Completed' ? 'border-green-200 dark:border-green-800' : 
-                      item.status === 'In Progress' ? 'border-blue-200 dark:border-blue-800' : 
-                      'border-gray-200 dark:border-gray-600'
-                    }`}
-                  >
-                    <div className="item-content">
-                      <h4 className="text-gray-800 dark:text-gray-200 font-medium mb-1">{item.title}</h4>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-8">{item.description}</p>
-                    </div>
-                    <span className={`absolute bottom-2 right-2 text-xs font-medium px-2 py-1 rounded-full ${
-                      item.status === 'Completed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' :
-                      item.status === 'In Progress' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' :
-                      'bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-200'
-                    }`}>
-                      {item.status}
-                    </span>
-                    {/* Connector line */}
-                    <div className={`absolute top-0 left-1/2 w-0.5 h-10 -translate-y-full transform -translate-x-1/2 ${
-                      item.status === 'Completed' ? 'bg-green-300 dark:bg-green-600' :
-                      item.status === 'In Progress' ? 'bg-blue-300 dark:bg-blue-600' :
-                      'bg-gray-300 dark:bg-gray-600'
-                    }`}></div>
-                  </div>
-                ))}
+              <div className="w-full flex flex-col gap-3 mt-12">
+                {groupedItems[quarter].map((item) => {
+                  const isExpanded = expandedItems.includes(item.id);
+
+                  const toggleExpanded = () => {
+                    setExpandedItems((prev) =>
+                      prev.includes(item.id)
+                        ? prev.filter((id) => id !== item.id)
+                        : [...prev, item.id]
+                    );
+                  };
+
+                  return (
+                    <button
+                      key={item.id}
+                      className={`relative bg-white dark:bg-gray-700 rounded-md border ${
+                        item.status === 'Completed'
+                          ? 'border-green-200 dark:border-green-800'
+                          : item.status === 'In Progress'
+                          ? 'border-blue-200 dark:border-blue-800'
+                          : 'border-gray-200 dark:border-gray-600'
+                      } p-4 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 w-full text-left`}
+                      onClick={toggleExpanded}
+                    >
+                      <div className="item-content">
+                        <h4 className="text-gray-800 dark:text-gray-200 font-medium mb-1">{item.title}</h4>
+                        <p
+                          className={`text-gray-600 dark:text-gray-400 text-sm mb-8 overflow-hidden transition-all duration-200 ${
+                            isExpanded ? 'max-h-40' : 'max-h-0'
+                          }`}
+                        >
+                          {item.description}
+                        </p>
+                      </div>
+                      <span className={`absolute bottom-2 right-2 text-xs font-medium px-2 py-1 rounded-full ${getStatusColor(item.status)}`}>
+                        {item.status}
+                      </span>
+                      {/* Connector line */}
+                      <div className={`absolute top-5 left-1/2 w-0.5 h-10 -translate-y-full transform -translate-x-1/2 ${
+                        item.status === 'Completed'
+                          ? 'bg-green-300 dark:bg-green-600'
+                          : item.status === 'In Progress'
+                          ? 'bg-blue-300 dark:bg-blue-600'
+                          : 'bg-gray-300 dark:bg-gray-600'
+                      }`}></div>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           ))}

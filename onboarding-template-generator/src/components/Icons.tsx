@@ -92,3 +92,12 @@ export const MoonIcon = ({ className }: { className?: string }) => (
       stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
+
+export const EngageServicesIcon = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="40" height="40" rx="8" fill="#0078D4" fillOpacity="0.1"/>
+    <path d="M20 12C15.5817 12 12 15.5817 12 20C12 24.4183 15.5817 28 20 28C24.4183 28 28 24.4183 28 20C28 15.5817 24.4183 12 20 12Z" stroke="#0078D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 12V8M20 32V28M12 20H8M32 20H28M14.9289 14.9289L12.3431 12.3431M27.6569 27.6569L25.0711 25.0711M14.9289 25.0711L12.3431 27.6569M27.6569 12.3431L25.0711 14.9289" stroke="#0078D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 16L24 20L20 24L16 20L20 16Z" stroke="#0078D4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);

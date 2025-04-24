@@ -21,7 +21,6 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
     const updatedContacts = [...contacts];
     updatedContacts[index] = { ...updatedContacts[index], [field]: value };
     // --- DEBUGGING START ---
-    console.log(`ContactsForm: Updating index ${index}, field ${field} to "${value}". New contacts array:`, JSON.stringify(updatedContacts));
     // --- DEBUGGING END ---
     onChange(updatedContacts);
   };
@@ -73,11 +72,11 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
             </div>
 
             {/* Contact fields layout (e.g., grid for responsiveness) */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Form group styling */}
               <div className="mb-2 md:mb-0">
                 {/* Label styling */}
-                <label htmlFor={`contact-name-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
+                <label htmlFor={`contact-name-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                 {/* Input styling */}
                 <input
                   id={`contact-name-${index}`}
@@ -91,7 +90,7 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
               </div>
 
               <div className="mb-2 md:mb-0">
-                <label htmlFor={`contact-email-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                <label htmlFor={`contact-email-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">email@company.com</label>
                 <input
                   id={`contact-email-${index}`}
                   type="email"

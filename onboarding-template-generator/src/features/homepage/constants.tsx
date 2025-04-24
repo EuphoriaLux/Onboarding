@@ -17,9 +17,11 @@ import {
   AzureTransferIcon,
   CostOptimizationIcon,
   RoadmapIcon,
-  DeploymentIcon
+  DeploymentIcon,
+  EngageServicesIcon
   // ReportingIcon is already imported above
 } from '../../components/Icons'; // Adjusted path
+import { EngageServicesSection } from '../engageServices/components/EngageServicesSection';
 
 // Feature type definition
 export interface Feature {
@@ -145,4 +147,13 @@ export const features: Feature[] = [
     enabled: false, // Disabled as it's coming soon
     category: 'Coming Soon Features' // Moved to Coming Soon
   },
+  {
+    id: 'engage-services',
+    name: 'Microsoft Engage Services',
+    description: 'View and manage Microsoft Engage service offerings and tools.',
+    icon: <EngageServicesIcon />,
+    component: () => <EngageServicesSection services={[]} />,
+    enabled: true,
+    category: 'Sales & Engage Services'
+  }
 ];
