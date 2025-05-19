@@ -1,23 +1,23 @@
 // src/App.tsx - Moved from features/common/components
 import React, { useState, useEffect } from 'react';
-import { TierSelector } from './features/emailBuilder/supportTiers';
-import EmailRecipientsForm from './components/EmailRecipientsForm';
-import { EmailRecipient } from './types/AppTypes';
-import { ContactsForm } from './features/emailBuilder/contacts'; // Adjusted path
-import { TenantManager } from './features/emailBuilder/tenants'; // Adjusted path
-import { EmailForm, EmailPreview } from './features/emailBuilder'; // Adjusted path
-import LanguageSelector from './components/LanguageSelector'; // Adjusted path
-import { useAppState } from './contexts/AppStateContext'; // Adjusted path
-import { useLanguage } from './contexts/LanguageContext'; // Adjusted path
-import { StorageService } from './services/storage'; // Adjusted path
-import { ThemeSettings, AgentSettings } from './types'; // Adjusted path, added AgentSettings
-import { supportTiers } from './features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path
-import { generateMeetingSlots } from './utils/slotUtils';
-import MeetingSlotSelector from './components/MeetingSlotSelector';
-import emailBuilder from './features/emailBuilder/utils/emailBuilder'; // Import emailBuilder to use translate
-import CollapsibleSection from './components/CollapsibleSection'; // Import moved component
-import { applyThemeColors } from './utils/themeUtils'; // Import theme utility
-import './styles/tailwind.css';
+import { TierSelector } from '../../../features/emailBuilder/supportTiers';
+import EmailRecipientsForm from '../../../components/EmailRecipientsForm';
+import { EmailRecipient } from '../../../types/AppTypes';
+import { ContactsForm } from '../../../features/emailBuilder/contacts'; // Adjusted path
+import { TenantManager } from '../../../features/emailBuilder/tenants'; // Adjusted path
+import { EmailForm, EmailPreview } from '../../../features/emailBuilder'; // Adjusted path
+import LanguageSelector from '../../../components/LanguageSelector'; // Adjusted path
+import { useAppState } from '../../../contexts/AppStateContext'; // Adjusted path
+import { useLanguage } from '../../../contexts/LanguageContext'; // Adjusted path
+import { StorageService } from '../../../services/storage'; // Adjusted path
+import { ThemeSettings, AgentSettings } from '../../../types'; // Adjusted path, added AgentSettings
+import { supportTiers } from '../../../features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path
+import { generateMeetingSlots } from '../../../utils/slotUtils';
+import MeetingSlotSelector from '../../../components/MeetingSlotSelector';
+import emailBuilder from '../../../features/emailBuilder/utils/emailBuilder'; // Import emailBuilder to use translate
+import CollapsibleSection from '../../../components/CollapsibleSection'; // Import moved component
+import { applyThemeColors } from '../../../utils/themeUtils'; // Import theme utility
+import '../../../styles/tailwind.css';
 
 // AgentSettings interface moved to src/types/index.ts
 
@@ -25,7 +25,7 @@ import './styles/tailwind.css';
  * Main App Component for the Onboarding Template Generator
  * Uses contexts for state management and i18n
  */
-const App: React.FC = () => {
+const OnboardingTemplateGenerator: React.FC = () => {
   const {
     state,
     updateCustomerInfo,
@@ -142,7 +142,7 @@ const App: React.FC = () => {
     }));
     // --- End temporary tenant list ---
 
-    // --- Build translated roles string (adjectives only) ---
+    // --- Build translated roles string (adjectives only)
     const translatedRoles = `${emailBuilder.translate('roleTechnical', language)} ${emailBuilder.translate('conjunctionAnd', language)} ${emailBuilder.translate('roleAdministrative', language)}`;
     // --- End translated roles string ---
 
@@ -369,4 +369,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default OnboardingTemplateGenerator;

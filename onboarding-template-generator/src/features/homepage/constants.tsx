@@ -1,5 +1,6 @@
 import React from 'react';
 import App from '../../App'; // Adjusted path
+import OnboardingTemplateGenerator from '../../features/onboarding/components/OnboardingTemplateGenerator';
 import SettingsPage from '../settings/components/SettingsPage';
 import OnCallDutyForm from '../icsGenerator/components/OnCallDutyForm';
 import VacationRequestForm from '../icsGenerator/components/VacationRequestForm';
@@ -41,7 +42,7 @@ export const features: Feature[] = [
     name: 'Onboarding Template Generator',
     description: 'Create rich text onboarding templates for Microsoft support customers.',
     icon: <OnboardingIcon />,
-    component: App,
+    component: OnboardingTemplateGenerator,
     enabled: true,
     category: 'Template & Email Tools'
   },
