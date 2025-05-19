@@ -347,22 +347,22 @@ const App: React.FC = () => {
           </div>
 
           {/* 7. Email Builder with Preview Button */}
-          <div className="form-section email-section">
-            <h2>Email Preview & Generate</h2>
-            <p className="section-description">
-              Preview the email template and generate it for sending. Agent details are configured in Extension Settings.
-            </p>
-            <div className="form-actions">
-              <button
-                type="button"
-                className="btn-preview"
-                onClick={handlePreviewEmail}
-                disabled={!agentSettings}
-              >
-                {agentSettings ? 'Preview Email' : 'Loading Settings...'}
-              </button>
-            </div>
-          </div>
+<div className="form-section email-section p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
+  <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Email Preview & Generate</h2>
+  <p className="text-sm text-gray-500 dark:text-gray-400">
+    Preview the email template and generate it for sending. Agent details are configured in Extension Settings.
+  </p>
+  <div className="form-actions">
+    <button
+      type="button"
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+      onClick={handlePreviewEmail}
+      disabled={!agentSettings}
+    >
+      {agentSettings ? 'Preview Email' : 'Loading Settings...'}
+    </button>
+  </div>
+</div>
         </div>
       )}
     </div>
