@@ -325,7 +325,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   const updateCustomer = (customer: Customer) => {
     setState(prevState => ({
       ...prevState,
-      crmData: prevState.crmData.map(c => c.id === customer.id ? customer : c)
+      crmData: prevState.crmData.map(c => (c.id === customer.id ? customer : c))
     }));
   };
 
