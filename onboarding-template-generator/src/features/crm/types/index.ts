@@ -17,7 +17,16 @@ export interface Customer {
   notes: CustomerNote[];
   createdAt: string; // ISO 8601 date string
   updatedAt: string; // ISO 8601 date string
+  onboardingStatus?: OnboardingStatus;
   _etag?: string; // To store the ETag for concurrency control (internal use)
+}
+
+// Define possible onboarding statuses
+export enum OnboardingStatus {
+  NOT_STARTED = 'Not Started',
+  IN_PROGRESS = 'In Progress',
+  COMPLETED = 'Completed',
+  ON_HOLD = 'On Hold',
 }
 
 // Optional: Define possible statuses

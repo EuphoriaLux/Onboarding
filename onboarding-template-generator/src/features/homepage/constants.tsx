@@ -1,5 +1,4 @@
 import React from 'react';
-import App from '../../App'; // Adjusted path
 import OnboardingTemplateGenerator from '../../features/onboarding/components/OnboardingTemplateGenerator';
 import SettingsPage from '../settings/components/SettingsPage';
 import OnCallDutyForm from '../icsGenerator/components/OnCallDutyForm';
@@ -145,7 +144,7 @@ export const features: Feature[] = [
     description: 'Manage customer records stored in Azure Blob Storage (Alpha version).', // Updated Description
     icon: <ReportingIcon />, // Using ReportingIcon as placeholder, same as Support Viewer
     component: CrmView,
-    enabled: false, // Disabled as it's coming soon
+    enabled: true, // Enabled as it's coming soon
     category: 'Coming Soon Features' // Moved to Coming Soon
   },
   {

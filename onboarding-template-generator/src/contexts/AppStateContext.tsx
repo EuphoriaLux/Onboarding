@@ -6,6 +6,7 @@ import { TenantInfo } from '../features/emailBuilder/tenants/types'; // Adjusted
 import { EmailFormData } from '../features/emailBuilder/utils/types';
 import { SupportTier } from '../features/emailBuilder/supportTiers/types'; // Adjusted path
 import { supportTiers } from '../features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path // Import supportTiers
+import { Customer } from '../features/crm/types'; // Import Customer type
 
 interface Contact {
   name: string;
@@ -28,6 +29,7 @@ interface AppState {
   language: Language;
   showAlphaBetaFeatures: boolean;
   darkMode: boolean;
+  crmData: Customer[]; // Add crmData property
 }
 
 interface AppStateContextType {
@@ -42,6 +44,10 @@ interface AppStateContextType {
   updateShowAlphaBetaFeatures: (value: boolean) => void;
   toggleDarkMode: () => void;
   resetState: () => void;
+  updateCrmData: (crmData: Customer[]) => void;
+  addCustomer: (customer: Customer) => void;
+  updateCustomer: (customer: Customer) => void;
+  deleteCustomer: (customerId: string) => void;
 }
 
 const defaultState: AppState = {
@@ -52,20 +58,21 @@ const defaultState: AppState = {
     authorizedContacts: [{ name: '', email: '', phone: '' }],
     selectedTier: 'silver',
     // Initialize default tenant with all flags
-    tenants: [{ 
-      id: '', 
-      companyName: '', 
-      tenantDomain: '', 
+    tenants: [{
+      id: '',
+      companyName: '',
+      tenantDomain: '',
       microsoftTenantDomain: '', // Added MS Domain default
-      implementationDeadline: null, 
+      implementationDeadline: null,
       hasAzure: false
       // Removed includeRbacScript default
-    }], 
+    }],
   },
   emailData: null,
   language: 'en',
   showAlphaBetaFeatures: false,
-  darkMode: false // Default to light mode
+  darkMode: false, // Default to light mode
+  crmData: [], // Initialize crmData as an empty array
 };
 
 const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -78,11 +85,12 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     const loadState = async () => {
       try {
         const savedState = await StorageService.getAll([
-          'customerInfo', 
-          'emailData', 
-          'language', 
+          'customerInfo',
+          'emailData',
+          'language',
           'showAlphaBetaFeatures',
-          'darkMode'
+          'darkMode',
+          'crmData'
         ]);
 
         if (savedState) {
@@ -133,17 +141,17 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
                 return processedTenant as TenantInfo; // Cast back to TenantInfo
               });
             }
-            
+
             newState.customerInfo = {
               ...defaultState.customerInfo,
               ...customerInfo
             };
           }
-          
+
           if (savedState.emailData) {
             newState.emailData = savedState.emailData;
           }
-          
+
           if (savedState.language) {
             newState.language = savedState.language;
           }
@@ -154,6 +162,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
           }
           if (typeof savedState.darkMode === 'boolean') {
             newState.darkMode = savedState.darkMode;
+          }
+
+          if (savedState.crmData) {
+            newState.crmData = savedState.crmData as Customer[];
           }
 
           // Apply the theme class based on the loaded state BEFORE setting the state
@@ -169,7 +181,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
         console.error('Error loading state from storage:', error);
       }
     };
-    
+
     loadState();
   }, []);
 
@@ -183,6 +195,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     // Save toggle states
     StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
     StorageService.set('darkMode', state.darkMode);
+    StorageService.set('crmData', state.crmData);
   }, [state]);
 
   // Handler functions
@@ -245,7 +258,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
         customerInfo: {
           ...prevState.customerInfo,
           selectedTier: tier,
-          authorizedContacts: updatedContacts // Update contacts along with the tier
+          authorizedContacts: updatedContacts
         }
       };
     });
@@ -261,7 +274,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   const updateLanguage = (language: Language) => {
     setState(prevState => ({
       ...prevState,
-      language
+      language: language
     }));
   };
 
@@ -295,6 +308,34 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     StorageService.clear();
   };
 
+  const updateCrmData = (crmData: Customer[]) => {
+    setState(prevState => ({
+      ...prevState,
+      crmData: crmData
+    }));
+  };
+
+  const addCustomer = (customer: Customer) => {
+    setState(prevState => ({
+      ...prevState,
+      crmData: [...prevState.crmData, customer]
+    }));
+  };
+
+  const updateCustomer = (customer: Customer) => {
+    setState(prevState => ({
+      ...prevState,
+      crmData: prevState.crmData.map(c => c.id === customer.id ? customer : c)
+    }));
+  };
+
+  const deleteCustomer = (customerId: string) => {
+    setState(prevState => ({
+      ...prevState,
+      crmData: prevState.crmData.filter(c => c.id !== customerId)
+    }));
+  };
+
   return (
     <AppStateContext.Provider value={{
       state,
@@ -307,7 +348,11 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       updateProposedSlots,
       updateShowAlphaBetaFeatures,
       toggleDarkMode,
-      resetState
+      resetState,
+      updateCrmData,
+      addCustomer,
+      updateCustomer,
+      deleteCustomer
     }}>
       {children}
     </AppStateContext.Provider>
