@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface CrmNavbarProps {
-  onViewChange: (view: 'customers' | 'contacts' | 'create' | 'update' | 'delete') => void;
+  onViewChange: (view: 'customers' | 'contacts' | 'create' | 'update' | 'delete' | 'addContact') => void;
 }
 
 const CrmNavbar: React.FC<CrmNavbarProps> = ({ onViewChange }) => {
@@ -24,6 +24,9 @@ const CrmNavbar: React.FC<CrmNavbarProps> = ({ onViewChange }) => {
           </button>
            <button onClick={() => onViewChange('delete')} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
             Delete Customer
+          </button>
+          <button onClick={() => onViewChange('addContact')} className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
+            Add Contact
           </button>
           {/* Add more links as needed */}
         </div>

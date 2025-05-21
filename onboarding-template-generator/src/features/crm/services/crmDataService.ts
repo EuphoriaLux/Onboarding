@@ -6,7 +6,7 @@ import {
 } from '@azure/storage-blob';
 import { TokenCredential } from '@azure/core-auth';
 import * as authService from '../../supportRequests/services/authService'; // Adjust path as needed
-import { Customer } from '../types'; // Import the CRM Customer type
+import { Customer, Contact } from '../types'; // Import the CRM Customer type
 import { v4 as uuidv4 } from 'uuid'; // For generating unique IDs
 
 // --- Configuration ---
@@ -146,6 +146,7 @@ export const createCustomer = async (customerData: Omit<Customer, 'id' | 'create
     createdAt: now,
     updatedAt: now,
     notes: customerData.notes || [], // Ensure notes array exists
+    contacts: customerData.contacts || [], // Ensure contacts array exists
   };
 
   const blobName = `customer-${newId}.json`;
@@ -289,5 +290,85 @@ export const deleteCustomer = async (customerId: string, etag: string): Promise<
        throw error;
     }
     throw new Error(`Failed to delete customer ${customerId}: ${error instanceof Error ? error.message : String(error)}`);
+  }
+};
+
+/**
+ * Adds a contact to a customer's notes array.
+ * @param customerId The ID of the customer to add the contact to.
+ * @param contact The contact object to add.
+ */
+export const addContactToCustomer = async (customerId: string, contact: Contact): Promise<Customer> => {
+  try {
+    const customer = await getCustomer(customerId);
+    if (!customer) {
+      throw new Error(`Customer with ID ${customerId} not found.`);
+    }
+
+    const newContact: Contact = {
+      id: uuidv4(),
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+      jobTitle: contact.jobTitle
+    };
+
+    const updatedCustomer: Customer = {
+      ...customer,
+      contacts: customer.contacts ? [...customer.contacts, newContact] : [newContact],
+    };
+
+    return await updateCustomer(updatedCustomer);
+  } catch (error) {
+    console.error("Error in addContactToCustomer:", error);
+    throw error; // Re-throw the error to be handled by the caller
+  }
+};
+
+/**
+ * Updates an existing contact for a customer.
+ * @param customerId The ID of the customer the contact belongs to.
+ * @param contact The updated contact object.
+ */
+export const updateContact = async (customerId: string, contact: Contact): Promise<Customer> => {
+  try {
+    const customer = await getCustomer(customerId);
+    if (!customer) {
+      throw new Error(`Customer with ID ${customerId} not found.`);
+    }
+
+    const updatedCustomer: Customer = {
+      ...customer,
+      contacts: customer.contacts?.map(c => (c.id === contact.id ? contact : c)) || [],
+    };
+
+    return await updateCustomer(updatedCustomer);
+  } catch (error) {
+    console.error("Error in updateContact:", error);
+    throw error;
+  }
+};
+
+/**
+ * Deletes a contact from a customer.
+ * @param customerId The ID of the customer the contact belongs to.
+ * @param contactId The ID of the contact to delete.
+ */
+export const deleteContact = async (customerId: string, contactId: string): Promise<Customer> => {
+  try {
+    const customer = await getCustomer(customerId);
+    if (!customer) {
+      throw new Error(`Customer with ID ${customerId} not found.`);
+    }
+
+    const updatedCustomer: Customer = {
+      ...customer,
+      contacts: customer.contacts?.filter(c => c.id !== contactId) || [],
+    };
+
+    return await updateCustomer(updatedCustomer);
+  } catch (error) {
+    console.error("Error in deleteContact:", error);
+    throw error;
   }
 };

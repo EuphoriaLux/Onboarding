@@ -3,6 +3,7 @@ import { StorageService } from '../../../services/storage';
 import { ThemeSettings } from '../../../types';
 import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
 import { applyThemeColors } from '../../../utils/themeUtils'; // Import theme utility
+import { saveAs } from 'file-saver';
 
 
 // Default theme colors (consider extracting from CSS or defining centrally)
@@ -37,19 +38,78 @@ const SettingsPage: React.FC = () => {
   // State for PDF attachment
   const [pdfFilename, setPdfFilename] = useState<string | null>(null);
   const [pdfBase64, setPdfBase64] = useState<string | null>(null);
+  // State for storage usage
+  const [storageUsage, setStorageUsage] = useState<number>(0);
+  const [storageUsagePercentage, setStorageUsagePercentage] = useState<number>(0);
   // Remove local state for toggle, use context instead
   // const [showAlphaBeta, setShowAlphaBeta] = useState(false);
 
   // Get state and update function from context
-  const { state: appState, updateShowAlphaBetaFeatures } = useAppState();
+  const { state: appState, updateShowAlphaBetaFeatures, updateCrmData } = useAppState();
 
   const [isLoading, setIsLoading] = useState(true); // Keep local loading state for settings page
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  // Load settings on component mount
+  const handleExport = () => {
+    const data = appState.crmData;
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    saveAs(blob, 'customer-data.json');
+  };
+
+  const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const json = e.target?.result as string;
+          const data = JSON.parse(json);
+          updateCrmData(data);
+          console.log('Imported data:', data);
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+          alert('Error parsing JSON file.');
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  // Function to format bytes into human-readable format
+  const formatBytes = (bytes: number, decimals: number = 2): string => {
+    if (bytes === 0) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  };
+
+  // Load settings on component mount and fetch storage usage
   useEffect(() => {
     setIsLoading(true);
+
+    const fetchStorageUsage = () => {
+      if (chrome && chrome.storage && chrome.storage.local) {
+        chrome.storage.local.getBytesInUse((bytesInUse) => {
+          const maxStorage = 5 * 1024 * 1024; // 5MB
+          const percentage = (bytesInUse / maxStorage) * 100;
+          setStorageUsage(bytesInUse);
+          setStorageUsagePercentage(percentage);
+        });
+      } else {
+        setStorageUsage(0);
+        setStorageUsagePercentage(0);
+      }
+    };
+
+    fetchStorageUsage();
+
     Promise.all([
       StorageService.get<AgentSettings>('agentSettings'),
       StorageService.get<ThemeSettings>('themeSettings'),
@@ -58,50 +118,50 @@ const SettingsPage: React.FC = () => {
       StorageService.get<string>('pdfAttachmentBase64'),
       // No need to load showAlphaBetaFeatures here, context handles it
     ])
-    .then(([agentSettings, themeSettings, loadedPdfFilename, loadedPdfBase64]) => {
-      // Load Agent Settings
-      if (agentSettings) {
-        setAgentName(agentSettings.agentName || '');
-        setAgentTitle(agentSettings.agentTitle || '');
-        setCompanyName(agentSettings.companyName || '');
-        setAgentEmail(agentSettings.agentEmail || '');
-        setOnCallRecipients(agentSettings.onCallRecipients || '');
-        setVacationRecipients(agentSettings.vacationRecipients || '');
-        setSupportRecipients(agentSettings.supportRecipients || '');
-      }
+      .then(([agentSettings, themeSettings, loadedPdfFilename, loadedPdfBase64]) => {
+        // Load Agent Settings
+        if (agentSettings) {
+          setAgentName(agentSettings.agentName || '');
+          setAgentTitle(agentSettings.agentTitle || '');
+          setCompanyName(agentSettings.companyName || '');
+          setAgentEmail(agentSettings.agentEmail || '');
+          setOnCallRecipients(agentSettings.onCallRecipients || '');
+          setVacationRecipients(agentSettings.vacationRecipients || '');
+          setSupportRecipients(agentSettings.supportRecipients || '');
+        }
 
-      // Load Theme Settings
-      if (themeSettings) {
-        setPrimaryColor(themeSettings.primaryColor || DEFAULT_THEME.primaryColor);
-        setTextColor(themeSettings.textColor || DEFAULT_THEME.textColor);
-        setBackgroundColor(themeSettings.backgroundColor || DEFAULT_THEME.backgroundColor);
-      } else {
-        // Fallback to defaults if no theme settings saved
+        // Load Theme Settings
+        if (themeSettings) {
+          setPrimaryColor(themeSettings.primaryColor || DEFAULT_THEME.primaryColor);
+          setTextColor(themeSettings.textColor || DEFAULT_THEME.textColor);
+          setBackgroundColor(themeSettings.backgroundColor || DEFAULT_THEME.backgroundColor);
+        } else {
+          // Fallback to defaults if no theme settings saved
+          setPrimaryColor(DEFAULT_THEME.primaryColor);
+          setTextColor(DEFAULT_THEME.textColor);
+          // Correctly use default background color in the else block
+          setBackgroundColor(DEFAULT_THEME.backgroundColor);
+        }
+        // Removed the redundant second 'else' block
+
+        // Load PDF settings only
+        // setCustomEmailTemplate(loadedTemplate || ''); // Removed template state update
+        setPdfFilename(loadedPdfFilename || null);
+        setPdfBase64(loadedPdfBase64 || null);
+
+        // Context handles loading showAlphaBetaFeatures
+      })
+      .catch(error => {
+        console.error("Error loading settings:", error);
+        // Optionally set an error state to show in the UI
+        // Still set default theme colors on error
         setPrimaryColor(DEFAULT_THEME.primaryColor);
         setTextColor(DEFAULT_THEME.textColor);
-        // Correctly use default background color in the else block
         setBackgroundColor(DEFAULT_THEME.backgroundColor);
-      }
-      // Removed the redundant second 'else' block
-
-      // Load PDF settings only
-      // setCustomEmailTemplate(loadedTemplate || ''); // Removed template state update
-      setPdfFilename(loadedPdfFilename || null);
-      setPdfBase64(loadedPdfBase64 || null);
-
-      // Context handles loading showAlphaBetaFeatures
-    })
-    .catch(error => {
-      console.error("Error loading settings:", error);
-      // Optionally set an error state to show in the UI
-      // Still set default theme colors on error
-      setPrimaryColor(DEFAULT_THEME.primaryColor);
-      setTextColor(DEFAULT_THEME.textColor);
-      setBackgroundColor(DEFAULT_THEME.backgroundColor);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   // Save settings handler
@@ -377,6 +437,19 @@ const SettingsPage: React.FC = () => {
             {!pdfFilename && <span className="text-gray-700 dark:text-gray-300">No PDF attached.</span>} {/* Added text color */}
         </div>
 
+        {/* --- Storage Usage --- */}
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Storage Usage</h3>
+        <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">View the current storage usage of the extension.</p>
+
+        <div className="mb-4">
+          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div className="bg-blue-600 h-2.5 rounded-full dark:bg-blue-500" style={{ width: `${storageUsagePercentage}%` }}></div>
+          </div>
+          <span className="text-gray-700 dark:text-gray-300">
+            Storage Usage: {formatBytes(storageUsage)} ({storageUsagePercentage.toFixed(2)}%)
+          </span>
+        </div>
+
         {/* --- Experimental Features Toggle --- */}
         <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Experimental Features</h3>
         <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Enable access to Alpha/Beta features currently under development.</p>
@@ -396,6 +469,26 @@ const SettingsPage: React.FC = () => {
           <span className="ml-4 text-sm font-semibold text-gray-700 dark:text-gray-300">{appState.showAlphaBetaFeatures ? 'Enabled' : 'Disabled'}</span>
         </div>
 
+        {/* --- Data Export/Import --- */}
+        <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Data Export/Import</h3>
+        <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Export or import your customer and contact data.</p>
+
+        <div className="mb-4">
+          <button onClick={handleExport} className="bg-green-500 dark:bg-green-600 text-white px-4 py-2 rounded-md min-w-[120px] hover:bg-green-700 dark:hover:bg-green-500">
+            Export Data
+          </button>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="importData" className="block mb-1 font-semibold text-gray-700 dark:text-gray-300 text-sm">Import Data:</label>
+          <input
+            type="file"
+            id="importData"
+            accept=".json"
+            onChange={handleImport}
+            className="text-gray-700 dark:text-gray-300"
+          />
+        </div>
 
         <div className="mt-6 flex items-center">
           <button onClick={handleSave} disabled={isSaving} className="bg-blue-500 dark:bg-blue-600 text-white px-4 py-2 rounded-md min-w-[120px] hover:bg-blue-700 dark:hover:bg-blue-500 disabled:opacity-50">

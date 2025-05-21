@@ -6,13 +6,7 @@ import { TenantInfo } from '../features/emailBuilder/tenants/types'; // Adjusted
 import { EmailFormData } from '../features/emailBuilder/utils/types';
 import { SupportTier } from '../features/emailBuilder/supportTiers/types'; // Adjusted path
 import { supportTiers } from '../features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path // Import supportTiers
-import { Customer } from '../features/crm/types'; // Import Customer type
-
-interface Contact {
-  name: string;
-  email: string;
-  phone: string;
-}
+import { Customer, Contact } from '../features/crm/types'; // Import Customer type
 
 interface CustomerInfo {
   contactName: string;
@@ -30,10 +24,12 @@ interface AppState {
   showAlphaBetaFeatures: boolean;
   darkMode: boolean;
   crmData: Customer[]; // Add crmData property
+  selectedCustomerId: string | null; // Add selectedCustomerId to state
 }
 
 interface AppStateContextType {
   state: AppState;
+  setSelectedCustomerId: (customerId: string | null) => void; // Add setter for selectedCustomerId
   updateCustomerInfo: (field: string, value: any) => void;
   updateContacts: (contacts: Contact[]) => void;
   updateTenants: (tenants: TenantInfo[]) => void;
@@ -48,6 +44,9 @@ interface AppStateContextType {
   addCustomer: (customer: Customer) => void;
   updateCustomer: (customer: Customer) => void;
   deleteCustomer: (customerId: string) => void;
+  addContactToCustomer: (customerId: string, contact: Contact) => void;
+  updateContact: (customerId: string, contact: Contact) => void;
+  deleteContact: (customerId: string, contactId: string) => void;
 }
 
 const defaultState: AppState = {
@@ -55,7 +54,7 @@ const defaultState: AppState = {
     contactName: '',
     contactEmail: '',
     proposedSlots: [], // Initialize as empty array
-    authorizedContacts: [{ name: '', email: '', phone: '' }],
+    authorizedContacts: [{ id: 'default-contact-1', name: '', email: '', phone: '', jobTitle: '' }],
     selectedTier: 'silver',
     // Initialize default tenant with all flags
     tenants: [{
@@ -73,6 +72,7 @@ const defaultState: AppState = {
   showAlphaBetaFeatures: false,
   darkMode: false, // Default to light mode
   crmData: [], // Initialize crmData as an empty array
+  selectedCustomerId: null, // Initialize selectedCustomerId as null
 };
 
 const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -164,8 +164,17 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             newState.darkMode = savedState.darkMode;
           }
 
-          if (savedState.crmData) {
-            newState.crmData = savedState.crmData as Customer[];
+          if (savedState.crmData && Array.isArray(savedState.crmData)) {
+            newState.crmData = savedState.crmData.map((customer: any) => { // Use 'any' temporarily for processing
+              // Ensure contacts array exists and is an array
+              const contacts = (customer.contacts && Array.isArray(customer.contacts)) ? customer.contacts : [];
+              return {
+                ...customer,
+                contacts: contacts as Contact[] // Cast back to Contact[]
+              };
+            }) as Customer[]; // Cast the whole array back to Customer[]
+          } else {
+             newState.crmData = []; // Default to empty array if crmData is missing or not an array
           }
 
           // Apply the theme class based on the loaded state BEFORE setting the state
@@ -196,6 +205,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
     StorageService.set('darkMode', state.darkMode);
     StorageService.set('crmData', state.crmData);
+    StorageService.set('selectedCustomerId', state.selectedCustomerId); // Save selectedCustomerId to storage
   }, [state]);
 
   // Handler functions
@@ -308,6 +318,13 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     StorageService.clear();
   };
 
+  const setSelectedCustomerId = (customerId: string | null) => {
+    setState(prevState => ({
+      ...prevState,
+      selectedCustomerId: customerId,
+    }));
+  };
+
   const updateCrmData = (crmData: Customer[]) => {
     setState(prevState => ({
       ...prevState,
@@ -318,7 +335,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   const addCustomer = (customer: Customer) => {
     setState(prevState => ({
       ...prevState,
-      crmData: [...prevState.crmData, customer]
+      crmData: [...prevState.crmData, { ...customer, contacts: customer.contacts || [] }] // Ensure contacts array exists
     }));
   };
 
@@ -333,6 +350,62 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     setState(prevState => ({
       ...prevState,
       crmData: prevState.crmData.filter(c => c.id !== customerId)
+    }));
+  };
+
+ const addContactToCustomer = (customerId: string, contact: Contact) => {
+    setState(prevState => {
+      return {
+        ...prevState,
+        crmData: prevState.crmData.map(customer => {
+          if (customer.id === customerId) {
+            // Update the customer with the new contact
+            return {
+              ...customer,
+              contacts: [...(customer.contacts || []), contact],
+              notes: [...customer.notes, {
+                timestamp: new Date().toISOString(),
+                text: `New contact added: ${contact.name} (${contact.email})`
+              }]
+            };
+          } else {
+            return customer;
+          }
+        })
+      };
+    });
+  };
+
+ const updateContact = (customerId: string, contact: Contact) => {
+    setState(prevState => ({
+      ...prevState,
+      crmData: prevState.crmData.map(customer => {
+        if (customer.id === customerId) {
+          return {
+            ...customer,
+            contacts: customer.contacts ? customer.contacts.map(c => (c.id === contact.id ? contact : c)) : [],
+            updatedAt: new Date().toISOString() // Update the timestamp
+          };
+        } else {
+          return customer;
+        }
+      })
+    }));
+  };
+
+  const deleteContact = (customerId: string, contactId: string) => {
+    setState(prevState => ({
+      ...prevState,
+      crmData: prevState.crmData.map(customer => {
+        if (customer.id === customerId) {
+          return {
+            ...customer,
+            contacts: customer.contacts ? customer.contacts.filter(c => c.id !== contactId) : [],
+          };
+        } else {
+          return customer;
+        }
+      })
     }));
   };
 
@@ -352,7 +425,11 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       updateCrmData,
       addCustomer,
       updateCustomer,
-      deleteCustomer
+      deleteCustomer,
+      addContactToCustomer,
+      updateContact,
+      deleteContact,
+      setSelectedCustomerId // Provide the setter in the context value
     }}>
       {children}
     </AppStateContext.Provider>

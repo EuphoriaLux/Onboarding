@@ -29,6 +29,32 @@ export enum OnboardingStatus {
   ON_HOLD = 'On Hold',
 }
 
+export interface Contact {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  jobTitle: string;
+}
+
+export interface Customer {
+  id: string; // Unique identifier (e.g., UUID)
+  name: string; // Primary/Official Customer Name
+  internalName?: string; // Optional internal name/alias
+  email?: string; // Optional
+  phone?: string; // Optional
+  company?: string; // Optional
+  status?: string; // e.g., 'Lead', 'Active', 'Inactive', 'Prospect'
+  tenantIds?: string[]; // Optional array of Microsoft Tenant IDs
+  parentId?: string; // Optional ID of the parent customer/company
+  notes: CustomerNote[];
+  contacts?: Contact[];
+  createdAt: string; // ISO 8601 date string
+  updatedAt: string; // ISO 8601 date string
+  onboardingStatus?: OnboardingStatus;
+  _etag?: string; // To store the ETag for concurrency control (internal use)
+}
+
 // Optional: Define possible statuses
 export enum CustomerStatus {
   LEAD = 'Lead',

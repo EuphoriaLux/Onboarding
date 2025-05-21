@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Customer, OnboardingStatus } from '../types';
 
 interface CustomerFormProps {
   onSubmit: (customer: Customer) => void;
   initialCustomer?: Customer | null;
+  customer?: Customer;
 }
 
 const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }) => {
@@ -11,6 +12,14 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
   const [email, setEmail] = useState(initialCustomer?.email || '');
   const [company, setCompany] = useState(initialCustomer?.company || '');
   const [onboardingStatus, setOnboardingStatus] = useState<OnboardingStatus>(initialCustomer?.onboardingStatus || OnboardingStatus.NOT_STARTED);
+
+  // Update local state when initialCustomer prop changes
+  useEffect(() => {
+    setName(initialCustomer?.name || '');
+    setEmail(initialCustomer?.email || '');
+    setCompany(initialCustomer?.company || '');
+    setOnboardingStatus(initialCustomer?.onboardingStatus || OnboardingStatus.NOT_STARTED);
+  }, [initialCustomer]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,14 +30,18 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
       company,
       onboardingStatus,
       notes: initialCustomer?.notes || [],
+      contacts: initialCustomer?.contacts || [], // Include existing contacts
       createdAt: initialCustomer?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
     onSubmit(newCustomer);
-    setName('');
-    setEmail('');
-    setCompany('');
-    setOnboardingStatus(OnboardingStatus.NOT_STARTED);
+    // Only clear the form if it's for adding a new customer (no initialCustomer)
+    if (!initialCustomer) {
+      setName('');
+      setEmail('');
+      setCompany('');
+      setOnboardingStatus(OnboardingStatus.NOT_STARTED);
+    }
   };
 
   return (

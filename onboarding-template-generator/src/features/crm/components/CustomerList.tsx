@@ -4,11 +4,11 @@ import { useAppState } from '../../../contexts/AppStateContext';
 
 interface CustomerListProps {
   customers: Customer[];
-  onSelectCustomer: (customerId: string) => void;
+  // Removed onSelectCustomer prop
 }
 
-const CustomerList: React.FC<CustomerListProps> = ({ customers, onSelectCustomer }) => {
-  const { deleteCustomer } = useAppState();
+const CustomerList: React.FC<CustomerListProps> = ({ customers }) => { // Removed onSelectCustomer from props
+  const { deleteCustomer, setSelectedCustomerId } = useAppState(); // Get setSelectedCustomerId from context
 
   return (
     <div className="overflow-x-auto">
@@ -22,7 +22,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, onSelectCustomer
         </thead>
         <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
           {customers.map(customer => (
-            <tr key={customer.id}>
+            <tr key={customer.id} onClick={() => setSelectedCustomerId(customer.id)} className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"> {/* Use context setter */}
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm text-gray-900 dark:text-gray-300">{customer.name}</div>
               </td>
@@ -30,12 +30,6 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, onSelectCustomer
                 <div className="text-sm text-gray-900 dark:text-gray-300">{customer.email}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <button
-                  onClick={() => onSelectCustomer(customer.id)}
-                  className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-200"
-                >
-                  Edit
-                </button>
                 <button
                   onClick={() => deleteCustomer(customer.id)}
                   className="text-red-600 dark:text-red-400 hover:text-red-900 dark:hover:text-red-200 ml-2"
