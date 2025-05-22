@@ -1,6 +1,0 @@
-{
-  "name": "Tenant Manager CRM",
-  "description": "A simple CRM application to manage customers and their associated Microsoft tenants. Allows adding new customers and tenants, and viewing them in an organized manner.",
-  "requestFramePermissions": [],
-  "prompt": ""
-}

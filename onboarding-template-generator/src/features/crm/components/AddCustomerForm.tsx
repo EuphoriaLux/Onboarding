@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Customer } from '../types/index'; // Updated import path
+import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
 
 interface AddCustomerFormProps {
   onAddCustomer: (customerData: Omit<Customer, 'id' | 'createdAt'>) => void;
@@ -7,6 +8,9 @@ interface AddCustomerFormProps {
 }
 
 const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onAddCustomer, onCancel }) => {
+  const { state } = useAppState(); // Get state from AppStateContext
+  const { darkMode } = state; // Access darkMode from state
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // Changed from contactEmail to email
   const [error, setError] = useState('');
@@ -28,6 +32,8 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onAddCustomer, onCanc
     setEmail('');
   };
 
+  const inputTextColor = darkMode ? 'white' : 'black'; // Determine text color based on dark mode
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
@@ -39,7 +45,8 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onAddCustomer, onCanc
           id="customerName"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full px-3 py-2 border border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 ${error ? 'border-red-500' : ''}`}
+          style={{ color: inputTextColor }}
           placeholder="e.g., Contoso Ltd."
         />
       </div>
@@ -52,7 +59,8 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onAddCustomer, onCanc
           id="contactEmail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-2 border border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm"
+          className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          style={{ color: inputTextColor }}
           placeholder="e.g., contact@contoso.com"
         />
       </div>

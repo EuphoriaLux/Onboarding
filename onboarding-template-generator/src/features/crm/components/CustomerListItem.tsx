@@ -1,14 +1,20 @@
 import React from 'react';
 import { Customer } from '../types/index'; // Updated import path
-import { UserGroupIcon, ChevronRightIcon } from './icons'; // Updated import path
+import { UserGroupIcon, ChevronRightIcon, PencilSquareIcon } from './icons'; // Updated import path
 
 interface CustomerListItemProps {
   customer: Customer;
   isSelected: boolean;
   onSelect: () => void;
+  onEdit: (customerId: string) => void; // New prop for edit action
 }
 
-const CustomerListItem: React.FC<CustomerListItemProps> = ({ customer, isSelected, onSelect }) => {
+const CustomerListItem: React.FC<CustomerListItemProps> = ({ customer, isSelected, onSelect, onEdit }) => {
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent the li's onClick from firing
+    onEdit(customer.id);
+  };
+
   return (
     <li
       onClick={onSelect}
@@ -17,17 +23,27 @@ const CustomerListItem: React.FC<CustomerListItemProps> = ({ customer, isSelecte
       role="button"
       tabIndex={0}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onSelect()}
-      aria-selected={isSelected}
     >
       <div className="flex items-center space-x-3 min-w-0">
-        <UserGroupIcon className={`w-6 h-6 flex-shrink-0 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : 'text-[var(--text-color-light)] opacity-70 dark:text-[var(--text-color-dark)] opacity-70'}`} />
+        <UserGroupIcon className={`w-6 h-6 flex-shrink-0 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : ''}`} style={!isSelected ? { color: 'black' } : {}} />
         <div className="min-w-0">
-          <p className={`font-medium truncate ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] font-semibold' : 'text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]'}`}>{customer.name}</p>
-          {customer.email && <p className="text-sm text-[var(--text-color-light)] opacity-80 dark:text-[var(--text-color-dark)] opacity-80 truncate">{customer.email}</p>}
-          <p className="text-xs text-[var(--text-color-light)] opacity-60 dark:text-[var(--text-color-dark)] opacity-60 mt-0.5">Joined: {new Date(customer.createdAt).toLocaleDateString()}</p>
+          <p className={`font-medium truncate ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] font-semibold' : ''}`} style={!isSelected ? { color: 'black' } : {}}>{customer.name}</p>
+          {customer.email && <p className="text-sm truncate" style={!isSelected ? { color: 'black' } : {}}>{customer.email}</p>}
+          <p className="text-xs mt-0.5" style={!isSelected ? { color: 'black' } : {}}>Joined: {new Date(customer.createdAt).toLocaleDateString()}</p>
         </div>
       </div>
-      {isSelected && <ChevronRightIcon className="w-5 h-5 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0 ml-2" />}
+      <div className="flex items-center space-x-2"> {/* Container for icons */}
+        {isSelected && (
+          <button
+            onClick={handleEditClick}
+            className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] transition-all duration-150 ease-in-out"
+            aria-label="Edit customer"
+          >
+            <PencilSquareIcon className={`w-5 h-5 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : 'text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]'}`} />
+          </button>
+        )}
+        {isSelected && <ChevronRightIcon className="w-5 h-5 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0" />}
+      </div>
     </li>
   );
 };

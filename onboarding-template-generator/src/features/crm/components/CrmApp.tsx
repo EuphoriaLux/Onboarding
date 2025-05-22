@@ -10,9 +10,10 @@ import AddTenantForm from './AddTenantForm';
 import CustomerContactSidebar from './CustomerContactSidebar';
 import AuthorizedContactsSidebar from './AuthorizedContactsSidebar';
 import AddAuthorizedContactForm from './AddAuthorizedContactForm';
+import UpdateCustomerView from './UpdateCustomerView'; // Import UpdateCustomerView
 import { PlusIcon } from './icons';
-import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
-
+import { useAppState } from '../../../contexts/AppStateContext';
+import * as crmStorageService from '../services/crmStorageService';
 
 const CrmApp: React.FC = () => {
   const { state, setSelectedCustomerId, addCustomer, addTenantToCustomer, addAuthorizedContactToCustomer } = useAppState();
@@ -20,16 +21,29 @@ const CrmApp: React.FC = () => {
   const [isAddCustomerModalOpen, setIsAddCustomerModalOpen] = useState(false);
   const [isAddTenantModalOpen, setIsAddTenantModalOpen] = useState(false);
   const [isAddAuthorizedContactModalOpen, setIsAddAuthorizedContactModalOpen] = useState(false);
-  // isLoading and error are now managed by AppStateContext
+  const [isUpdateCustomerModalOpen, setIsUpdateCustomerModalOpen] = useState(false); // New state for update modal
+  const [selectedCustomerIdForEdit, setSelectedCustomerIdForEdit] = useState<string | null>(null);
 
   const handleSelectCustomer = useCallback((customerId: string) => {
     setSelectedCustomerId(customerId);
+    // No need to set currentCrmView here anymore as it's not used for main content switching
   }, [setSelectedCustomerId]);
 
   const handleAddCustomer = async (customerData: Omit<Customer, 'id' | 'createdAt'>) => {
     await addCustomer(customerData);
     setIsAddCustomerModalOpen(false);
   };
+
+  const handleEditCustomer = useCallback((customerId: string) => {
+    setSelectedCustomerId(customerId); // Keep selected customer in main state
+    setSelectedCustomerIdForEdit(customerId);
+    setIsUpdateCustomerModalOpen(true); // Open update modal
+  }, [setSelectedCustomerId]);
+
+  const handleCloseUpdateModal = useCallback(() => {
+    setSelectedCustomerIdForEdit(null);
+    setIsUpdateCustomerModalOpen(false);
+  }, []);
 
   const handleAddTenant = async (tenantData: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => {
     if (!selectedCustomerId) return;
@@ -59,8 +73,8 @@ const CrmApp: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            {/* Customer List Section */}
-            <div className="lg:col-span-1 bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg">
+            {/* Customer List Section - Always visible */}
+            <div className="lg:col-span-1 bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg flex flex-col flex-grow">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl sm:text-2xl font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]">Customers</h2>
                 <button
@@ -76,43 +90,47 @@ const CrmApp: React.FC = () => {
                 customers={customers}
                 selectedCustomerId={selectedCustomerId}
                 onSelectCustomer={handleSelectCustomer}
+                onEditCustomer={handleEditCustomer} // Pass the new onEditCustomer prop
               />
             </div>
 
-            {/* Tenant List Section */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl sm:text-2xl font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]">
-                  {selectedCustomer ? `${selectedCustomer.name}'s Tenants` : 'Select a Customer'}
-                </h2>
-                <button
-                  onClick={() => setIsAddTenantModalOpen(true)}
-                  disabled={!selectedCustomerId}
-                  className="flex items-center bg-[var(--primary-color-light)] hover:bg-[color-mix(in srgb, var(--primary-color-light) 80%, black)] dark:bg-[var(--primary-color-dark)] dark:hover:bg-[color-mix(in srgb, var(--primary-color-dark) 80%, black)] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
-                  title={selectedCustomerId ? "Add New Tenant" : "Select a customer first"}
-                >
-                  <PlusIcon className="w-5 h-5 mr-2" />
-                  Add Tenant
-                </button>
+            {/* Main Content Area - Always show Tenant List and Sidebars */}
+            <>
+              {/* Tenant List Section */}
+              <div className="lg:col-span-2 bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg flex flex-col flex-grow">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl sm:text-2xl font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]">
+                    {selectedCustomer ? `${selectedCustomer.name}'s Tenants` : 'Select a Customer'}
+                  </h2>
+                  <button
+                    onClick={() => setIsAddTenantModalOpen(true)}
+                    disabled={!selectedCustomerId}
+                    className="flex items-center bg-[var(--primary-color-light)] hover:bg-[color-mix(in srgb, var(--primary-color-light) 80%, black)] dark:bg-[var(--primary-color-dark)] dark:hover:bg-[color-mix(in srgb, var(--primary-color-dark) 80%, black)] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
+                    title={selectedCustomerId ? "Add New Tenant" : "Select a customer first"}
+                  >
+                    <PlusIcon className="w-5 h-5 mr-2" />
+                    Add Tenant
+                  </button>
+                </div>
+                <TenantList
+                  tenants={displayedTenants}
+                  customerName={selectedCustomer?.name || ''}
+                  isLoading={false}
+                  selectedCustomerId={selectedCustomerId}
+                />
               </div>
-              <TenantList
-                tenants={displayedTenants}
-                customerName={selectedCustomer?.name || ''}
-                isLoading={false}
-                selectedCustomerId={selectedCustomerId}
-              />
-            </div>
-            
-            {/* Sidebars Column */}
-            <div className="lg:col-span-1 flex flex-col space-y-6">
-              <CustomerContactSidebar customer={selectedCustomer} />
-              <AuthorizedContactsSidebar
-                contacts={displayedAuthorizedContacts}
-                selectedCustomerId={selectedCustomerId}
-                onAddContactClick={() => setIsAddAuthorizedContactModalOpen(true)}
-                customerName={selectedCustomer?.name}
-              />
-            </div>
+              
+              {/* Sidebars Column */}
+              <div className="lg:col-span-1 flex flex-col space-y-6 flex-grow">
+                <CustomerContactSidebar customer={selectedCustomer} />
+                <AuthorizedContactsSidebar
+                  contacts={displayedAuthorizedContacts}
+                  selectedCustomerId={selectedCustomerId}
+                  onAddContactClick={() => setIsAddAuthorizedContactModalOpen(true)}
+                  customerName={selectedCustomer?.name}
+                />
+              </div>
+            </>
           </div>
         )}
       </main>
@@ -136,6 +154,14 @@ const CrmApp: React.FC = () => {
         <AddAuthorizedContactForm
           onAddContact={handleAddAuthorizedContact}
           onCancel={() => setIsAddAuthorizedContactModalOpen(false)}
+        />
+      </Modal>
+
+      {/* New Modal for Update Customer */}
+      <Modal isOpen={isUpdateCustomerModalOpen} onClose={handleCloseUpdateModal} title={`Update Customer: ${selectedCustomer?.name || ''}`}>
+        <UpdateCustomerView
+          selectedCustomerId={selectedCustomerIdForEdit}
+          onUpdateSuccess={handleCloseUpdateModal}
         />
       </Modal>
     </div>

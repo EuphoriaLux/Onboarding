@@ -6,7 +6,6 @@ import VacationRequestForm from '../icsGenerator/components/VacationRequestForm'
 import SupportRequestForm from '../icsGenerator/components/SupportRequestForm';
 import RoadmapPage from '../roadmap/components/RoadmapPage'; // Import the new Roadmap component
 import { SupportRequestViewer } from '../supportRequests'; // Import the new Azure tool
-import CrmView from '../crm/components/CrmView'; // Import the CRM view component
 import {
   OnboardingIcon,
   ComplianceIcon, // Still used for Azure Transfer Assist placeholder
@@ -22,6 +21,7 @@ import {
   // ReportingIcon is already imported above
 } from '../../components/Icons'; // Adjusted path
 import { EngageServicesSection } from '../engageServices/components/EngageServicesSection';
+import CrmView from '../crm/components/CrmView'; // Re-add the CRM view component
 
 // Feature type definition
 export interface Feature {
@@ -137,15 +137,14 @@ export const features: Feature[] = [
     enabled: false, // Disabled as it's coming soon
     category: 'Coming Soon Features' // Moved to Coming Soon
   },
-  // Add the new CRM feature
   {
     id: 'crm',
-    name: 'Customer Management (CRM - Alpha)', // Updated Name
-    description: 'Manage customer records stored in Azure Blob Storage (Alpha version).', // Updated Description
-    icon: <ReportingIcon />, // Using ReportingIcon as placeholder, same as Support Viewer
+    name: 'Customer Management (CRM - Alpha)',
+    description: 'Manage customer records.',
+    icon: <ReportingIcon />, // Using ReportingIcon as placeholder
     component: CrmView,
-    enabled: true, // Enabled as it's coming soon
-    category: 'Coming Soon Features' // Moved to Coming Soon
+    enabled: true,
+    category: 'Coming Soon Features'
   },
   {
     id: 'engage-services',

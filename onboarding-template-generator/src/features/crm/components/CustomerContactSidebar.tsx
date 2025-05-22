@@ -33,7 +33,7 @@ const CustomerContactSidebar: React.FC<CustomerContactSidebarProps> = ({ custome
 
   return (
     // Ensure sticky positioning works well when stacked in a flex container
-    <div className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-6">
+    <div className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-6 flex flex-col flex-grow">
       <div className="flex items-center space-x-3 mb-4 pb-4 border-b border-slate-200">
         <UserCircleIcon className="w-12 h-12 text-[var(--primary-color-light)] opacity-80 dark:text-[var(--primary-color-dark)] opacity-80 flex-shrink-0" />
         <div>
@@ -42,7 +42,7 @@ const CustomerContactSidebar: React.FC<CustomerContactSidebarProps> = ({ custome
         </div>
       </div>
       
-      <div className="space-y-1">
+      <div className="space-y-1 flex flex-col justify-around flex-grow">
         <DetailItem
           icon={<EnvelopeIcon />}
           label="Contact Email"

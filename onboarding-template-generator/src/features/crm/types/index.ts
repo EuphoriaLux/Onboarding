@@ -18,11 +18,15 @@ export interface Tenant {
 export interface AuthorizedContact {
   id: string;
   customerId: string;
-  name: string;
+  fullName: string; // Renamed from 'name'
+  firstName?: string; // New: First Name
+  lastName?: string; // Renamed from 'familyName' to Last Name
   email: string;
-  phone?: string;
+  businessPhone?: string; // New: Business Phone
+  mobileNumber?: string; // Renamed from 'phone' to Mobile Number
+  teamsAddress?: string; // New: Teams Address
   createdAt: string;
-  jobTitle?: string; // Added from existing Contact if needed
+  jobTitle?: string;
 }
 
 export interface Customer {

@@ -6,21 +6,21 @@ import { features, Feature } from '../constants';
 
 const Homepage: React.FC = () => {
   const { translate } = useLanguage();
-  const { state } = useAppState();
-  const [activeFeature, setActiveFeature] = useState<string | null>(null);
+  const { state, setActiveFeatureId } = useAppState(); // Destructure setActiveFeatureId
+  // Removed local activeFeature state
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.altKey && event.key === 'ArrowLeft' && activeFeature !== null) {
+      if (event.altKey && event.key === 'ArrowLeft' && state.activeFeatureId !== null) {
         event.preventDefault();
-        setActiveFeature(null);
+        setActiveFeatureId(null); // Use setActiveFeatureId from context
       }
     };
 
     const handleMouseUp = (event: MouseEvent) => {
-      if (event.button === 3 && activeFeature !== null) {
+      if (event.button === 3 && state.activeFeatureId !== null) {
         event.preventDefault();
-        setActiveFeature(null);
+        setActiveFeatureId(null); // Use setActiveFeatureId from context
       }
     };
 
@@ -31,7 +31,7 @@ const Homepage: React.FC = () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [activeFeature]);
+  }, [state.activeFeatureId, setActiveFeatureId]); // Update dependencies
 
   const groupedFeatures = features.reduce((acc, feature) => {
     const category = feature.category || 'Other';
@@ -58,10 +58,10 @@ const Homepage: React.FC = () => {
     return a.localeCompare(b);
   });
 
-  const handleBackToHome = () => setActiveFeature(null);
+  const handleBackToHome = () => setActiveFeatureId(null); // Use setActiveFeatureId from context
 
-  if (activeFeature) {
-    const feature = features.find(f => f.id === activeFeature);
+  if (state.activeFeatureId) { // Use activeFeatureId from context
+    const feature = features.find(f => f.id === state.activeFeatureId); // Use activeFeatureId from context
     if (feature) {
       const FeatureComponent = feature.component;
       return (
@@ -118,7 +118,7 @@ const Homepage: React.FC = () => {
                   key={feature.id}
                   className={`group flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow-sm transition-all duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700
                     ${!isFeatureEnabled ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer hover:shadow-md hover:-translate-y-1'}`}
-                  onClick={() => isFeatureEnabled && setActiveFeature(feature.id)}
+                  onClick={() => isFeatureEnabled && setActiveFeatureId(feature.id)} // Use setActiveFeatureId from context
                   aria-label={feature.name}
                 >
                   {/* Icon with hover effect */}

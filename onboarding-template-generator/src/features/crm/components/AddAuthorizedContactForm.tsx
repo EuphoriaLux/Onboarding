@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthorizedContact } from '../types/index'; // Updated import path
 
 interface AddAuthorizedContactFormProps {
@@ -7,14 +7,26 @@ interface AddAuthorizedContactFormProps {
 }
 
 const AddAuthorizedContactForm: React.FC<AddAuthorizedContactFormProps> = ({ onAddContact, onCancel }) => {
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState(''); // Renamed from familyName
+  const [fullName, setFullName] = useState(''); // Derived state
   const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [businessPhone, setBusinessPhone] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [teamsAddress, setTeamsAddress] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [errors, setErrors] = useState<{ fullName?: string; email?: string }>({});
+
+  // Effect to update fullName automatically
+  useEffect(() => {
+    setFullName(
+      [firstName, lastName].filter(Boolean).join(' ').trim()
+    );
+  }, [firstName, lastName]);
 
   const validate = (): boolean => {
-    const newErrors: { name?: string; email?: string } = {};
-    if (!name.trim()) newErrors.name = 'Contact name is required.';
+    const newErrors: { fullName?: string; email?: string } = {};
+    if (!fullName.trim()) newErrors.fullName = 'Full Name is required (derived from First and Last Name).';
     if (!email.trim()) {
       newErrors.email = 'Email is required.';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -28,27 +40,66 @@ const AddAuthorizedContactForm: React.FC<AddAuthorizedContactFormProps> = ({ onA
     e.preventDefault();
     if (!validate()) return;
     
-    onAddContact({ name, email, phone });
-    setName('');
+    onAddContact({ 
+      fullName, 
+      firstName, 
+      lastName, // Use lastName
+      email, 
+      businessPhone, 
+      mobileNumber, 
+      teamsAddress, 
+      jobTitle 
+    });
+    setFirstName('');
+    setLastName('');
     setEmail('');
-    setPhone('');
+    setBusinessPhone('');
+    setMobileNumber('');
+    setTeamsAddress('');
+    setJobTitle('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="contactName" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
-          Full Name <span className="text-red-500">*</span>
+        <label htmlFor="firstName" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          First Name (Optional)
         </label>
         <input
           type="text"
-          id="contactName"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className={`w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30'} rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm`}
-          placeholder="e.g., Jane Doe"
+          id="firstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          placeholder="e.g., Jane"
         />
-        {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
+      </div>
+      <div>
+        <label htmlFor="lastName" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          Last Name (Optional)
+        </label>
+        <input
+          type="text"
+          id="lastName"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          placeholder="e.g., Doe"
+        />
+      </div>
+      <div>
+        <label htmlFor="fullNameDisplay" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          Full Name (Auto-completed) <span className="text-red-500">*</span>
+        </label>
+        <input
+          type="text"
+          id="fullNameDisplay"
+          value={fullName}
+          readOnly
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 ${errors.fullName ? 'border-red-500' : ''} bg-gray-100 dark:bg-gray-700 cursor-not-allowed`}
+          placeholder="Auto-generated from First and Last Name"
+        />
+        {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
       </div>
       <div>
         <label htmlFor="contactEmail" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
@@ -59,22 +110,61 @@ const AddAuthorizedContactForm: React.FC<AddAuthorizedContactFormProps> = ({ onA
           id="contactEmail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30'} rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm`}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 ${errors.email ? 'border-red-500' : ''}`}
           placeholder="e.g., jane.doe@example.com"
         />
         {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
       </div>
       <div>
-        <label htmlFor="contactPhone" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
-          Phone Number (Optional)
+        <label htmlFor="businessPhone" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          Business Phone (Optional)
         </label>
         <input
           type="tel"
-          id="contactPhone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          className="w-full px-3 py-2 border border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm"
-          placeholder="e.g., 555-123-4567"
+          id="businessPhone"
+          value={businessPhone}
+          onChange={(e) => setBusinessPhone(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          placeholder="e.g., +1-234-567-8900"
+        />
+      </div>
+      <div>
+        <label htmlFor="mobileNumber" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          Mobile Number (Optional)
+        </label>
+        <input
+          type="tel"
+          id="mobileNumber"
+          value={mobileNumber}
+          onChange={(e) => setMobileNumber(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          placeholder="e.g., +1-987-654-3210"
+        />
+      </div>
+      <div>
+        <label htmlFor="teamsAddress" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          Teams Address (Optional)
+        </label>
+        <input
+          type="text"
+          id="teamsAddress"
+          value={teamsAddress}
+          onChange={(e) => setTeamsAddress(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          placeholder="e.g., jane.doe@teams.com"
+        />
+      </div>
+      <div>
+        <label htmlFor="jobTitle" className="block text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] mb-1">
+          Job Title (Optional)
+        </label>
+        <input
+          type="text"
+          id="jobTitle"
+          value={jobTitle}
+          onChange={(e) => setJobTitle(e.target.value)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          placeholder="e.g., IT Manager"
         />
       </div>
       <div className="flex justify-end space-x-3 pt-2">

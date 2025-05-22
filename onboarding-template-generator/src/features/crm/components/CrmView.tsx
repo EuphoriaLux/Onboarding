@@ -1,9 +1,7 @@
 import React from 'react';
-import CrmApp from './CrmApp'; // Import the new CrmApp
+import CrmApp from './CrmApp';
 
-interface CrmViewProps {}
-
-const CrmView: React.FC<CrmViewProps> = () => {
+const CrmView: React.FC = () => {
   return (
     <CrmApp />
   );

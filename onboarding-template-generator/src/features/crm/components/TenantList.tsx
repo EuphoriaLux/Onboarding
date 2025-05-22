@@ -27,6 +27,7 @@ const TenantList: React.FC<TenantListProps> = ({ tenants, customerName, isLoadin
         icon={<InformationCircleIcon className="w-16 h-16 text-[var(--text-color-light)] opacity-50 dark:text-[var(--text-color-dark)] opacity-50" />}
         title="No Customer Selected"
         message="Please select a customer from the list to view their tenants."
+        className="flex flex-col justify-center items-center flex-grow"
       />
     );
   }
@@ -37,12 +38,13 @@ const TenantList: React.FC<TenantListProps> = ({ tenants, customerName, isLoadin
         icon={<CloudIcon className="w-16 h-16 text-[var(--text-color-light)] opacity-50 dark:text-[var(--text-color-dark)] opacity-50" />}
         title={`No Tenants for ${customerName}`}
         message="This customer doesn't have any tenants yet. You can add one using the button above."
+        className="flex flex-col justify-center items-center flex-grow"
       />
     );
   }
 
   return (
-    <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-2 -mr-2"> {/* pr-2 -mr-2 for scrollbar spacing */}
+    <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-2 -mr-2 flex-grow"> {/* pr-2 -mr-2 for scrollbar spacing */}
       {tenants.map((tenant) => (
         <TenantListItem key={tenant.id} tenant={tenant} />
       ))}

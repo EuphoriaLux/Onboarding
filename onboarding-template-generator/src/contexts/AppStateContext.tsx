@@ -26,11 +26,13 @@ interface AppState {
   darkMode: boolean;
   crmData: Customer[]; // Add crmData property
   selectedCustomerId: string | null; // Add selectedCustomerId to state
+  activeFeatureId: string | null; // New: Add activeFeatureId to state
 }
 
 interface AppStateContextType {
   state: AppState;
   setSelectedCustomerId: (customerId: string | null) => void; // Add setter for selectedCustomerId
+  setActiveFeatureId: (featureId: string | null) => void; // New: Add setter for activeFeatureId
   updateCustomerInfo: (field: string, value: any) => void;
   updateContacts: (contacts: AuthorizedContact[]) => void; // Changed from Contact to AuthorizedContact
   updateTenants: (tenants: TenantInfo[]) => void;
@@ -77,6 +79,7 @@ const defaultState: AppState = {
   darkMode: false, // Default to light mode
   crmData: [], // Initialize crmData as an empty array
   selectedCustomerId: null, // Initialize selectedCustomerId as null
+  activeFeatureId: null, // New: Initialize activeFeatureId as null
 };
 
 const AppStateContext = createContext<AppStateContextType | undefined>(undefined);
@@ -95,7 +98,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
           'showAlphaBetaFeatures',
           'darkMode',
           'crmData',
-          'selectedCustomerId' // Ensure selectedCustomerId is loaded
+          'selectedCustomerId', // Ensure selectedCustomerId is loaded
+          'activeFeatureId' // New: Ensure activeFeatureId is loaded
         ]);
 
         if (savedState) {
@@ -185,6 +189,11 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             newState.selectedCustomerId = null;
           }
 
+          // New: Load activeFeatureId
+          if (savedState.activeFeatureId) {
+            newState.activeFeatureId = savedState.activeFeatureId;
+          }
+
           // Apply the theme class based on the loaded state BEFORE setting the state
           if (newState.darkMode) {
             document.documentElement.classList.add('dark');
@@ -212,7 +221,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
     StorageService.set('darkMode', state.darkMode);
     StorageService.set('selectedCustomerId', state.selectedCustomerId); // Save selectedCustomerId to storage
-  }, [state.customerInfo, state.emailData, state.language, state.showAlphaBetaFeatures, state.darkMode, state.selectedCustomerId]); // Add selectedCustomerId to dependencies
+    StorageService.set('activeFeatureId', state.activeFeatureId); // New: Save activeFeatureId to storage
+  }, [state.customerInfo, state.emailData, state.language, state.showAlphaBetaFeatures, state.darkMode, state.selectedCustomerId, state.activeFeatureId]); // Add activeFeatureId to dependencies
 
   // Handler functions
   const updateCustomerInfo = (field: string, value: any) => {
@@ -328,6 +338,14 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     setState(prevState => ({
       ...prevState,
       selectedCustomerId: customerId,
+    }));
+  };
+
+  // New: Add setActiveFeatureId function
+  const setActiveFeatureId = (featureId: string | null) => {
+    setState(prevState => ({
+      ...prevState,
+      activeFeatureId: featureId,
     }));
   };
 
@@ -456,6 +474,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     <AppStateContext.Provider value={{
       state,
       setSelectedCustomerId,
+      setActiveFeatureId, // New: Add setActiveFeatureId to context value
       updateCustomerInfo,
       updateContacts,
       updateTenants,

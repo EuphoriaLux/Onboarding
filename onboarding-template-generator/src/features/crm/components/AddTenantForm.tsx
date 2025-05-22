@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tenant, SubscriptionStatus } from '../types/index'; // Updated import path
 import { SUBSCRIPTION_STATUSES } from '../constants'; // Updated import path
+import { useAppState } from '../../../contexts/AppStateContext'; // Import useAppState
 
 interface AddTenantFormProps {
   onAddTenant: (tenantData: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => void;
@@ -8,6 +9,9 @@ interface AddTenantFormProps {
 }
 
 const AddTenantForm: React.FC<AddTenantFormProps> = ({ onAddTenant, onCancel }) => {
+  const { state } = useAppState(); // Get state from AppStateContext
+  const { darkMode } = state; // Access darkMode from state
+
   const [name, setName] = useState('');
   const [microsoftTenantId, setMicrosoftTenantId] = useState('');
   const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | undefined>(undefined);
@@ -36,6 +40,8 @@ const AddTenantForm: React.FC<AddTenantFormProps> = ({ onAddTenant, onCancel }) 
     setSubscriptionStatus(undefined);
   };
 
+  const inputTextColor = darkMode ? 'white' : 'black'; // Determine text color based on dark mode
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
@@ -47,7 +53,8 @@ const AddTenantForm: React.FC<AddTenantFormProps> = ({ onAddTenant, onCancel }) 
           id="tenantName"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className={`w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30'} rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm`}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 ${errors.name ? 'border-red-500' : ''}`}
+          style={{ color: inputTextColor }}
           placeholder="e.g., Production Environment"
         />
         {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
@@ -61,7 +68,8 @@ const AddTenantForm: React.FC<AddTenantFormProps> = ({ onAddTenant, onCancel }) 
           id="microsoftTenantId"
           value={microsoftTenantId}
           onChange={(e) => setMicrosoftTenantId(e.target.value)}
-          className={`w-full px-3 py-2 border ${errors.tenantId ? 'border-red-500' : 'border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30'} rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm`}
+          className={`shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600 ${errors.tenantId ? 'border-red-500' : ''}`}
+          style={{ color: inputTextColor }}
           placeholder="e.g., contoso.onmicrosoft.com or a GUID"
         />
         {errors.tenantId && <p className="text-xs text-red-600 mt-1">{errors.tenantId}</p>}
@@ -74,7 +82,8 @@ const AddTenantForm: React.FC<AddTenantFormProps> = ({ onAddTenant, onCancel }) 
           id="subscriptionStatus"
           value={subscriptionStatus || ''}
           onChange={(e) => setSubscriptionStatus(e.target.value as SubscriptionStatus || undefined)}
-          className="w-full px-3 py-2 border border-[var(--text-color-light)] opacity-30 dark:border-[var(--text-color-dark)] opacity-30 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm bg-white dark:bg-slate-800"
+          className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+          style={{ color: inputTextColor }}
         >
           <option value="">Select status</option>
           {SUBSCRIPTION_STATUSES.map((status: SubscriptionStatus) => (
