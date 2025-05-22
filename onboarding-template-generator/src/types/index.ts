@@ -37,9 +37,14 @@ export interface AppConfig {
  * Theme customization settings
  */
 export interface ThemeSettings {
-  primaryColor: string;
-  textColor: string;
-  backgroundColor: string;
+  primaryColor: string; // Light mode primary
+  textColor: string;     // Light mode text
+  backgroundColor: string; // Light mode background
+
+  // Dark mode specific colors (optional, fallback to light if not provided)
+  darkPrimaryColor?: string;
+  darkTextColor?: string;
+  darkBackgroundColor?: string;
 }
 
 /**

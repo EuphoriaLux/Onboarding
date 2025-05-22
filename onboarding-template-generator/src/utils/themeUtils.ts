@@ -9,21 +9,37 @@ export const applyThemeColors = (settings: ThemeSettings | null): void => {
   if (!root) return;
 
   // Define default colors (should match CSS defaults)
-  const defaults: ThemeSettings = {
-    primaryColor: '#0078d4',
-    textColor: '#323130',
-    backgroundColor: '#f5f5f5',
+  // Define default colors for light and dark mode
+  const defaultLight: ThemeSettings = {
+    primaryColor: '#0078d4', // Microsoft Blue
+    textColor: '#323130',    // Microsoft Grey (dark)
+    backgroundColor: '#f5f5f5', // Light grey
+  };
+
+  const defaultDark: ThemeSettings = {
+    primaryColor: '#38bdf8', // Sky-400 (lighter blue for dark mode primary)
+    textColor: '#e2e8f0',    // Slate-200 (light text for dark mode)
+    backgroundColor: '#1e293b', // Slate-800 (dark background)
   };
 
   // Use saved settings or fall back to defaults
-  const primary = settings?.primaryColor || defaults.primaryColor;
-  const text = settings?.textColor || defaults.textColor;
-  const background = settings?.backgroundColor || defaults.backgroundColor;
+  const lightPrimary = settings?.primaryColor || defaultLight.primaryColor;
+  const lightText = settings?.textColor || defaultLight.textColor;
+  const lightBackground = settings?.backgroundColor || defaultLight.backgroundColor;
 
-  // Set CSS variables
-  root.style.setProperty('--primary-color', primary);
-  root.style.setProperty('--text-color', text);
-  root.style.setProperty('--background-light', background); // Assuming this is the main background variable
+  const darkPrimary = settings?.darkPrimaryColor || defaultDark.primaryColor;
+  const darkText = settings?.darkTextColor || defaultDark.textColor;
+  const darkBackground = settings?.darkBackgroundColor || defaultDark.backgroundColor;
+
+  // Set CSS variables for light mode
+  root.style.setProperty('--primary-color-light', lightPrimary);
+  root.style.setProperty('--text-color-light', lightText);
+  root.style.setProperty('--background-light-light', lightBackground);
+
+  // Set CSS variables for dark mode
+  root.style.setProperty('--primary-color-dark', darkPrimary);
+  root.style.setProperty('--text-color-dark', darkText);
+  root.style.setProperty('--background-light-dark', darkBackground);
 
   // Optional: You might need to update related variables too (e.g., hover states)
   // Example: Calculate a hover color based on the primary color

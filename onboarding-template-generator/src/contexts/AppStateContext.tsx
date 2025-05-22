@@ -6,13 +6,14 @@ import { TenantInfo } from '../features/emailBuilder/tenants/types'; // Adjusted
 import { EmailFormData } from '../features/emailBuilder/utils/types';
 import { SupportTier } from '../features/emailBuilder/supportTiers/types'; // Adjusted path
 import { supportTiers } from '../features/emailBuilder/supportTiers/data/supportTiers'; // Adjusted path // Import supportTiers
-import { Customer, Contact } from '../features/crm/types'; // Import Customer type
+import { Customer, AuthorizedContact, Tenant } from '../features/crm/types/index'; // Updated import for CRM types
+import * as crmStorageService from '../features/crm/services/crmStorageService'; // Import crmStorageService
 
 interface CustomerInfo {
   contactName: string;
   contactEmail: string;
-  proposedSlots: Date[]; // Changed from proposedDate
-  authorizedContacts: Contact[];
+  proposedSlots: Date[];
+  authorizedContacts: AuthorizedContact[]; // Changed from Contact to AuthorizedContact
   selectedTier: string;
   tenants: TenantInfo[];
 }
@@ -31,7 +32,7 @@ interface AppStateContextType {
   state: AppState;
   setSelectedCustomerId: (customerId: string | null) => void; // Add setter for selectedCustomerId
   updateCustomerInfo: (field: string, value: any) => void;
-  updateContacts: (contacts: Contact[]) => void;
+  updateContacts: (contacts: AuthorizedContact[]) => void; // Changed from Contact to AuthorizedContact
   updateTenants: (tenants: TenantInfo[]) => void;
   updateTier: (tier: string) => void;
   updateEmailData: (data: EmailFormData) => void;
@@ -40,13 +41,16 @@ interface AppStateContextType {
   updateShowAlphaBetaFeatures: (value: boolean) => void;
   toggleDarkMode: () => void;
   resetState: () => void;
-  updateCrmData: (crmData: Customer[]) => void;
-  addCustomer: (customer: Customer) => void;
-  updateCustomer: (customer: Customer) => void;
-  deleteCustomer: (customerId: string) => void;
-  addContactToCustomer: (customerId: string, contact: Contact) => void;
-  updateContact: (customerId: string, contact: Contact) => void;
-  deleteContact: (customerId: string, contactId: string) => void;
+  // CRM Data Actions (now interacting with crmStorageService)
+  addCustomer: (customer: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | '_etag'>) => Promise<void>;
+  updateCustomer: (customer: Customer) => Promise<void>;
+  deleteCustomer: (customerId: string, etag: string) => Promise<void>;
+  addAuthorizedContactToCustomer: (customerId: string, contact: Omit<AuthorizedContact, 'id' | 'customerId' | 'createdAt'>) => Promise<void>;
+  updateAuthorizedContact: (customerId: string, contact: AuthorizedContact) => Promise<void>;
+  deleteAuthorizedContact: (customerId: string, contactId: string) => Promise<void>;
+  addTenantToCustomer: (customerId: string, tenant: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => Promise<void>;
+  updateTenantInCustomer: (customerId: string, tenant: Tenant) => Promise<void>;
+  deleteTenantFromCustomer: (customerId: string, tenantId: string) => Promise<void>;
 }
 
 const defaultState: AppState = {
@@ -54,7 +58,7 @@ const defaultState: AppState = {
     contactName: '',
     contactEmail: '',
     proposedSlots: [], // Initialize as empty array
-    authorizedContacts: [{ id: 'default-contact-1', name: '', email: '', phone: '', jobTitle: '' }],
+    authorizedContacts: [{ id: 'default-contact-1', customerId: '', name: '', email: '', phone: '', createdAt: new Date().toISOString(), jobTitle: '' }], // Updated to AuthorizedContact
     selectedTier: 'silver',
     // Initialize default tenant with all flags
     tenants: [{
@@ -90,7 +94,8 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
           'language',
           'showAlphaBetaFeatures',
           'darkMode',
-          'crmData'
+          'crmData',
+          'selectedCustomerId' // Ensure selectedCustomerId is loaded
         ]);
 
         if (savedState) {
@@ -111,7 +116,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
               customerInfo.proposedSlots = []; // Default to empty array if missing or invalid
             }
 
-
             // Also parse implementationDeadline and ensure boolean flags within tenants
             if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
               customerInfo.tenants = customerInfo.tenants.map((tenant: any) => { // Use 'any' temporarily for processing
@@ -129,15 +133,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
                 if (typeof processedTenant.hasAzure === 'undefined') {
                   processedTenant.hasAzure = false;
                 }
-                 // Removed includeRbacScript check
-
-                // Ensure other required fields have defaults if somehow missing (optional)
-                processedTenant.id = processedTenant.id ?? '';
-                processedTenant.companyName = processedTenant.companyName ?? '';
-                processedTenant.tenantDomain = processedTenant.tenantDomain ?? '';
-                processedTenant.microsoftTenantDomain = processedTenant.microsoftTenantDomain ?? ''; // Ensure MS Domain default on load
-
-
                 return processedTenant as TenantInfo; // Cast back to TenantInfo
               });
             }
@@ -164,17 +159,30 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             newState.darkMode = savedState.darkMode;
           }
 
-          if (savedState.crmData && Array.isArray(savedState.crmData)) {
-            newState.crmData = savedState.crmData.map((customer: any) => { // Use 'any' temporarily for processing
-              // Ensure contacts array exists and is an array
-              const contacts = (customer.contacts && Array.isArray(customer.contacts)) ? customer.contacts : [];
-              return {
-                ...customer,
-                contacts: contacts as Contact[] // Cast back to Contact[]
-              };
-            }) as Customer[]; // Cast the whole array back to Customer[]
-          } else {
-             newState.crmData = []; // Default to empty array if crmData is missing or not an array
+          // Load crmData from chrome.storage.local using crmStorageService
+          try {
+            const storedCustomers = await crmStorageService.listCustomers();
+            const detailedCustomers: Customer[] = [];
+            for (const summary of storedCustomers) {
+              const detail = await crmStorageService.getCustomer(summary.id);
+              if (detail) {
+                detailedCustomers.push(detail);
+              }
+            }
+            newState.crmData = detailedCustomers;
+            // Set selectedCustomerId if there are customers and none is selected
+            if (detailedCustomers.length > 0 && !savedState.selectedCustomerId) {
+              newState.selectedCustomerId = detailedCustomers[0].id;
+            } else if (savedState.selectedCustomerId && !detailedCustomers.some(c => c.id === savedState.selectedCustomerId)) {
+              // If previously selected customer was deleted, select the first one or null
+              newState.selectedCustomerId = detailedCustomers.length > 0 ? detailedCustomers[0].id : null;
+            } else if (savedState.selectedCustomerId) {
+              newState.selectedCustomerId = savedState.selectedCustomerId;
+            }
+          } catch (err) {
+            console.error("Error loading CRM data from storage:", err);
+            newState.crmData = [];
+            newState.selectedCustomerId = null;
           }
 
           // Apply the theme class based on the loaded state BEFORE setting the state
@@ -201,12 +209,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (state.emailData) {
       StorageService.set('emailData', state.emailData);
     }
-    // Save toggle states
     StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
     StorageService.set('darkMode', state.darkMode);
-    StorageService.set('crmData', state.crmData);
     StorageService.set('selectedCustomerId', state.selectedCustomerId); // Save selectedCustomerId to storage
-  }, [state]);
+  }, [state.customerInfo, state.emailData, state.language, state.showAlphaBetaFeatures, state.darkMode, state.selectedCustomerId]); // Add selectedCustomerId to dependencies
 
   // Handler functions
   const updateCustomerInfo = (field: string, value: any) => {
@@ -230,7 +236,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  const updateContacts = (contacts: Contact[]) => {
+  const updateContacts = (contacts: AuthorizedContact[]) => { // Changed from Contact to AuthorizedContact
     setState(prevState => ({
       ...prevState,
       customerInfo: {
@@ -325,93 +331,131 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  const updateCrmData = (crmData: Customer[]) => {
-    setState(prevState => ({
-      ...prevState,
-      crmData: crmData
-    }));
-  };
-
-  const addCustomer = (customer: Customer) => {
-    setState(prevState => ({
-      ...prevState,
-      crmData: [...prevState.crmData, { ...customer, contacts: customer.contacts || [] }] // Ensure contacts array exists
-    }));
-  };
-
-  const updateCustomer = (customer: Customer) => {
-    setState(prevState => ({
-      ...prevState,
-      crmData: prevState.crmData.map(c => (c.id === customer.id ? customer : c))
-    }));
-  };
-
-  const deleteCustomer = (customerId: string) => {
-    setState(prevState => ({
-      ...prevState,
-      crmData: prevState.crmData.filter(c => c.id !== customerId)
-    }));
-  };
-
- const addContactToCustomer = (customerId: string, contact: Contact) => {
-    setState(prevState => {
-      return {
+  // CRM Data Actions (now interacting with crmStorageService)
+  const addCustomer = async (customerData: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | '_etag'>) => {
+    try {
+      const newCustomer = await crmStorageService.createCustomer(customerData);
+      setState(prevState => ({
         ...prevState,
-        crmData: prevState.crmData.map(customer => {
-          if (customer.id === customerId) {
-            // Update the customer with the new contact
-            return {
-              ...customer,
-              contacts: [...(customer.contacts || []), contact],
-              notes: [...customer.notes, {
-                timestamp: new Date().toISOString(),
-                text: `New contact added: ${contact.name} (${contact.email})`
-              }]
-            };
-          } else {
-            return customer;
-          }
-        })
-      };
-    });
+        crmData: [newCustomer, ...prevState.crmData],
+        selectedCustomerId: newCustomer.id,
+      }));
+    } catch (error) {
+      console.error("Error adding customer:", error);
+      // Handle error in UI if needed
+    }
   };
 
- const updateContact = (customerId: string, contact: Contact) => {
-    setState(prevState => ({
-      ...prevState,
-      crmData: prevState.crmData.map(customer => {
-        if (customer.id === customerId) {
-          return {
-            ...customer,
-            contacts: customer.contacts ? customer.contacts.map(c => (c.id === contact.id ? contact : c)) : [],
-            updatedAt: new Date().toISOString() // Update the timestamp
-          };
-        } else {
-          return customer;
-        }
-      })
-    }));
+  const updateCustomer = async (customer: Customer) => {
+    try {
+      const updatedCustomer = await crmStorageService.updateCustomer(customer);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error updating customer:", error);
+      // Handle error in UI if needed
+    }
   };
 
-  const deleteContact = (customerId: string, contactId: string) => {
-    setState(prevState => ({
-      ...prevState,
-      crmData: prevState.crmData.map(customer => {
-        if (customer.id === customerId) {
-          return {
-            ...customer,
-            contacts: customer.contacts ? customer.contacts.filter(c => c.id !== contactId) : [],
-          };
-        } else {
-          return customer;
+  const deleteCustomer = async (customerId: string, etag: string) => {
+    try {
+      await crmStorageService.deleteCustomer(customerId);
+      setState(prevState => {
+        const updatedCrmData = prevState.crmData.filter(c => c.id !== customerId);
+        let newSelectedCustomerId = prevState.selectedCustomerId;
+        if (newSelectedCustomerId === customerId) {
+          newSelectedCustomerId = updatedCrmData.length > 0 ? updatedCrmData[0].id : null;
         }
-      })
-    }));
+        return {
+          ...prevState,
+          crmData: updatedCrmData,
+          selectedCustomerId: newSelectedCustomerId,
+        };
+      });
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+      // Handle error in UI if needed
+    }
+  };
+
+  const addAuthorizedContactToCustomer = async (customerId: string, contact: Omit<AuthorizedContact, 'id' | 'customerId' | 'createdAt'>) => {
+    try {
+      const updatedCustomer = await crmStorageService.addAuthorizedContactToCustomer(customerId, contact as AuthorizedContact);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error adding authorized contact:", error);
+    }
+  };
+
+  const updateAuthorizedContact = async (customerId: string, contact: AuthorizedContact) => {
+    try {
+      const updatedCustomer = await crmStorageService.updateAuthorizedContact(customerId, contact);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error updating authorized contact:", error);
+    }
+  };
+
+  const deleteAuthorizedContact = async (customerId: string, contactId: string) => {
+    try {
+      const updatedCustomer = await crmStorageService.deleteAuthorizedContact(customerId, contactId);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error deleting authorized contact:", error);
+    }
+  };
+
+  const addTenantToCustomer = async (customerId: string, tenant: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => {
+    try {
+      const updatedCustomer = await crmStorageService.addTenantToCustomer(customerId, tenant as Tenant);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error adding tenant:", error);
+    }
+  };
+
+  const updateTenantInCustomer = async (customerId: string, tenant: Tenant) => {
+    try {
+      const updatedCustomer = await crmStorageService.updateTenantInCustomer(customerId, tenant);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error updating tenant:", error);
+    }
+  };
+
+  const deleteTenantFromCustomer = async (customerId: string, tenantId: string) => {
+    try {
+      const updatedCustomer = await crmStorageService.deleteTenantFromCustomer(customerId, tenantId);
+      setState(prevState => ({
+        ...prevState,
+        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+      }));
+    } catch (error) {
+      console.error("Error deleting tenant:", error);
+    }
   };
 
   return (
     <AppStateContext.Provider value={{
       state,
+      setSelectedCustomerId,
       updateCustomerInfo,
       updateContacts,
       updateTenants,
@@ -422,14 +466,15 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       updateShowAlphaBetaFeatures,
       toggleDarkMode,
       resetState,
-      updateCrmData,
       addCustomer,
       updateCustomer,
       deleteCustomer,
-      addContactToCustomer,
-      updateContact,
-      deleteContact,
-      setSelectedCustomerId // Provide the setter in the context value
+      addAuthorizedContactToCustomer,
+      updateAuthorizedContact,
+      deleteAuthorizedContact,
+      addTenantToCustomer,
+      updateTenantInCustomer,
+      deleteTenantFromCustomer,
     }}>
       {children}
     </AppStateContext.Provider>

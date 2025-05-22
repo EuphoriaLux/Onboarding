@@ -1,5 +1,5 @@
 import React from 'react';
-import { Customer } from '../types/index';
+import { Customer } from '../types';
 import CustomerListItem from './CustomerListItem';
 import EmptyState from './EmptyState';
 import { UserGroupIcon } from './icons';
@@ -14,7 +14,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, selectedCustomer
   if (customers.length === 0) {
     return (
       <EmptyState
-        icon={<UserGroupIcon className="w-16 h-16 text-[var(--text-color-light)] opacity-50 dark:text-[var(--text-color-dark)] opacity-50" />}
+        icon={<UserGroupIcon className="w-16 h-16 text-slate-300" />}
         title="No Customers Yet"
         message="Start by adding your first customer to manage their tenants."
       />
@@ -22,7 +22,7 @@ const CustomerList: React.FC<CustomerListProps> = ({ customers, selectedCustomer
   }
 
   return (
-    <ul className="divide-y divide-[var(--text-color-light)] opacity-20 dark:divide-[var(--text-color-dark)] opacity-20 max-h-[60vh] overflow-y-auto rounded-md border border-[var(--text-color-light)] opacity-20 dark:border-[var(--text-color-dark)] opacity-20">
+    <ul className="divide-y divide-slate-200 max-h-[60vh] overflow-y-auto rounded-md border border-slate-200">
       {customers.map((customer) => (
         <CustomerListItem
           key={customer.id}
