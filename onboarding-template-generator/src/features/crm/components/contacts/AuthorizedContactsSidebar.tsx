@@ -13,8 +13,8 @@ interface AuthorizedContactsSidebarProps {
 
 const AuthorizedContactsSidebar: React.FC<AuthorizedContactsSidebarProps> = ({ contacts, selectedCustomerId, onAddContactClick, customerName }) => {
   return (
-    <div className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-[calc(theme(spacing.6)_+_250px)] flex flex-col flex-grow"> {/* Adjust top based on CustomerContactSidebar height */}
-      <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-200">
+    <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-[calc(theme(spacing.6)_+_250px)] flex flex-col flex-grow"> {/* Adjust top based on CustomerContactSidebar height */}
+      <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-200 dark:border-slate-700">
         <div className="flex items-center space-x-2">
           <UsersIcon className="w-7 h-7 text-[var(--primary-color-light)] opacity-80 dark:text-[var(--primary-color-dark)] opacity-80" />
           <h3 className="text-lg font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]">Authorized Contacts</h3>
@@ -22,7 +22,7 @@ const AuthorizedContactsSidebar: React.FC<AuthorizedContactsSidebarProps> = ({ c
         <button
           onClick={onAddContactClick}
           disabled={!selectedCustomerId}
-          className="flex items-center bg-[var(--primary-color-light)] hover:bg-[color-mix(in srgb, var(--primary-color-light) 80%, black)] dark:bg-[var(--primary-color-dark)] dark:hover:bg-[color-mix(in srgb, var(--primary-color-dark) 80%, black)] text-white font-semibold py-1.5 px-3 rounded-md shadow-sm hover:shadow-md transition-all duration-150 ease-in-out text-sm disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none"
+          className="flex items-center bg-[var(--primary-color-light)] hover:bg-[color-mix(in srgb, var(--primary-color-light) 80%, black)] dark:bg-[var(--primary-color-dark)] dark:hover:bg-[color-mix(in srgb, var(--primary-color-dark) 80%, black)] text-white font-semibold py-1.5 px-3 rounded-md shadow-sm hover:shadow-md transition-all duration-150 ease-in-out text-sm disabled:bg-slate-300 dark:disabled:bg-slate-700 disabled:cursor-not-allowed disabled:shadow-none"
           title={selectedCustomerId ? "Add New Contact" : "Select a customer first"}
         >
           <PlusIcon className="w-4 h-4 mr-1.5" />

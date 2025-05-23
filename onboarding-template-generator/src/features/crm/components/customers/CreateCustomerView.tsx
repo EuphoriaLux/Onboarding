@@ -17,7 +17,7 @@ const CreateCustomerView: React.FC<CreateCustomerViewProps> = ({ onCustomerAdded
 
   return (
     <div>
-      <h2>Create Customer</h2>
+      <h2 className="text-gray-800 dark:text-gray-200">Create Customer</h2>
       <CustomerForm onSubmit={handleSubmit} />
     </div>
   );

@@ -47,15 +47,15 @@ const CustomerView: React.FC<CustomerViewProps> = ({ customer, onUpdate, onDelet
       <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Customer Details</h2>
       <div className="mb-4">
         <h3 className="text-md font-semibold mb-1 text-gray-800 dark:text-gray-200">Company Information</h3>
-        <p><strong>Name:</strong> {customer.name}</p>
-        {customer.internalName && <p><strong>Internal Name:</strong> {customer.internalName}</p>}
-        {customer.company && <p><strong>Company:</strong> {customer.company}</p>}
-        {customer.email && <p><strong>Email:</strong> {customer.email}</p>}
-        {customer.phone && <p><strong>Phone:</strong> {customer.phone}</p>}
-        {customer.status && <p><strong>Status:</strong> {customer.status}</p>}
-        {customer.onboardingStatus && <p><strong>Onboarding Status:</strong> {customer.onboardingStatus}</p>}
-        <p><strong>Joined:</strong> {new Date(customer.createdAt).toLocaleDateString()}</p>
-        <p><strong>Last Updated:</strong> {new Date(customer.updatedAt).toLocaleDateString()}</p>
+        <p className="text-gray-700 dark:text-gray-300"><strong>Name:</strong> {customer.name}</p>
+        {customer.internalName && <p className="text-gray-700 dark:text-gray-300"><strong>Internal Name:</strong> {customer.internalName}</p>}
+        {customer.company && <p className="text-gray-700 dark:text-gray-300"><strong>Company:</strong> {customer.company}</p>}
+        {customer.email && <p className="text-gray-700 dark:text-gray-300"><strong>Email:</strong> {customer.email}</p>}
+        {customer.phone && <p className="text-gray-700 dark:text-gray-300"><strong>Phone:</strong> {customer.phone}</p>}
+        {customer.status && <p className="text-gray-700 dark:text-gray-300"><strong>Status:</strong> {customer.status}</p>}
+        {customer.onboardingStatus && <p className="text-gray-700 dark:text-gray-300"><strong>Onboarding Status:</strong> {customer.onboardingStatus}</p>}
+        <p className="text-gray-700 dark:text-gray-300"><strong>Joined:</strong> {new Date(customer.createdAt).toLocaleDateString()}</p>
+        <p className="text-gray-700 dark:text-gray-300"><strong>Last Updated:</strong> {new Date(customer.updatedAt).toLocaleDateString()}</p>
       </div>
 
       {editingContact ? (
@@ -88,7 +88,7 @@ const CustomerView: React.FC<CustomerViewProps> = ({ customer, onUpdate, onDelet
             ))}
           </ul>
         ) : (
-          <p>No notes found.</p>
+          <p className="text-gray-600 dark:text-gray-400">No notes found.</p>
         )}
       </div>
       <div className="mb-4 pt-4 border-t border-gray-200 dark:border-gray-700">

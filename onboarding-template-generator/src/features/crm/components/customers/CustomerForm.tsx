@@ -43,7 +43,6 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
       createdAt: initialCustomer?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       _etag: initialCustomer?._etag || undefined, // Include _etag for updates
-      tenants: initialCustomer?.tenants || [], // Include existing tenants
       accountManager,
       supportPlan: supportPlanType ? {
         type: supportPlanType,
@@ -66,7 +65,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 text-gray-700 dark:text-gray-300">
       <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">{initialCustomer ? 'Edit Customer' : 'Add New Customer'}</h2>
       <FormField
         label="Name:"
@@ -128,7 +127,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
             onChange={e => setSupportPlanType(e.target.value as SupportPlanType)}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm text-black dark:text-white font-normal"
             title="Select Support Plan Type" // Added title for accessibility
-          >
+        >
             <option value="">Select Plan</option>
             {Object.keys(supportTiers).map((key) => (
               <option key={key} value={key}>{supportTiers[key as SupportPlanType].name}</option>
