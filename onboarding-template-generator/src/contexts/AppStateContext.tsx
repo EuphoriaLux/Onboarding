@@ -13,9 +13,9 @@ interface CustomerInfo {
   contactName: string;
   contactEmail: string;
   proposedSlots: Date[];
-  authorizedContacts: AuthorizedContact[]; // Changed from Contact to AuthorizedContact
+  authorizedContacts: AuthorizedContact[];
   selectedTier: string;
-  tenants: TenantInfo[];
+  // Removed tenants from CustomerInfo as they are now top-level
 }
 
 interface AppState {
@@ -24,18 +24,19 @@ interface AppState {
   language: Language;
   showAlphaBetaFeatures: boolean;
   darkMode: boolean;
-  crmData: Customer[]; // Add crmData property
-  selectedCustomerId: string | null; // Add selectedCustomerId to state
-  activeFeatureId: string | null; // New: Add activeFeatureId to state
+  crmData: Customer[]; // Customers data
+  allTenants: Tenant[]; // New: All tenants data, top-level
+  selectedCustomerId: string | null;
+  activeFeatureId: string | null;
 }
 
 interface AppStateContextType {
   state: AppState;
-  setSelectedCustomerId: (customerId: string | null) => void; // Add setter for selectedCustomerId
-  setActiveFeatureId: (featureId: string | null) => void; // New: Add setter for activeFeatureId
+  setSelectedCustomerId: (customerId: string | null) => void;
+  setActiveFeatureId: (featureId: string | null) => void;
   updateCustomerInfo: (field: string, value: any) => void;
-  updateContacts: (contacts: AuthorizedContact[]) => void; // Changed from Contact to AuthorizedContact
-  updateTenants: (tenants: TenantInfo[]) => void;
+  updateContacts: (contacts: AuthorizedContact[]) => void;
+  // Removed updateTenants as they are now top-level
   updateTier: (tier: string) => void;
   updateEmailData: (data: EmailFormData) => void;
   updateLanguage: (language: Language) => void;
@@ -46,13 +47,15 @@ interface AppStateContextType {
   // CRM Data Actions (now interacting with crmStorageService)
   addCustomer: (customer: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | '_etag'>) => Promise<void>;
   updateCustomer: (customer: Customer) => Promise<void>;
-  deleteCustomer: (customerId: string, etag: string) => Promise<void>;
+  deleteCustomer: (customerId: string) => Promise<void>;
   addAuthorizedContactToCustomer: (customerId: string, contact: Omit<AuthorizedContact, 'id' | 'customerId' | 'createdAt'>) => Promise<void>;
   updateAuthorizedContact: (customerId: string, contact: AuthorizedContact) => Promise<void>;
   deleteAuthorizedContact: (customerId: string, contactId: string) => Promise<void>;
-  addTenantToCustomer: (customerId: string, tenant: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => Promise<void>;
-  updateTenantInCustomer: (customerId: string, tenant: Tenant) => Promise<void>;
-  deleteTenantFromCustomer: (customerId: string, tenantId: string) => Promise<void>;
+  // New tenant actions for top-level tenants
+  addTenant: (tenant: Omit<Tenant, 'id' | 'createdAt'>) => Promise<void>;
+  updateTenant: (tenant: Tenant) => Promise<void>;
+  deleteTenant: (tenantId: string) => Promise<void>;
+  matchTenantToCustomer: (tenantId: string, newCustomerId: string | null) => Promise<void>;
 }
 
 const defaultState: AppState = {
@@ -60,24 +63,16 @@ const defaultState: AppState = {
     contactName: '',
     contactEmail: '',
     proposedSlots: [], // Initialize as empty array
-    authorizedContacts: [{ id: 'default-contact-1', customerId: '', name: '', email: '', phone: '', createdAt: new Date().toISOString(), jobTitle: '' }], // Updated to AuthorizedContact
+    authorizedContacts: [{ id: 'default-contact-1', customerId: '', fullName: '', email: '', createdAt: new Date().toISOString() }], // Updated to AuthorizedContact, removed 'name' and 'phone', added 'fullName'
     selectedTier: 'silver',
-    // Initialize default tenant with all flags
-    tenants: [{
-      id: '',
-      companyName: '',
-      tenantDomain: '',
-      microsoftTenantDomain: '', // Added MS Domain default
-      implementationDeadline: null,
-      hasAzure: false
-      // Removed includeRbacScript default
-    }],
+    // Removed tenants from default customerInfo
   },
   emailData: null,
   language: 'en',
   showAlphaBetaFeatures: false,
   darkMode: false, // Default to light mode
   crmData: [], // Initialize crmData as an empty array
+  allTenants: [], // Initialize allTenants as an empty array
   selectedCustomerId: null, // Initialize selectedCustomerId as null
   activeFeatureId: null, // New: Initialize activeFeatureId as null
 };
@@ -98,48 +93,43 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
           'showAlphaBetaFeatures',
           'darkMode',
           'crmData',
-          'selectedCustomerId', // Ensure selectedCustomerId is loaded
-          'activeFeatureId' // New: Ensure activeFeatureId is loaded
+          'selectedCustomerId',
+          'activeFeatureId'
         ]);
 
         if (savedState) {
           const newState = { ...defaultState };
 
           if (savedState.customerInfo) {
-            let customerInfo = { ...savedState.customerInfo }; // Clone to modify
+            let customerInfo = { ...savedState.customerInfo };
 
-            // Process proposedSlots from storage (convert array of strings to Dates)
             if (customerInfo.proposedSlots && Array.isArray(customerInfo.proposedSlots)) {
               customerInfo.proposedSlots = customerInfo.proposedSlots
                 .map((slotString: string) => {
                   const parsedDate = new Date(slotString);
                   return !isNaN(parsedDate.getTime()) ? parsedDate : null;
                 })
-                .filter((slot: Date | null): slot is Date => slot !== null); // Filter out invalid dates
+                .filter((slot: Date | null): slot is Date => slot !== null);
             } else {
-              customerInfo.proposedSlots = []; // Default to empty array if missing or invalid
+              customerInfo.proposedSlots = [];
             }
 
-            // Also parse implementationDeadline and ensure boolean flags within tenants
-            if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
-              customerInfo.tenants = customerInfo.tenants.map((tenant: any) => { // Use 'any' temporarily for processing
-                let processedTenant = { ...tenant };
-
-                // Parse deadline
-                if (processedTenant.implementationDeadline) {
-                  const parsedDeadline = new Date(processedTenant.implementationDeadline);
-                  processedTenant.implementationDeadline = !isNaN(parsedDeadline.getTime()) ? parsedDeadline : null;
-                } else {
-                  processedTenant.implementationDeadline = null; // Ensure null if missing/falsy
-                }
-
-                // Ensure boolean flags exist, default to false if undefined
-                if (typeof processedTenant.hasAzure === 'undefined') {
-                  processedTenant.hasAzure = false;
-                }
-                return processedTenant as TenantInfo; // Cast back to TenantInfo
-              });
-            }
+            // Removed old tenant processing from customerInfo.tenants
+            // if (customerInfo.tenants && Array.isArray(customerInfo.tenants)) {
+            //   customerInfo.tenants = customerInfo.tenants.map((tenant: any) => {
+            //     let processedTenant = { ...tenant };
+            //     if (processedTenant.implementationDeadline) {
+            //       const parsedDeadline = new Date(processedTenant.implementationDeadline);
+            //       processedTenant.implementationDeadline = !isNaN(parsedDeadline.getTime()) ? parsedDeadline : null;
+            //     } else {
+            //       processedTenant.implementationDeadline = null;
+            //     }
+            //     if (typeof processedTenant.hasAzure === 'undefined') {
+            //       processedTenant.hasAzure = false;
+            //     }
+            //     return processedTenant as TenantInfo;
+            //   });
+            // }
 
             newState.customerInfo = {
               ...defaultState.customerInfo,
@@ -155,7 +145,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             newState.language = savedState.language;
           }
 
-          // Load the toggle states
           if (typeof savedState.showAlphaBetaFeatures === 'boolean') {
             newState.showAlphaBetaFeatures = savedState.showAlphaBetaFeatures;
           }
@@ -163,38 +152,64 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
             newState.darkMode = savedState.darkMode;
           }
 
-          // Load crmData from chrome.storage.local using crmStorageService
+          // Load crmData (customers and tenants) from crmStorageService
           try {
-            const storedCustomers = await crmStorageService.listCustomers();
-            const detailedCustomers: Customer[] = [];
-            for (const summary of storedCustomers) {
-              const detail = await crmStorageService.getCustomer(summary.id);
-              if (detail) {
-                detailedCustomers.push(detail);
+            const crmDataFromStorage = await crmStorageService.getStorageData();
+            newState.crmData = crmDataFromStorage.customers;
+            newState.allTenants = crmDataFromStorage.tenants;
+
+            // Handle migration of old nested tenants to new top-level tenants
+            // This logic should only run once on first load after data model change
+            let migratedTenants: Tenant[] = [];
+            let customersToUpdate: Customer[] = [];
+
+            if (crmDataFromStorage.customers.length > 0) {
+              crmDataFromStorage.customers.forEach(customer => {
+                if ((customer as any).tenants && Array.isArray((customer as any).tenants)) {
+                  (customer as any).tenants.forEach((nestedTenant: Tenant) => {
+                    // Ensure customerId is set for migrated tenants
+                    migratedTenants.push({ ...nestedTenant, customerId: nestedTenant.customerId || customer.id });
+                  });
+                  // Remove tenants from the customer object for future consistency
+                  const { tenants, ...customerWithoutTenants } = customer as any;
+                  customersToUpdate.push(customerWithoutTenants); // Fixed typo here
+                } else {
+                  customersToUpdate.push(customer);
+                }
+              });
+
+              if (migratedTenants.length > 0) { // Fixed typo here
+                // Only update storage if migration actually happened
+                const updatedStorageData = {
+                  customers: customersToUpdate,
+                  tenants: [...crmDataFromStorage.tenants, ...migratedTenants.filter(mt => !crmDataFromStorage.tenants.some(t => t.id === mt.id))]
+                };
+                await crmStorageService.setStorageData(updatedStorageData); // Now setStorageData is exported
+                newState.crmData = updatedStorageData.customers;
+                newState.allTenants = updatedStorageData.tenants;
               }
             }
-            newState.crmData = detailedCustomers;
-            // Set selectedCustomerId if there are customers and none is selected
-            if (detailedCustomers.length > 0 && !savedState.selectedCustomerId) {
-              newState.selectedCustomerId = detailedCustomers[0].id;
-            } else if (savedState.selectedCustomerId && !detailedCustomers.some(c => c.id === savedState.selectedCustomerId)) {
-              // If previously selected customer was deleted, select the first one or null
-              newState.selectedCustomerId = detailedCustomers.length > 0 ? detailedCustomers[0].id : null;
+
+            // Set selectedCustomerId logic remains the same
+            if (newState.crmData.length > 0 && !savedState.selectedCustomerId) {
+              newState.selectedCustomerId = newState.crmData[0].id;
+            } else if (savedState.selectedCustomerId && !newState.crmData.some(c => c.id === savedState.selectedCustomerId)) {
+              newState.selectedCustomerId = newState.crmData.length > 0 ? newState.crmData[0].id : null;
             } else if (savedState.selectedCustomerId) {
               newState.selectedCustomerId = savedState.selectedCustomerId;
             }
+
           } catch (err) {
             console.error("Error loading CRM data from storage:", err);
             newState.crmData = [];
+            newState.allTenants = [];
             newState.selectedCustomerId = null;
           }
 
-          // New: Load activeFeatureId
           if (savedState.activeFeatureId) {
             newState.activeFeatureId = savedState.activeFeatureId;
           }
 
-          // Apply the theme class based on the loaded state BEFORE setting the state
           if (newState.darkMode) {
             document.documentElement.classList.add('dark');
           } else {
@@ -220,9 +235,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
     StorageService.set('showAlphaBetaFeatures', state.showAlphaBetaFeatures);
     StorageService.set('darkMode', state.darkMode);
-    StorageService.set('selectedCustomerId', state.selectedCustomerId); // Save selectedCustomerId to storage
-    StorageService.set('activeFeatureId', state.activeFeatureId); // New: Save activeFeatureId to storage
-  }, [state.customerInfo, state.emailData, state.language, state.showAlphaBetaFeatures, state.darkMode, state.selectedCustomerId, state.activeFeatureId]); // Add activeFeatureId to dependencies
+    StorageService.set('selectedCustomerId', state.selectedCustomerId);
+    StorageService.set('activeFeatureId', state.activeFeatureId);
+    // No need to save crmData or allTenants here, as crmStorageService handles it
+  }, [state.customerInfo, state.emailData, state.language, state.showAlphaBetaFeatures, state.darkMode, state.selectedCustomerId, state.activeFeatureId]);
 
   // Handler functions
   const updateCustomerInfo = (field: string, value: any) => {
@@ -235,7 +251,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  // Add handler for updating proposed slots
   const updateProposedSlots = (slots: Date[]) => {
     setState(prevState => ({
       ...prevState,
@@ -246,7 +261,7 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  const updateContacts = (contacts: AuthorizedContact[]) => { // Changed from Contact to AuthorizedContact
+  const updateContacts = (contacts: AuthorizedContact[]) => {
     setState(prevState => ({
       ...prevState,
       customerInfo: {
@@ -256,26 +271,24 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  const updateTenants = (tenants: TenantInfo[]) => {
-    setState(prevState => ({
-      ...prevState,
-      customerInfo: {
-        ...prevState.customerInfo,
-        tenants
-      }
-    }));
-  };
+  // Removed updateTenants as they are now top-level
+  // const updateTenants = (tenants: TenantInfo[]) => {
+  //   setState(prevState => ({
+  //     ...prevState,
+  //     customerInfo: {
+  //       ...prevState.customerInfo,
+  //       tenants
+  //     }
+  //   }));
+  // };
 
   const updateTier = (tier: string) => {
-    // Get the contact limit for the new tier
     const newTierLimit = supportTiers[tier]?.authorizedContacts;
 
     setState(prevState => {
       let updatedContacts = prevState.customerInfo.authorizedContacts;
 
-      // Check if the limit is defined and if the current contacts exceed it
       if (newTierLimit !== undefined && updatedContacts.length > newTierLimit) {
-        // Truncate the contacts array to the new limit
         updatedContacts = updatedContacts.slice(0, newTierLimit);
       }
 
@@ -304,7 +317,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  // Handler for updating the Alpha/Beta toggle state
   const updateShowAlphaBetaFeatures = (value: boolean) => {
     setState(prevState => ({
       ...prevState,
@@ -316,7 +328,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   const toggleDarkMode = () => {
     setState(prevState => {
       const newDarkMode = !prevState.darkMode;
-      // Update document class for Tailwind dark mode
       if (newDarkMode) {
         document.documentElement.classList.add('dark');
       } else {
@@ -341,7 +352,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }));
   };
 
-  // New: Add setActiveFeatureId function
   const setActiveFeatureId = (featureId: string | null) => {
     setState(prevState => ({
       ...prevState,
@@ -360,7 +370,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       }));
     } catch (error) {
       console.error("Error adding customer:", error);
-      // Handle error in UI if needed
     }
   };
 
@@ -373,11 +382,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       }));
     } catch (error) {
       console.error("Error updating customer:", error);
-      // Handle error in UI if needed
     }
   };
 
-  const deleteCustomer = async (customerId: string, etag: string) => {
+  const deleteCustomer = async (customerId: string) => {
     try {
       await crmStorageService.deleteCustomer(customerId);
       setState(prevState => {
@@ -394,7 +402,6 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       });
     } catch (error) {
       console.error("Error deleting customer:", error);
-      // Handle error in UI if needed
     }
   };
 
@@ -434,39 +441,54 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   };
 
-  const addTenantToCustomer = async (customerId: string, tenant: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => {
+  // New tenant actions for top-level tenants
+  const addTenant = async (tenantData: Omit<Tenant, 'id' | 'createdAt'>) => {
     try {
-      const updatedCustomer = await crmStorageService.addTenantToCustomer(customerId, tenant as Tenant);
+      const newTenant = await crmStorageService.addTenant(tenantData);
       setState(prevState => ({
         ...prevState,
-        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+        allTenants: [...prevState.allTenants, newTenant],
       }));
     } catch (error) {
       console.error("Error adding tenant:", error);
     }
   };
 
-  const updateTenantInCustomer = async (customerId: string, tenant: Tenant) => {
+  const updateTenant = async (tenantData: Tenant) => {
     try {
-      const updatedCustomer = await crmStorageService.updateTenantInCustomer(customerId, tenant);
+      const updatedTenant = await crmStorageService.updateTenant(tenantData);
       setState(prevState => ({
         ...prevState,
-        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+        allTenants: prevState.allTenants.map(t => (t.id === updatedTenant.id ? updatedTenant : t)),
       }));
     } catch (error) {
       console.error("Error updating tenant:", error);
     }
   };
 
-  const deleteTenantFromCustomer = async (customerId: string, tenantId: string) => {
+  const deleteTenant = async (tenantId: string) => {
     try {
-      const updatedCustomer = await crmStorageService.deleteTenantFromCustomer(customerId, tenantId);
+      await crmStorageService.deleteTenant(tenantId);
       setState(prevState => ({
         ...prevState,
-        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+        allTenants: prevState.allTenants.filter(t => t.id !== tenantId),
       }));
     } catch (error) {
       console.error("Error deleting tenant:", error);
+    }
+  };
+
+  const matchTenantToCustomer = async (tenantId: string, newCustomerId: string | null) => {
+    try {
+      await crmStorageService.matchTenantToCustomer(tenantId, newCustomerId);
+      // Re-fetch all tenants to update their customerId in state
+      const data = await crmStorageService.getStorageData();
+      setState(prevState => ({
+        ...prevState,
+        allTenants: data.tenants,
+      }));
+    } catch (error) {
+      console.error("Error matching tenant to customer:", error);
     }
   };
 
@@ -474,10 +496,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
     <AppStateContext.Provider value={{
       state,
       setSelectedCustomerId,
-      setActiveFeatureId, // New: Add setActiveFeatureId to context value
+      setActiveFeatureId,
       updateCustomerInfo,
       updateContacts,
-      updateTenants,
+      // Removed updateTenants
       updateTier,
       updateEmailData,
       updateLanguage,
@@ -491,9 +513,10 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
       addAuthorizedContactToCustomer,
       updateAuthorizedContact,
       deleteAuthorizedContact,
-      addTenantToCustomer,
-      updateTenantInCustomer,
-      deleteTenantFromCustomer,
+      addTenant,
+      updateTenant,
+      deleteTenant,
+      matchTenantToCustomer,
     }}>
       {children}
     </AppStateContext.Provider>

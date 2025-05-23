@@ -9,16 +9,15 @@ interface UpdateTenantViewProps {
 }
 
 const UpdateTenantView: React.FC<UpdateTenantViewProps> = ({ selectedTenantId, onUpdateSuccess }) => {
-  const { state, updateTenantInCustomer } = useAppState();
-  const { crmData, selectedCustomerId } = state;
+  const { state, updateTenant } = useAppState(); // Removed updateTenantInCustomer, added updateTenant
+  const { allTenants } = state; // Get allTenants from state
   const [initialTenant, setInitialTenant] = useState<Tenant | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (selectedTenantId && selectedCustomerId) {
-      const customer = crmData.find(c => c.id === selectedCustomerId);
-      const tenantToEdit = customer?.tenants?.find(t => t.id === selectedTenantId);
+    if (selectedTenantId) {
+      const tenantToEdit = allTenants.find(t => t.id === selectedTenantId); // Find tenant directly from allTenants
       if (tenantToEdit) {
         setInitialTenant(tenantToEdit);
         setIsLoading(false);
@@ -30,17 +29,22 @@ const UpdateTenantView: React.FC<UpdateTenantViewProps> = ({ selectedTenantId, o
       setError("No tenant selected for update.");
       setIsLoading(false);
     }
-  }, [selectedTenantId, selectedCustomerId, crmData]);
+  }, [selectedTenantId, allTenants]); // Depend on allTenants
 
-  const handleSubmit = async (updatedTenant: Tenant) => {
-    if (!selectedCustomerId) {
-      setError("No customer selected for tenant update.");
+  const handleSubmit = async (updatedTenant: Omit<Tenant, 'id' | 'createdAt'>) => { // Adjusted type for onSubmit
+    if (!selectedTenantId) {
+      setError("No tenant selected for update.");
       return;
     }
     try {
-      // Ensure the customerId is correctly set for the updated tenant
-      const tenantWithCustomerId = { ...updatedTenant, customerId: selectedCustomerId };
-      await updateTenantInCustomer(selectedCustomerId, tenantWithCustomerId);
+      // The updatedTenant from TenantForm will not have id/createdAt, so we need to add them back
+      const fullUpdatedTenant: Tenant = {
+        ...updatedTenant,
+        id: selectedTenantId, // Use the ID of the tenant being edited
+        createdAt: initialTenant?.createdAt || new Date().toISOString(), // Preserve original createdAt
+        customerId: updatedTenant.customerId || initialTenant?.customerId || '', // Preserve or update customerId
+      };
+      await updateTenant(fullUpdatedTenant); // Use context action
       onUpdateSuccess();
     } catch (err) {
       console.error("Failed to update tenant:", err);

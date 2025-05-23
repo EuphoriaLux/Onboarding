@@ -1,50 +1,49 @@
 import { Customer, AuthorizedContact, Tenant } from '../types/index';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'; // Revert to named import
 
 const STORAGE_KEY = 'crmData';
 
 interface CrmStorageData {
   customers: Customer[];
+  tenants: Tenant[]; // New: Top-level tenants array
 }
 
-const getStorageData = async (): Promise<CrmStorageData> => {
+export const getStorageData = async (): Promise<CrmStorageData> => {
   return new Promise((resolve) => {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
       chrome.storage.local.get([STORAGE_KEY], (result) => {
         const storedData = result[STORAGE_KEY];
-        // Ensure storedData is an object and has a 'customers' array
-        if (storedData && typeof storedData === 'object' && Array.isArray(storedData.customers)) {
+        if (storedData && typeof storedData === 'object' && Array.isArray(storedData.customers) && Array.isArray(storedData.tenants)) {
           resolve(storedData);
         } else {
-          resolve({ customers: [] }); // Return a clean initial state if data is missing or malformed
+          // Initialize with empty arrays if data is missing or malformed
+          resolve({ customers: [], tenants: [] });
         }
       });
     } else {
-      // Fallback for non-Chrome extension environments
       const localStorageData = localStorage.getItem(STORAGE_KEY);
       try {
         const parsedData = localStorageData ? JSON.parse(localStorageData) : null;
-        if (parsedData && typeof parsedData === 'object' && Array.isArray(parsedData.customers)) {
+        if (parsedData && typeof parsedData === 'object' && Array.isArray(parsedData.customers) && Array.isArray(parsedData.tenants)) {
           resolve(parsedData);
         } else {
-          resolve({ customers: [] });
+          resolve({ customers: [], tenants: [] });
         }
       } catch (e) {
         console.warn("Error parsing localStorage data. Using empty fallback.", e);
-        resolve({ customers: [] });
+        resolve({ customers: [], tenants: [] });
       }
     }
   });
 };
 
-const setStorageData = async (data: CrmStorageData): Promise<void> => {
+export const setStorageData = async (data: CrmStorageData): Promise<void> => {
   return new Promise((resolve) => {
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
       chrome.storage.local.set({ [STORAGE_KEY]: data }, () => {
         resolve();
       });
     } else {
-      // Fallback for non-Chrome extension environments
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       resolve();
     }
@@ -68,7 +67,7 @@ export const getCustomer = async (customerId: string): Promise<Customer | null> 
 
 export const createCustomer = async (customerData: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | '_etag'>): Promise<Customer> => {
   const data = await getStorageData();
-  const newId = uuidv4();
+  const newId = uuidv4(); // Revert to uuidv4()
   const now = new Date().toISOString();
   const newCustomer: Customer = {
     ...customerData,
@@ -77,8 +76,8 @@ export const createCustomer = async (customerData: Omit<Customer, 'id' | 'create
     updatedAt: now,
     notes: customerData.notes || [],
     contacts: customerData.contacts || [],
-    tenants: customerData.tenants || [],
-    _etag: uuidv4(), // Simulate ETag for consistency, though not strictly needed for local storage
+    // Tenants are now managed globally, not nested in customer
+    _etag: uuidv4(), // Revert to uuidv4()
   };
   data.customers.push(newCustomer);
   await setStorageData(data);
@@ -101,7 +100,7 @@ export const updateCustomer = async (customerData: Customer): Promise<Customer> 
   const updatedCustomer: Customer = {
     ...customerData,
     updatedAt: now,
-    _etag: uuidv4(), // Generate new ETag on update
+    _etag: uuidv4(), // Revert to uuidv4()
   };
   data.customers[index] = updatedCustomer;
   await setStorageData(data);
@@ -120,7 +119,7 @@ export const addAuthorizedContactToCustomer = async (customerId: string, contact
 
   const { id: _, ...restOfContact } = contact;
   const newContact: AuthorizedContact = {
-    id: uuidv4(),
+    id: uuidv4(), // Revert to uuidv4()
     ...restOfContact,
     customerId: customerId,
     createdAt: new Date().toISOString(),
@@ -155,43 +154,58 @@ export const deleteAuthorizedContact = async (customerId: string, contactId: str
   return await updateCustomer(updatedCustomer);
 };
 
-export const addTenantToCustomer = async (customerId: string, tenant: Tenant): Promise<Customer> => {
-  const customer = await getCustomer(customerId);
-  if (!customer) throw new Error(`Customer with ID ${customerId} not found.`);
-
-  const { id: _, ...restOfTenant } = tenant;
+export const addTenant = async (tenantData: Omit<Tenant, 'id' | 'createdAt'>): Promise<Tenant> => {
+  const data = await getStorageData();
+  const newId = uuidv4(); // Revert to uuidv4()
+  const now = new Date().toISOString();
   const newTenant: Tenant = {
-    id: uuidv4(),
-    ...restOfTenant,
-    customerId: customerId,
-    createdAt: new Date().toISOString(),
+    ...tenantData,
+    id: newId,
+    createdAt: now,
+    customerId: tenantData.customerId || '', // Ensure customerId is set, even if empty
   };
-
-  const updatedCustomer: Customer = {
-    ...customer,
-    tenants: customer.tenants ? [...customer.tenants, newTenant] : [newTenant],
-  };
-  return await updateCustomer(updatedCustomer);
+  data.tenants.push(newTenant);
+  await setStorageData(data);
+  return newTenant;
 };
 
-export const updateTenantInCustomer = async (customerId: string, tenant: Tenant): Promise<Customer> => {
-  const customer = await getCustomer(customerId);
-  if (!customer) throw new Error(`Customer with ID ${customerId} not found.`);
-
-  const updatedCustomer: Customer = {
-    ...customer,
-    tenants: customer.tenants?.map(t => (t.id === tenant.id ? tenant : t)) || [],
-  };
-  return await updateCustomer(updatedCustomer);
+export const updateTenant = async (tenantData: Tenant): Promise<Tenant> => {
+  const data = await getStorageData();
+  const index = data.tenants.findIndex(t => t.id === tenantData.id);
+  if (index === -1) {
+    throw new Error(`Tenant with ID ${tenantData.id} not found.`);
+  }
+  data.tenants[index] = tenantData;
+  await setStorageData(data);
+  return tenantData;
 };
 
-export const deleteTenantFromCustomer = async (customerId: string, tenantId: string): Promise<Customer> => {
-  const customer = await getCustomer(customerId);
-  if (!customer) throw new Error(`Customer with ID ${customerId} not found.`);
+export const deleteTenant = async (tenantId: string): Promise<void> => {
+  const data = await getStorageData();
+  data.tenants = data.tenants.filter(t => t.id !== tenantId);
+  await setStorageData(data);
+};
 
-  const updatedCustomer: Customer = {
-    ...customer,
-    tenants: customer.tenants?.filter(t => t.id !== tenantId) || [],
-  };
-  return await updateCustomer(updatedCustomer);
+export const getAllTenants = async (): Promise<Tenant[]> => {
+  const data = await getStorageData();
+  return data.tenants;
+};
+
+export const getTenant = async (tenantId: string): Promise<Tenant | null> => {
+  const data = await getStorageData();
+  return data.tenants.find(t => t.id === tenantId) || null;
+};
+
+export const matchTenantToCustomer = async (tenantId: string, newCustomerId: string | null): Promise<void> => {
+  const data = await getStorageData();
+  const tenantIndex = data.tenants.findIndex(t => t.id === tenantId);
+
+  if (tenantIndex === -1) {
+    throw new Error(`Tenant with ID ${tenantId} not found.`);
+  }
+
+  // Update tenant's customerId
+  data.tenants[tenantIndex].customerId = newCustomerId || ''; // Set to empty string if unmatching
+
+  await setStorageData(data);
 };

@@ -10,7 +10,7 @@ export interface Tenant {
   id: string;
   name: string;
   microsoftTenantId: string;
-  customerId: string;
+  customerId?: string; // Made optional
   subscriptionStatus?: SubscriptionStatus;
   gdap?: boolean; // New: GDAP checkbox
   rbac?: boolean; // New: RBAC checkbox
@@ -42,7 +42,7 @@ export interface Customer {
   parentId?: string; // Optional ID of the parent customer/company
   notes: CustomerNote[];
   contacts?: AuthorizedContact[]; // Updated to use AuthorizedContact
-  tenants?: Tenant[]; // New: array of Tenant objects
+  // Removed tenants array from Customer, as they will be top-level
   createdAt: string; // ISO 8601 date string
   updatedAt: string; // ISO 8601 date string
   onboardingStatus?: OnboardingStatus;

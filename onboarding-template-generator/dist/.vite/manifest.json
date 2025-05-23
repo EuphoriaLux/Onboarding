@@ -5,16 +5,16 @@
     "src": "../../../@crx/manifest",
     "isEntry": true
   },
-  "_tailwind--6kn27KG.js": {
-    "file": "assets/tailwind--6kn27KG.js",
+  "_tailwind-CNI0uN-Q.js": {
+    "file": "assets/tailwind-CNI0uN-Q.js",
     "name": "tailwind",
     "css": [
-      "assets/tailwind-KndPLktn.css"
+      "assets/tailwind-DhwXOzPq.css"
     ]
   },
-  "_tailwind-KndPLktn.css": {
-    "file": "assets/tailwind-KndPLktn.css",
-    "src": "_tailwind-KndPLktn.css"
+  "_tailwind-DhwXOzPq.css": {
+    "file": "assets/tailwind-DhwXOzPq.css",
+    "src": "_tailwind-DhwXOzPq.css"
   },
   "src/assets/ms-symbollockup_signin_dark.svg": {
     "file": "assets/ms-symbollockup_signin_dark-BLaB1Mw_.svg",
@@ -25,12 +25,12 @@
     "src": "src/assets/ms-symbollockup_signin_light.svg"
   },
   "src/options.html": {
-    "file": "assets/options.html-Bcko7jC_.js",
+    "file": "assets/options.html-CU_nCJOT.js",
     "name": "options.html",
     "src": "src/options.html",
     "isEntry": true,
     "imports": [
-      "_tailwind--6kn27KG.js"
+      "_tailwind-CNI0uN-Q.js"
     ],
     "css": [
       "assets/options-DdjxYr1F.css"
@@ -41,12 +41,12 @@
     ]
   },
   "src/popup.html": {
-    "file": "assets/popup.html-Cv7GpOYM.js",
+    "file": "assets/popup.html-DoEY3cjX.js",
     "name": "popup.html",
     "src": "src/popup.html",
     "isEntry": true,
     "imports": [
-      "_tailwind--6kn27KG.js"
+      "_tailwind-CNI0uN-Q.js"
     ]
   }
 }
