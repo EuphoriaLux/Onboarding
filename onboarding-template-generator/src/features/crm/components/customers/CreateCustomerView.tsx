@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomerForm from './CustomerForm';
-import { useAppState } from '../../../contexts/AppStateContext';
-import { Customer } from '../types'; // Import Customer type
+import { useAppState } from '../../../../contexts/AppStateContext';
+import { Customer } from '../../types'; // Import Customer type
 
 interface CreateCustomerViewProps {
   onCustomerAdded: () => void;

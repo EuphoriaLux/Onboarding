@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Customer, Tenant, AuthorizedContact } from '../types/index';
-import Header from './Header';
-import Footer from './Footer';
-import CustomerList from './CustomerList';
-import TenantList from './TenantList';
-import Modal from './Modal';
-import AddCustomerForm from './AddCustomerForm';
-import AddTenantForm from './AddTenantForm';
-import CustomerContactSidebar from './CustomerContactSidebar';
-import AuthorizedContactsSidebar from './AuthorizedContactsSidebar';
-import AddAuthorizedContactForm from './AddAuthorizedContactForm';
-import UpdateCustomerView from './UpdateCustomerView'; // Import UpdateCustomerView
-import { PlusIcon } from './icons';
+import Header from './common/Header';
+import Footer from './common/Footer';
+import CustomerList from './customers/CustomerList';
+import TenantList from './tenants/TenantList';
+import Modal from './common/Modal';
+import AddCustomerForm from './customers/AddCustomerForm';
+import TenantForm from './tenants/TenantForm';
+import CustomerContactSidebar from './contacts/CustomerContactSidebar';
+import AuthorizedContactsSidebar from './contacts/AuthorizedContactsSidebar';
+import AddAuthorizedContactForm from './contacts/AddAuthorizedContactForm';
+import UpdateCustomerView from './customers/UpdateCustomerView'; // Import UpdateCustomerView
+import UpdateTenantView from './tenants/UpdateTenantView'; // Import UpdateTenantView
+import { PlusIcon } from './common/icons';
 import { useAppState } from '../../../contexts/AppStateContext';
 import * as crmStorageService from '../services/crmStorageService';
 
@@ -23,13 +24,15 @@ const CrmApp: React.FC = () => {
   const [isAddAuthorizedContactModalOpen, setIsAddAuthorizedContactModalOpen] = useState(false);
   const [isUpdateCustomerModalOpen, setIsUpdateCustomerModalOpen] = useState(false); // New state for update modal
   const [selectedCustomerIdForEdit, setSelectedCustomerIdForEdit] = useState<string | null>(null);
+  const [isUpdateTenantModalOpen, setIsUpdateTenantModalOpen] = useState(false); // New state for update tenant modal
+  const [selectedTenantIdForEdit, setSelectedTenantIdForEdit] = useState<string | null>(null);
 
   const handleSelectCustomer = useCallback((customerId: string) => {
     setSelectedCustomerId(customerId);
     // No need to set currentCrmView here anymore as it's not used for main content switching
   }, [setSelectedCustomerId]);
 
-  const handleAddCustomer = async (customerData: Omit<Customer, 'id' | 'createdAt'>) => {
+  const handleAddCustomer = async (customerData: Omit<Customer, 'id' | 'createdAt' | 'updatedAt' | '_etag'>) => {
     await addCustomer(customerData);
     setIsAddCustomerModalOpen(false);
   };
@@ -45,10 +48,27 @@ const CrmApp: React.FC = () => {
     setIsUpdateCustomerModalOpen(false);
   }, []);
 
+  const handleEditTenant = useCallback((tenantId: string) => {
+    setSelectedTenantIdForEdit(tenantId);
+    setIsUpdateTenantModalOpen(true);
+  }, []);
+
+  const handleCloseUpdateTenantModal = useCallback(() => {
+    setSelectedTenantIdForEdit(null);
+    setIsUpdateTenantModalOpen(false);
+  }, []);
+
   const handleAddTenant = async (tenantData: Omit<Tenant, 'id' | 'customerId' | 'createdAt'>) => {
     if (!selectedCustomerId) return;
     await addTenantToCustomer(selectedCustomerId, tenantData);
     setIsAddTenantModalOpen(false);
+  };
+
+  const handleUpdateTenant = async (tenantData: Tenant) => {
+    if (!selectedCustomerId) return;
+    // Assuming updateTenantToCustomer exists in AppStateContext
+    // await updateTenantToCustomer(selectedCustomerId, tenantData);
+    setIsUpdateTenantModalOpen(false);
   };
 
   const handleAddAuthorizedContact = async (contactData: Omit<AuthorizedContact, 'id' | 'customerId' | 'createdAt'>) => {
@@ -74,7 +94,7 @@ const CrmApp: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Customer List Section - Always visible */}
-            <div className="lg:col-span-1 bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg flex flex-col flex-grow">
+            <div className="lg:col-span-1 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-lg flex flex-col flex-grow">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl sm:text-2xl font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]">Customers</h2>
                 <button
@@ -117,6 +137,7 @@ const CrmApp: React.FC = () => {
                   customerName={selectedCustomer?.name || ''}
                   isLoading={false}
                   selectedCustomerId={selectedCustomerId}
+                  onEditTenant={handleEditTenant} // Pass the new onEditTenant prop
                 />
               </div>
               
@@ -144,8 +165,8 @@ const CrmApp: React.FC = () => {
       </Modal>
 
       <Modal isOpen={isAddTenantModalOpen} onClose={() => setIsAddTenantModalOpen(false)} title={`Add Tenant for ${selectedCustomer?.name || ''}`}>
-        <AddTenantForm
-          onAddTenant={handleAddTenant}
+        <TenantForm
+          onSubmit={handleAddTenant}
           onCancel={() => setIsAddTenantModalOpen(false)}
         />
       </Modal>
@@ -162,6 +183,14 @@ const CrmApp: React.FC = () => {
         <UpdateCustomerView
           selectedCustomerId={selectedCustomerIdForEdit}
           onUpdateSuccess={handleCloseUpdateModal}
+        />
+      </Modal>
+
+      {/* New Modal for Update Tenant */}
+      <Modal isOpen={isUpdateTenantModalOpen} onClose={handleCloseUpdateTenantModal} title={`Update Tenant: ${selectedCustomer?.tenants?.find(t => t.id === selectedTenantIdForEdit)?.name || ''}`}>
+        <UpdateTenantView
+          selectedTenantId={selectedTenantIdForEdit}
+          onUpdateSuccess={handleCloseUpdateTenantModal}
         />
       </Modal>
     </div>

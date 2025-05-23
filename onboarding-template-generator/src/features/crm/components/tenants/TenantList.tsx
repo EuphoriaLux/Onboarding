@@ -1,8 +1,8 @@
 import React from 'react';
-import { Tenant } from '../types/index'; // Updated import path
+import { Tenant } from '../../types/index'; // Updated import path
 import TenantListItem from './TenantListItem'; // Updated import path
-import EmptyState from './EmptyState'; // Updated import path
-import { CloudIcon, InformationCircleIcon } from './icons'; // Updated import path
+import EmptyState from '../common/EmptyState'; // Updated import path
+import { CloudIcon, InformationCircleIcon } from '../common/icons'; // Updated import path
 
 
 interface TenantListProps {
@@ -10,9 +10,10 @@ interface TenantListProps {
   customerName: string;
   isLoading: boolean; // Can be used for tenant-specific loading if needed
   selectedCustomerId: string | null;
+  onEditTenant: (tenantId: string) => void; // New prop for editing tenant
 }
 
-const TenantList: React.FC<TenantListProps> = ({ tenants, customerName, isLoading, selectedCustomerId }) => {
+const TenantList: React.FC<TenantListProps> = ({ tenants, customerName, isLoading, selectedCustomerId, onEditTenant }) => {
   if (isLoading) {
      return (
         <div className="flex justify-center items-center h-40">
@@ -46,7 +47,7 @@ const TenantList: React.FC<TenantListProps> = ({ tenants, customerName, isLoadin
   return (
     <ul className="space-y-3 max-h-[60vh] overflow-y-auto pr-2 -mr-2 flex-grow"> {/* pr-2 -mr-2 for scrollbar spacing */}
       {tenants.map((tenant) => (
-        <TenantListItem key={tenant.id} tenant={tenant} />
+        <TenantListItem key={tenant.id} tenant={tenant} onEditTenant={onEditTenant} />
       ))}
     </ul>
   );

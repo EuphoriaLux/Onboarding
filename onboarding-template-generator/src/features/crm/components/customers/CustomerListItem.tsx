@@ -1,6 +1,6 @@
 import React from 'react';
-import { Customer } from '../types/index'; // Updated import path
-import { UserGroupIcon, ChevronRightIcon, PencilSquareIcon } from './icons'; // Updated import path
+import { Customer } from '../../types/index'; // Updated import path
+import { UserGroupIcon, ChevronRightIcon, EditIcon } from '../common/icons'; // Updated import path
 
 interface CustomerListItemProps {
   customer: Customer;
@@ -28,8 +28,7 @@ const CustomerListItem: React.FC<CustomerListItemProps> = ({ customer, isSelecte
         <UserGroupIcon className={`w-6 h-6 flex-shrink-0 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : ''}`} style={!isSelected ? { color: 'black' } : {}} />
         <div className="min-w-0">
           <p className={`font-medium truncate ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] font-semibold' : ''}`} style={!isSelected ? { color: 'black' } : {}}>{customer.name}</p>
-          {customer.email && <p className="text-sm truncate" style={!isSelected ? { color: 'black' } : {}}>{customer.email}</p>}
-          <p className="text-xs mt-0.5" style={!isSelected ? { color: 'black' } : {}}>Joined: {new Date(customer.createdAt).toLocaleDateString()}</p>
+          {/* Removed email and joined date as per user feedback */}
         </div>
       </div>
       <div className="flex items-center space-x-2"> {/* Container for icons */}
@@ -39,7 +38,7 @@ const CustomerListItem: React.FC<CustomerListItemProps> = ({ customer, isSelecte
             className="p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] transition-all duration-150 ease-in-out"
             aria-label="Edit customer"
           >
-            <PencilSquareIcon className={`w-5 h-5 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : 'text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]'}`} />
+            <EditIcon className={`w-5 h-5 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : 'text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]'}`} />
           </button>
         )}
         {isSelected && <ChevronRightIcon className="w-5 h-5 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0" />}

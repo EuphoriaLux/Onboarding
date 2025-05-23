@@ -1,7 +1,7 @@
 import React from 'react';
-import { Customer } from '../types/index'; // Updated import path
-import { UserCircleIcon, EnvelopeIcon, CalendarDaysIcon, InformationCircleIcon } from './icons'; // Updated import path
-import EmptyState from './EmptyState'; // Updated import path
+import { Customer } from '../../types/index'; // Updated import path
+import { UserCircleIcon, EnvelopeIcon, CalendarDaysIcon, InformationCircleIcon, UsersIcon } from '../common/icons'; // Updated import path
+import EmptyState from '../common/EmptyState'; // Updated import path
 
 interface CustomerContactSidebarProps {
   customer: Customer | null | undefined;
@@ -50,6 +50,24 @@ const CustomerContactSidebar: React.FC<CustomerContactSidebarProps> = ({ custome
           valueClass="text-[var(--primary-color-light)] hover:text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] dark:hover:text-[var(--primary-color-dark)]"
           placeholder="No email provided"
         />
+        {customer.accountManager && (
+          <DetailItem
+            icon={<UsersIcon />}
+            label="Account Manager"
+            value={customer.accountManager}
+            valueClass="text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]"
+            placeholder="N/A"
+          />
+        )}
+        {customer.supportPlan && (
+          <DetailItem
+            icon={<CalendarDaysIcon />}
+            label="Support Plan"
+            value={`${customer.supportPlan.type} (${new Date(customer.supportPlan.startDate).toLocaleDateString()} - ${new Date(customer.supportPlan.endDate).toLocaleDateString()})`}
+            valueClass="text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]"
+            placeholder="N/A"
+          />
+        )}
         <DetailItem
           icon={<CalendarDaysIcon />}
           label="Joined Date"

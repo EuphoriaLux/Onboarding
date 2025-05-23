@@ -1,8 +1,8 @@
 import React from 'react';
-import { Customer } from '../types/index';
+import { Customer } from '../../types/index';
 import CustomerListItem from './CustomerListItem';
-import EmptyState from './EmptyState';
-import { UserGroupIcon } from './icons';
+import EmptyState from '../common/EmptyState';
+import { UserGroupIcon } from '../common/icons';
 
 interface CustomerListProps {
   customers: Customer[];

@@ -1,20 +1,26 @@
 import React, { useState, useCallback } from 'react';
-import { Contact } from '../types';
+import { AuthorizedContact } from '../../types';
 
 interface ContactFormProps {
-  contact: Contact;
-  onSave: (contact: Contact) => void;
+  contact: AuthorizedContact;
+  onSave: (contact: AuthorizedContact) => void;
   onCancel: () => void;
 }
 
 const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) => {
-  const [name, setName] = useState(contact.name);
+  const [name, setName] = useState(contact.fullName); // Changed from contact.name
   const [email, setEmail] = useState(contact.email);
-  const [phone, setPhone] = useState(contact.phone);
-  const [jobTitle, setJobTitle] = useState(contact.jobTitle);
+  const [phone, setPhone] = useState(contact.businessPhone || contact.mobileNumber || ''); // Use businessPhone or mobileNumber
+  const [jobTitle, setJobTitle] = useState(contact.jobTitle || '');
 
   const handleSubmit = useCallback(() => {
-    const updatedContact = { ...contact, name, email, phone, jobTitle };
+    const updatedContact: AuthorizedContact = { // Explicitly type as AuthorizedContact
+      ...contact,
+      fullName: name, // Update fullName
+      email,
+      businessPhone: phone, // Assuming phone maps to businessPhone for simplicity
+      jobTitle,
+    };
     onSave(updatedContact);
   }, [contact, name, email, phone, jobTitle, onSave]);
 

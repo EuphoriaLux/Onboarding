@@ -12,6 +12,8 @@ export interface Tenant {
   microsoftTenantId: string;
   customerId: string;
   subscriptionStatus?: SubscriptionStatus;
+  gdap?: boolean; // New: GDAP checkbox
+  rbac?: boolean; // New: RBAC checkbox
   createdAt: string;
 }
 
@@ -45,7 +47,17 @@ export interface Customer {
   updatedAt: string; // ISO 8601 date string
   onboardingStatus?: OnboardingStatus;
   _etag?: string; // To store the ETag for concurrency control (internal use)
+  accountManager?: string; // New: Account Manager field
+  supportPlan?: { // New: Support Plan section
+    type: SupportPlanType;
+    startDate: string; // ISO 8601 date string
+    endDate: string; // ISO 8601 date string
+  };
 }
+
+import { SupportTierKey } from '../../emailBuilder/supportTiers/types'; // Import SupportTierKey
+
+export type SupportPlanType = SupportTierKey; // Use SupportTierKey for consistency
 
 export enum OnboardingStatus {
   NOT_STARTED = 'Not Started',

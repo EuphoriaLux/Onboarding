@@ -1,6 +1,6 @@
 import React from 'react';
-import { AuthorizedContact } from '../types/index'; // Updated import path
-import { EnvelopeIcon, PhoneIcon, UserCircleIcon, ChatBubbleLeftRightIcon } from './icons'; // Updated import path
+import { AuthorizedContact } from '../../types/index'; // Updated import path
+import { EnvelopeIcon, PhoneIcon, UserCircleIcon, ChatBubbleLeftRightIcon } from '../common/icons'; // Updated import path
 
 interface AuthorizedContactListItemProps {
   contact: AuthorizedContact;

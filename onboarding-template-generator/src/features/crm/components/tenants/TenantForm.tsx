@@ -1,0 +1,144 @@
+import React, { useState, useEffect } from 'react';
+import { Tenant, SubscriptionStatus } from '../../types/index';
+import { SUBSCRIPTION_STATUSES } from '../../constants';
+import FormField from '../../../../components/FormField'; // Import FormField
+
+interface TenantFormProps {
+  onSubmit: (tenant: Tenant) => void;
+  onCancel: () => void;
+  initialTenant?: Tenant | null;
+}
+
+const TenantForm: React.FC<TenantFormProps> = ({ onSubmit, onCancel, initialTenant }) => {
+  const [name, setName] = useState(initialTenant?.name || '');
+  const [microsoftTenantId, setMicrosoftTenantId] = useState(initialTenant?.microsoftTenantId || '');
+  const [subscriptionStatus, setSubscriptionStatus] = useState<SubscriptionStatus | undefined>(initialTenant?.subscriptionStatus || undefined);
+  const [gdap, setGdap] = useState(initialTenant?.gdap || false);
+  const [rbac, setRbac] = useState(initialTenant?.rbac || false);
+  const [errors, setErrors] = useState<{ name?: string; tenantId?: string }>({});
+
+  // Update local state when initialTenant prop changes
+  useEffect(() => {
+    setName(initialTenant?.name || '');
+    setMicrosoftTenantId(initialTenant?.microsoftTenantId || '');
+    setSubscriptionStatus(initialTenant?.subscriptionStatus || undefined);
+    setGdap(initialTenant?.gdap || false);
+    setRbac(initialTenant?.rbac || false);
+  }, [initialTenant]);
+
+  const validate = (): boolean => {
+    const newErrors: { name?: string; tenantId?: string } = {};
+    if (!name.trim()) newErrors.name = 'Tenant name is required.';
+    if (!microsoftTenantId.trim()) newErrors.tenantId = 'Microsoft Tenant ID is required.';
+    else if (!/^[a-zA-Z0-9.-]+\.onmicrosoft\.com$/.test(microsoftTenantId.trim()) && !/^[a-zA-Z0-9-]+$/.test(microsoftTenantId.trim()) ) {
+       // Basic validation for tenant ID format or a simple GUID-like string
+       // A more robust regex might be needed for strict `*.onmicrosoft.com` or GUID.
+       // This example allows `tenant.onmicrosoft.com` or simple names.
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    
+    const newTenant: Tenant = {
+      id: initialTenant?.id || Math.random().toString(), // Temporary ID
+      customerId: initialTenant?.customerId || '', // Will be set by parent component on add
+      name,
+      microsoftTenantId,
+      subscriptionStatus,
+      gdap,
+      rbac,
+      createdAt: initialTenant?.createdAt || new Date().toISOString(),
+    };
+    onSubmit(newTenant);
+    
+    // Only clear the form if it's for adding a new tenant (no initialTenant)
+    if (!initialTenant) {
+      setName('');
+      setMicrosoftTenantId('');
+      setSubscriptionStatus(undefined);
+      setGdap(false);
+      setRbac(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">{initialTenant ? 'Edit Tenant' : 'Add New Tenant'}</h2>
+      <FormField
+        label="Tenant Name"
+        id="tenantName"
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
+      <FormField
+        label="Microsoft Tenant ID"
+        id="microsoftTenantId"
+        type="text"
+        value={microsoftTenantId}
+        onChange={(e) => setMicrosoftTenantId(e.target.value)}
+        required
+      />
+      {errors.tenantId && <p className="text-xs text-red-600 mt-1">{errors.tenantId}</p>}
+      <FormField
+        label="Subscription Status (Optional)"
+        id="subscriptionStatus"
+      >
+        <select
+          id="subscriptionStatus"
+          value={subscriptionStatus || ''}
+          onChange={(e) => setSubscriptionStatus(e.target.value as SubscriptionStatus || undefined)}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] focus:border-[var(--primary-color-light)] dark:focus:border-[var(--primary-color-dark)] sm:text-sm text-black dark:text-white font-normal"
+          title="Select Subscription Status" // Added title for accessibility
+        >
+          <option value="">Select status</option>
+          {SUBSCRIPTION_STATUSES.map((status: SubscriptionStatus) => (
+            <option key={status} value={status}>{status}</option>
+          ))}
+        </select>
+      </FormField>
+
+      {/* GDAP Checkbox */}
+      <FormField
+        label="GDAP"
+        id="gdap"
+        type="checkbox"
+        checked={gdap}
+        onChange={(e) => setGdap((e.target as HTMLInputElement).checked)}
+      />
+
+      {/* RBAC Checkbox */}
+      <FormField
+        label="RBAC"
+        id="rbac"
+        type="checkbox"
+        checked={rbac}
+        onChange={(e) => setRbac((e.target as HTMLInputElement).checked)}
+      />
+
+      <div className="flex justify-end space-x-3 pt-2">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] bg-[var(--background-light-light)] hover:bg-[color-mix(in srgb, var(--background-light-light) 90%, black)] dark:bg-[var(--background-light-dark)] dark:hover:bg-[color-mix(in srgb, var(--background-light-dark) 90%, black)] rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--text-color-light)] opacity-70 dark:focus:ring-[var(--text-color-dark)] opacity-70 transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          className="px-4 py-2 text-sm font-medium text-white bg-[var(--primary-color-light)] hover:bg-[color-mix(in srgb, var(--primary-color-light) 80%, black)] dark:bg-[var(--primary-color-dark)] dark:hover:bg-[color-mix(in srgb, var(--primary-color-dark) 80%, black)] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] transition-colors"
+        >
+          {initialTenant ? 'Update Tenant' : 'Add Tenant'}
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default TenantForm;

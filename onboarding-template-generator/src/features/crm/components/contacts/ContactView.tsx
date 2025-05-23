@@ -1,9 +1,9 @@
 import React from 'react';
-import { Contact } from '../types';
+import { AuthorizedContact } from '../../types';
 
 interface ContactViewProps {
-  contact: Contact;
-  onEdit: (contact: Contact) => void;
+  contact: AuthorizedContact;
+  onEdit: (contact: AuthorizedContact) => void;
 }
 
 const ContactView: React.FC<ContactViewProps> = ({ contact, onEdit }) => {
@@ -13,9 +13,11 @@ const ContactView: React.FC<ContactViewProps> = ({ contact, onEdit }) => {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-md font-semibold mb-1 text-gray-800 dark:text-gray-200">Contact Information</h3>
-          <p>Name: {contact.name}</p>
+          <p>Name: {contact.fullName}</p>
           <p>Email: {contact.email}</p>
-          <p>Phone: {contact.phone}</p>
+          <p>Business Phone: {contact.businessPhone || 'N/A'}</p>
+          <p>Mobile Number: {contact.mobileNumber || 'N/A'}</p>
+          <p>Teams Address: {contact.teamsAddress || 'N/A'}</p>
           <p>Job Title: {contact.jobTitle}</p>
         </div>
         <button

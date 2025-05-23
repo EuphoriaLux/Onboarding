@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Contact } from '../types';
+import { AuthorizedContact } from '../../types';
 
 interface ContactManagerProps {
-  contacts: Contact[];
+  contacts: AuthorizedContact[];
   customerId: string;
-  onChange: (contacts: Contact[]) => void;
+  onChange: (contacts: AuthorizedContact[]) => void;
 }
 
 const ContactManager: React.FC<ContactManagerProps> = ({ contacts, customerId, onChange }) => {
@@ -18,20 +18,25 @@ const ContactManager: React.FC<ContactManagerProps> = ({ contacts, customerId, o
     }
   }, [contacts]);
 
-  const handleContactChange = (index: number, field: keyof Contact, value: string) => {
+  const handleContactChange = (index: number, field: keyof AuthorizedContact, value: string) => {
     const updatedContacts = [...contacts];
     updatedContacts[index] = { ...updatedContacts[index], [field]: value };
     onChange(updatedContacts);
   };
 
   const addContact = () => {
-    const newContact: Contact = {
+    const newContact: AuthorizedContact = {
       id: nextId.toString(),
-      name: '',
+      fullName: '', // Use fullName
+      firstName: '', // Initialize firstName
+      lastName: '', // Initialize lastName
       email: '',
-      phone: '',
+      businessPhone: '', // Use businessPhone
+      mobileNumber: '', // Initialize mobileNumber
+      teamsAddress: '', // Initialize teamsAddress
       jobTitle: '',
       customerId: customerId,
+      createdAt: new Date().toISOString(), // Add createdAt
     };
     onChange([...contacts, newContact]);
     setNextId(nextId + 1);
@@ -60,13 +65,13 @@ const ContactManager: React.FC<ContactManagerProps> = ({ contacts, customerId, o
           </div>
           <div className="space-y-2">
             <div>
-              <label htmlFor={`contact-name-${contact.id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+              <label htmlFor={`contact-fullName-${contact.id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Full Name</label>
               <input
                 type="text"
-                id={`contact-name-${contact.id}`}
+                id={`contact-fullName-${contact.id}`}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
-                value={contact.name}
-                onChange={(e) => handleContactChange(index, 'name', e.target.value)}
+                value={contact.fullName}
+                onChange={(e) => handleContactChange(index, 'fullName', e.target.value)}
               />
             </div>
             <div>
@@ -80,13 +85,33 @@ const ContactManager: React.FC<ContactManagerProps> = ({ contacts, customerId, o
               />
             </div>
             <div>
-              <label htmlFor={`contact-phone-${contact.id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Phone</label>
+              <label htmlFor={`contact-businessPhone-${contact.id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Business Phone</label>
               <input
                 type="tel"
-                id={`contact-phone-${contact.id}`}
+                id={`contact-businessPhone-${contact.id}`}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
-                value={contact.phone}
-                onChange={(e) => handleContactChange(index, 'phone', e.target.value)}
+                value={contact.businessPhone || ''}
+                onChange={(e) => handleContactChange(index, 'businessPhone', e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor={`contact-mobileNumber-${contact.id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Mobile Number</label>
+              <input
+                type="tel"
+                id={`contact-mobileNumber-${contact.id}`}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+                value={contact.mobileNumber || ''}
+                onChange={(e) => handleContactChange(index, 'mobileNumber', e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor={`contact-teamsAddress-${contact.id}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300">Teams Address</label>
+              <input
+                type="text"
+                id={`contact-teamsAddress-${contact.id}`}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+                value={contact.teamsAddress || ''}
+                onChange={(e) => handleContactChange(index, 'teamsAddress', e.target.value)}
               />
             </div>
             <div>
@@ -95,7 +120,7 @@ const ContactManager: React.FC<ContactManagerProps> = ({ contacts, customerId, o
                 type="text"
                 id={`contact-jobTitle-${contact.id}`}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
-                value={contact.jobTitle}
+                value={contact.jobTitle || ''}
                 onChange={(e) => handleContactChange(index, 'jobTitle', e.target.value)}
               />
             </div>

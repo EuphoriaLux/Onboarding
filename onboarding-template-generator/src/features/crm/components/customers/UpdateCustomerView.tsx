@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomerForm from './CustomerForm';
-import { useAppState } from '../../../contexts/AppStateContext';
-import { Customer } from '../types';
+import { useAppState } from '../../../../contexts/AppStateContext';
+import { Customer } from '../../types';
 
 interface UpdateCustomerViewProps {
   selectedCustomerId: string | null;

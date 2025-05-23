@@ -1,8 +1,8 @@
 import React from 'react';
-import { AuthorizedContact } from '../types/index'; // Updated import path
-import { UsersIcon, PlusIcon, InformationCircleIcon } from './icons'; // Updated import path
+import { AuthorizedContact } from '../../types/index'; // Updated import path
+import { UsersIcon, PlusIcon, InformationCircleIcon } from '../common/icons'; // Updated import path
 import AuthorizedContactListItem from './AuthorizedContactListItem'; // Updated import path
-import EmptyState from './EmptyState'; // Updated import path
+import EmptyState from '../common/EmptyState'; // Updated import path
 
 interface AuthorizedContactsSidebarProps {
   contacts: AuthorizedContact[];

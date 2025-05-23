@@ -21,7 +21,7 @@ import {
   // ReportingIcon is already imported above
 } from '../../components/Icons'; // Adjusted path
 import { EngageServicesSection } from '../engageServices/components/EngageServicesSection';
-import CrmView from '../crm/components/CrmView'; // Re-add the CRM view component
+import CrmView from '../crm/components/common/CrmView'; // Re-add the CRM view component
 
 // Feature type definition
 export interface Feature {

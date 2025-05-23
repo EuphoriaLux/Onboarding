@@ -1,9 +1,9 @@
 import React from 'react';
-import { Contact } from '../types';
+import { AuthorizedContact } from '../../types';
 
 interface ContactListProps {
-  contacts: Contact[];
-  onEditContact?: (contact: Contact) => void;
+  contacts: AuthorizedContact[];
+  onEditContact?: (contact: AuthorizedContact) => void;
   onDeleteContact?: (contactId: string) => void;
 }
 
@@ -16,7 +16,7 @@ const ContactList: React.FC<ContactListProps> = ({ contacts, onEditContact, onDe
           {contacts.map(contact => (
             <li key={contact.id} className="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-700">
               <div>
-                {contact.name} ({contact.email})
+                {contact.fullName} ({contact.email})
               </div>
               <div>
                 {onEditContact && (
