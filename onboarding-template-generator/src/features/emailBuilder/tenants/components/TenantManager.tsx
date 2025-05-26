@@ -2,36 +2,30 @@ import React, { useEffect } from 'react'; // Import useEffect
 import DatePicker from 'react-datepicker'; // Import DatePicker
 import 'react-datepicker/dist/react-datepicker.css'; // Import DatePicker CSS
 import { supportTiers } from '../../supportTiers/constants'; // Corrected relative path
-import { TenantInfo } from '../types'; // Import updated TenantInfo type
+// Removed TenantInfo import
 
 interface TenantManagerProps {
-  tenants: TenantInfo[]; // Use imported TenantInfo
+  tenants: any[]; // Temporarily use any[]
   selectedTier: string;
-  onChange: (tenants: TenantInfo[]) => void;
-  calculatedDeadline: Date; // Add prop for calculated deadline
+  onChange: (tenants: any[]) => void; // Temporarily use any[]
+  calculatedDeadline: Date;
 }
 
-const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange, calculatedDeadline }) => { // Destructure new prop
+const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, onChange, calculatedDeadline }) => {
   const tier = supportTiers[selectedTier];
 
-  // Effect to adjust tenants when tier changes
   useEffect(() => {
     const currentTier = supportTiers[selectedTier];
     const tenantLimit = currentTier.tenants;
     if (tenants.length > tenantLimit) {
-      // If current tenants exceed the new limit, truncate the array
       const updatedTenants = tenants.slice(0, tenantLimit);
       onChange(updatedTenants);
     }
-    // Dependencies: run when selectedTier changes or the onChange function reference changes
-    // It's generally safe to include tenants array too, though it might cause extra runs if not memoized upstream
   }, [selectedTier, tenants, onChange]);
 
-  // Handle tenant field changes, including Date and boolean types
-  const handleTenantChange = (index: number, field: keyof TenantInfo, value: string | Date | boolean | null) => {
+  const handleTenantChange = (index: number, field: string, value: string | Date | boolean | null) => {
     const updatedTenants = tenants.map((tenant, i) => {
       if (i === index) {
-        // Handle potential null value for DatePicker when cleared
         const newValue = field === 'implementationDeadline' && value === null ? null : value;
         return { ...tenant, [field]: newValue };
       }
@@ -40,18 +34,15 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
     onChange(updatedTenants);
   };
 
-  // Add a new tenant, initializing new flags
   const addTenant = () => {
     if (tenants.length < tier.tenants) {
-      // Initialize tenantDomain, msDomain, deadline, hasAzure
       onChange([...tenants, { 
         id: '', 
         companyName: '', 
         tenantDomain: '', 
-        microsoftTenantDomain: '', // Initialize MS Domain
+        microsoftTenantDomain: '', 
         implementationDeadline: null, 
-        hasAzure: false, // Default to false
-        // Removed includeRbacScript initialization
+        hasAzure: false, 
         gdapLink: '' 
       }]);
     }
@@ -85,7 +76,7 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
       <div className="space-y-4">
         {tenants.map((tenant, index) => (
           // Tenant card styling
-          <div key={index} className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+          <div key={index} className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 bg-white dark:bg-gray-800 shadow-sm">
             {/* Tenant header with remove button */}
             <div className="flex justify-between items-center mb-3 pb-2 border-b border-gray-200 dark:border-gray-600">
               <h3 className="text-md font-medium text-gray-700 dark:text-gray-300">Tenant #{index + 1}</h3>
@@ -167,7 +158,7 @@ const TenantManager: React.FC<TenantManagerProps> = ({ tenants, selectedTier, on
               </div>
 
               {/* Configuration Section Starts Here */}
-              <hr className="border-gray-200 dark:border-gray-700" /> {/* Optional visual divider */}
+              <hr className="border-gray-200 dark:border-gray-800" /> {/* Optional visual divider */}
 
               {/* Display Calculated Deadline */}
               <div>

@@ -210,7 +210,7 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
       </h2>
 
       {/* Actions section */}
-      <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+      <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4">
         {/* View toggle buttons */}
         <div className="flex space-x-2">
           <button
@@ -253,9 +253,9 @@ const EmailPreview: React.FC<EmailPreviewProps> = ({
       </div>
 
       {/* Preview content area */}
-      <div className="border border-gray-200 rounded-lg dark:border-gray-700 overflow-hidden">
+      <div className="border border-gray-200 rounded-lg dark:border-gray-800 overflow-hidden">
         {/* Preview header */}
-        <div className="p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 text-sm text-gray-700 dark:text-gray-300 space-y-1">
+        <div className="p-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 text-sm text-gray-700 dark:text-gray-300 space-y-1">
           <div>
             <strong className="font-semibold text-gray-900 dark:text-gray-100">To:</strong> {emailData.to}
             {emailData.cc && <><br /><strong className="font-semibold text-gray-900 dark:text-gray-100">Cc:</strong> {emailData.cc}</>}

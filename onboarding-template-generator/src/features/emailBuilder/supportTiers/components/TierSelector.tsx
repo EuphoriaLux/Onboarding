@@ -21,7 +21,7 @@ const TierSelector: React.FC<TierSelectorProps> = ({ selectedTier, onChange }) =
           // Tier card styling
           <div
             key={key}
-            className={`border-2 rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:-translate-y-1 shadow-md hover:shadow-lg dark:bg-gray-800 dark:border-gray-700 ${selectedTier === key ? 'border-indigo-500 dark:border-indigo-400' : 'border-transparent'}`}
+            className={`border-2 rounded-lg overflow-hidden cursor-pointer transition-transform transform hover:-translate-y-1 shadow-md hover:shadow-lg dark:bg-gray-800 dark:border-gray-800 ${selectedTier === key ? 'border-indigo-500 dark:border-indigo-400' : 'border-transparent'}`}
             style={{ backgroundColor: selectedTier === key ? `${tier.color}20` : 'transparent' }} // Keep dynamic background color
             onClick={() => onChange(key)}
           >

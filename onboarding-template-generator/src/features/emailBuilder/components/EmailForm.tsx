@@ -124,7 +124,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
       {/* Add spacing between form elements */}
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Section styling: border, padding, rounded corners */}
-        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4">
           {/* Section title styling */}
           <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Email Recipients</h3>
           {/* Form group styling: margin-bottom */}
@@ -169,7 +169,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
         </div>
 
         {/* Section styling */}
-        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4">
           <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Onboarding Components</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">Select the components to include in your onboarding email:</p>
 
@@ -274,7 +274,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
         </div>
 
         {/* Section styling */}
-        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4">
           <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Additional Information</h3>
 
           <div className="mb-4">
@@ -292,7 +292,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
         </div>
 
         {/* Section styling */}
-        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4">
+        <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4">
           <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Sender Information</h3>
           <div className="mb-4">
             <label htmlFor="senderName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Your Name:</label>
@@ -346,7 +346,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
         </div>
 
         {/* Form actions styling */}
-        <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-gray-800">
           {/* Button styling */}
           <button
             type="submit"

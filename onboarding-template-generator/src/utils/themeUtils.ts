@@ -11,15 +11,15 @@ export const applyThemeColors = (settings: ThemeSettings | null): void => {
   // Define default colors (should match CSS defaults)
   // Define default colors for light and dark mode
   const defaultLight: ThemeSettings = {
-    primaryColor: '#0078d4', // Microsoft Blue
-    textColor: '#323130',    // Microsoft Grey (dark)
-    backgroundColor: '#f5f5f5', // Light grey
+    primaryColor: '#CC0000',
+    textColor: '#666666',
+    backgroundColor: 'white',
   };
 
   const defaultDark: ThemeSettings = {
-    primaryColor: '#38bdf8', // Sky-400 (lighter blue for dark mode primary)
-    textColor: '#e2e8f0',    // Slate-200 (light text for dark mode)
-    backgroundColor: '#1e293b', // Slate-800 (dark background)
+    primaryColor: '#CC0000',
+    textColor: '#FFFFFF',
+    backgroundColor: '#1e293b',
   };
 
   // Use saved settings or fall back to defaults

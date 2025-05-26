@@ -283,7 +283,7 @@ const SettingsPage: React.FC = () => {
 
   return (
     <div className="p-5 bg-gray-50 dark:bg-gray-800 rounded-lg my-5">
-      <h2 className="mt-0 mb-2 text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-700 pb-2">Agent Configuration</h2>
+      <h2 className="mt-0 mb-2 text-gray-800 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800 pb-2">Agent Configuration</h2>
       <p className="mb-5 text-gray-600 dark:text-gray-400 text-sm">Configure the details used in the email signature.</p>
 
       <div className="settings-form">

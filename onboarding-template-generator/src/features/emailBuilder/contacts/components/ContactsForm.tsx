@@ -1,33 +1,27 @@
 // src/components/ContactsForm.tsx
 import React from 'react';
 import { supportTiers } from '../data/supportTiers';
-
-interface Contact {
-  name: string;
-  email: string;
-  phone: string;
-}
+// Removed AuthorizedContact import
 
 interface ContactsFormProps {
-  contacts: Contact[];
+  contacts: any[]; // Temporarily use any[]
   selectedTier: string;
-  onChange: (contacts: Contact[]) => void;
+  onChange: (contacts: any[]) => void; // Temporarily use any[]
 }
 
 const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onChange }) => {
   const tier = supportTiers[selectedTier];
   
-  const handleContactChange = (index: number, field: keyof Contact, value: string) => {
+  const handleContactChange = (index: number, field: string, value: string) => {
     const updatedContacts = [...contacts];
     updatedContacts[index] = { ...updatedContacts[index], [field]: value };
-    // --- DEBUGGING START ---
-    // --- DEBUGGING END ---
     onChange(updatedContacts);
   };
 
   const addContact = () => {
     if (contacts.length < tier.authorizedContacts) {
-      onChange([...contacts, { name: '', email: '', phone: '' }]);
+      const newId = `temp-contact-${Date.now()}`;
+      onChange([...contacts, { id: newId, customerId: '', fullName: '', email: '', createdAt: new Date().toISOString() }]);
     }
   };
 
@@ -55,7 +49,7 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
       <div className="space-y-4">
         {contacts.map((contact, index) => (
           // Contact card styling
-          <div key={index} className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+          <div key={index} className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 bg-white dark:bg-gray-800 shadow-sm">
             {/* Card header */}
             <div className="flex justify-between items-center mb-3 pb-2 border-b border-gray-200 dark:border-gray-600">
               <h3 className="text-md font-medium text-gray-700 dark:text-gray-300">Contact #{index + 1}</h3>
@@ -79,11 +73,11 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
                 <label htmlFor={`contact-name-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
                 {/* Input styling */}
                 <input
-                  id={`contact-name-${index}`}
+                  id={`contact-fullName-${index}`}
                   type="text"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
-                  value={contact.name}
-                  onChange={(e) => handleContactChange(index, 'name', e.target.value)}
+                  value={contact.fullName}
+                  onChange={(e) => handleContactChange(index, 'fullName', e.target.value)}
                   placeholder="Full Name"
                   required
                 />
@@ -103,13 +97,13 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ contacts, selectedTier, onC
               </div>
 
               <div className="mb-2 md:mb-0">
-                <label htmlFor={`contact-phone-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone</label>
+                <label htmlFor={`contact-mobileNumber-${index}`} className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mobile Number</label>
                 <input
-                  id={`contact-phone-${index}`}
+                  id={`contact-mobileNumber-${index}`}
                   type="tel"
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-indigo-600 dark:focus:border-indigo-600"
-                  value={contact.phone}
-                  onChange={(e) => handleContactChange(index, 'phone', e.target.value)}
+                  value={contact.mobileNumber || ''}
+                  onChange={(e) => handleContactChange(index, 'mobileNumber', e.target.value)}
                   placeholder="+1 (123) 456-7890"
                 />
               </div>

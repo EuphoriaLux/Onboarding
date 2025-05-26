@@ -101,7 +101,9 @@ const CrmApp: React.FC = () => {
           />
         )}
         {currentView === 'tenantMatching' && (
-          <TenantMatchingView onClose={() => setCurrentView('customers')} />
+          <TenantMatchingView
+            onClose={() => setCurrentView('customers')}
+          />
         )}
       </main>
       <Footer />

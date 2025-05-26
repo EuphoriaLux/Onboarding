@@ -66,7 +66,7 @@ const Homepage: React.FC = () => {
       const FeatureComponent = feature.component;
       return (
         <div className="flex flex-col min-h-screen">
-          <div className="flex items-center px-6 py-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex items-center px-6 py-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800">
             <button 
               className="bg-transparent text-blue-600 dark:text-blue-400 text-base px-4 py-2 rounded hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors"
               onClick={handleBackToHome}
@@ -90,7 +90,7 @@ const Homepage: React.FC = () => {
     <div className="w-full px-4 sm:px-6 py-10 min-h-screen flex flex-col items-center"> {/* Center items */}
       <Navbar />
       {/* Center the header content, ensure it doesn't exceed max width */}
-      <div className="text-center mb-10 pb-6 border-b border-gray-200 dark:border-gray-700 w-full max-w-4xl">
+      <div className="text-center mb-10 pb-6 border-b border-gray-200 dark:border-gray-800 w-full max-w-4xl">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Microsoft Support Tools</h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">Select a tool to get started</p>
       </div>
@@ -99,7 +99,7 @@ const Homepage: React.FC = () => {
       {sortedCategories.map((category) => (
         <div key={category} className="mb-10 w-full max-w-6xl"> {/* Set max-width here */}
           {/* Sticky header for category */}
-          <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm py-4 mb-6 border-b border-gray-200 dark:border-gray-700"> {/* Increased mb */}
+          <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm py-4 mb-6 border-b border-gray-200 dark:border-gray-800"> {/* Increased mb */}
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-white"> {/* Adjusted font weight */}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent"> {/* Changed gradient */}
                 {category}
@@ -116,7 +116,7 @@ const Homepage: React.FC = () => {
               return (
                 <div
                   key={feature.id}
-                  className={`group flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow-sm transition-all duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-700
+                  className={`group flex flex-col p-6 bg-white border border-gray-200 rounded-lg shadow-sm transition-all duration-300 ease-in-out dark:bg-gray-800 dark:border-gray-800
                     ${!isFeatureEnabled ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer hover:shadow-md hover:-translate-y-1'}`}
                   onClick={() => isFeatureEnabled && setActiveFeatureId(feature.id)} // Use setActiveFeatureId from context
                   aria-label={feature.name}
@@ -147,7 +147,7 @@ const Homepage: React.FC = () => {
         </div>
       ))}
 
-      <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-gray-500 dark:text-gray-400 text-sm">
+      <div className="mt-auto pt-6 border-t border-gray-200 dark:border-gray-800 text-center text-gray-500 dark:text-gray-400 text-sm">
         <p className="mb-1">Microsoft Support Tools Extension v1.0.2</p>
         <p>© 2025 Microsoft Corporation. All rights reserved.</p>
       </div>

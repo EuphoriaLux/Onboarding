@@ -58,10 +58,11 @@ const CustomerView: React.FC<CustomerViewProps> = ({ customer, onUpdate, onDelet
         <p><strong>Last Updated:</strong> {new Date(customer.updatedAt).toLocaleDateString()}</p>
       </div>
 
-      {editingContact ? (
+      {editingContact && customer.id ? ( // Ensure customer.id is available
         <ContactForm
-          contact={editingContact}
-          onSave={handleSaveContact}
+          initialContact={editingContact} // Renamed prop
+          customerId={customer.id} // Pass customerId
+          onSubmit={handleSaveContact}
           onCancel={handleCancelEditContact}
         />
       ) : selectedContact ? (
@@ -79,7 +80,7 @@ const CustomerView: React.FC<CustomerViewProps> = ({ customer, onUpdate, onDelet
         </div>
       )}
 
-      <div className="mb-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="mb-4 pt-4 border-t border-gray-200 dark:border-gray-800">
         <h3 className="text-md font-semibold mb-1 text-gray-800 dark:text-gray-200">Notes</h3>
         {customer.notes && customer.notes.length > 0 ? (
           <ul>

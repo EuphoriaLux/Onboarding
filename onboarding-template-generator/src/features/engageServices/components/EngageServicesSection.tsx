@@ -9,7 +9,7 @@ interface EngageServicesSectionProps {
 export const EngageServicesSection: React.FC<EngageServicesSectionProps> = ({ services }) => {
   return (
     <div className="mb-10 w-full max-w-6xl">
-      <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm py-4 mb-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="sticky top-0 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm py-4 mb-6 border-b border-gray-200 dark:border-gray-800">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
           <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
             Microsoft Engage Services
@@ -31,7 +31,7 @@ export const EngageServicesSection: React.FC<EngageServicesSectionProps> = ({ se
                 {category.services.map((service) => (
                   <div 
                     key={service.id}
-                    className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
+                    className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg"
                   >
                     <h3 className="font-medium text-gray-900 dark:text-white">{service.name}</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{service.description}</p>

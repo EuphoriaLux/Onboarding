@@ -132,15 +132,28 @@ export const addAuthorizedContactToCustomer = async (customerId: string, contact
   return await updateCustomer(updatedCustomer);
 };
 
-export const updateAuthorizedContact = async (customerId: string, contact: AuthorizedContact): Promise<Customer> => {
-  const customer = await getCustomer(customerId);
-  if (!customer) throw new Error(`Customer with ID ${customerId} not found.`);
+export const updateAuthorizedContact = async (contactToUpdate: AuthorizedContact): Promise<Customer> => {
+  const data = await getStorageData();
+  const customerIndex = data.customers.findIndex(c => c.id === contactToUpdate.customerId);
+  if (customerIndex === -1) {
+    throw new Error(`Customer with ID ${contactToUpdate.customerId} not found for contact update.`);
+  }
+
+  const customer = data.customers[customerIndex];
+  const updatedContacts = customer.contacts?.map(c =>
+    c.id === contactToUpdate.id ? contactToUpdate : c
+  ) || [];
 
   const updatedCustomer: Customer = {
     ...customer,
-    contacts: customer.contacts?.map(c => (c.id === contact.id ? contact : c)) || [],
+    contacts: updatedContacts,
+    updatedAt: new Date().toISOString(), // Update customer's updatedAt
+    _etag: uuidv4(), // Update customer's etag
   };
-  return await updateCustomer(updatedCustomer);
+
+  data.customers[customerIndex] = updatedCustomer;
+  await setStorageData(data);
+  return updatedCustomer;
 };
 
 export const deleteAuthorizedContact = async (customerId: string, contactId: string): Promise<Customer> => {
@@ -183,6 +196,12 @@ export const updateTenant = async (tenantData: Tenant): Promise<Tenant> => {
 export const deleteTenant = async (tenantId: string): Promise<void> => {
   const data = await getStorageData();
   data.tenants = data.tenants.filter(t => t.id !== tenantId);
+  await setStorageData(data);
+};
+
+export const deleteTenants = async (tenantIds: string[]): Promise<void> => {
+  const data = await getStorageData();
+  data.tenants = data.tenants.filter(t => !tenantIds.includes(t.id));
   await setStorageData(data);
 };
 

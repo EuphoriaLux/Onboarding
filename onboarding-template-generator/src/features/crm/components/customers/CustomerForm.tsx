@@ -43,7 +43,6 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
       createdAt: initialCustomer?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       _etag: initialCustomer?._etag || undefined, // Include _etag for updates
-      tenants: initialCustomer?.tenants || [], // Include existing tenants
       accountManager,
       supportPlan: supportPlanType ? {
         type: supportPlanType,
@@ -117,7 +116,7 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
       />
 
       {/* Support Plan Section */}
-      <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
         <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">Support Plan</h3>
         <FormField
           label="Support Plan Type:"

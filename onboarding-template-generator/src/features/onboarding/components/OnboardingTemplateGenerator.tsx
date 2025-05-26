@@ -30,11 +30,23 @@ const OnboardingTemplateGenerator: React.FC = () => {
     state,
     updateCustomerInfo,
     updateContacts,
-    updateTenants,
     updateTier,
     updateEmailData,
-    updateProposedSlots // Get the new handler
+    updateProposedSlots,
+    updateAllTenants, // Add updateAllTenants
+    state: { selectedCustomerId, allTenants, crmData } // Destructure allTenants and crmData from state
   } = useAppState();
+
+  // Find the currently selected customer
+  const selectedCustomer = crmData.find(c => c.id === selectedCustomerId);
+
+  // Filter tenants relevant to the selected customer
+  const customerTenants = selectedCustomerId
+    ? allTenants.filter(tenant => tenant.customerId === selectedCustomerId)
+    : [];
+
+  // Get the primary tenant (e.g., the first one) for display purposes
+  const primaryTenant = customerTenants.length > 0 ? customerTenants[0] : null;
 
   const { language, setLanguage } = useLanguage();
 
@@ -126,7 +138,7 @@ const OnboardingTemplateGenerator: React.FC = () => {
 
     // --- Automatic Subject Line ---
     const tierName = supportTiers[state.customerInfo.selectedTier as keyof typeof supportTiers]?.name || 'Support';
-    const companyName = state.customerInfo.tenants[0]?.companyName || 'Customer';
+    const companyName = primaryTenant?.name || 'Customer'; // Use primaryTenant's name
     const autoSubject = `${companyName} - Microsoft - ${tierName} Support Plan Onboarding`;
     // --- End Automatic Subject ---
 
@@ -136,7 +148,7 @@ const OnboardingTemplateGenerator: React.FC = () => {
     // --- End Calculate Deadline ---
 
     // --- Create temporary tenant list with calculated deadline ---
-    const tenantsWithDeadline = state.customerInfo.tenants.map(tenant => ({
+    const tenantsWithDeadline = customerTenants.map(tenant => ({ // Use customerTenants
       ...tenant,
       implementationDeadline: deadlineDate
     }));
@@ -152,9 +164,9 @@ const OnboardingTemplateGenerator: React.FC = () => {
       contactName: state.customerInfo.contactName,
       contactEmail: state.customerInfo.contactEmail,
       proposedSlots: state.customerInfo.proposedSlots, // Pass the array
-      tenantId: state.customerInfo.tenants[0]?.id || '', // Use primary tenant ID
+      tenantId: primaryTenant?.id || '', // Use primaryTenant's ID
       selectedTier: state.customerInfo.selectedTier,
-      emailContacts: state.customerInfo.authorizedContacts, // Pass contacts
+      emailContacts: selectedCustomer?.contacts || [], // Pass contacts from selectedCustomer
       to: emailRecipients.to,
       cc: emailRecipients.cc,
       subject: autoSubject,
@@ -242,7 +254,7 @@ const OnboardingTemplateGenerator: React.FC = () => {
           </div>
 
           {/* 3. Customer Contact Information - Refactored with Tailwind */}
-          <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
+          <div className="p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
             <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Customer Contact Information</h3>
             {/* Use grid for layout consistency */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -291,18 +303,18 @@ const OnboardingTemplateGenerator: React.FC = () => {
           {/* 4. Authorized Contacts */}
           <div className="form-section contacts-section">
             <ContactsForm
-              contacts={state.customerInfo.authorizedContacts}
+              contacts={selectedCustomer?.contacts || []} // Pass contacts from selectedCustomer
               selectedTier={state.customerInfo.selectedTier}
-              onChange={updateContacts}
+              onChange={updateContacts} // Pass updateContacts
             />
           </div>
 
           {/* 5. Tenant Information */}
           <div className="form-section tenant-section">
             <TenantManager
-              tenants={state.customerInfo.tenants}
+              tenants={customerTenants} // Pass filtered customerTenants
               selectedTier={state.customerInfo.selectedTier}
-              onChange={updateTenants}
+              onChange={updateAllTenants} // Pass updateAllTenants
               calculatedDeadline={deadlineDate} // Pass calculated deadline
             />
           </div>
@@ -347,7 +359,7 @@ const OnboardingTemplateGenerator: React.FC = () => {
           </div>
 
           {/* 7. Email Builder with Preview Button */}
-<div className="form-section email-section p-4 border border-gray-200 rounded-lg dark:border-gray-700 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
+<div className="form-section email-section p-4 border border-gray-200 rounded-lg dark:border-gray-800 space-y-4 bg-white dark:bg-gray-800 shadow-sm">
   <h2 className="text-lg font-medium text-gray-700 dark:text-gray-300">Email Preview & Generate</h2>
   <p className="text-sm text-gray-500 dark:text-gray-400">
     Preview the email template and generate it for sending. Agent details are configured in Extension Settings.

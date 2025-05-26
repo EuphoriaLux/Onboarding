@@ -2,27 +2,38 @@ import React, { useState, useCallback } from 'react';
 import { AuthorizedContact } from '../../types';
 
 interface ContactFormProps {
-  contact: AuthorizedContact;
-  onSave: (contact: AuthorizedContact) => void;
+  initialContact?: AuthorizedContact;
+  customerId: string;
+  onSubmit: (contact: AuthorizedContact) => void; // Change to full AuthorizedContact
   onCancel: () => void;
 }
 
-const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) => {
-  const [name, setName] = useState(contact.fullName); // Changed from contact.name
-  const [email, setEmail] = useState(contact.email);
-  const [phone, setPhone] = useState(contact.businessPhone || contact.mobileNumber || ''); // Use businessPhone or mobileNumber
-  const [jobTitle, setJobTitle] = useState(contact.jobTitle || '');
+const ContactForm: React.FC<ContactFormProps> = ({ initialContact, customerId, onSubmit, onCancel }) => {
+  const [firstName, setFirstName] = useState(initialContact?.firstName || '');
+  const [lastName, setLastName] = useState(initialContact?.lastName || '');
+  const [email, setEmail] = useState(initialContact?.email || '');
+  const [businessPhone, setBusinessPhone] = useState(initialContact?.businessPhone || '');
+  const [mobileNumber, setMobileNumber] = useState(initialContact?.mobileNumber || '');
+  const [jobTitle, setJobTitle] = useState(initialContact?.jobTitle || '');
+  const [teamsAddress, setTeamsAddress] = useState(initialContact?.teamsAddress || '');
 
   const handleSubmit = useCallback(() => {
-    const updatedContact: AuthorizedContact = { // Explicitly type as AuthorizedContact
-      ...contact,
-      fullName: name, // Update fullName
+    const fullName = `${firstName} ${lastName}`.trim();
+    const contactToSubmit: AuthorizedContact = {
+      id: initialContact?.id || `new-contact-${Date.now()}`, // Use existing ID or generate new
+      createdAt: initialContact?.createdAt || new Date().toISOString(), // Use existing or new timestamp
+      fullName,
+      firstName,
+      lastName,
       email,
-      businessPhone: phone, // Assuming phone maps to businessPhone for simplicity
+      businessPhone,
+      mobileNumber,
       jobTitle,
+      teamsAddress,
+      customerId,
     };
-    onSave(updatedContact);
-  }, [contact, name, email, phone, jobTitle, onSave]);
+    onSubmit(contactToSubmit);
+  }, [firstName, lastName, email, businessPhone, mobileNumber, jobTitle, teamsAddress, customerId, initialContact, onSubmit]);
 
   return (
     <div className="bg-white dark:bg-gray-800 shadow-md rounded-md p-4">
@@ -32,16 +43,29 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
         handleSubmit();
       }}>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="name">
-            Name:
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="firstName">
+            First Name:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-            id="name"
+            id="firstName"
             type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            placeholder="First Name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="lastName">
+            Last Name:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+            id="lastName"
+            type="text"
+            placeholder="Last Name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -58,16 +82,29 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="phone">
-            Phone:
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="businessPhone">
+            Business Phone:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-            id="phone"
+            id="businessPhone"
             type="text"
-            placeholder="Phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            placeholder="Business Phone"
+            value={businessPhone}
+            onChange={(e) => setBusinessPhone(e.target.value)}
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="mobileNumber">
+            Mobile Number:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+            id="mobileNumber"
+            type="text"
+            placeholder="Mobile Number"
+            value={mobileNumber}
+            onChange={(e) => setMobileNumber(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -83,19 +120,32 @@ const ContactForm: React.FC<ContactFormProps> = ({ contact, onSave, onCancel }) 
             onChange={(e) => setJobTitle(e.target.value)}
           />
         </div>
-        <div className="flex justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-blue-600 dark:hover:bg-blue-700"
-          >
-            Save
-          </button>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="teamsAddress">
+            Teams Address:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+            id="teamsAddress"
+            type="text"
+            placeholder="Teams Address"
+            value={teamsAddress}
+            onChange={(e) => setTeamsAddress(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-end space-x-3 pt-2">
           <button
             type="button"
-            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline dark:bg-gray-600 dark:hover:bg-gray-700"
             onClick={onCancel}
+            className="px-4 py-2 text-sm font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] bg-[var(--background-light-light)] hover:bg-[color-mix(in srgb, var(--background-light-light) 90%, black)] dark:bg-[var(--background-light-dark)] dark:hover:bg-[color-mix(in srgb, var(--background-light-dark) 90%, black)] rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--text-color-light)] opacity-70 dark:focus:ring-[var(--text-color-dark)] opacity-70 transition-colors"
           >
             Cancel
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 text-sm font-medium text-white bg-[var(--primary-color-light)] hover:bg-[color-mix(in srgb, var(--primary-color-light) 80%, black)] dark:bg-[var(--primary-color-dark)] dark:hover:bg-[color-mix(in srgb, var(--primary-color-dark) 80%, black)] rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color-light)] dark:focus:ring-[var(--primary-color-dark)] transition-colors"
+          >
+            Save
           </button>
         </div>
       </form>

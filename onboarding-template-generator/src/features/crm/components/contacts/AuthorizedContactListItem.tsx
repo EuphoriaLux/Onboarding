@@ -1,17 +1,30 @@
-import React from 'react';
-import { AuthorizedContact } from '../../types/index'; // Updated import path
-import { EnvelopeIcon, PhoneIcon, UserCircleIcon, ChatBubbleLeftRightIcon } from '../common/icons'; // Updated import path
+import React, { useState } from 'react';
+import { AuthorizedContact } from '../../types/index';
+import { EnvelopeIcon, PhoneIcon, UserCircleIcon, ChatBubbleLeftRightIcon, EditIcon, BuildingOfficeIcon } from '../common/icons';
+import Modal from '../common/Modal';
+import UpdateAuthorizedContactView from './UpdateAuthorizedContactView'; // Import the new view
 
 interface AuthorizedContactListItemProps {
   contact: AuthorizedContact;
 }
 
 const AuthorizedContactListItem: React.FC<AuthorizedContactListItemProps> = ({ contact }) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateSuccess = () => {
+    setIsEditModalOpen(false);
+    // Optionally, trigger a re-fetch or state update if needed, though AppStateContext should handle it
+  };
+
   return (
-    <li className="p-3 bg-slate-50/50 rounded-lg border border-slate-200/80 hover:bg-slate-100 transition-colors duration-150">
+    <li className="p-3 bg-slate-50/50 rounded-lg border border-slate-200/80 hover:bg-slate-100 transition-colors duration-150 relative">
       <div className="flex items-center space-x-3 mb-1.5">
         <UserCircleIcon className="w-6 h-6 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0" />
-        <div className="min-w-0">
+        <div className="min-w-0 flex-grow">
           <p className="font-medium text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] truncate" title={contact.fullName}>{contact.fullName}</p>
           {(contact.firstName || contact.lastName) && (
             <p className="text-xs text-[var(--text-color-light)] opacity-80 dark:text-[var(--text-color-dark)] opacity-80 truncate">
@@ -19,12 +32,18 @@ const AuthorizedContactListItem: React.FC<AuthorizedContactListItemProps> = ({ c
             </p>
           )}
         </div>
+        <button
+          onClick={handleEditClick}
+          className="text-gray-500 hover:text-[var(--primary-color-light)] dark:text-gray-400 dark:hover:text-[var(--primary-color-dark)] transition-colors duration-150"
+          title="Edit Contact"
+        >
+          <EditIcon className="w-5 h-5" />
+        </button>
       </div>
       <div className="space-y-1 pl-9 text-xs">
         {contact.jobTitle && (
           <div className="flex items-center space-x-1.5 text-[var(--text-color-light)] opacity-80 dark:text-[var(--text-color-dark)] opacity-80">
-            {/* No specific icon for job title, could use a generic one if desired */}
-            <span className="w-3.5 h-3.5 flex-shrink-0"></span> {/* Placeholder for alignment */}
+            <BuildingOfficeIcon className="w-3.5 h-3.5 flex-shrink-0 text-[var(--text-color-light)] opacity-60 dark:text-[var(--text-color-dark)] opacity-60" />
             <p className="truncate" title={contact.jobTitle}>{contact.jobTitle}</p>
           </div>
         )}
@@ -59,6 +78,13 @@ const AuthorizedContactListItem: React.FC<AuthorizedContactListItemProps> = ({ c
           </div>
         )}
       </div>
+
+      <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title={`Edit Contact: ${contact.fullName}`}>
+        <UpdateAuthorizedContactView
+          selectedContactId={contact.id}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      </Modal>
     </li>
   );
 };

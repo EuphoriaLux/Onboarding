@@ -11,18 +11,18 @@ const TenantListItem: React.FC<TenantListItemProps> = ({ tenant, onEditTenant })
   const getStatusPillClasses = (status?: SubscriptionStatus): string => {
     switch (status) {
       case 'Active':
-        return 'bg-green-100 text-green-700 border-green-300';
+        return 'bg-green-100 text-green-700 border-green-300 dark:bg-green-700 dark:text-green-200 dark:border-green-600';
       case 'Inactive':
-        return 'bg-red-100 text-red-700 border-red-300';
+        return 'bg-red-100 text-red-700 border-red-300 dark:bg-red-700 dark:text-red-200 dark:border-red-600';
       case 'Trial':
-        return 'bg-yellow-100 text-yellow-700 border-yellow-300';
+        return 'bg-yellow-100 text-yellow-700 border-yellow-300 dark:bg-yellow-700 dark:text-yellow-200 dark:border-yellow-600';
       default:
-        return 'bg-slate-100 text-slate-600 border-slate-300';
+        return 'bg-slate-100 text-slate-600 border-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600';
     }
   };
 
   return (
-    <li className="p-4 bg-white rounded-lg shadow-md border border-slate-200 hover:shadow-lg transition-shadow duration-150">
+    <li className="p-4 bg-white dark:bg-[var(--background-light-dark)] rounded-lg shadow-md border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow duration-150">
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-3 min-w-0">
           <CloudIcon className="w-7 h-7 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0 mt-1" />
@@ -49,10 +49,10 @@ const TenantListItem: React.FC<TenantListItemProps> = ({ tenant, onEditTenant })
             </span>
           )}
           {tenant.gdap && (
-            <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-blue-100 text-blue-700 border-blue-300">GDAP</span>
+            <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-700 dark:text-blue-200 dark:border-blue-600">GDAP</span>
           )}
           {tenant.rbac && (
-            <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-purple-100 text-purple-700 border-purple-300">RBAC</span>
+            <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-700 dark:text-purple-200 dark:border-purple-600">RBAC</span>
           )}
           <button
             onClick={() => onEditTenant(tenant.id)}
