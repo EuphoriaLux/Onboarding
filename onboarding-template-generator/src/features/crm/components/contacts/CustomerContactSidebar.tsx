@@ -21,7 +21,7 @@ const DetailItem: React.FC<{ icon: React.ReactNode; label: string; value: string
 const CustomerContactSidebar: React.FC<CustomerContactSidebarProps> = ({ customer }) => {
   if (!customer) {
     return (
-    <div className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg h-full">
+    <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-lg h-full">
         <EmptyState
           icon={<InformationCircleIcon className="w-12 h-12 text-[var(--text-color-light)] opacity-50 dark:text-[var(--text-color-dark)] opacity-50" />}
           title="No Customer Selected"
@@ -33,8 +33,8 @@ const CustomerContactSidebar: React.FC<CustomerContactSidebarProps> = ({ custome
 
   return (
     // Ensure sticky positioning works well when stacked in a flex container
-    <div className="bg-white dark:bg-slate-800 p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-6 flex flex-col flex-grow">
-      <div className="flex items-center space-x-3 mb-4 pb-4 border-b border-slate-200">
+    <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-xl shadow-lg lg:sticky lg:top-6 flex flex-col flex-grow">
+      <div className="flex items-center space-x-3 mb-4 pb-4 border-b border-slate-200 dark:border-slate-700">
         <UserCircleIcon className="w-12 h-12 text-[var(--primary-color-light)] opacity-80 dark:text-[var(--primary-color-dark)] opacity-80 flex-shrink-0" />
         <div>
           <h2 className="text-xl font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)] truncate" title={customer.name}>{customer.name}</h2>

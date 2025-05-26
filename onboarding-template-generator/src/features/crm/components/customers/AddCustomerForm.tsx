@@ -17,7 +17,6 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onAddCustomer, onCanc
       onboardingStatus: customer.onboardingStatus,
       notes: [], // Initialize notes
       contacts: [], // Initialize contacts
-      tenants: [], // Initialize tenants
       accountManager: customer.accountManager, // Include accountManager
       supportPlan: customer.supportPlan, // Include supportPlan
     });
@@ -32,7 +31,6 @@ const AddCustomerForm: React.FC<AddCustomerFormProps> = ({ onAddCustomer, onCanc
     onboardingStatus: OnboardingStatus.NOT_STARTED,
     notes: [],
     contacts: [],
-    tenants: [],
     createdAt: new Date().toISOString(), // Will be set by parent
     updatedAt: new Date().toISOString(), // Will be set by parent
     accountManager: '', // Default for new customer

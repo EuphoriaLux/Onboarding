@@ -25,9 +25,9 @@ const CustomerListItem: React.FC<CustomerListItemProps> = ({ customer, isSelecte
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onSelect()}
     >
       <div className="flex items-center space-x-3 min-w-0">
-        <UserGroupIcon className={`w-6 h-6 flex-shrink-0 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : ''}`} style={!isSelected ? { color: 'black' } : {}} />
+        <UserGroupIcon className={`w-6 h-6 flex-shrink-0 ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)]' : 'text-gray-700 dark:text-gray-300'}`} />
         <div className="min-w-0">
-          <p className={`font-medium truncate ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] font-semibold' : ''}`} style={!isSelected ? { color: 'black' } : {}}>{customer.name}</p>
+          <p className={`font-medium truncate ${isSelected ? 'text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] font-semibold' : 'text-gray-700 dark:text-gray-300'}`}>{customer.name}</p>
           {/* Removed email and joined date as per user feedback */}
         </div>
       </div>

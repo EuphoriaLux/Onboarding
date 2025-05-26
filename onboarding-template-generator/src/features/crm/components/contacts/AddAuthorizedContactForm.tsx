@@ -84,10 +84,10 @@ const AddAuthorizedContactForm: React.FC<AddAuthorizedContactFormProps> = ({ onA
         type="text"
         value={fullName}
         readOnly
-        className={`bg-gray-100 dark:bg-gray-700 cursor-not-allowed ${errors.fullName ? 'border-red-500' : ''}`}
+        className={`bg-gray-100 dark:bg-gray-700 cursor-not-allowed ${errors.fullName ? 'border-red-500 dark:border-red-400' : ''}`}
         placeholder="Auto-generated from First and Last Name"
       />
-      {errors.fullName && <p className="text-xs text-red-600 mt-1">{errors.fullName}</p>}
+      {errors.fullName && <p className="text-xs text-red-600 dark:text-red-400 mt-1">{errors.fullName}</p>}
       <FormField
         label="Email Address"
         id="contactEmail"
@@ -95,10 +95,10 @@ const AddAuthorizedContactForm: React.FC<AddAuthorizedContactFormProps> = ({ onA
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
-        className={`${errors.email ? 'border-red-500' : ''}`}
+        className={`${errors.email ? 'border-red-500 dark:border-red-400' : ''}`}
         placeholder="e.g., jane.doe@example.com"
       />
-      {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
+      {errors.email && <p className="text-xs text-red-600 dark:text-red-400 mt-1">{errors.email}</p>}
       <FormField
         label="Business Phone (Optional)"
         id="businessPhone"

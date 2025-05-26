@@ -13,12 +13,12 @@ const ContactView: React.FC<ContactViewProps> = ({ contact, onEdit }) => {
       <div className="flex items-center justify-between">
         <div>
           <h3 className="text-md font-semibold mb-1 text-gray-800 dark:text-gray-200">Contact Information</h3>
-          <p>Name: {contact.fullName}</p>
-          <p>Email: {contact.email}</p>
-          <p>Business Phone: {contact.businessPhone || 'N/A'}</p>
-          <p>Mobile Number: {contact.mobileNumber || 'N/A'}</p>
-          <p>Teams Address: {contact.teamsAddress || 'N/A'}</p>
-          <p>Job Title: {contact.jobTitle}</p>
+          <p className="text-gray-700 dark:text-gray-300"><strong>Name:</strong> {contact.fullName}</p>
+          {contact.email && <p className="text-gray-700 dark:text-gray-300"><strong>Email:</strong> {contact.email}</p>}
+          {contact.businessPhone && <p className="text-gray-700 dark:text-gray-300"><strong>Business Phone:</strong> {contact.businessPhone || 'N/A'}</p>}
+          {contact.mobileNumber && <p className="text-gray-700 dark:text-gray-300"><strong>Mobile Number:</strong> {contact.mobileNumber || 'N/A'}</p>}
+          {contact.teamsAddress && <p className="text-gray-700 dark:text-gray-300"><strong>Teams Address:</strong> {contact.teamsAddress || 'N/A'}</p>}
+          {contact.jobTitle && <p className="text-gray-700 dark:text-gray-300"><strong>Job Title:</strong> {contact.jobTitle}</p>}
         </div>
         <button
           type="button"

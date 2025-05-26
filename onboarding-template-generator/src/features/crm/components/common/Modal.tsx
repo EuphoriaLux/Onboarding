@@ -19,15 +19,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center z-50 p-4 transition-opacity duration-300 ease-in-out"
       onClick={onClose} // Close on overlay click
     >
-      <div 
-        className={`bg-white rounded-xl shadow-2xl w-full ${sizeClasses[size]} p-6 m-4 transform transition-all duration-300 ease-in-out scale-100 opacity-100 flex flex-col max-h-[90vh]`}
+      <div
+        className={`bg-white dark:bg-gray-800 rounded-xl shadow-2xl w-full ${sizeClasses[size]} p-6 m-4 transform transition-all duration-300 ease-in-out scale-100 opacity-100 flex flex-col max-h-[90vh]`}
         onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside modal
       >
-        <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-200">
+        <div className="flex justify-between items-center mb-4 pb-3 border-b border-slate-200 dark:border-slate-700">
           <h2 className="text-xl font-semibold text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]">{title}</h2>
           <button
             onClick={onClose}

@@ -66,7 +66,7 @@ const TenantForm: React.FC<TenantFormProps> = ({ onSubmit, onCancel, initialTena
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 text-gray-700 dark:text-gray-300">
       <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">{initialTenant ? 'Edit Tenant' : 'Add New Tenant'}</h2>
       <FormField
         label="Tenant Name"
@@ -76,7 +76,7 @@ const TenantForm: React.FC<TenantFormProps> = ({ onSubmit, onCancel, initialTena
         onChange={(e) => setName(e.target.value)}
         required
       />
-      {errors.name && <p className="text-xs text-red-600 mt-1">{errors.name}</p>}
+      {errors.name && <p className="text-xs text-red-600 dark:text-red-400 mt-1">{errors.name}</p>}
       <FormField
         label="Microsoft Tenant ID"
         id="microsoftTenantId"
@@ -85,7 +85,7 @@ const TenantForm: React.FC<TenantFormProps> = ({ onSubmit, onCancel, initialTena
         onChange={(e) => setMicrosoftTenantId(e.target.value)}
         required
       />
-      {errors.tenantId && <p className="text-xs text-red-600 mt-1">{errors.tenantId}</p>}
+      {errors.tenantId && <p className="text-xs text-red-600 dark:text-red-400 mt-1">{errors.tenantId}</p>}
       <FormField
         label="Subscription Status (Optional)"
         id="subscriptionStatus"

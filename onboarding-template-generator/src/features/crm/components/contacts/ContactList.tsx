@@ -42,7 +42,7 @@ const ContactList: React.FC<ContactListProps> = ({ contacts, onEditContact, onDe
           ))}
         </ul>
       ) : (
-        <p>No contacts found.</p>
+        <p className="text-gray-600 dark:text-gray-400">No contacts found.</p>
       )}
     </div>
   );

@@ -15,7 +15,7 @@ const UpdateCustomerView: React.FC<UpdateCustomerViewProps> = ({ selectedCustome
   const selectedCustomer = state.crmData.find(customer => customer.id === selectedCustomerId);
 
   if (!selectedCustomer) {
-    return <div>No customer selected.</div>;
+    return <div className="text-gray-600 dark:text-gray-400">No customer selected.</div>;
   }
 
   const handleSubmit = async (customer: Customer) => {
