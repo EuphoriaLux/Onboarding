@@ -43,21 +43,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ initialContact, customerId, o
         handleSubmit();
       }}>
         <div className="mb-4">
-<<<<<<< HEAD
           <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="firstName">
             First Name:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
             id="firstName"
-=======
-          <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="name">
-            Name:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
-            id="name"
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
             type="text"
             placeholder="First Name"
             value={firstName}
@@ -91,21 +82,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ initialContact, customerId, o
           />
         </div>
         <div className="mb-4">
-<<<<<<< HEAD
           <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-gray-300" htmlFor="businessPhone">
             Business Phone:
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
             id="businessPhone"
-=======
-          <label className="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2" htmlFor="phone">
-            Phone:
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-200 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-            id="phone"
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
             type="text"
             placeholder="Business Phone"
             value={businessPhone}

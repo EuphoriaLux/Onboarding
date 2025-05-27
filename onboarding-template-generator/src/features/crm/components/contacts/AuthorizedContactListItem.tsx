@@ -21,11 +21,7 @@ const AuthorizedContactListItem: React.FC<AuthorizedContactListItemProps> = ({ c
   };
 
   return (
-<<<<<<< HEAD
     <li className="p-3 bg-slate-50/50 rounded-lg border border-slate-200/80 hover:bg-slate-100 transition-colors duration-150 relative">
-=======
-    <li className="p-3 bg-slate-50/50 dark:bg-slate-800/50 rounded-lg border border-slate-200/80 dark:border-slate-700/80 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-150">
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
       <div className="flex items-center space-x-3 mb-1.5">
         <UserCircleIcon className="w-6 h-6 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0" />
         <div className="min-w-0 flex-grow">

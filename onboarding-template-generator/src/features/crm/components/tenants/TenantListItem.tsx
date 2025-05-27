@@ -11,7 +11,6 @@ const TenantListItem: React.FC<TenantListItemProps> = ({ tenant, onEditTenant })
   const getStatusPillClasses = (status?: SubscriptionStatus): string => {
     switch (status) {
       case 'Active':
-<<<<<<< HEAD
         return 'bg-green-100 text-green-700 border-green-300 dark:bg-green-700 dark:text-green-200 dark:border-green-600';
       case 'Inactive':
         return 'bg-red-100 text-red-700 border-red-300 dark:bg-red-700 dark:text-red-200 dark:border-red-600';
@@ -19,24 +18,11 @@ const TenantListItem: React.FC<TenantListItemProps> = ({ tenant, onEditTenant })
         return 'bg-yellow-100 text-yellow-700 border-yellow-300 dark:bg-yellow-700 dark:text-yellow-200 dark:border-yellow-600';
       default:
         return 'bg-slate-100 text-slate-600 border-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600';
-=======
-        return 'bg-green-100 dark:bg-green-800 text-green-700 dark:text-green-200 border-green-300 dark:border-green-700';
-      case 'Inactive':
-        return 'bg-red-100 dark:bg-red-800 text-red-700 dark:text-red-200 border-red-300 dark:border-red-700';
-      case 'Trial':
-        return 'bg-yellow-100 dark:bg-yellow-800 text-yellow-700 dark:text-yellow-200 border-yellow-300 dark:border-yellow-700';
-      default:
-        return 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-600';
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
     }
   };
 
   return (
-<<<<<<< HEAD
     <li className="p-4 bg-white dark:bg-[var(--background-light-dark)] rounded-lg shadow-md border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow duration-150">
-=======
-    <li className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow duration-150">
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-3 min-w-0">
           <CloudIcon className="w-7 h-7 text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] flex-shrink-0 mt-1" />
@@ -63,17 +49,10 @@ const TenantListItem: React.FC<TenantListItemProps> = ({ tenant, onEditTenant })
             </span>
           )}
           {tenant.gdap && (
-<<<<<<< HEAD
             <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-700 dark:text-blue-200 dark:border-blue-600">GDAP</span>
           )}
           {tenant.rbac && (
             <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-purple-100 text-purple-700 border-purple-300 dark:bg-purple-700 dark:text-purple-200 dark:border-purple-600">RBAC</span>
-=======
-            <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 border-blue-300 dark:border-blue-700">GDAP</span>
-          )}
-          {tenant.rbac && (
-            <span className="px-3 py-1 text-xs font-semibold rounded-full border bg-purple-100 dark:bg-purple-800 text-purple-700 dark:text-purple-200 border-purple-300 dark:border-purple-700">RBAC</span>
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
           )}
           <button
             onClick={() => onEditTenant(tenant.id)}

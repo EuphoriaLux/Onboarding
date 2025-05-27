@@ -1,35 +1,21 @@
 {
-  "../../../../../@crx/manifest": {
+  "../../../@crx/manifest": {
     "file": "assets/crx-manifest.js-B0pwO2aj.js",
     "name": "crx-manifest.js",
-    "src": "../../../../../@crx/manifest",
+    "src": "../../../@crx/manifest",
     "isEntry": true
   },
-<<<<<<< HEAD
-  "_tailwind-BAeR8cS6.js": {
-    "file": "assets/tailwind-BAeR8cS6.js",
+  "_tailwind-B-JY6Y1O.js": {
+    "file": "assets/tailwind-B-JY6Y1O.js",
     "name": "tailwind",
     "css": [
-      "assets/tailwind-Nl2FXzXG.css"
+      "assets/tailwind-Czhgm9mV.css"
     ]
   },
-  "_tailwind-Nl2FXzXG.css": {
-    "file": "assets/tailwind-Nl2FXzXG.css",
-    "src": "_tailwind-Nl2FXzXG.css"
+  "_tailwind-Czhgm9mV.css": {
+    "file": "assets/tailwind-Czhgm9mV.css",
+    "src": "_tailwind-Czhgm9mV.css"
   },
-=======
-  "_tailwind-CbQRGqyy.css": {
-    "file": "assets/tailwind-CbQRGqyy.css",
-    "src": "_tailwind-CbQRGqyy.css"
-  },
-  "_tailwind-DsYl9yB3.js": {
-    "file": "assets/tailwind-DsYl9yB3.js",
-    "name": "tailwind",
-    "css": [
-      "assets/tailwind-CbQRGqyy.css"
-    ]
-  },
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
   "src/assets/ms-symbollockup_signin_dark.svg": {
     "file": "assets/ms-symbollockup_signin_dark-BLaB1Mw_.svg",
     "src": "src/assets/ms-symbollockup_signin_dark.svg"
@@ -39,20 +25,12 @@
     "src": "src/assets/ms-symbollockup_signin_light.svg"
   },
   "src/options.html": {
-<<<<<<< HEAD
-    "file": "assets/options.html-Cl9cSD9f.js",
-=======
-    "file": "assets/options.html-Bgcv5zwS.js",
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
+    "file": "assets/options.html-CC6TQ5_V.js",
     "name": "options.html",
     "src": "src/options.html",
     "isEntry": true,
     "imports": [
-<<<<<<< HEAD
-      "_tailwind-BAeR8cS6.js"
-=======
-      "_tailwind-DsYl9yB3.js"
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
+      "_tailwind-B-JY6Y1O.js"
     ],
     "css": [
       "assets/options-DdjxYr1F.css"
@@ -63,20 +41,12 @@
     ]
   },
   "src/popup.html": {
-<<<<<<< HEAD
-    "file": "assets/popup.html-ccSKNMgm.js",
-=======
-    "file": "assets/popup.html-CUFG4tWv.js",
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
+    "file": "assets/popup.html-DI421lkn.js",
     "name": "popup.html",
     "src": "src/popup.html",
     "isEntry": true,
     "imports": [
-<<<<<<< HEAD
-      "_tailwind-BAeR8cS6.js"
-=======
-      "_tailwind-DsYl9yB3.js"
->>>>>>> 193d398ec1755b1cec940e328a60dbc9fe8b6d4b
+      "_tailwind-B-JY6Y1O.js"
     ]
   }
 }
