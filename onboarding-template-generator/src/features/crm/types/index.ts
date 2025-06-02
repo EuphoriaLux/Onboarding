@@ -48,6 +48,8 @@ export interface Customer {
   onboardingStatus?: OnboardingStatus;
   _etag?: string; // To store the ETag for concurrency control (internal use)
   accountManager?: string; // New: Account Manager field
+  contractOwnerName?: string; // New: Contract Owner Name field
+  contractOwnerEmail?: string; // New: Contract Owner Email field
   supportPlan?: { // New: Support Plan section
     type: SupportPlanType;
     startDate: string; // ISO 8601 date string

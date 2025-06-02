@@ -448,10 +448,14 @@ export const AppStateProvider: React.FC<{ children: ReactNode }> = ({ children }
   const addAuthorizedContactToCustomer = async (customerId: string, contact: Omit<AuthorizedContact, 'id' | 'customerId' | 'createdAt'>) => {
     try {
       const updatedCustomer = await crmStorageService.addAuthorizedContactToCustomer(customerId, contact as AuthorizedContact);
-      setState(prevState => ({
-        ...prevState,
-        crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
-      }));
+      setState(prevState => {
+        const newContact = updatedCustomer.contacts?.find(c => c.customerId === customerId && !prevState.allAuthorizedContacts.some(pac => pac.id === c.id));
+        return {
+          ...prevState,
+          crmData: prevState.crmData.map(c => (c.id === updatedCustomer.id ? updatedCustomer : c)),
+          allAuthorizedContacts: newContact ? [...prevState.allAuthorizedContacts, newContact] : prevState.allAuthorizedContacts,
+        };
+      });
     } catch (error) {
       console.error("Error adding authorized contact:", error);
     }

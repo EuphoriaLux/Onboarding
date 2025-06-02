@@ -59,6 +59,30 @@ const CustomerContactSidebar: React.FC<CustomerContactSidebarProps> = ({ custome
             placeholder="N/A"
           />
         )}
+        {/* Contract Owner Section */}
+        {(customer.contractOwnerName || customer.contractOwnerEmail) && (
+          <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
+            <h3 className="text-md font-semibold mb-1 text-gray-800 dark:text-gray-200">Contract Owner</h3>
+            {customer.contractOwnerName && (
+              <DetailItem
+                icon={<UsersIcon />}
+                label="Name"
+                value={customer.contractOwnerName}
+                valueClass="text-[var(--text-color-light)] dark:text-[var(--text-color-dark)]"
+                placeholder="N/A"
+              />
+            )}
+            {customer.contractOwnerEmail && (
+              <DetailItem
+                icon={<EnvelopeIcon />}
+                label="Email"
+                value={customer.contractOwnerEmail}
+                valueClass="text-[var(--primary-color-light)] hover:text-[var(--primary-color-light)] dark:text-[var(--primary-color-dark)] dark:hover:text-[var(--primary-color-dark)]"
+                placeholder="No email provided"
+              />
+            )}
+          </div>
+        )}
         {customer.supportPlan && (
           <DetailItem
             icon={<CalendarDaysIcon />}

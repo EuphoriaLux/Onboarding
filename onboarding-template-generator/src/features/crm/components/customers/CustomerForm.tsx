@@ -14,6 +14,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
   const [company, setCompany] = useState(initialCustomer?.company || '');
   const [onboardingStatus, setOnboardingStatus] = useState<OnboardingStatus>(initialCustomer?.onboardingStatus || OnboardingStatus.NOT_STARTED);
   const [accountManager, setAccountManager] = useState(initialCustomer?.accountManager || '');
+  const [contractOwnerName, setContractOwnerName] = useState(initialCustomer?.contractOwnerName || ''); // New state for contract owner name
+  const [contractOwnerEmail, setContractOwnerEmail] = useState(initialCustomer?.contractOwnerEmail || '');
   const [supportPlanType, setSupportPlanType] = useState<SupportPlanType | ''>(initialCustomer?.supportPlan?.type || '');
   const [supportPlanStartDate, setSupportPlanStartDate] = useState(initialCustomer?.supportPlan?.startDate ? new Date(initialCustomer.supportPlan.startDate).toISOString().split('T')[0] : '');
   const [supportPlanEndDate, setSupportPlanEndDate] = useState(initialCustomer?.supportPlan?.endDate ? new Date(initialCustomer.supportPlan.endDate).toISOString().split('T')[0] : '');
@@ -25,6 +27,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
     setCompany(initialCustomer?.company || '');
     setOnboardingStatus(initialCustomer?.onboardingStatus || OnboardingStatus.NOT_STARTED);
     setAccountManager(initialCustomer?.accountManager || '');
+    setContractOwnerName(initialCustomer?.contractOwnerName || ''); // Update contract owner name
+    setContractOwnerEmail(initialCustomer?.contractOwnerEmail || '');
     setSupportPlanType(initialCustomer?.supportPlan?.type || '');
     setSupportPlanStartDate(initialCustomer?.supportPlan?.startDate ? new Date(initialCustomer.supportPlan.startDate).toISOString().split('T')[0] : '');
     setSupportPlanEndDate(initialCustomer?.supportPlan?.endDate ? new Date(initialCustomer.supportPlan.endDate).toISOString().split('T')[0] : '');
@@ -44,6 +48,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
       updatedAt: new Date().toISOString(),
       _etag: initialCustomer?._etag || undefined, // Include _etag for updates
       accountManager,
+      contractOwnerName, // Include contract owner name
+      contractOwnerEmail,
       supportPlan: supportPlanType ? {
         type: supportPlanType,
         startDate: supportPlanStartDate,
@@ -58,6 +64,8 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
       setCompany('');
       setOnboardingStatus(OnboardingStatus.NOT_STARTED);
       setAccountManager('');
+      setContractOwnerName(''); // Clear contract owner name
+      setContractOwnerEmail('');
       setSupportPlanType('');
       setSupportPlanStartDate('');
       setSupportPlanEndDate('');
@@ -115,13 +123,31 @@ const CustomerForm: React.FC<CustomerFormProps> = ({ onSubmit, initialCustomer }
         onChange={e => setAccountManager(e.target.value)}
       />
 
+      {/* Contract Owner Name Field */}
+      <FormField
+        label="Contract Owner Name:"
+        id="contractOwnerName"
+        type="text"
+        value={contractOwnerName}
+        onChange={e => setContractOwnerName(e.target.value)}
+      />
+
+      {/* Contract Owner Email Field */}
+      <FormField
+        label="Contract Owner Email:"
+        id="contractOwnerEmail"
+        type="email"
+        value={contractOwnerEmail}
+        onChange={e => setContractOwnerEmail(e.target.value)}
+      />
+
       {/* Support Plan Section */}
       <div className="pt-4 border-t border-gray-200 dark:border-gray-800">
         <h3 className="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">Support Plan</h3>
         <FormField
           label="Support Plan Type:"
           id="supportPlanType"
-        >
+          >
           <select
             value={supportPlanType}
             onChange={e => setSupportPlanType(e.target.value as SupportPlanType)}
